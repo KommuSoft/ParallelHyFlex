@@ -51,5 +51,9 @@ public class MemorySlots<TSolution extends Solution<TSolution>> {
     public String toString () {
         return String.format("MemorySlots[%s,%s,%s]",this.isLocal(),this.getPolicy(),this.storage.length);
     }
+
+    public int getSize() {
+        return this.storage.length;
+    }
     
 }

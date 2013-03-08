@@ -12,6 +12,14 @@ import parallelhyflex.SolutionGenerator;
  */
 public class ThreeSatProblem implements Problem<ThreeSatSolution> {
 
+    private int nvariables;
+    private ThreeSatSolutionGenerator generator;
+    
+    public ThreeSatProblem (int nvars) {
+        this.nvariables = nvars;
+        this.generator = new ThreeSatSolutionGenerator((nvars+63)>>6);
+    }
+    
     @Override
     public Heuristic<ThreeSatSolution> getHeuristic(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -44,7 +52,7 @@ public class ThreeSatProblem implements Problem<ThreeSatSolution> {
 
     @Override
     public SolutionGenerator<ThreeSatSolution> getSolutionGenerator() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.generator;
     }
     
 }

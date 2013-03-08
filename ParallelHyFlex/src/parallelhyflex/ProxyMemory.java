@@ -47,6 +47,10 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     public int getMemorySize () {
         return this.totalMemory;
     }
+    
+    public int getLocalMemorySize () {
+        return this.localSlots.getSize();
+    }
 
     protected TSolution getSolution(int index) {
         //return (TSolution) this.innerMemory[index];
