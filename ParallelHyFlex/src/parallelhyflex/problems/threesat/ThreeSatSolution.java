@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import parallelhyflex.Communication;
 import parallelhyflex.Solution;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -84,7 +85,7 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     public String toString () {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < this.values.length; i++) {
-            sb.append(String.format("%s ",String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0')));
+            sb.append(String.format("%s ",Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0'))));
         }
         return sb.toString();
     }

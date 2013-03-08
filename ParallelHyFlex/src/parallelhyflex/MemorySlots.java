@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpi.MPI;
+import parallelhyflex.utils.CompactBitArray;
 
 /**
  *
@@ -20,11 +21,13 @@ public class MemorySlots<TSolution extends Solution<TSolution>> {
     private final boolean local;
     private final MemoryExchangePolicy policy;
     private final Object[] storage;
+    private final CompactBitArray notExchangeMask;
     
     public MemorySlots (boolean isLocal, int memorySize, MemoryExchangePolicy policy) {
         this.local = isLocal;
         this.policy = policy;
         this.storage = new Object[memorySize];
+        this.notExchangeMask = new CompactBitArray(memorySize);
         //TODO: memorySize
     }
 
@@ -75,6 +78,17 @@ public class MemorySlots<TSolution extends Solution<TSolution>> {
 
     public int getSize() {
         return this.storage.length;
+    }
+
+    /**
+     * @return the notExchangeMask
+     */
+    public CompactBitArray getNotExchangeMask() {
+        return notExchangeMask;
+    }
+    
+    public boolean willExchange (int index) {
+        return !this.notExchangeMask.get(index);
     }
     
 }
