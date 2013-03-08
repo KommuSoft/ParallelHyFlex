@@ -12,11 +12,14 @@ import parallelhyflex.SolutionGenerator;
  */
 public class ThreeSatProblem implements Problem<ThreeSatSolution> {
 
-    private int nvariables;
-    private ThreeSatSolutionGenerator generator;
+    private final long[] constraints;
+    private final int n, k;
+    private final ThreeSatSolutionGenerator generator;
     
-    public ThreeSatProblem (int nvars) {
-        this.nvariables = nvars;
+    public ThreeSatProblem (int nvars, long[] constraints) {
+        this.constraints = constraints;
+        this.n = nvars;
+        this.k = this.constraints.length;
         this.generator = new ThreeSatSolutionGenerator((nvars+63)>>6);
     }
     

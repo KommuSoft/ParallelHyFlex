@@ -50,13 +50,37 @@ public class CompactBitArray {
         int fj = fromIndex>>6, tj = toIndex>>6;
         fromIndex -= fj<<6;
         toIndex -= tj<<6;
-        for(int i = fj+1; i < tj-1; i++) {
+        for(int i = fj+1; i < tj; i++) {
             values[i] = ~values[i];
         }
-        long mask = (2L<<toIndex)-1;
+        long mask = (4L<<toIndex)-1;
         values[tj] ^= mask;
         mask = (2L<<fromIndex)-1;
         values[fj] ^= ~mask;
+    }
+    public void setRange (int fromIndex, int toIndex) {
+        int fj = fromIndex>>6, tj = toIndex>>6;
+        fromIndex -= fj<<6;
+        toIndex -= tj<<6;
+        for(int i = fj+1; i < tj; i++) {
+            values[i] = 0xFFFFFFFFFFFFFFFFL;
+        }
+        long mask = (4L<<toIndex)-1;
+        values[tj] |= mask;
+        mask = (2L<<fromIndex)-1;
+        values[fj] |= ~mask;
+    }
+    public void resetRange (int fromIndex, int toIndex) {
+        int fj = fromIndex>>6, tj = toIndex>>6;
+        fromIndex -= fj<<6;
+        toIndex -= tj<<6;
+        for(int i = fj+1; i < tj; i++) {
+            values[i] = 0x0000000000000000L;
+        }
+        long mask = (4L<<toIndex)-1;
+        values[tj] &= ~mask;
+        mask = (2L<<fromIndex)-1;
+        values[fj] &= mask;
     }
     public void set (int index, boolean value) {
         int j = index>>6;
@@ -83,6 +107,11 @@ public class CompactBitArray {
             }
         }
         return false;
+    }
+    
+    public static CompactBitArray randomInstance (int n) {
+        CompactBitArray cba = new CompactBitArray(n);
+        return cba;
     }
 
     @Override

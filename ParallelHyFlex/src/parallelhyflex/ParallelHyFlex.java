@@ -14,9 +14,13 @@ public class ParallelHyFlex {
      */
     public static void main(String[] args) {
         
-        CompactBitArray cba = new CompactBitArray(256);
+        CompactBitArray cba = new CompactBitArray(192);
         System.out.println(cba);
-        cba.swapRange(17,213);
+        cba.swapRange(17,189);
+        System.out.println(cba);
+        cba.resetRange(18,188);
+        System.out.println(cba);
+        cba.setRange(19,187);
         System.out.println(cba);
         
         Communication.initializeCommunication(args);
