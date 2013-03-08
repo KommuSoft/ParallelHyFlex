@@ -10,6 +10,8 @@ public class ParallelHyFlex {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Communication.initializeCommunication(args);
+        System.out.println("Hi from <"+Communication.getCommunication().getRank()+">");
+        Communication.finalizeCommunication();
     }
 }

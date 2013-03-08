@@ -10,5 +10,8 @@ public interface Problem<TSolution extends Solution> {
     public int getNumberOfHeuristics ();
     public ObjectiveFunction<TSolution> getObjectiveFunction (int index);
     public int getNumberOfObjectiveFunctions ();
+    public DistanceFunction<TSolution> getDistanceFunction (int index);
+    public int getNumberOfDistanceFunctions ();
+    public SolutionGenerator<TSolution> getSolutionGenerator ();
     
 }
