@@ -36,7 +36,7 @@ public class MemorySlots<TSolution extends Solution<TSolution>> {
     }
 
     public void pushSolution(int index) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        
     }
     public void setSolution (int index, TSolution sol) {
         this.storage[index] = sol;

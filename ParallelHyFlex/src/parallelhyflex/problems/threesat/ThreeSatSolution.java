@@ -1,5 +1,8 @@
 package parallelhyflex.problems.threesat;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import parallelhyflex.Solution;
 
 /**
@@ -13,7 +16,7 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     public ThreeSatSolution (int n64) {
         this.values = new long[n64];
     }
-    private ThreeSatSolution (long[] values) {
+    ThreeSatSolution (long[] values) {
         this.values = values;
     }
     
@@ -59,6 +62,20 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void writeSolution(DataOutputStream os) throws IOException {
+        for(int i = 0; i < values.length; i++) {
+            os.writeLong(values[i]);
+        }
+    }
+
+    @Override
+    public void readSolution(DataInputStream is) throws IOException {
+        for(int i = 0; i < values.length; i++) {
+            values[i] = is.readLong();
+        }
     }
     
 }

@@ -1,5 +1,7 @@
 package parallelhyflex.problems.dummy;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import parallelhyflex.Solution;
 
 /**
@@ -16,6 +18,16 @@ public class DummySolution implements Solution<DummySolution> {
     @Override
     public boolean equalSolution(DummySolution other) {
         return true;
+    }
+
+    @Override
+    public void writeSolution(DataOutputStream os) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void readSolution(DataInputStream is) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

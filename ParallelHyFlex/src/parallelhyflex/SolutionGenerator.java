@@ -11,6 +11,6 @@ package parallelhyflex;
 public interface SolutionGenerator<TSolution extends Solution> {
     
     public TSolution generateSolution ();
-    public void setSeed (int seed);
+    public void setSeed (long seed);
     
 }
