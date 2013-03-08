@@ -10,41 +10,25 @@ import mpi.MPI;
 public class ProxyMemory<TSolution extends Solution> {
 
     private Object[] innerMemory;
+    private final Object[][] othersLocalCache;
     private final int[] others;
 
     public ProxyMemory(int initialMemory) {
         int s = Communication.getCommunication().getSize();
         int r = Communication.getCommunication().getRank();
         this.setInnerMemorySize(initialMemory);
-        int[][] out = new int[s][1];
-        for(int i = 0; i < s; i++) {
-            out[i][0] = initialMemory;
-        }
-        int[][] in = new int[s][];
-        Communication.getCommunication().AllToAll(out,0, 1, MPI.OBJECT, in, 0, 1, MPI.OBJECT);
+        int[] out = new int[1];
+        out[0] = initialMemory;
         this.others = new int[s];
-        for(int i = 0; i < s; i++) {
-            this.others[i] = in[i][0];
+        this.othersLocalCache = new Object[s-1][];
+        Communication.AG(out,0, 1, MPI.INT, this.others, 0, 1, MPI.INT);
+        for(int i = 0; i < r; i++) {
+            othersLocalCache[i] = new Object[this.others[i]];
         }
-        System.out.println(""+r+" in says "+Arrays.toString(this.others));
-        /*int MAXLEN = 1;
-        int tasks = s;
-        int out[][] = new int[MAXLEN * tasks][MAXLEN];
-        int in[][] = new int[MAXLEN * tasks][];
-
-        for (int k = 0; k < MAXLEN; k++) {
-            for (int i = 0; i < MAXLEN * tasks; i++) {
-                out[i][k] = (r+1)*k+i;
-            }
+        for(int i = r; i < s-1; i++) {
+            othersLocalCache[i] = new Object[this.others[i+1]];
         }
-        
-        System.out.println(""+r+" out says "+Arrays.deepToString(out));
-        System.out.println(""+r+" in says "+Arrays.deepToString(in));
-
-        MPI.COMM_WORLD.Alltoall(out, 0, MAXLEN, MPI.OBJECT, in, 0, MAXLEN, MPI.OBJECT);
-        
-        System.out.println(""+r+" out after says "+Arrays.deepToString(out));
-        System.out.println(""+r+" in after says "+Arrays.deepToString(in));*/
+        System.out.println(""+r+" in says "+Arrays.toString(this.others)+" with "+Arrays.deepToString(this.othersLocalCache));
     }
 
     public void setInnerMemorySize(int innerMemorySize) {
