@@ -1,1 +1,0 @@
-mpjrun.sh -np 16 ParallelHyFlex/dist/ParallelHyFlex.jar
