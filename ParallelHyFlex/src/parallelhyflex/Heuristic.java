@@ -4,7 +4,7 @@ package parallelhyflex;
  *
  * @author kommusoft
  */
-public abstract class Heuristic<TSolution extends Solution> {
+public abstract class Heuristic<TSolution extends Solution<TSolution>> {
     
     private final HeuristicType type;
     
@@ -12,8 +12,18 @@ public abstract class Heuristic<TSolution extends Solution> {
         this.type = type;
     }
     
-    public abstract TSolution applyHeuristic (TSolution from);
-    public abstract TSolution applyHeuristic (TSolution from1, TSolution from2);
+    public TSolution applyHeuristic (TSolution from) {
+        TSolution clone = from.clone();
+        applyHeuristicLocally(clone);
+        return clone;
+    }
+    public abstract void applyHeuristicLocally (TSolution from);
+    public TSolution applyHeuristic (TSolution from1, TSolution from2) {
+        TSolution clone = from1.clone();
+        applyHeuristicLocally(clone,from2);
+        return clone;
+    }
+    public abstract void applyHeuristicLocally (TSolution from1, TSolution from2);
 
     /**
      * @return the type

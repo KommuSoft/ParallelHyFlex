@@ -7,11 +7,12 @@ import mpi.MPI;
  *
  * @author kommusoft
  */
-public class ProxyMemory<TSolution extends Solution> {
+public class ProxyMemory<TSolution extends Solution<TSolution>> {
 
     private Object[] innerMemory;
     private final Object[][] othersLocalCache;
     private final int[] others;
+    private int totalMemory = 0;
 
     public ProxyMemory(int initialMemory) {
         int s = Communication.getCommunication().getSize();
@@ -22,13 +23,20 @@ public class ProxyMemory<TSolution extends Solution> {
         this.others = new int[s];
         this.othersLocalCache = new Object[s-1][];
         Communication.AG(out,0, 1, MPI.INT, this.others, 0, 1, MPI.INT);
+        int sum = 0, ni;
         for(int i = 0; i < r; i++) {
-            othersLocalCache[i] = new Object[this.others[i]];
+            ni = this.others[i];
+            sum += ni;
+            othersLocalCache[i] = new Object[ni];
         }
+        sum += this.others[r];
         for(int i = r; i < s-1; i++) {
-            othersLocalCache[i] = new Object[this.others[i+1]];
+            ni = this.others[i+1];
+            sum += ni;
+            othersLocalCache[i] = new Object[ni];
         }
-        System.out.println(""+r+" in says "+Arrays.toString(this.others)+" with "+Arrays.deepToString(this.othersLocalCache));
+        this.totalMemory = sum;
+        //System.out.println(""+r+" in says "+Arrays.toString(this.others)+" with "+Arrays.deepToString(this.othersLocalCache));
     }
 
     public void setInnerMemorySize(int innerMemorySize) {
@@ -42,6 +50,9 @@ public class ProxyMemory<TSolution extends Solution> {
         this.innerMemory = innerMemory;
 
     }
+    public int getMemorySize () {
+        return this.totalMemory;
+    }
 
     protected TSolution getSolution(int index) {
         return (TSolution) this.innerMemory[index];
@@ -49,13 +60,32 @@ public class ProxyMemory<TSolution extends Solution> {
 
     protected void setSolution(int index, TSolution value) {
         this.innerMemory[index] = value;
+        pushSolution(index);
     }
 
+    //TODO: carefull with heuristics applied to global solution space
     protected void applyHeuristic(Heuristic<TSolution> heuristic, int from, int to) {
-        this.setSolution(to, heuristic.applyHeuristic(this.getSolution(from)));
+        if(from == to) {
+            heuristic.applyHeuristicLocally(this.getSolution(from));
+            pushSolution(to);
+        }
+        else {
+            this.setSolution(to, heuristic.applyHeuristic(this.getSolution(from)));
+        }
     }
 
     protected void applyHeuristic(Heuristic<TSolution> heuristic, int from1, int from2, int to) {
-        this.setSolution(to, heuristic.applyHeuristic(this.getSolution(from1), this.getSolution(from2)));
+        if(from1 == to) {
+            heuristic.applyHeuristicLocally(this.getSolution(from1),this.getSolution(from2));
+            pushSolution(to);
+        }
+        else {
+            this.setSolution(to, heuristic.applyHeuristic(this.getSolution(from1), this.getSolution(from2)));
+        }
     }
+
+    private void pushSolution(int to) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
 }

@@ -6,5 +6,8 @@ package parallelhyflex;
  */
 public enum MemoryExchangePolicy {
     Queued,
-    Immediately
+    Immediately,
+    Probable,
+    Periodically,
+    Ith
 }

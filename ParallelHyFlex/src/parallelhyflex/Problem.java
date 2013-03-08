@@ -4,7 +4,7 @@ package parallelhyflex;
  *
  * @author kommusoft
  */
-public interface Problem<TSolution extends Solution> {
+public interface Problem<TSolution extends Solution<TSolution>> {
     
     public Heuristic<TSolution> getHeuristic (int index);
     public int getNumberOfHeuristics ();
