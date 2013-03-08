@@ -42,6 +42,12 @@ public class Communication {
     public static void AG (Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
         MPI.COMM_WORLD.Allgather(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
     }
+    public static void BC (Object buf, int offset, int count, Datatype type, int root) {
+        MPI.COMM_WORLD.Bcast(buf, offset, count, type, root);
+    }
+    public static void Log (String message) {
+        System.out.println("<"+Communication.MainCommunication.rank+"> "+message);
+    }
 
     /**
      * @return the rank

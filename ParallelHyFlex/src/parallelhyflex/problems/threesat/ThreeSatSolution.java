@@ -3,6 +3,7 @@ package parallelhyflex.problems.threesat;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import parallelhyflex.Communication;
 import parallelhyflex.Solution;
 
 /**
@@ -18,6 +19,7 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     }
     ThreeSatSolution (long[] values) {
         this.values = values;
+        Communication.Log(this.toString());
     }
     
     public boolean getValue (int index) {
@@ -76,6 +78,15 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
         for(int i = 0; i < values.length; i++) {
             values[i] = is.readLong();
         }
+    }
+    
+    @Override
+    public String toString () {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < this.values.length; i++) {
+            sb.append(String.format("%s ",String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0')));
+        }
+        return sb.toString();
     }
     
 }

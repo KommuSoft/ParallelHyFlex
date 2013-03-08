@@ -4,6 +4,13 @@
  */
 package parallelhyflex;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mpi.MPI;
+
 /**
  *
  * @author kommusoft
@@ -36,7 +43,21 @@ public class MemorySlots<TSolution extends Solution<TSolution>> {
     }
 
     public void pushSolution(int index) {
-        
+        Communication.Log("pushing "+index);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+        try {
+            dos.writeInt(Communication.getCommunication().getRank());
+            dos.writeInt(index);
+            TSolution tsol = (TSolution) this.storage[index];
+            tsol.writeSolution(dos);
+            dos.close();
+            baos.close();
+            byte[] ba = baos.toByteArray();
+            Communication.BC(ba,0,ba.length,MPI.BYTE,Communication.getCommunication().getRank());
+        } catch (IOException ex) {
+            Logger.getLogger(MemorySlots.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void setSolution (int index, TSolution sol) {
         this.storage[index] = sol;
