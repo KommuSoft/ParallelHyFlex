@@ -1,6 +1,7 @@
 package parallelhyflex.problems.threesat;
 
 import parallelhyflex.utils.CompactBitArray;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -17,7 +18,19 @@ public class ThreeSatProblemGenerator {
     
     public ThreeSatProblem generateProblem () {
         long[] constraints = new long[k];
-        CompactBitArray cba = new CompactBitArray.randomInstance(this.n);
+        CompactBitArray cba = CompactBitArray.randomInstance(this.n);
+        for(int i = 0; i < k; i++) {
+            long fill = (((long) Utils.StaticRandom.nextInt(8))<<60)|(((long) Utils.StaticRandom.nextInt(n))<<40)|(((long) Utils.StaticRandom.nextInt(n))<<20)|((long) Utils.StaticRandom.nextInt(n));
+            int ci = Utils.StaticRandom.nextInt(3);
+            long index = ((fill>>(20*ci))&0x0FFFFF);
+            System.out.println(String.format("Indices are %s>%s %s>%s %s>%s",fill&0x0FFFFF,cba.getBit(fill&0x0FFFFF),(fill>>20)&0x0FFFFF,cba.getBit((fill>>20)&0x0FFFFF),(fill>>40)&0x0FFFFF,cba.getBit((fill>>40)&0x0FFFFF)));
+            fill &= ~(0x1<<(60+ci));
+            fill |= cba.getBit(index)<<(60+ci);
+            System.out.println(String.format("Vals with %s: %s",ci,String.format("%3s",Long.toBinaryString(fill>>60)).replace(" ","0")));
+            if(!cba.satisfiesClause(fill)) {
+                System.out.println(String.format("KERNEL PANIC with %s",ci));
+            }
+        }
         return new ThreeSatProblem(this.n,constraints);
     }
 

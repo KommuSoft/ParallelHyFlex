@@ -4,6 +4,8 @@
  */
 package parallelhyflex.utils;
 
+import java.util.Random;
+
 /**
  *
  * @author kommusoft
@@ -11,6 +13,8 @@ package parallelhyflex.utils;
 public class Utils {
     
     private Utils () {}
+    
+    public static final Random StaticRandom = new Random();
     
     public static String stringReverse (String inp) {
         StringBuilder sb = new StringBuilder();

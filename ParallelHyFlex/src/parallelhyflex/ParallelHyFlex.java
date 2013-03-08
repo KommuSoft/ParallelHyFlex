@@ -1,7 +1,6 @@
 package parallelhyflex;
 
-import parallelhyflex.problems.threesat.ThreeSatProblem;
-import parallelhyflex.utils.CompactBitArray;
+import parallelhyflex.problems.threesat.ThreeSatProblemGenerator;
 
 /**
  *
@@ -14,17 +13,16 @@ public class ParallelHyFlex {
      */
     public static void main(String[] args) {
         
-        CompactBitArray cba = new CompactBitArray(192);
+        /*CompactBitArray cba = new CompactBitArray(188);
         System.out.println(cba);
-        cba.swapRange(17,189);
+        cba.swapRange(17,191);
         System.out.println(cba);
-        cba.resetRange(18,188);
-        System.out.println(cba);
-        cba.setRange(19,187);
-        System.out.println(cba);
+        cba.clearTail();
+        System.out.println(cba);*/
         
         Communication.initializeCommunication(args);
-        HyperHeuristic dummy = new HyperHeuristic(new ThreeSatProblem(128));
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(1024,20000);
+        HyperHeuristic dummy = new HyperHeuristic(tspg.generateProblem());
         //System.out.println("Hi from <"+Communication.getCommunication().getRank()+">");
         Communication.finalizeCommunication();
     }

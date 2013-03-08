@@ -40,6 +40,22 @@ public class CompactBitArray {
         long mask = 1L<<index;
         return (values[j]&mask) != 0;
     }
+    public long getBit (int index) {
+        int j = index>>6;
+        index -= j<<6;
+        return (values[j]>>index)&1;
+    }
+    public long getBit (long index) {
+        long j = index>>6;
+        index -= j<<6;
+        return (values[(int) j]>>index)&1;
+    }
+    public boolean satisfiesClause (long constraint) {
+        System.out.println(String.format("%s=%s | %s=%s | %s=%s",getBit(constraint&0x0FFFFF),((constraint>>60)&1),getBit((constraint>>20)&0xFFFFF),((constraint>>61)&1),getBit((constraint>>40)&0xFFFFF),((constraint>>62)&1)));
+        return (getBit(constraint&0x0FFFFF) == ((constraint>>60)&1) ||
+                getBit((constraint>>20)&0xFFFFF) == ((constraint>>61)&1) ||
+                getBit((constraint>>40)&0xFFFFF) == ((constraint>>62)&1));
+    }
     public void swap (int index) {
         int j = index>>6;
         index -= j<<6;
@@ -111,7 +127,18 @@ public class CompactBitArray {
     
     public static CompactBitArray randomInstance (int n) {
         CompactBitArray cba = new CompactBitArray(n);
+        for(int i = cba.values.length-1; i >= 0; i--) {
+            cba.values[i] = Utils.StaticRandom.nextLong();
+        }
+        cba.clearTail();
         return cba;
+    }
+    
+    public void clearTail () {
+        long tailmask = 64+this.n-(this.values.length<<6);
+        //TODO: remove tail
+        tailmask = (1L<<tailmask)-1;
+        this.values[this.values.length-1] &= tailmask;
     }
 
     @Override
