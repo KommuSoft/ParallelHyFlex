@@ -4,8 +4,8 @@ package parallelhyflex;
  *
  * @author kommusoft
  */
-public abstract class ObjectiveFunction<TSolution extends Solution> {
+public interface ObjectiveFunction<TSolution extends Solution> {
     
-    public abstract double evaluateSolution (TSolution solution);
+    public double evaluateSolution (TSolution solution);
     
 }

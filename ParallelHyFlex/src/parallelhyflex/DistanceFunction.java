@@ -4,8 +4,8 @@ package parallelhyflex;
  *
  * @author kommusoft
  */
-public abstract class DistanceFunction<TSolution extends Solution> {
+public interface DistanceFunction<TSolution extends Solution> {
     
-    public abstract double evaluateDistance (TSolution solution1, TSolution solution2);
+    public double evaluateDistance (TSolution solution1, TSolution solution2);
     
 }
