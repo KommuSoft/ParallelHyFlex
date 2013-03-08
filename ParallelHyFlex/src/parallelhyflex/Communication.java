@@ -35,6 +35,10 @@ public class Communication {
     public static void finalizeCommunication () {
         MainCommunication.finalize();
     }
+    
+    public void AllToAll (Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
+        MPI.COMM_WORLD.Alltoall(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
+    }
 
     /**
      * @return the rank
