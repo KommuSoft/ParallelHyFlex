@@ -1,5 +1,6 @@
 package parallelhyflex;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import mpi.MPI;
 
@@ -8,59 +9,52 @@ import mpi.MPI;
  * @author kommusoft
  */
 public class ProxyMemory<TSolution extends Solution<TSolution>> {
-
-    private Object[] innerMemory;
-    private final Object[][] othersLocalCache;
-    private final int[] others;
+    
+    private final MemorySlots<TSolution>[] solutionCache;
+    private final MemorySlots localSlots;
+    private final int[][] others;
     private int totalMemory = 0;
 
-    public ProxyMemory(int initialMemory) {
+    public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy) {
+        MemoryExchangePolicy[] policies = MemoryExchangePolicy.values();
         int s = Communication.getCommunication().getSize();
         int r = Communication.getCommunication().getRank();
-        this.setInnerMemorySize(initialMemory);
-        int[] out = new int[1];
-        out[0] = initialMemory;
-        this.others = new int[s];
-        this.othersLocalCache = new Object[s-1][];
-        Communication.AG(out,0, 1, MPI.INT, this.others, 0, 1, MPI.INT);
+        int[][] out = new int[1][2];
+        out[0][0] = initialMemory;
+        out[0][1] = localPolicy.ordinal();
+        this.others = new int[s][];
+        this.localSlots = new MemorySlots<TSolution>(true,initialMemory,localPolicy);
+        this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass(),s);
+        this.solutionCache[0x00] = this.localSlots;
+        Communication.AG(out,0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);
         int sum = 0, ni;
-        for(int i = 0; i < r; i++) {
-            ni = this.others[i];
+        int i = 1;
+        for(int j = r+1; j < s; i++, j++) {
+            ni = this.others[j][0];
             sum += ni;
-            othersLocalCache[i] = new Object[ni];
+            solutionCache[i] = new MemorySlots<TSolution>(false,ni,policies[this.others[j][1]]);
         }
-        sum += this.others[r];
-        for(int i = r; i < s-1; i++) {
-            ni = this.others[i+1];
+        sum += this.others[r][0];
+        for(int j = 0; j < r; i++, j++) {
+            ni = this.others[j][0];
             sum += ni;
-            othersLocalCache[i] = new Object[ni];
+            solutionCache[i] = new MemorySlots<TSolution>(false,ni,policies[this.others[j][1]]);
         }
         this.totalMemory = sum;
-        //System.out.println(""+r+" in says "+Arrays.toString(this.others)+" with "+Arrays.deepToString(this.othersLocalCache));
+        System.out.println(""+r+" in says "+Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
     }
-
-    public void setInnerMemorySize(int innerMemorySize) {
-        Object[] innerMemory = new Object[innerMemorySize];
-        if (this.innerMemory != null) {
-            int n = Math.min(innerMemorySize, this.innerMemory.length);
-            for (int i = 0; i < n; i++) {
-                innerMemory[i] = this.innerMemory[i];
-            }
-        }
-        this.innerMemory = innerMemory;
-
-    }
+    
     public int getMemorySize () {
         return this.totalMemory;
     }
 
     protected TSolution getSolution(int index) {
-        return (TSolution) this.innerMemory[index];
+        //return (TSolution) this.innerMemory[index];
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     protected void setSolution(int index, TSolution value) {
-        this.innerMemory[index] = value;
-        pushSolution(index);
+        this.localSlots.setSolution(index,value);
     }
 
     //TODO: carefull with heuristics applied to global solution space
@@ -85,6 +79,10 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     }
 
     private void pushSolution(int to) {
+        this.localSlots.pushSolution(to);
+    }
+
+    public Solution peekSolution(int index) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
     

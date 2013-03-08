@@ -9,5 +9,6 @@ public enum MemoryExchangePolicy {
     Immediately,
     Probable,
     Periodically,
-    Ith
+    Ith,
+    DistributedQueued
 }
