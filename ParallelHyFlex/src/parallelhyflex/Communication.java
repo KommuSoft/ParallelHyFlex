@@ -1,5 +1,6 @@
 package parallelhyflex;
 
+import java.util.Arrays;
 import mpi.*;
 
 /**
@@ -43,6 +44,7 @@ public class Communication {
         MPI.COMM_WORLD.Allgather(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
     }
     public static void BC (Object buf, int offset, int count, Datatype type, int root) {
+        Log(Arrays.toString((byte[]) buf));
         MPI.COMM_WORLD.Bcast(buf, offset, count, type, root);
     }
     public static void Log (String message) {
