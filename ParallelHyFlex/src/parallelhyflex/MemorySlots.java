@@ -1,14 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mpi.MPI;
 import parallelhyflex.utils.CompactBitArray;
 
@@ -16,27 +9,18 @@ import parallelhyflex.utils.CompactBitArray;
  *
  * @author kommusoft
  */
-public class MemorySlots<TSolution extends Solution<TSolution>> {
+public abstract class MemorySlots<TSolution extends Solution<TSolution>> {
     
-    private final boolean local;
     private final MemoryExchangePolicy policy;
-    private final Object[] storage;
-    private final CompactBitArray notExchangeMask;
     
-    public MemorySlots (boolean isLocal, int memorySize, MemoryExchangePolicy policy) {
-        this.local = isLocal;
+    public MemorySlots (MemoryExchangePolicy policy) {
         this.policy = policy;
-        this.storage = new Object[memorySize];
-        this.notExchangeMask = new CompactBitArray(memorySize);
-        //TODO: memorySize
     }
 
     /**
      * @return the isLocal
      */
-    public boolean isLocal() {
-        return local;
-    }
+    public abstract boolean isLocal();
 
     /**
      * @return the policy
@@ -45,50 +29,23 @@ public class MemorySlots<TSolution extends Solution<TSolution>> {
         return policy;
     }
 
-    public void pushSolution(int index) {
-        Communication.Log("pushing "+index);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        try {
-            dos.writeInt(Communication.getCommunication().getRank());
-            dos.writeInt(index);
-            TSolution tsol = (TSolution) this.storage[index];
-            tsol.writeSolution(dos);
-            dos.close();
-            baos.close();
-            byte[] ba = baos.toByteArray();
-            Communication.BC(ba,0,ba.length,MPI.BYTE,Communication.getCommunication().getRank());
-        } catch (IOException ex) {
-            Logger.getLogger(MemorySlots.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void setSolution (int index, TSolution sol) {
-        this.storage[index] = sol;
-        this.pushSolution(index);
-    }
-    public TSolution getSolution (int index) {
-        return (TSolution) this.storage[index];
-        //TODO: update queues
-    }
+    public abstract void pushSolution(int index);
+    public abstract void setSolution (int index, TSolution sol);
+    public abstract TSolution getSolution (int index);
+    abstract void receiveSolution (int index, TSolution sol);
     
     @Override
     public String toString () {
-        return String.format("MemorySlots[%s,%s,%s]",this.isLocal(),this.getPolicy(),this.storage.length);
+        return String.format("MemorySlots[%s,%s,%s]",this.isLocal(),this.getPolicy(),this.getSize());
     }
 
-    public int getSize() {
-        return this.storage.length;
-    }
+    public abstract int getSize();
 
     /**
      * @return the notExchangeMask
      */
-    public CompactBitArray getNotExchangeMask() {
-        return notExchangeMask;
-    }
+    public abstract CompactBitArray getNotExchangeMask();
     
-    public boolean willExchange (int index) {
-        return !this.notExchangeMask.get(index);
-    }
+    public abstract boolean willExchange (int index);
     
 }

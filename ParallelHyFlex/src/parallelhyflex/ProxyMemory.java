@@ -23,8 +23,8 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         out[0][0] = initialMemory;
         out[0][1] = localPolicy.ordinal();
         this.others = new int[s][];
-        this.localSlots = new MemorySlots<TSolution>(true,initialMemory,localPolicy);
-        this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass(),s);
+        this.localSlots = new LocalMemorySlots<TSolution>(initialMemory,localPolicy);
+        this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass().getSuperclass(),s);
         this.solutionCache[0x00] = this.localSlots;
         Communication.AG(out,0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);
         int sum = 0, ni;
@@ -32,16 +32,17 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         for(int j = r+1; j < s; i++, j++) {
             ni = this.others[j][0];
             sum += ni;
-            solutionCache[i] = new MemorySlots<TSolution>(false,ni,policies[this.others[j][1]]);
+            solutionCache[i] = new ProxyMemorySlots<TSolution>(ni,policies[this.others[j][1]]);
         }
         sum += this.others[r][0];
         for(int j = 0; j < r; i++, j++) {
             ni = this.others[j][0];
             sum += ni;
-            solutionCache[i] = new MemorySlots<TSolution>(false,ni,policies[this.others[j][1]]);
+            solutionCache[i] = new ProxyMemorySlots<TSolution>(ni,policies[this.others[j][1]]);
         }
         this.totalMemory = sum;
-        System.out.println(""+r+" in says "+Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
+        //Communication.Log(Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
+        new FetchThread().start();
     }
     
     public int getMemorySize () {
@@ -88,6 +89,34 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
 
     public Solution peekSolution(int index) {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+    
+    private int rankToIndex (int rank) {
+        int myr = Communication.getCommunication().getRank();
+        if(rank > myr) {
+            return rank-myr;
+        }
+        else {
+            int siz = Communication.getCommunication().getSize();
+            return siz-myr+rank;
+        }
+    }
+    
+    private class FetchThread extends Thread {
+        
+        public FetchThread () {
+            this.setDaemon(true);
+        }
+        
+        public void run () {
+            Object[] buffer = new Object[3];
+            while(true) {
+                Communication.RV(buffer,0,3,MPI.OBJECT,MPI.ANY_SOURCE,0);
+                Communication.Log("received "+Arrays.toString(buffer));
+                solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1],(TSolution) buffer[2]);
+            }
+        }
+    
     }
     
 }

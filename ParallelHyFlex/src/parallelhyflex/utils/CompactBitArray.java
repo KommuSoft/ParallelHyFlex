@@ -51,7 +51,6 @@ public class CompactBitArray {
         return (values[(int) j]>>index)&1;
     }
     public boolean satisfiesClause (long constraint) {
-        //System.out.println(String.format("Real > Wanted | %s=%s | %s=%s | %s=%s",getBit(constraint&0x0FFFFF),((constraint>>60)&1),getBit((constraint>>20)&0x0FFFFF),((constraint>>61)&1),getBit((constraint>>40)&0x0FFFFF),((constraint>>62)&1)));
         return (getBit(constraint&0x0FFFFF) == ((constraint>>60)&1) ||
                 getBit((constraint>>20)&0xFFFFF) == ((constraint>>61)&1) ||
                 getBit((constraint>>40)&0xFFFFF) == ((constraint>>62)&1));

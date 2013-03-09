@@ -13,21 +13,12 @@ public class ParallelHyFlex {
      */
     public static void main(String[] args) {
         
-        /*CompactBitArray cba = new CompactBitArray(188);
-        System.out.println(cba);
-        cba.swapRange(17,191);
-        System.out.println(cba);
-        cba.clearTail();
-        System.out.println(cba);*/
-        
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(1000000,90000000);
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(128,500);
         tspg.generateProblem();
         
         
-        /*Communication.initializeCommunication(args);
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(1024,20000);
+        Communication.initializeCommunication(args);
         HyperHeuristic dummy = new HyperHeuristic(tspg.generateProblem());
-        //System.out.println("Hi from <"+Communication.getCommunication().getRank()+">");
-        Communication.finalizeCommunication();*/
+        Communication.finalizeCommunication();
     }
 }
