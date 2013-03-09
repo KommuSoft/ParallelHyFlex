@@ -20,10 +20,14 @@ public class ParallelHyFlex {
         cba.clearTail();
         System.out.println(cba);*/
         
-        Communication.initializeCommunication(args);
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(1000000,90000000);
+        tspg.generateProblem();
+        
+        
+        /*Communication.initializeCommunication(args);
         ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(1024,20000);
         HyperHeuristic dummy = new HyperHeuristic(tspg.generateProblem());
         //System.out.println("Hi from <"+Communication.getCommunication().getRank()+">");
-        Communication.finalizeCommunication();
+        Communication.finalizeCommunication();*/
     }
 }
