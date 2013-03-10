@@ -1,5 +1,7 @@
 package parallelhyflex.problems.threesat;
 
+import java.util.Arrays;
+import parallelhyflex.Communication;
 import parallelhyflex.DistanceFunction;
 import parallelhyflex.Heuristic;
 import parallelhyflex.ObjectiveFunction;
@@ -21,8 +23,9 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     public ThreeSatProblem (long[] constraints) {
         this.constraints = constraints;
         this.k = this.constraints.length;
-        int n = ClauseUtils.getLargestIndex(constraints);
+        int n = ClauseUtils.getLargestIndex(constraints)+1;
         this.n = n;
+        System.out.println("nVariables is "+n);
         this.posinfluences = new int[n][];
         this.neginfluences = new int[n][];
         int[] npn = new int[n], nnn = new int[n];
@@ -33,6 +36,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
                 npn[np[i]]++;
             }
             for(int i = 1; i <= nn[0]; i++) {
+                System.out.println(nn[i]);
                 nnn[nn[i]]++;
             }
         }
@@ -40,18 +44,21 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
             this.posinfluences[i] = new int[npn[i]];
             this.neginfluences[i] = new int[nnn[i]];
         }
-        int index;
+        int index, j = 0;
         for(long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for(int i = 1; i <= np[0]; i++) {
                 index = np[i];
-                this.posinfluences[index][--npn[index]]++;
+                this.posinfluences[index][--npn[index]] = j;
             }
             for(int i = 1; i <= nn[0]; i++) {
                 index = nn[i];
-                this.neginfluences[index][--nnn[index]]++;
+                this.neginfluences[index][--nnn[index]] = j;
             }
+            j++;
         }
+        System.out.println(Arrays.deepToString(posinfluences));
+        System.out.println(Arrays.deepToString(neginfluences));
         this.generator = new ThreeSatSolutionGenerator((this.n+63)>>6);
     }
     
