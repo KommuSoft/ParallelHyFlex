@@ -17,8 +17,8 @@ public class ParallelHyFlex {
         tspg.generateProblem();
         
         
-        Communication.initializeCommunication(args);
+        /*Communication.initializeCommunication(args);
         HyperHeuristic dummy = new HyperHeuristic(tspg.generateProblem());
-        Communication.finalizeCommunication();
+        Communication.finalizeCommunication();*/
     }
 }
