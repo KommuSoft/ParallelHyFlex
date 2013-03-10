@@ -20,14 +20,38 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     
     public ThreeSatProblem (long[] constraints) {
         this.constraints = constraints;
-        this.n = ClauseUtils.getLargestIndex(constraints);
-        this.posinfluences = new int[this.n][];
-        this.neginfluences = new int[this.n][];
-        int[] np = new int[this.n], nn = new int[this.n];
-        for(long constraint : constraints) {
-            
-        }
         this.k = this.constraints.length;
+        int n = ClauseUtils.getLargestIndex(constraints);
+        this.n = n;
+        this.posinfluences = new int[n][];
+        this.neginfluences = new int[n][];
+        int[] npn = new int[n], nnn = new int[n];
+        int[] np = new int[4], nn = new int[4];
+        for(long constraint : constraints) {
+            ClauseUtils.setInfluences(constraint, np, nn);
+            for(int i = 1; i <= np[0]; i++) {
+                npn[np[i]]++;
+            }
+            for(int i = 1; i <= nn[0]; i++) {
+                nnn[nn[i]]++;
+            }
+        }
+        for(int i = 0; i < n; i++) {
+            this.posinfluences[i] = new int[npn[i]];
+            this.neginfluences[i] = new int[nnn[i]];
+        }
+        int index;
+        for(long constraint : constraints) {
+            ClauseUtils.setInfluences(constraint, np, nn);
+            for(int i = 1; i <= np[0]; i++) {
+                index = np[i];
+                this.posinfluences[index][--npn[index]]++;
+            }
+            for(int i = 1; i <= nn[0]; i++) {
+                index = nn[i];
+                this.neginfluences[index][--nnn[index]]++;
+            }
+        }
         this.generator = new ThreeSatSolutionGenerator((this.n+63)>>6);
     }
     
