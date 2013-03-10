@@ -36,4 +36,6 @@ public interface ICompactBitArray {
 
     void writeSolution(DataOutputStream os) throws IOException;
     
+    int getLength ();
+    
 }

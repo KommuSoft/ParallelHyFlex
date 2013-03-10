@@ -103,4 +103,8 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
         this.cba.readSolution(is);
     }
     
+    public int getLength() {
+        return this.cba.getLength();
+    }
+    
 }

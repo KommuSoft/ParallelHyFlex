@@ -3,24 +3,32 @@ package parallelhyflex.problems.threesat;
 import parallelhyflex.DistanceFunction;
 import parallelhyflex.Heuristic;
 import parallelhyflex.ObjectiveFunction;
-import parallelhyflex.Problem;
+import parallelhyflex.ProblemBase;
 import parallelhyflex.SolutionGenerator;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatProblem implements Problem<ThreeSatSolution> {
+public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
     private final long[] constraints;
+    private final int[][] posinfluences;
+    private final int[][] neginfluences;
     private final int n, k;
     private final ThreeSatSolutionGenerator generator;
     
-    public ThreeSatProblem (int nvars, long[] constraints) {
+    public ThreeSatProblem (long[] constraints) {
         this.constraints = constraints;
-        this.n = nvars;
+        this.n = ClauseUtils.getLargestIndex(constraints);
+        this.posinfluences = new int[this.n][];
+        this.neginfluences = new int[this.n][];
+        int[] np = new int[this.n], nn = new int[this.n];
+        for(long constraint : constraints) {
+            
+        }
         this.k = this.constraints.length;
-        this.generator = new ThreeSatSolutionGenerator((nvars+63)>>6);
+        this.generator = new ThreeSatSolutionGenerator((this.n+63)>>6);
     }
     
     @Override

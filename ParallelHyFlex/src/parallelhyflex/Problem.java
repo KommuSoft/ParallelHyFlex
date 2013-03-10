@@ -13,5 +13,9 @@ public interface Problem<TSolution extends Solution<TSolution>> {
     public DistanceFunction<TSolution> getDistanceFunction (int index);
     public int getNumberOfDistanceFunctions ();
     public SolutionGenerator<TSolution> getSolutionGenerator ();
+    public double getIntensityOfMutation();
+    public double getDepthOfSearch();
+    public void setIntensityOfMutation(double iom);
+    public void setDepthOfSearch(double dos);
     
 }

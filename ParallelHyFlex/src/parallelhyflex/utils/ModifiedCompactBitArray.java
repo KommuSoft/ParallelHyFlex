@@ -108,4 +108,9 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    @Override
+    public int getLength () {
+        return this.innercba.getLength();
+    }
+    
 }
