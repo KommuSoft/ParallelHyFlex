@@ -30,4 +30,9 @@ public class DummySolution implements Solution<DummySolution> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+    @Override
+    public boolean hasFastDifferenceWith (DummySolution other) {
+        return false;
+    }
+    
 }

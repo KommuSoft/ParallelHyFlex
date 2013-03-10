@@ -1,14 +1,17 @@
 package parallelhyflex.utils;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
  *
  * @author kommusoft
  */
-public class CompactBitArray {
+public class CompactBitArray implements ICompactBitArray {
     
-    private final long[] values;
+    final long[] values;
     private int n;
     
     public CompactBitArray (int n) {
@@ -17,6 +20,10 @@ public class CompactBitArray {
     }
     public CompactBitArray (long[] values) {
         this.n = 64*values.length;
+        this.values = values;
+    }
+    public CompactBitArray (int n, long[] values) {
+        this.n = n;
         this.values = values;
     }
     public CompactBitArray (boolean[] values) {
@@ -72,6 +79,7 @@ public class CompactBitArray {
         values[tj] ^= mask;
         mask = (2L<<fromIndex)-1;
         values[fj] ^= ~mask;
+        //TODO: same master
     }
     public void setRange (int fromIndex, int toIndex) {
         int fj = fromIndex>>6, tj = toIndex>>6;
@@ -84,6 +92,7 @@ public class CompactBitArray {
         values[tj] |= mask;
         mask = (2L<<fromIndex)-1;
         values[fj] |= ~mask;
+        //TODO: same master
     }
     public void resetRange (int fromIndex, int toIndex) {
         int fj = fromIndex>>6, tj = toIndex>>6;
@@ -96,6 +105,7 @@ public class CompactBitArray {
         values[tj] &= ~mask;
         mask = (2L<<fromIndex)-1;
         values[fj] &= mask;
+        //TODO: same master
     }
     public void set (int index, boolean value) {
         int j = index>>6;
@@ -154,6 +164,25 @@ public class CompactBitArray {
             sb.append(String.format("%s ",Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0'))));
         }
         return sb.toString();
+    }
+    
+    public CompactBitArray clone () {
+        long[] valc = new long[this.values.length];
+        System.arraycopy(this.values, 0, valc, 0, valc.length);
+        return new CompactBitArray(this.n,valc);
+    }
+
+    public void writeSolution(DataOutputStream os) throws IOException {
+        os.writeInt(this.n);
+        for(int i = 0; i < values.length; i++) {
+            os.writeLong(values[i]);
+        }
+    }
+    public void readSolution(DataInputStream is) throws IOException {
+        this.n = is.readInt();
+        for(int i = 0; i < values.length; i++) {
+            values[i] = is.readLong();
+        }
     }
     
 }

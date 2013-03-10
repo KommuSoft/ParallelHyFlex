@@ -1,7 +1,5 @@
 package parallelhyflex;
 
-import java.lang.reflect.Array;
-import java.util.LinkedList;
 import parallelhyflex.utils.CompactBitArray;
 
 /**

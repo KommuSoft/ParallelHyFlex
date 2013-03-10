@@ -28,15 +28,6 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         Communication.Log("pushing " + index);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-        //try {
-        /*dos.writeInt(Communication.getCommunication().getRank());
-        dos.writeInt(index);
-        TSolution tsol = (TSolution) this.storage[index];
-        tsol.writeSolution(dos);
-        dos.close();
-        baos.close();
-        byte[] ba = baos.toByteArray();
-        Communication.BC(ba,0,ba.length,MPI.BYTE,0);*/
         Object[] data = new Object[3];
         data[0] = Communication.getCommunication().getRank();
         data[1] = index;
@@ -44,10 +35,9 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         for(int other : Communication.others()) {
             Communication.S(data, 0, 3, MPI.OBJECT, other, 0);
         }
-        /*} catch (IOException ex) {
-        Logger.getLogger(MemorySlots.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
+    
+    //protected abstract void sendSolution ();
 
     public void setSolution(int index, TSolution sol) {
         this.storage[index] = sol;
@@ -56,7 +46,6 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
 
     public TSolution getSolution(int index) {
         return (TSolution) this.storage[index];
-        //TODO: update queues
     }
 
     public int getSize() {

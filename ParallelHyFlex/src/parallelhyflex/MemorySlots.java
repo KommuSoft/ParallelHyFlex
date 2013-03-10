@@ -32,6 +32,9 @@ public abstract class MemorySlots<TSolution extends Solution<TSolution>> {
     public abstract void pushSolution(int index);
     public abstract void setSolution (int index, TSolution sol);
     public abstract TSolution getSolution (int index);
+    public TSolution peekSolution (int index) {
+        return this.getSolution(index);
+    }
     abstract void receiveSolution (int index, TSolution sol);
     
     @Override

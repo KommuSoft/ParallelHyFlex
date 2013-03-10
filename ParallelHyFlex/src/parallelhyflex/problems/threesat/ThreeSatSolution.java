@@ -3,9 +3,8 @@ package parallelhyflex.problems.threesat;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import parallelhyflex.Communication;
 import parallelhyflex.Solution;
-import parallelhyflex.utils.Utils;
+import parallelhyflex.utils.CompactBitArray;
 
 /**
  *
@@ -13,81 +12,95 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     
-    private final long[] values;
+    private final CompactBitArray cba;
     
-    public ThreeSatSolution (int n64) {
-        this.values = new long[n64];
+    public ThreeSatSolution (int n) {
+        this.cba = new CompactBitArray(n);
     }
     ThreeSatSolution (long[] values) {
-        this.values = values;
-        Communication.Log(this.toString());
+        this.cba = new CompactBitArray(values);
+    }
+    ThreeSatSolution (CompactBitArray cba) {
+        this.cba = cba;
     }
     
-    public boolean getValue (int index) {
-        int j = index>>6;
-        index -= j<<6;
-        long mask = 1L<<index;
-        return (values[j]&mask) != 0;
+    public boolean get (int index) {
+        return this.get(index);
     }
-    public void swapValue (int index) {
-        int j = index>>6;
-        index -= j<<6;
-        long mask = 1L<<index;
-        values[j] ^= mask;
+    public long getBit (int index) {
+        return this.getBit(index);
     }
-    public void setValue (int index, boolean value) {
-        int j = index>>6;
-        index -= j<<6;
-        long mask = 1L<<index;
-        values[j] &= ~mask;
-        if(value) {
-            values[j] |= mask;
-        }
+    public long getBit (long index) {
+        return this.getBit(index);
     }
-
-    @Override
-    public ThreeSatSolution clone() {
-        int n64 = this.values.length;
-        long[] data = new long[n64];
-        System.arraycopy(this.values, 0, data, 0, n64);
-        return new ThreeSatSolution(data);
+    public boolean satisfiesClause (long constraint) {
+        return this.cba.satisfiesClause(constraint);
+    }
+    public void swap (int index) {
+        this.cba.swap(index);
+    }
+    public void swapRange (int fromIndex, int toIndex) {
+        this.cba.swapRange(fromIndex, toIndex);
+    }
+    public void setRange (int fromIndex, int toIndex) {
+        this.cba.setRange(fromIndex, toIndex);
+    }
+    public void resetRange (int fromIndex, int toIndex) {
+        this.cba.resetRange(fromIndex, toIndex);
+    }
+    public void set (int index, boolean value) {
+        this.cba.set(index, value);
     }
 
     @Override
-    public boolean equalSolution(ThreeSatSolution other) {
-        int n64 = this.values.length;
-        if(n64 == other.values.length) {
-            for(int i = 0; i < n64; i++) {
-                if(this.values[i] != other.values[i]) {
-                    return false;
-                }
-            }
-            return true;
+    public boolean equals (Object obj) {
+        if(obj instanceof ThreeSatSolution) {
+            return this.equalSolution((ThreeSatSolution) obj);
         }
         return false;
     }
-
-    @Override
-    public void writeSolution(DataOutputStream os) throws IOException {
-        for(int i = 0; i < values.length; i++) {
-            os.writeLong(values[i]);
-        }
+    
+    public static ThreeSatSolution randomInstance (int n) {
+        return new ThreeSatSolution(CompactBitArray.randomInstance(n));
+    }
+    
+    public void clearTail () {
+        this.cba.clearTail();
     }
 
     @Override
-    public void readSolution(DataInputStream is) throws IOException {
-        for(int i = 0; i < values.length; i++) {
-            values[i] = is.readLong();
-        }
+    public int hashCode() {
+        return this.cba.hashCode();
     }
     
     @Override
     public String toString () {
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < this.values.length; i++) {
-            sb.append(String.format("%s ",Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0'))));
-        }
-        return sb.toString();
+        return this.cba.toString();
+    }
+    
+    @Override
+    public boolean hasFastDifferenceWith (ThreeSatSolution other) {
+        return false;
+    }
+
+    @Override
+    public ThreeSatSolution clone() {
+        return new ThreeSatSolution(cba.clone());
+    }
+
+    @Override
+    public boolean equalSolution(ThreeSatSolution other) {
+        return this.cba.equals(other.cba);
+    }
+
+    @Override
+    public void writeSolution(DataOutputStream os) throws IOException {
+        this.cba.writeSolution(os);
+    }
+
+    @Override
+    public void readSolution(DataInputStream is) throws IOException {
+        this.cba.readSolution(is);
     }
     
 }

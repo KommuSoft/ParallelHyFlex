@@ -25,7 +25,12 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
 
     @Override
     public TSolution getSolution(int index) {
-        return this.solutionQueue[index].pop();
+        if(this.solutionQueue[index].size() > 1) {
+            return this.solutionQueue[index].pop();
+        }
+        else {
+            return this.solutionQueue[index].peek();
+        }
     }
 
     @Override
@@ -36,7 +41,11 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
     @Override
     void receiveSolution(int index, TSolution sol) {
         this.solutionQueue[index].add(sol);
-        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public TSolution peekSolution(int index) {
+        return this.solutionQueue[index].peek();
     }
     
 }

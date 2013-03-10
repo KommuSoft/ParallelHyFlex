@@ -15,5 +15,6 @@ public interface Solution<TSolution> extends Serializable {
     public boolean equalSolution (TSolution other);
     public void writeSolution (DataOutputStream os) throws IOException;
     public void readSolution (DataInputStream is) throws IOException;
+    public boolean hasFastDifferenceWith (TSolution other);
     
 }

@@ -23,7 +23,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         out[0][0] = initialMemory;
         out[0][1] = localPolicy.ordinal();
         this.others = new int[s][];
-        this.localSlots = new LocalMemorySlots<TSolution>(initialMemory,localPolicy);
+        this.localSlots = new LocalMemorySlots<>(initialMemory,localPolicy);
         this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass().getSuperclass(),s);
         this.solutionCache[0x00] = this.localSlots;
         Communication.AG(out,0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);
@@ -32,13 +32,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         for(int j = r+1; j < s; i++, j++) {
             ni = this.others[j][0];
             sum += ni;
-            solutionCache[i] = new ProxyMemorySlots<TSolution>(ni,policies[this.others[j][1]]);
+            solutionCache[i] = policies[this.others[j][1]].generateReceiver(ni);
         }
         sum += this.others[r][0];
         for(int j = 0; j < r; i++, j++) {
             ni = this.others[j][0];
             sum += ni;
-            solutionCache[i] = new ProxyMemorySlots<TSolution>(ni,policies[this.others[j][1]]);
+            solutionCache[i] = policies[this.others[j][1]].generateReceiver(ni);
         }
         this.totalMemory = sum;
         //Communication.Log(Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
