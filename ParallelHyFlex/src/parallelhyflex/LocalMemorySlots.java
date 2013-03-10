@@ -1,7 +1,7 @@
 package parallelhyflex;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+import parallelhyflex.pushsenders.PushSender;
+import parallelhyflex.pushdeciders.PushDecider;
 import mpi.MPI;
 import parallelhyflex.utils.CompactBitArray;
 
@@ -12,12 +12,16 @@ import parallelhyflex.utils.CompactBitArray;
 public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends MemorySlots<TSolution> {
     
     private final Object[] storage;
-    private final CompactBitArray notExchangeMask;
+    private final CompactBitArray blockingMask;
+    private final PushDecider<TSolution> pushDecider;
+    private final PushSender<TSolution> pushSender;
     
-    public LocalMemorySlots (int memorySize, MemoryExchangePolicy policy) {
+    public LocalMemorySlots (int memorySize, MemoryExchangePolicy policy, PushDecider<TSolution> pushDecider, PushSender<TSolution> pushSender) {
         super(policy);
         this.storage = new Object[memorySize];
-        this.notExchangeMask = new CompactBitArray(memorySize);
+        this.blockingMask = new CompactBitArray(memorySize);
+        this.pushDecider = pushDecider;
+        this.pushSender = pushSender;
     }
     
     public boolean isLocal () {
@@ -25,15 +29,7 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
     }
 
     public void pushSolution(int index) {
-        Communication.Log("pushing " + index);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        Object[] data = new Object[3];
-        data[0] = Communication.getCommunication().getRank();
-        data[1] = index;
-        data[2] = this.storage[index];
-        for(int other : Communication.others()) {
-            Communication.S(data, 0, 3, MPI.OBJECT, other, 0);
+        if(this.willExchange(index)) {
         }
     }
     
@@ -55,12 +51,12 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
     /**
      * @return the notExchangeMask
      */
-    public CompactBitArray getNotExchangeMask() {
-        return notExchangeMask;
+    public CompactBitArray getBlockingMask() {
+        return blockingMask;
     }
 
     public boolean willExchange(int index) {
-        return !this.notExchangeMask.get(index);
+        return !this.blockingMask.get(index);
     }
 
     @Override

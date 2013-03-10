@@ -23,7 +23,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         out[0][0] = initialMemory;
         out[0][1] = localPolicy.ordinal();
         this.others = new int[s][];
-        this.localSlots = new LocalMemorySlots<>(initialMemory,localPolicy);
+        this.localSlots = localPolicy.generateSender(initialMemory);
         this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass().getSuperclass(),s);
         this.solutionCache[0x00] = this.localSlots;
         Communication.AG(out,0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);

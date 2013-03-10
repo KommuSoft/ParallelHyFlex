@@ -47,7 +47,7 @@ public abstract class MemorySlots<TSolution extends Solution<TSolution>> {
     /**
      * @return the notExchangeMask
      */
-    public abstract CompactBitArray getNotExchangeMask();
+    public abstract CompactBitArray getBlockingMask();
     
     public abstract boolean willExchange (int index);
     

@@ -1,87 +1,79 @@
 package parallelhyflex;
 
+import parallelhyflex.pushdeciders.AlwaysPushDecider;
+import parallelhyflex.pushdeciders.IthPushDecider;
+import parallelhyflex.pushdeciders.ProbablePushDecider;
+import parallelhyflex.pushsenders.BroadcastPushSender;
+import parallelhyflex.pushsenders.DistributedPushSender;
+
 /**
  *
  * @author kommusoft
  */
 public enum MemoryExchangePolicy {
     
-    Queued {
+    QueuedAlwaysBroadcasted {
         
         public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.Queued);
+            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.QueuedAlwaysBroadcasted);
         }
         public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
+            return new LocalMemorySlots<TSol>(memorySize,MemoryExchangePolicy.QueuedAlwaysBroadcasted,new AlwaysPushDecider<TSol>(),new BroadcastPushSender<TSol>());
         }
         
     },
-    Immediately {
+    
+    QueuedAlwaysDistributed {
         
         public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new StateProxyMemorySlots<>(memorySize,MemoryExchangePolicy.Immediately);
+            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.QueuedAlwaysDistributed);
         }
         public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
+            return new LocalMemorySlots<TSol>(memorySize,MemoryExchangePolicy.QueuedAlwaysDistributed,new AlwaysPushDecider<TSol>(),new DistributedPushSender<TSol>());
         }
         
     },
-    Probable {
+    
+    QueuedProbableBroadcasted {
         
         public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new StateProxyMemorySlots<>(memorySize,MemoryExchangePolicy.Probable);
+            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.QueuedProbableBroadcasted);
         }
         public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
+            return new LocalMemorySlots<TSol>(memorySize,MemoryExchangePolicy.QueuedProbableBroadcasted,new ProbablePushDecider<TSol>(),new BroadcastPushSender<TSol>());
         }
         
     },
-    Periodically {
+    
+    QueuedProbableDistributed {
         
         public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new StateProxyMemorySlots<>(memorySize,MemoryExchangePolicy.Periodically);
+            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.QueuedProbableDistributed);
         }
         public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
+            return new LocalMemorySlots<TSol>(memorySize,MemoryExchangePolicy.QueuedProbableDistributed,new ProbablePushDecider<TSol>(),new DistributedPushSender<TSol>());
         }
         
     },
-    Ith {
+    
+    QueuedIthBroadcasted {
         
         public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new StateProxyMemorySlots<>(memorySize,MemoryExchangePolicy.Ith);
+            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.QueuedIthBroadcasted);
         }
         public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
+            return new LocalMemorySlots<TSol>(memorySize,MemoryExchangePolicy.QueuedIthBroadcasted,new IthPushDecider<TSol>(memorySize,5),new BroadcastPushSender<TSol>());
         }
         
     },
-    DistributedQueued {
+    
+    QueuedIthDistributed {
         
         public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.DistributedQueued);
+            return new QueueProxyMemorySlots<>(memorySize,MemoryExchangePolicy.QueuedIthDistributed);
         }
         public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
-        }
-        
-    },
-    DistributedIth {
-        
-        public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new StateProxyMemorySlots<>(memorySize,MemoryExchangePolicy.DistributedIth);
-        }
-        public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
-        }
-        
-    },
-    Explicit {
-        public<TSol extends Solution<TSol>> ProxyMemorySlots<TSol> generateReceiver (int memorySize) {
-            return new StateProxyMemorySlots<>(memorySize,MemoryExchangePolicy.Explicit);
-        }
-        public<TSol extends Solution<TSol>> LocalMemorySlots<TSol> generateSender (int memorySize) {
-            return null;
+            return new LocalMemorySlots<TSol>(memorySize,MemoryExchangePolicy.QueuedIthDistributed,new IthPushDecider<TSol>(memorySize,5),new DistributedPushSender<TSol>());
         }
         
     };

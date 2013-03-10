@@ -28,7 +28,7 @@ public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> ex
     }
 
     @Override
-    public CompactBitArray getNotExchangeMask() {
+    public CompactBitArray getBlockingMask() {
         return null;
     }
 
