@@ -1,12 +1,11 @@
 package parallelhyflex.problems.threesat;
 
-import java.util.Arrays;
-import parallelhyflex.Communication;
 import parallelhyflex.DistanceFunction;
 import parallelhyflex.Heuristic;
 import parallelhyflex.ObjectiveFunction;
 import parallelhyflex.ProblemBase;
 import parallelhyflex.SolutionGenerator;
+import parallelhyflex.utils.CompactBitArray;
 
 /**
  *
@@ -19,6 +18,8 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final int[][] neginfluences;
     private final int n, k;
     private final ThreeSatSolutionGenerator generator;
+    private CompactBitArray fixedArray;
+    private CompactBitArray valueArray;
     
     public ThreeSatProblem (long[] constraints) {
         this.constraints = constraints;
