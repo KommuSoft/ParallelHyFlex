@@ -18,6 +18,10 @@ public abstract class HeuristicBase<TSolution extends Solution<TSolution>, TProb
         super(type);
         this.problem = problem;
     }
+    public HeuristicBase (HeuristicType type, TProblem problem) {
+        super(type);
+        this.problem = problem;
+    }
     
     /**
      * @return the problem

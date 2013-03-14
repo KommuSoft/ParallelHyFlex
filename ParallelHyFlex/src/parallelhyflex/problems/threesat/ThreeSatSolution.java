@@ -30,22 +30,22 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
         return this.getBit(index);
     }
     public boolean satisfiesClause (long constraint) {
-        return this.cba.satisfiesClause(constraint);
+        return this.getCompactBitArray().satisfiesClause(constraint);
     }
     public void swap (int index) {
-        this.cba.swap(index);
+        this.getCompactBitArray().swap(index);
     }
     public void swapRange (int fromIndex, int toIndex) {
-        this.cba.swapRange(fromIndex, toIndex);
+        this.getCompactBitArray().swapRange(fromIndex, toIndex);
     }
     public void setRange (int fromIndex, int toIndex) {
-        this.cba.setRange(fromIndex, toIndex);
+        this.getCompactBitArray().setRange(fromIndex, toIndex);
     }
     public void resetRange (int fromIndex, int toIndex) {
-        this.cba.resetRange(fromIndex, toIndex);
+        this.getCompactBitArray().resetRange(fromIndex, toIndex);
     }
     public void set (int index, boolean value) {
-        this.cba.set(index, value);
+        this.getCompactBitArray().set(index, value);
     }
     public int getConflictingClauses () {
         return this.conflictingClauses;
@@ -62,17 +62,17 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     }
     
     public void clearTail () {
-        this.cba.clearTail();
+        this.getCompactBitArray().clearTail();
     }
 
     @Override
     public int hashCode() {
-        return this.cba.hashCode();
+        return this.getCompactBitArray().hashCode();
     }
     
     @Override
     public String toString () {
-        return this.cba.toString();
+        return this.getCompactBitArray().toString();
     }
     
     @Override
@@ -82,26 +82,37 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
 
     @Override
     public ThreeSatSolution clone() {
-        return new ThreeSatSolution(this.getConflictingClauses(),cba.clone());
+        return new ThreeSatSolution(this.getConflictingClauses(),getCompactBitArray().clone());
     }
 
     @Override
     public boolean equalSolution(ThreeSatSolution other) {
-        return this.cba.equals(other.cba);
+        return this.getCompactBitArray().equals(other.getCompactBitArray());
     }
 
     @Override
     public void writeSolution(DataOutputStream os) throws IOException {
-        this.cba.writeSolution(os);
+        this.getCompactBitArray().writeSolution(os);
     }
 
     @Override
     public void readSolution(DataInputStream is) throws IOException {
-        this.cba.readSolution(is);
+        this.getCompactBitArray().readSolution(is);
     }
     
     public int getLength() {
-        return this.cba.getLength();
+        return this.getCompactBitArray().getLength();
+    }
+
+    /**
+     * @return the cba
+     */
+    public CompactBitArray getCompactBitArray() {
+        return cba;
+    }
+
+    void addConfictingClauses(int delta) {
+        this.conflictingClauses += delta;
     }
     
 }

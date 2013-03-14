@@ -31,6 +31,8 @@ public interface ICompactBitArray {
     void setRange(int fromIndex, int toIndex);
 
     void swap(int index);
+    
+    int swapGetBit (int index);
 
     void swapRange(int fromIndex, int toIndex);
 

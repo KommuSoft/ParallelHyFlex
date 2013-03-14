@@ -219,8 +219,17 @@ public class CompactBitArray implements ICompactBitArray {
         long index1 = (constraint >> 40) & 0xFFFFF;
         long index2 = (constraint >> 20) & 0xFFFFF;
         long index3 = constraint & 0xFFFFF;
-        return ((index1 == index || getBit(index1) != ((constraint >> 62) & 1)) &&
-                (index2 == index || getBit(index2) != ((constraint >> 61) & 1)) &&
-                (index3 == index || getBit(index3) != ((constraint >> 60) & 1)));
+        return ((index1 == index || getBit(index1) != ((constraint >> 62) & 1))
+                && (index2 == index || getBit(index2) != ((constraint >> 61) & 1))
+                && (index3 == index || getBit(index3) != ((constraint >> 60) & 1)));
+    }
+
+    @Override
+    public int swapGetBit(int index) {
+        int j = index >> 6;
+        index -= j << 6;
+        long mask = 1L << index;
+        values[j] ^= mask;
+        return (int) ((values[j]>>index)&0x01);
     }
 }

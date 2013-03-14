@@ -117,5 +117,10 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
     public boolean willSwap(long constraint, int index) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public int swapGetBit(int index) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
