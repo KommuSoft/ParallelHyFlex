@@ -1,5 +1,8 @@
 package parallelhyflex;
 
+import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.Problem;
+
 /**
  *
  * @author kommusoft

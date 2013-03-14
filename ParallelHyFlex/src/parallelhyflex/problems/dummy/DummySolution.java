@@ -2,7 +2,7 @@ package parallelhyflex.problems.dummy;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import parallelhyflex.Solution;
+import parallelhyflex.problemdependent.Solution;
 
 /**
  *

@@ -2,7 +2,7 @@ package parallelhyflex.pushsenders;
 
 import mpi.MPI;
 import parallelhyflex.Communication;
-import parallelhyflex.Solution;
+import parallelhyflex.problemdependent.Solution;
 
 /**
  *

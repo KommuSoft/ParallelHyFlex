@@ -1,4 +1,4 @@
-package parallelhyflex;
+package parallelhyflex.problemdependent;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

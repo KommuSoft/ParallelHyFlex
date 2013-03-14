@@ -1,10 +1,10 @@
 package parallelhyflex.problems.threesat;
 
-import parallelhyflex.DistanceFunction;
-import parallelhyflex.Heuristic;
-import parallelhyflex.ObjectiveFunction;
-import parallelhyflex.ProblemBase;
-import parallelhyflex.SolutionGenerator;
+import parallelhyflex.problemdependent.DistanceFunction;
+import parallelhyflex.problemdependent.Heuristic;
+import parallelhyflex.problemdependent.ObjectiveFunction;
+import parallelhyflex.problemdependent.ProblemBase;
+import parallelhyflex.problemdependent.SolutionGenerator;
 import parallelhyflex.utils.CompactBitArray;
 
 /**
@@ -14,8 +14,7 @@ import parallelhyflex.utils.CompactBitArray;
 public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
     private final long[] constraints;
-    private final int[][] posinfluences;
-    private final int[][] neginfluences;
+    private final int[][] influences;
     private final int n, k;
     private final ThreeSatSolutionGenerator generator;
     private CompactBitArray fixedArray;
@@ -26,8 +25,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.k = this.constraints.length;
         int n = ClauseUtils.getLargestIndex(constraints)+1;
         this.n = n;
-        this.posinfluences = new int[n][];
-        this.neginfluences = new int[n][];
+        this.influences = new int[n][];
         int[] npn = new int[n], nnn = new int[n];
         int[] np = new int[4], nn = new int[4];
         int index;
@@ -42,24 +40,29 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
                 nnn[nn[i]]++;
             }
         }
+        int nplus;
+        int[] arr;
         for(int i = 0; i < n; i++) {
-            this.posinfluences[i] = new int[npn[i]];
-            this.neginfluences[i] = new int[nnn[i]];
+            nplus = npn[i];
+            arr = new int[nplus+nnn[i]];
+            arr[0] = nplus;
+            nnn[i] += nplus;
+            this.influences[i] = arr;
         }
         int j = 0;
         for(long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for(int i = 1; i < np[0]; i++) {
                 index = np[i];
-                this.posinfluences[index][--npn[index]] = j;
+                this.influences[index][npn[index]--] = j;
             }
             for(int i = 1; i < nn[0]; i++) {
                 index = nn[i];
-                this.neginfluences[index][--nnn[index]] = j;
+                this.influences[index][nnn[index]--] = j;
             }
             j++;
         }
-        this.generator = new ThreeSatSolutionGenerator((this.n+63)>>6);
+        this.generator = new ThreeSatSolutionGenerator(this);
     }
     
     @Override
@@ -95,6 +98,34 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     @Override
     public SolutionGenerator<ThreeSatSolution> getSolutionGenerator() {
         return this.generator;
+    }
+
+    /**
+     * @return the n
+     */
+    public int getN() {
+        return n;
+    }
+
+    /**
+     * @return the k
+     */
+    public int getK() {
+        return k;
+    }
+
+    /**
+     * @return the constraints
+     */
+    public long[] getConstraints() {
+        return constraints;
+    }
+
+    /**
+     * @return the influences
+     */
+    public int[][] getInfluences() {
+        return influences;
     }
     
 }

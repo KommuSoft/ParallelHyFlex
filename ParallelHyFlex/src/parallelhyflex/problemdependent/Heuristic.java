@@ -1,4 +1,6 @@
-package parallelhyflex;
+package parallelhyflex.problemdependent;
+
+import parallelhyflex.HeuristicType;
 
 /**
  *
@@ -7,11 +9,9 @@ package parallelhyflex;
 public abstract class Heuristic<TSolution extends Solution<TSolution>> {
     
     private final HeuristicType type;
-    private final Problem<TSolution> problem;
     
-    public Heuristic (Problem<TSolution> problem, HeuristicType type) {
+    public Heuristic (HeuristicType type) {
         this.type = type;
-        this.problem = problem;
     }
     
     public TSolution applyHeuristic (TSolution from) {
@@ -34,20 +34,6 @@ public abstract class Heuristic<TSolution extends Solution<TSolution>> {
      */
     public HeuristicType getType() {
         return type;
-    }
-
-    /**
-     * @return the problem
-     */
-    public Problem getProblem() {
-        return problem;
-    }
-    
-    public double getIntensityOfMutation () {
-        return this.getProblem().getIntensityOfMutation();
-    }
-    public double getDepthOfSearch () {
-        return this.getProblem().getDepthOfSearch();
     }
     
 }

@@ -18,13 +18,13 @@ public interface ICompactBitArray {
 
     long getBit(long index);
 
-    int hashCode();
-
     void readSolution(DataInputStream is) throws IOException;
 
     void resetRange(int fromIndex, int toIndex);
 
     boolean satisfiesClause(long constraint);
+    
+    boolean willSwap (long constraint, int index);
 
     void set(int index, boolean value);
 

@@ -68,9 +68,9 @@ public class CompactBitArray implements ICompactBitArray {
 
     @Override
     public boolean satisfiesClause(long constraint) {
-        return (getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1)
+        return (getBit((constraint >> 40) & 0xFFFFF) == ((constraint >> 62) & 1)
                 || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
-                || getBit((constraint >> 40) & 0xFFFFF) == ((constraint >> 62) & 1));
+                || getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1));
     }
 
     @Override
@@ -212,5 +212,15 @@ public class CompactBitArray implements ICompactBitArray {
     @Override
     public int getLength() {
         return this.n;
+    }
+
+    @Override
+    public boolean willSwap(long constraint, int index) {
+        long index1 = (constraint >> 40) & 0xFFFFF;
+        long index2 = (constraint >> 20) & 0xFFFFF;
+        long index3 = constraint & 0xFFFFF;
+        return ((index1 == index || getBit(index1) != ((constraint >> 62) & 1)) &&
+                (index2 == index || getBit(index2) != ((constraint >> 61) & 1)) &&
+                (index3 == index || getBit(index3) != ((constraint >> 60) & 1)));
     }
 }

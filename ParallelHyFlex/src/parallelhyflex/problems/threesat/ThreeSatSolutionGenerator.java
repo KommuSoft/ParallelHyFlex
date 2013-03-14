@@ -4,29 +4,31 @@
  */
 package parallelhyflex.problems.threesat;
 
-import java.util.Random;
-import parallelhyflex.SolutionGeneratorBase;
+import parallelhyflex.problemdependent.SolutionGeneratorBase;
+import parallelhyflex.utils.CompactBitArray;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSolution> {
+public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSolution,ThreeSatProblem> {
     
-    private final int n64;
-    
-    public ThreeSatSolutionGenerator (int n64) {
-        this.n64 = n64;
+    public ThreeSatSolutionGenerator (ThreeSatProblem problem) {
+        super(problem);
     }
     
     @Override
     public ThreeSatSolution generateSolution() {
-        long[] data = new long[n64];
-        Random rand = this.getRandom();
-        for(int i = 0; i < n64; i++) {
-            data[i] = rand.nextLong();
+        ThreeSatProblem problem = this.getProblem();
+        CompactBitArray cba = CompactBitArray.randomInstance(problem.getN());
+        int nfail = 0;
+        long[] clauses = problem.getConstraints();
+        for(int i = 0; i < clauses.length; i++) {
+            if(!cba.satisfiesClause(clauses[i])) {
+                nfail++;
+            }
         }
-        return new ThreeSatSolution(data);
+        return new ThreeSatSolution(nfail,cba);
     }
     
 }

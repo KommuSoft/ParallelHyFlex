@@ -3,7 +3,7 @@ package parallelhyflex.problems.threesat;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import parallelhyflex.Solution;
+import parallelhyflex.problemdependent.Solution;
 import parallelhyflex.utils.CompactBitArray;
 
 /**
@@ -13,14 +13,10 @@ import parallelhyflex.utils.CompactBitArray;
 public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     
     private final CompactBitArray cba;
+    private int conflictingClauses;
     
-    public ThreeSatSolution (int n) {
-        this.cba = new CompactBitArray(n);
-    }
-    ThreeSatSolution (long[] values) {
-        this.cba = new CompactBitArray(values);
-    }
-    ThreeSatSolution (CompactBitArray cba) {
+    ThreeSatSolution (int conflictingClauses, CompactBitArray cba) {
+        this.conflictingClauses = conflictingClauses;
         this.cba = cba;
     }
     
@@ -51,17 +47,18 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     public void set (int index, boolean value) {
         this.cba.set(index, value);
     }
-
+    public int getConflictingClauses () {
+        return this.conflictingClauses;
+    }
+    void setConflictingClauses (int conflictingClauses) {
+        this.conflictingClauses = conflictingClauses;
+    }
     @Override
     public boolean equals (Object obj) {
         if(obj instanceof ThreeSatSolution) {
             return this.equalSolution((ThreeSatSolution) obj);
         }
         return false;
-    }
-    
-    public static ThreeSatSolution randomInstance (int n) {
-        return new ThreeSatSolution(CompactBitArray.randomInstance(n));
     }
     
     public void clearTail () {
@@ -85,7 +82,7 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
 
     @Override
     public ThreeSatSolution clone() {
-        return new ThreeSatSolution(cba.clone());
+        return new ThreeSatSolution(this.getConflictingClauses(),cba.clone());
     }
 
     @Override

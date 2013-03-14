@@ -1,6 +1,6 @@
 package parallelhyflex.pushsenders;
 
-import parallelhyflex.Solution;
+import parallelhyflex.problemdependent.Solution;
 
 /**
  *

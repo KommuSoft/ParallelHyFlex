@@ -1,5 +1,6 @@
 package parallelhyflex;
 
+import parallelhyflex.problemdependent.Solution;
 import parallelhyflex.pushsenders.PushSender;
 import parallelhyflex.pushdeciders.PushDecider;
 import mpi.MPI;

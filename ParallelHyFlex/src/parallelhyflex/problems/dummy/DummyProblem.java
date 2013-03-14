@@ -1,10 +1,10 @@
 package parallelhyflex.problems.dummy;
 
-import parallelhyflex.DistanceFunction;
-import parallelhyflex.Heuristic;
-import parallelhyflex.ObjectiveFunction;
-import parallelhyflex.ProblemBase;
-import parallelhyflex.SolutionGenerator;
+import parallelhyflex.problemdependent.DistanceFunction;
+import parallelhyflex.problemdependent.Heuristic;
+import parallelhyflex.problemdependent.ObjectiveFunction;
+import parallelhyflex.problemdependent.ProblemBase;
+import parallelhyflex.problemdependent.SolutionGenerator;
 
 /**
  *

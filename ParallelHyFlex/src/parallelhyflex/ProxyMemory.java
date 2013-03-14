@@ -1,5 +1,7 @@
 package parallelhyflex;
 
+import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.Heuristic;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import mpi.MPI;

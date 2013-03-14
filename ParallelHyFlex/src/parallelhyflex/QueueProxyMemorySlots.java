@@ -1,5 +1,6 @@
 package parallelhyflex;
 
+import parallelhyflex.problemdependent.Solution;
 import java.lang.reflect.Array;
 import java.util.LinkedList;
 
