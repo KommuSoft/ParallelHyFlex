@@ -1,5 +1,8 @@
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.utils.CompactBitArray;
+import parallelhyflex.utils.Utils;
+
 /**
  *
  * @author kommusoft
@@ -20,6 +23,28 @@ public class ClauseUtils {
         long valb = (clause >> 61) & 1;
         long valc = (clause >> 62) & 1;
         return (inda != indb || vala == valb) && (indb != indc || valb == valc) && (inda != indc || vala == valc);//TODO: optional third part? (indices are sorted)
+    }
+    
+    public static void swapRandom (int[][] influence, int n, ThreeSatSolution solution, long[] constraints) {
+        int i = Utils.StaticRandom.nextInt(n);
+        int[] tocheck = influence[i];
+        int delta = 0;
+        int np = tocheck[0];
+        int nn = tocheck.length;
+        int j;
+        CompactBitArray cba = solution.getCompactBitArray();
+        for(j = 1; j <= np; j++) {
+            if(cba.willSwap(constraints[tocheck[j]],i)) {
+                delta++;
+            }
+        }
+        for(; j < nn; j++) {
+            if(cba.willSwap(constraints[tocheck[j]],i)) {
+                delta--;
+            }
+        }
+        delta *= (cba.swapGetBit(i)<<1)-1;
+        solution.addConfictingClauses(delta);
     }
 
     public static int getIndexI(long clause, int i) {

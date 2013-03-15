@@ -21,6 +21,9 @@ public class ThreeSatHeuristicM2 extends HeuristicBase<ThreeSatSolution,ThreeSat
         CompactBitArray cba = from.getCompactBitArray();
         int ic = Utils.StaticRandom.nextInt(constraint.length);
         int ri = Utils.StaticRandom.nextInt(3);
+        int ii = ClauseUtils.getIndexI(constraint[ic],ri);
+        int va = ClauseUtils.getValueI(constraint[ic],ri);
+        int[] infl = this.getProblem().getInfluences()[ii];
         //TODO: search for other clause (if fails)
     }
     

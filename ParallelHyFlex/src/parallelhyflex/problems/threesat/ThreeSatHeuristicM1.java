@@ -23,23 +23,7 @@ public class ThreeSatHeuristicM1 extends HeuristicBase<ThreeSatSolution,ThreeSat
         long[] constraints = this.getProblem().getConstraints();
         CompactBitArray cba = from.getCompactBitArray();
         do {
-            i = Utils.StaticRandom.nextInt(n);
-            tocheck = this.getProblem().getInfluences()[i];
-            delta = 0;
-            np = tocheck[0];
-            nn = tocheck.length;
-            for(j = 1; j <= np; j++) {
-                if(cba.willSwap(constraints[tocheck[j]],i)) {
-                    delta++;
-                }
-            }
-            for(; j < nn; j++) {
-                if(cba.willSwap(constraints[tocheck[j]],i)) {
-                    delta--;
-                }
-            }
-            delta *= (cba.swapGetBit(i)<<1)-1;
-            from.addConfictingClauses(delta);
+            swapRandomBit(n, cba, constraints, from);
         }
         while(Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
     }
