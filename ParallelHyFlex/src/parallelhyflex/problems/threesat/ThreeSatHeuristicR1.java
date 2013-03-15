@@ -1,6 +1,5 @@
 package parallelhyflex.problems.threesat;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import parallelhyflex.HeuristicType;
 import parallelhyflex.problemdependent.HeuristicBase;
@@ -8,7 +7,8 @@ import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
 /**
- *
+ * A ruin-recreate heuristic where an entire block of 64 consecutive bits are cleared and set to a new value based on a greedy approach where the number of
+ * satisfyable clauses (if positive or negative) is maximized.
  * @author kommusoft
  */
 public class ThreeSatHeuristicR1 extends HeuristicBase<ThreeSatSolution,ThreeSatProblem> {

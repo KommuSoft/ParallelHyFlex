@@ -6,7 +6,7 @@ import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
 /**
- *
+ * A mutation heuristic that swaps one or more bits (depending on the intensity of mutation). The swapped indices are uniform random.
  * @author kommusoft
  */
 public class ThreeSatHeuristicM1 extends HeuristicBase<ThreeSatSolution,ThreeSatProblem> {

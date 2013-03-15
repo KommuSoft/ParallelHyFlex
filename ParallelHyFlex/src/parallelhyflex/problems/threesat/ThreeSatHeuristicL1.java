@@ -3,10 +3,9 @@ package parallelhyflex.problems.threesat;
 import parallelhyflex.HeuristicType;
 import parallelhyflex.problemdependent.HeuristicBase;
 import parallelhyflex.utils.CompactBitArray;
-import parallelhyflex.utils.Utils;
 
 /**
- *
+ * A local search heurstic, where the system looks for a bit when swapped increases the number of satisfied constraints.
  * @author kommusoft
  */
 public class ThreeSatHeuristicL1 extends HeuristicBase<ThreeSatSolution,ThreeSatProblem> {
