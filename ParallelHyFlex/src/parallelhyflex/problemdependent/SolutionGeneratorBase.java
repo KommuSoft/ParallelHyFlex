@@ -1,5 +1,6 @@
 package parallelhyflex.problemdependent;
 
+import parallelhyflex.ProblemPointerBase;
 import java.util.Random;
 
 /**

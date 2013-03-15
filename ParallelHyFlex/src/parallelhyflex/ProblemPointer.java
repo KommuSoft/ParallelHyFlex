@@ -1,4 +1,7 @@
-package parallelhyflex.problemdependent;
+package parallelhyflex;
+
+import parallelhyflex.problemdependent.Problem;
+import parallelhyflex.problemdependent.Solution;
 
 /**
  *

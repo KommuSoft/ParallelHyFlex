@@ -1,5 +1,6 @@
 package parallelhyflex.problemdependent;
 
+import parallelhyflex.ProblemPointer;
 import parallelhyflex.HeuristicType;
 
 /**
