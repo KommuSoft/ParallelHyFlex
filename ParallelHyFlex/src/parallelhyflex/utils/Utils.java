@@ -23,5 +23,15 @@ public class Utils {
         }
         return sb.toString();
     }
+    public static<T> void randomPermutate (T[] vals) {
+        T tmp;
+        int ind;
+        for(int i = 0, j = vals.length; j > 1; i++, j--) {
+            ind = i+Utils.StaticRandom.nextInt(j);
+            tmp = vals[i];
+            vals[i] = vals[ind];
+            vals[ind] = tmp;
+        }
+    }
     
 }

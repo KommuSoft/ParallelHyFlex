@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.problemdependent;
 
 import parallelhyflex.HeuristicType;
@@ -10,7 +6,7 @@ import parallelhyflex.HeuristicType;
  *
  * @author kommusoft
  */
-public abstract class HeuristicBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends Heuristic<TSolution> {
+public abstract class HeuristicBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends Heuristic<TSolution> implements ProblemPointer<TSolution,TProblem> {
     
     private final TProblem problem;
     

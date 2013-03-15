@@ -11,6 +11,7 @@ import java.util.Arrays;
  */
 public class CompactBitArray implements ICompactBitArray {
 
+    public static final long BLOCK_MASK = 0xFFFFFFFFFFFFFFBFL;
     final long[] values;
     private int n;
 
@@ -72,7 +73,25 @@ public class CompactBitArray implements ICompactBitArray {
                 || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
                 || getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1));
     }
-
+    
+    public boolean SatisfiesClauseWithoutBlock (long constraint, int blockindex) {
+        long index1 = (constraint >> 40) & 0xFFFFF, index2 = (constraint >> 20) & 0xFFFFF, index3 = constraint & 0x0FFFFF;
+        long pattern = (long) blockindex<<6;
+        return (((index1&BLOCK_MASK) != pattern && getBit(index1) == ((constraint >> 62) & 1))
+                || ((index2&BLOCK_MASK) != pattern && getBit(index2) == ((constraint >> 61) & 1))
+                || ((index3&BLOCK_MASK) != pattern && getBit(index3) == ((constraint >> 60) & 1)));
+    }
+    
+    public int getNumberOfFailingClauses (long[] constraints) {
+        int nfail = 0;
+        for(long constraint : constraints) {
+            if(!satisfiesClause(constraint)) {
+                nfail++;
+            }
+        }
+        return nfail;
+    }
+    
     @Override
     public void swap(int index) {
         int j = index >> 6;
@@ -212,6 +231,11 @@ public class CompactBitArray implements ICompactBitArray {
     @Override
     public int getLength() {
         return this.n;
+    }
+    
+    @Override
+    public int getBlockLength () {
+        return this.values.length;
     }
 
     @Override

@@ -40,4 +40,6 @@ public interface ICompactBitArray {
     
     int getLength ();
     
+    int getBlockLength ();
+    
 }

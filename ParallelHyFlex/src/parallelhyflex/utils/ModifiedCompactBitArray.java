@@ -112,6 +112,11 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
     public int getLength () {
         return this.innercba.getLength();
     }
+    
+    @Override
+    public int getBlockLength () {
+        return this.innercba.getBlockLength();
+    }
 
     @Override
     public boolean willSwap(long constraint, int index) {
