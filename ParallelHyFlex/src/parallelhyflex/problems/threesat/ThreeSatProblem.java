@@ -17,16 +17,17 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final long[] constraints;
     private final int[][] influences;
     private final int[][] blockInfluences;
-    private final int n, k;
+    private final int v, c;
+    private final double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
     private final ThreeSatSolutionGenerator generator;
     private final Object[] distanceFunctions;
     private final Object[] heuristics;
     
     public ThreeSatProblem (long[] constraints) {
         this.constraints = constraints;
-        this.k = this.constraints.length;
+        this.c = this.constraints.length;
         int n = ClauseUtils.getLargestIndex(constraints)+1;
-        this.n = n;
+        this.v = n;
         int[] npn = new int[n], nnn = new int[n], np = new int[4], nn = new int[4], arr;
         int index, nplus, i, j = 0, k, l;
         this.influences = new int[n][];
@@ -81,6 +82,15 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.generator = new ThreeSatSolutionGenerator(this);
         this.distanceFunctions = new Object[] {new ThreeSatDistance1(this),new ThreeSatDistance2(this)};
         this.heuristics = new Object[] {new ThreeSatHeuristicC1(this),new ThreeSatHeuristicL1(this),new ThreeSatHeuristicM1(this),new ThreeSatHeuristicM3(this),new ThreeSatHeuristicR1(this)};
+        this.ratio1 = (double) this.c/this.v;
+        this.ratio2 = this.ratio1*this.ratio1;
+        this.ratio3 = this.ratio1*this.ratio2;
+        this.ratioReciprocal1 = (double) this.v/this.c;
+        this.ratioReciprocal2 = this.ratioReciprocal1*this.ratioReciprocal1;
+        this.ratioReciprocal3 = this.ratioReciprocal1*this.ratioReciprocal2;
+        this.linearizedRatio1 = Math.abs(4.26-this.ratio1);
+        this.linearizedRatio2 = this.linearizedRatio1*this.linearizedRatio1;
+        this.linearizedRatio3 = this.linearizedRatio1*this.linearizedRatio2;
     }
     
     @Override
@@ -119,17 +129,17 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     }
 
     /**
-     * @return the n
+     * @return the number of variables
      */
-    public int getN() {
-        return n;
+    public int getV() {
+        return v;
     }
 
     /**
-     * @return the k
+     * @return the number of clauses
      */
-    public int getK() {
-        return k;
+    public int getC() {
+        return c;
     }
 
     /**

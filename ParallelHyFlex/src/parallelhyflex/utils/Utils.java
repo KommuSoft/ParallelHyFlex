@@ -44,6 +44,45 @@ public class Utils {
         }
         return ones;
     }
+    
+    public static double Mean (double[] vals) {
+        double sum = 0.0d;
+        for(double d : vals) {
+            sum += d;
+        }
+        return sum/vals.length;
+    }
+    
+    public static double Variation (double[] vals) {
+        double mean = Mean(vals);
+        return Variation(vals,mean);
+    }
+    
+    public static double Variation (double[] vals, double mean) {
+        double sum = 0.0d;
+        for(double d : vals) {
+            sum += (d-mean)*(d-mean);
+        }
+        return sum/vals.length;
+    }
+    public static double Min (double[] vals) {
+        double min = Double.POSITIVE_INFINITY;
+        for(double d : vals) {
+            if(d < min) {
+                min = d;
+            }
+        }
+        return min;
+    }
+    public static double Max (double[] vals) {
+        double max = Double.NEGATIVE_INFINITY;
+        for(double d : vals) {
+            if(d > max) {
+                max = d;
+            }
+        }
+        return max;
+    }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {
         return new Iterator<Integer> ()

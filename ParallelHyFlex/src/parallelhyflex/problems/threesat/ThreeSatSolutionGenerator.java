@@ -20,7 +20,7 @@ public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSol
     @Override
     public ThreeSatSolution generateSolution() {
         ThreeSatProblem problem = this.getProblem();
-        CompactBitArray cba = CompactBitArray.randomInstance(problem.getN());
+        CompactBitArray cba = CompactBitArray.randomInstance(problem.getV());
         int nfail = 0;
         long[] clauses = problem.getConstraints();
         for(int i = 0; i < clauses.length; i++) {
