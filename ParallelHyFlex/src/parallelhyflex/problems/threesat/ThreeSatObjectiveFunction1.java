@@ -6,7 +6,7 @@ import parallelhyflex.problemdependent.ObjectiveFunction;
  *
  * @author kommusoft
  */
-public class ThreeSatObjectiveFunction implements ObjectiveFunction<ThreeSatSolution> {
+public class ThreeSatObjectiveFunction1 implements ObjectiveFunction<ThreeSatSolution> {
 
     @Override
     public double evaluateSolution(ThreeSatSolution solution) {

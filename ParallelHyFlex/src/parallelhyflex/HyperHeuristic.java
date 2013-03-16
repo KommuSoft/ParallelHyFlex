@@ -1,5 +1,6 @@
 package parallelhyflex;
 
+import parallelhyflex.communication.Communication;
 import parallelhyflex.problemdependent.Solution;
 import parallelhyflex.problemdependent.Problem;
 

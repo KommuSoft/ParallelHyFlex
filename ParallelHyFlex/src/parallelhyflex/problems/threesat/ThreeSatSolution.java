@@ -112,12 +112,12 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     }
 
     @Override
-    public void writeSolution(DataOutputStream os) throws IOException {
+    public void write(DataOutputStream os) throws IOException {
         this.getCompactBitArray().writeSolution(os);
     }
 
     @Override
-    public void readSolution(DataInputStream is) throws IOException {
+    public void read(DataInputStream is) throws IOException {
         this.getCompactBitArray().readSolution(is);
     }
 

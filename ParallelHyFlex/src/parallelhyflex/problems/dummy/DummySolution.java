@@ -21,12 +21,12 @@ public class DummySolution implements Solution<DummySolution> {
     }
 
     @Override
-    public void writeSolution(DataOutputStream os) {
+    public void write(DataOutputStream os) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void readSolution(DataInputStream is) {
+    public void read(DataInputStream is) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
