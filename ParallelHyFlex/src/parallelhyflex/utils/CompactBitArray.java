@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class CompactBitArray implements ICompactBitArray {
 
     public static final long BLOCK_MASK = 0xFFFFFFFFFFFFFFBFL;
-    final long[] values;
+    public final long[] values;
     private int n;
 
     public CompactBitArray(int n) {

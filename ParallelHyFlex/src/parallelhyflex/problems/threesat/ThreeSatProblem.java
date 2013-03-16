@@ -19,8 +19,8 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final int[][] blockInfluences;
     private final int n, k;
     private final ThreeSatSolutionGenerator generator;
-    /*private CompactBitArray fixedArray;
-    private CompactBitArray valueArray;*/
+    private final Object[] distanceFunctions;
+    private final Object[] heuristics;
     
     public ThreeSatProblem (long[] constraints) {
         this.constraints = constraints;
@@ -31,7 +31,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         int index, nplus, i, j = 0, k, l;
         this.influences = new int[n][];
         this.blockInfluences = new int[(n+63)>>6][];
-        HashSet<Integer> blockCache = new HashSet<Integer>();
+        HashSet<Integer> blockCache = new HashSet<>();
         for(long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for(i = 1; i < np[0]; i++) {
@@ -79,16 +79,18 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
             this.blockInfluences[j] = arr;
         }
         this.generator = new ThreeSatSolutionGenerator(this);
+        this.distanceFunctions = new Object[] {new ThreeSatDistance1(this),new ThreeSatDistance2(this)};
+        this.heuristics = new Object[] {new ThreeSatHeuristicC1(this),new ThreeSatHeuristicL1(this),new ThreeSatHeuristicM1(this),new ThreeSatHeuristicM3(this),new ThreeSatHeuristicR1(this)};
     }
     
     @Override
     public Heuristic<ThreeSatSolution> getHeuristic(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (Heuristic<ThreeSatSolution>) this.heuristics[index];
     }
 
     @Override
     public int getNumberOfHeuristics() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.heuristics.length;
     }
 
     @Override
@@ -103,12 +105,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
     @Override
     public DistanceFunction<ThreeSatSolution> getDistanceFunction(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (DistanceFunction<ThreeSatSolution>) this.distanceFunctions[index];
     }
 
     @Override
     public int getNumberOfDistanceFunctions() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.distanceFunctions.length;
     }
 
     @Override

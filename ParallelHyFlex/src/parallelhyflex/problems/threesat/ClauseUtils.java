@@ -25,14 +25,13 @@ public class ClauseUtils {
         return (inda != indb || vala == valb) && (indb != indc || valb == valc) && (inda != indc || vala == valc);//TODO: optional third part? (indices are sorted)
     }
     
-    public static void swapRandom (int[][] influence, int n, ThreeSatSolution solution, long[] constraints) {
+    public static void swapRandomBit(int n, int[][] influences, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
         int i = Utils.StaticRandom.nextInt(n);
-        int[] tocheck = influence[i];
-        int delta = 0;
-        int np = tocheck[0];
-        int nn = tocheck.length;
-        int j;
-        CompactBitArray cba = solution.getCompactBitArray();
+        swapBit(i,influences[i],cba,constraints,from);
+    }
+    
+    public static void swapBit (int i, int[] tocheck, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
+        int j, np = tocheck[0], nn = tocheck.length, delta = 0;
         for(j = 1; j <= np; j++) {
             if(cba.willSwap(constraints[tocheck[j]],i)) {
                 delta++;
@@ -44,7 +43,7 @@ public class ClauseUtils {
             }
         }
         delta *= (cba.swapGetBit(i)<<1)-1;
-        solution.addConfictingClauses(delta);
+        from.addConfictingClauses(delta);
     }
 
     public static int getIndexI(long clause, int i) {

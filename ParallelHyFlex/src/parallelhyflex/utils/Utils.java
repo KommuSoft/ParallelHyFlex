@@ -35,6 +35,15 @@ public class Utils {
             vals[ind] = tmp;
         }
     }
+    
+    public static int countOnes (long data) {
+        int ones = 0;
+        while(data != 0) {
+            ones += data&1;
+            data >>= 1;
+        }
+        return ones;
+    }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {
         return new Iterator<Integer> ()
