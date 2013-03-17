@@ -4,6 +4,7 @@
  */
 package parallelhyflex.utils;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -125,9 +126,26 @@ public class Utils {
         return max;
     }
     
+    public static double entropy (int[] vals) {
+        HashMap<Integer,Integer> frequency = new HashMap<>();
+        for(int val : vals) {
+            if(!frequency.containsKey(val)) {
+                frequency.put(val,1);
+            }
+            else {
+                frequency.put(val,frequency.get(val)+1);
+            }
+        }
+        double sum = 0.0;
+        for(int freq : frequency.values()) {
+            double p = (double) freq/vals.length;
+            sum -= p*Math.log(p);
+        }
+        return sum/Math.log(2.0d);
+    }
+    
     public static<T> T randomElement (List<T> list) {
         return list.get(StaticRandom.nextInt(list.size()));
-        
     }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {

@@ -20,7 +20,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final int[][] blockInfluences;
     private final int v, c;
     private final double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
-    private final double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax;
+    private final double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy;
     private final ThreeSatSolutionGenerator generator;
     private final Object[] distanceFunctions;
     private final Object[] heuristics;
@@ -59,10 +59,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.vcClauseVariation = Utils.Variation(degclause,this.vcClauseMean);
         this.vcClauseMin = Utils.Min(degclause);
         this.vcClauseMax = Utils.Max(degclause);
+        this.vcClauseEntropy = Utils.entropy(degclause);
         this.vcVariableMean = Utils.Mean(nnn);
         this.vcVariableVariation = Utils.Variation(nnn,this.vcVariableMean);
         this.vcVariableMin = Utils.Min(nnn);
         this.vcVariableMax = Utils.Max(nnn);
+        this.vcVariableEntropy = Utils.entropy(nnn);
         for(long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for(i = 1; i < np[0]; i++) {
@@ -107,12 +109,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     
     @Override
     public Heuristic<ThreeSatSolution> getHeuristic(int index) {
-        return (Heuristic<ThreeSatSolution>) this.heuristics[index];
+        return (Heuristic<ThreeSatSolution>) this.getHeuristics()[index];
     }
 
     @Override
     public int getNumberOfHeuristics() {
-        return this.heuristics.length;
+        return this.getHeuristics().length;
     }
 
     @Override
@@ -127,17 +129,17 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
     @Override
     public DistanceFunction<ThreeSatSolution> getDistanceFunction(int index) {
-        return (DistanceFunction<ThreeSatSolution>) this.distanceFunctions[index];
+        return (DistanceFunction<ThreeSatSolution>) this.getDistanceFunctions()[index];
     }
 
     @Override
     public int getNumberOfDistanceFunctions() {
-        return this.distanceFunctions.length;
+        return this.getDistanceFunctions().length;
     }
 
     @Override
     public SolutionGenerator<ThreeSatSolution> getSolutionGenerator() {
-        return this.generator;
+        return this.getGenerator();
     }
 
     /**
@@ -173,6 +175,160 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
      */
     public int[][] getBlockInfluences() {
         return blockInfluences;
+    }
+
+    /**
+     * @return the ratio1
+     */
+    public double getRatio1() {
+        return ratio1;
+    }
+
+    /**
+     * @return the ratio2
+     */
+    public double getRatio2() {
+        return ratio2;
+    }
+
+    /**
+     * @return the ratio3
+     */
+    public double getRatio3() {
+        return ratio3;
+    }
+
+    /**
+     * @return the ratioReciprocal1
+     */
+    public double getRatioReciprocal1() {
+        return ratioReciprocal1;
+    }
+
+    /**
+     * @return the ratioReciprocal2
+     */
+    public double getRatioReciprocal2() {
+        return ratioReciprocal2;
+    }
+
+    /**
+     * @return the ratioReciprocal3
+     */
+    public double getRatioReciprocal3() {
+        return ratioReciprocal3;
+    }
+
+    /**
+     * @return the linearizedRatio1
+     */
+    public double getLinearizedRatio1() {
+        return linearizedRatio1;
+    }
+
+    /**
+     * @return the linearizedRatio2
+     */
+    public double getLinearizedRatio2() {
+        return linearizedRatio2;
+    }
+
+    /**
+     * @return the linearizedRatio3
+     */
+    public double getLinearizedRatio3() {
+        return linearizedRatio3;
+    }
+
+    /**
+     * @return the vcVariableMean
+     */
+    public double getVcVariableMean() {
+        return vcVariableMean;
+    }
+
+    /**
+     * @return the vcVariableVariation
+     */
+    public double getVcVariableVariation() {
+        return vcVariableVariation;
+    }
+
+    /**
+     * @return the vcVariableMin
+     */
+    public double getVcVariableMin() {
+        return vcVariableMin;
+    }
+
+    /**
+     * @return the vcVariableMax
+     */
+    public double getVcVariableMax() {
+        return vcVariableMax;
+    }
+
+    /**
+     * @return the vcVariableEntropy
+     */
+    public double getVcVariableEntropy() {
+        return vcVariableEntropy;
+    }
+
+    /**
+     * @return the vcClauseMean
+     */
+    public double getVcClauseMean() {
+        return vcClauseMean;
+    }
+
+    /**
+     * @return the vcClauseVariation
+     */
+    public double getVcClauseVariation() {
+        return vcClauseVariation;
+    }
+
+    /**
+     * @return the vcClauseMin
+     */
+    public double getVcClauseMin() {
+        return vcClauseMin;
+    }
+
+    /**
+     * @return the vcClauseMax
+     */
+    public double getVcClauseMax() {
+        return vcClauseMax;
+    }
+
+    /**
+     * @return the vcClauseEntropy
+     */
+    public double getVcClauseEntropy() {
+        return vcClauseEntropy;
+    }
+
+    /**
+     * @return the generator
+     */
+    public ThreeSatSolutionGenerator getGenerator() {
+        return generator;
+    }
+
+    /**
+     * @return the distanceFunctions
+     */
+    public Object[] getDistanceFunctions() {
+        return distanceFunctions;
+    }
+
+    /**
+     * @return the heuristics
+     */
+    public Object[] getHeuristics() {
+        return heuristics;
     }
     
 }
