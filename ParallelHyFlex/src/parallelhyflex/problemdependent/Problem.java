@@ -1,10 +1,12 @@
 package parallelhyflex.problemdependent;
 
+import parallelhyflex.communication.Writable;
+
 /**
  *
  * @author kommusoft
  */
-public interface Problem<TSolution extends Solution<TSolution>> {
+public interface Problem<TSolution extends Solution<TSolution>> extends Writable {
     
     public Heuristic<TSolution> getHeuristic (int index);
     public int getNumberOfHeuristics ();
