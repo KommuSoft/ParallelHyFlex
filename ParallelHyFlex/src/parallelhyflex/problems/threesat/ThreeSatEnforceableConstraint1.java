@@ -1,7 +1,7 @@
 package parallelhyflex.problems.threesat;
 
 import parallelhyflex.ProblemPointerBase;
-import parallelhyflex.problemdependent.EnforcableConstraint;
+import parallelhyflex.problemdependent.EnforceableConstraint;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
@@ -9,11 +9,11 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatEnforcableConstraint1 extends ProblemPointerBase<ThreeSatSolution,ThreeSatProblem> implements EnforcableConstraint<ThreeSatSolution> {
+public class ThreeSatEnforceableConstraint1 extends ProblemPointerBase<ThreeSatSolution,ThreeSatProblem> implements EnforceableConstraint<ThreeSatSolution> {
 
     private long data;
     
-    public ThreeSatEnforcableConstraint1 (ThreeSatProblem problem) {
+    public ThreeSatEnforceableConstraint1 (ThreeSatProblem problem) {
         super(problem);
     }
 

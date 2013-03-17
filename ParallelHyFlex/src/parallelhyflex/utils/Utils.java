@@ -53,7 +53,20 @@ public class Utils {
         return sum/vals.length;
     }
     
+    public static double Mean (int[] vals) {
+        double sum = 0.0d;
+        for(double d : vals) {
+            sum += d;
+        }
+        return sum/vals.length;
+    }
+    
     public static double Variation (double[] vals) {
+        double mean = Mean(vals);
+        return Variation(vals,mean);
+    }
+    
+    public static double Variation (int[] vals) {
         double mean = Mean(vals);
         return Variation(vals,mean);
     }
@@ -65,6 +78,15 @@ public class Utils {
         }
         return sum/vals.length;
     }
+    
+    public static double Variation (int[] vals, double mean) {
+        double sum = 0.0d;
+        for(double d : vals) {
+            sum += (d-mean)*(d-mean);
+        }
+        return sum/vals.length;
+    }
+    
     public static double Min (double[] vals) {
         double min = Double.POSITIVE_INFINITY;
         for(double d : vals) {
@@ -74,7 +96,25 @@ public class Utils {
         }
         return min;
     }
+    public static double Min (int[] vals) {
+        double min = Double.POSITIVE_INFINITY;
+        for(double d : vals) {
+            if(d < min) {
+                min = d;
+            }
+        }
+        return min;
+    }
     public static double Max (double[] vals) {
+        double max = Double.NEGATIVE_INFINITY;
+        for(double d : vals) {
+            if(d > max) {
+                max = d;
+            }
+        }
+        return max;
+    }
+    public static double Max (int[] vals) {
         double max = Double.NEGATIVE_INFINITY;
         for(double d : vals) {
             if(d > max) {

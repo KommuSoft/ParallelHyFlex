@@ -7,6 +7,7 @@ import parallelhyflex.problemdependent.Heuristic;
 import parallelhyflex.problemdependent.ObjectiveFunction;
 import parallelhyflex.problemdependent.ProblemBase;
 import parallelhyflex.problemdependent.SolutionGenerator;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -19,6 +20,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final int[][] blockInfluences;
     private final int v, c;
     private final double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
+    private final double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax;
     private final ThreeSatSolutionGenerator generator;
     private final Object[] distanceFunctions;
     private final Object[] heuristics;
@@ -29,11 +31,13 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         int n = ClauseUtils.getLargestIndex(constraints)+1;
         this.v = n;
         int[] npn = new int[n], nnn = new int[n], np = new int[4], nn = new int[4], arr;
-        int index, nplus, i, j = 0, k, l;
+        int[] degclause = new int[this.c];
+        int index, nplus, i, j = 0, k = 0, l;
         this.influences = new int[n][];
         this.blockInfluences = new int[(n+63)>>6][];
         HashSet<Integer> blockCache = new HashSet<>();
         for(long constraint : constraints) {
+            degclause[k] = ClauseUtils.degree(constraint);
             ClauseUtils.setInfluences(constraint, np, nn);
             for(i = 1; i < np[0]; i++) {
                 index = np[i];
@@ -51,6 +55,14 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
             nnn[i] += nplus;
             this.influences[i] = arr;
         }
+        this.vcClauseMean = Utils.Mean(degclause);
+        this.vcClauseVariation = Utils.Variation(degclause,this.vcClauseMean);
+        this.vcClauseMin = Utils.Min(degclause);
+        this.vcClauseMax = Utils.Max(degclause);
+        this.vcVariableMean = Utils.Mean(nnn);
+        this.vcVariableVariation = Utils.Variation(nnn,this.vcVariableMean);
+        this.vcVariableMin = Utils.Min(nnn);
+        this.vcVariableMax = Utils.Max(nnn);
         for(long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for(i = 1; i < np[0]; i++) {

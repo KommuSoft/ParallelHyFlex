@@ -12,6 +12,25 @@ public class ClauseUtils {
     private ClauseUtils() {
     }
 
+    public static int degree(long clause) {
+        long inda = clause & 0x0FFFFF;
+        long indb = (clause >> 20) & 0x0FFFFF;
+        long indc = (clause >> 40) & 0x0FFFFF;
+        int deg = 1;
+        if(inda != indb) {
+            deg++;
+        }
+        if(indb != indc) {
+            deg++;
+        }
+        return deg;
+    }
+    
+    public static boolean isHornClause (long clause) {
+        long vals = (clause>>60)&7;
+        return Utils.countOnes(vals)<2;
+    }
+
     public static boolean isValidClause(long clause) {
         long inda = clause & 0x0FFFFF;
         long indb = (clause >> 20) & 0x0FFFFF;
@@ -24,25 +43,25 @@ public class ClauseUtils {
         long valc = (clause >> 62) & 1;
         return (inda != indb || vala == valb) && (indb != indc || valb == valc) && (inda != indc || vala == valc);//TODO: optional third part? (indices are sorted)
     }
-    
+
     public static void swapRandomBit(int n, int[][] influences, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
         int i = Utils.StaticRandom.nextInt(n);
-        swapBit(i,influences[i],cba,constraints,from);
+        swapBit(i, influences[i], cba, constraints, from);
     }
-    
-    public static void swapBit (int i, int[] tocheck, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
+
+    public static void swapBit(int i, int[] tocheck, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
         int j, np = tocheck[0], nn = tocheck.length, delta = 0;
-        for(j = 1; j <= np; j++) {
-            if(cba.willSwap(constraints[tocheck[j]],i)) {
+        for (j = 1; j <= np; j++) {
+            if (cba.willSwap(constraints[tocheck[j]], i)) {
                 delta++;
             }
         }
-        for(; j < nn; j++) {
-            if(cba.willSwap(constraints[tocheck[j]],i)) {
+        for (; j < nn; j++) {
+            if (cba.willSwap(constraints[tocheck[j]], i)) {
                 delta--;
             }
         }
-        delta *= (cba.swapGetBit(i)<<1)-1;
+        delta *= (cba.swapGetBit(i) << 1) - 1;
         from.addConfictingClauses(delta);
     }
 
@@ -63,7 +82,7 @@ public class ClauseUtils {
     }
 
     public static int getValueI(long clause, int i) {
-        return (int) ((clause >> (62-i)) & 0x01);
+        return (int) ((clause >> (62 - i)) & 0x01);
     }
 
     public static int getValue0(long clause) {
