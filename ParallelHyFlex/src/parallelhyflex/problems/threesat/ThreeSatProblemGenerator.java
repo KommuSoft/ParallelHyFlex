@@ -1,5 +1,9 @@
 package parallelhyflex.problems.threesat;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import parallelhyflex.communication.SerialisationUtils;
+import parallelhyflex.problemdependent.ProblemReader;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
@@ -7,7 +11,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatProblemGenerator {
+public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,ThreeSatProblem> {
     
     private int n, k;
     
@@ -65,6 +69,16 @@ public class ThreeSatProblemGenerator {
      */
     public void setK(int k) {
         this.k = k;
+    }
+
+    @Override
+    public ThreeSatProblem readAndGenerate(DataInputStream dis) throws IOException {
+        long[] constraints = SerialisationUtils.readLongArray(dis);
+        int[][] influences = SerialisationUtils.readIntArray2d(dis);
+        int[][] blockInfluences = SerialisationUtils.readIntArray2d(dis);
+        int[] vc = SerialisationUtils.readIntArray(dis);
+        double[] stats = SerialisationUtils.readDoubleArray(dis);
+        return new ThreeSatProblem(constraints,influences,blockInfluences,vc,stats);
     }
     
 }

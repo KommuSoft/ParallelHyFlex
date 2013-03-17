@@ -1,7 +1,10 @@
 package parallelhyflex.problems.threesat;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import parallelhyflex.communication.SerialisationUtils;
 import parallelhyflex.problemdependent.DistanceFunction;
 import parallelhyflex.problemdependent.Heuristic;
 import parallelhyflex.problemdependent.ObjectiveFunction;
@@ -15,17 +18,23 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
-    private final long[] constraints;
-    private final int[][] influences;
-    private final int[][] blockInfluences;
-    private final int v, c;
-    private final double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
-    private final double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy;
+    private long[] constraints;
+    private int[][] influences;
+    private int[][] blockInfluences;
+    private int v, c;
+    private double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
+    private double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy;
     private final ThreeSatSolutionGenerator generator;
     private final Object[] distanceFunctions;
     private final Object[] heuristics;
     
+    private ThreeSatProblem () {
+        this.generator = new ThreeSatSolutionGenerator(this);
+        this.distanceFunctions = new Object[] {new ThreeSatDistance1(this),new ThreeSatDistance2(this)};
+        this.heuristics = new Object[] {new ThreeSatHeuristicC1(this),new ThreeSatHeuristicL1(this),new ThreeSatHeuristicM1(this),new ThreeSatHeuristicM3(this),new ThreeSatHeuristicR1(this)};
+    }
     public ThreeSatProblem (long[] constraints) {
+        this();
         this.constraints = constraints;
         this.c = this.constraints.length;
         int n = ClauseUtils.getLargestIndex(constraints)+1;
@@ -93,9 +102,6 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
             Arrays.sort(arr);
             this.blockInfluences[j] = arr;
         }
-        this.generator = new ThreeSatSolutionGenerator(this);
-        this.distanceFunctions = new Object[] {new ThreeSatDistance1(this),new ThreeSatDistance2(this)};
-        this.heuristics = new Object[] {new ThreeSatHeuristicC1(this),new ThreeSatHeuristicL1(this),new ThreeSatHeuristicM1(this),new ThreeSatHeuristicM3(this),new ThreeSatHeuristicR1(this)};
         this.ratio1 = (double) this.c/this.v;
         this.ratio2 = this.ratio1*this.ratio1;
         this.ratio3 = this.ratio1*this.ratio2;
@@ -105,6 +111,34 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.linearizedRatio1 = Math.abs(4.26-this.ratio1);
         this.linearizedRatio2 = this.linearizedRatio1*this.linearizedRatio1;
         this.linearizedRatio3 = this.linearizedRatio1*this.linearizedRatio2;
+    }
+
+    ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, int[] vc, double[] stats) {
+        this();
+        this.constraints = constraints;
+        this.influences = influences;
+        this.blockInfluences = blockInfluences;
+        this.v = vc[0];
+        this.c = vc[1];
+        this.ratio1 = stats[0];
+        this.ratio2 = stats[1];
+        this.ratio3 = stats[2];
+        this.ratioReciprocal1 = stats[3];
+        this.ratioReciprocal2 = stats[4];
+        this.ratioReciprocal3 = stats[5];
+        this.linearizedRatio1 = stats[6];
+        this.linearizedRatio2 = stats[7];
+        this.linearizedRatio3 = stats[8];
+        this.vcVariableMean = stats[9];
+        this.vcVariableVariation = stats[10];
+        this.vcVariableMin = stats[11];
+        this.vcVariableMax = stats[12];
+        this.vcVariableEntropy = stats[13];
+        this.vcClauseMean = stats[14];
+        this.vcClauseVariation = stats[15];
+        this.vcClauseMin = stats[16];
+        this.vcClauseMax = stats[17];
+        this.vcClauseEntropy = stats[18];
     }
     
     @Override
@@ -329,6 +363,19 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
      */
     public Object[] getHeuristics() {
         return heuristics;
+    }
+
+    @Override
+    public void write(DataOutputStream dos) throws IOException {
+        SerialisationUtils.writeLongArray(dos,constraints);
+        SerialisationUtils.writeIntArray2d(dos, influences);
+        SerialisationUtils.writeIntArray2d(dos, blockInfluences);
+        SerialisationUtils.writeIntArray(dos, v,c);
+        SerialisationUtils.writeDoubleArray(dos,ratio1, ratio2, ratio3,
+                ratioReciprocal1, ratioReciprocal2, ratioReciprocal3,
+                linearizedRatio1, linearizedRatio2, linearizedRatio3,
+                vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy,
+                vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy);
     }
     
 }

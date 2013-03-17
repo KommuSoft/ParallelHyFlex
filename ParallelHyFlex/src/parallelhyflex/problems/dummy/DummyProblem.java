@@ -1,5 +1,7 @@
 package parallelhyflex.problems.dummy;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import parallelhyflex.problemdependent.DistanceFunction;
 import parallelhyflex.problemdependent.Heuristic;
 import parallelhyflex.problemdependent.ObjectiveFunction;
@@ -45,6 +47,10 @@ public class DummyProblem extends ProblemBase<DummySolution> {
     @Override
     public SolutionGenerator<DummySolution> getSolutionGenerator() {
         return null;
+    }
+
+    @Override
+    public void write(DataOutputStream dos) throws IOException {
     }
     
 }
