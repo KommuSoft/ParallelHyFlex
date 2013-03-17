@@ -1,0 +1,15 @@
+package parallelhyflex.problemdependent;
+
+import parallelhyflex.ProblemPointerBase;
+
+/**
+ *
+ * @author kommusoft
+ */
+public abstract class SearchSpaceBase<TSolution extends Solution<TSolution>,TProblem extends Problem<TSolution>> extends ProblemPointerBase<TSolution,TProblem> implements SearchSpace<TSolution> {
+    
+    public SearchSpaceBase (TProblem problem) {
+        super(problem);
+    }
+    
+}
