@@ -5,6 +5,7 @@
 package parallelhyflex.utils;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -122,6 +123,11 @@ public class Utils {
             }
         }
         return max;
+    }
+    
+    public static<T> T randomElement (List<T> list) {
+        return list.get(StaticRandom.nextInt(list.size()));
+        
     }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {

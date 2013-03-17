@@ -12,4 +12,9 @@ public abstract class SearchSpaceBase<TSolution extends Solution<TSolution>,TPro
         super(problem);
     }
     
+    @Override
+    public boolean isNotInSearchSpace(TSolution solution) {
+        return !this.isInSearchSpace(solution);
+    }
+    
 }
