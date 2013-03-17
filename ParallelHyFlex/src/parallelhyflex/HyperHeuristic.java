@@ -41,9 +41,9 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
             for(int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
+            Communication.Log(this.problem.toString());
         }
         else {
-            Communication.Log("FU");
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
         }
     }
@@ -61,9 +61,9 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
             for(int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
+            Communication.Log(this.problem.toString());
         }
         else {
-            Communication.Log("FU");
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
         }
     }

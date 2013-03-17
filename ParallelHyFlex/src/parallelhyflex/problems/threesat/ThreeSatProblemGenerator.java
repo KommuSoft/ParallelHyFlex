@@ -2,6 +2,7 @@ package parallelhyflex.problems.threesat;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.SerialisationUtils;
 import parallelhyflex.problemdependent.ProblemReader;
 import parallelhyflex.utils.CompactBitArray;
@@ -33,9 +34,8 @@ public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,
             ib = i0+i1+i2-ia-ic;
             long fill = (((long) Utils.StaticRandom.nextInt(8))<<60)|(ia<<40)|(ib<<20)|ic;
             int ci = Utils.StaticRandom.nextInt(3);
-            long index = ((fill>>(20*ci))&0x0FFFFF);
-            fill &= ~(0x1L<<(60+ci));
-            fill |= cba.getBit(index)<<(60+ci);
+            long index = ClauseUtils.getIndexI(fill,ci);
+            fill = ClauseUtils.setValue(fill,ci,cba.getBit(index));
             if(ClauseUtils.isValidClause(fill)) {
                 constraints[i++] = fill;
             }

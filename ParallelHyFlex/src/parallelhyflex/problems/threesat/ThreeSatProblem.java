@@ -27,39 +27,40 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final ThreeSatSolutionGenerator generator;
     private final Object[] distanceFunctions;
     private final Object[] heuristics;
-    
-    private ThreeSatProblem () {
+
+    private ThreeSatProblem() {
         this.generator = new ThreeSatSolutionGenerator(this);
-        this.distanceFunctions = new Object[] {new ThreeSatDistance1(this),new ThreeSatDistance2(this)};
-        this.heuristics = new Object[] {new ThreeSatHeuristicC1(this),new ThreeSatHeuristicL1(this),new ThreeSatHeuristicM1(this),new ThreeSatHeuristicM3(this),new ThreeSatHeuristicR1(this)};
+        this.distanceFunctions = new Object[]{new ThreeSatDistance1(this), new ThreeSatDistance2(this)};
+        this.heuristics = new Object[]{new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this)};
     }
-    public ThreeSatProblem (long[] constraints) {
+
+    public ThreeSatProblem(long[] constraints) {
         this();
         this.constraints = constraints;
         this.c = this.constraints.length;
-        int n = ClauseUtils.getLargestIndex(constraints)+1;
+        int n = ClauseUtils.getLargestIndex(constraints) + 1;
         this.v = n;
         int[] npn = new int[n], nnn = new int[n], np = new int[4], nn = new int[4], arr;
         int[] degclause = new int[this.c];
         int index, nplus, i, j = 0, k = 0, l;
         this.influences = new int[n][];
-        this.blockInfluences = new int[(n+63)>>6][];
+        this.blockInfluences = new int[(n + 63) >> 6][];
         HashSet<Integer> blockCache = new HashSet<>();
-        for(long constraint : constraints) {
+        for (long constraint : constraints) {
             degclause[k] = ClauseUtils.degree(constraint);
             ClauseUtils.setInfluences(constraint, np, nn);
-            for(i = 1; i < np[0]; i++) {
+            for (i = 1; i < np[0]; i++) {
                 index = np[i];
                 npn[np[i]]++;
             }
-            for(i = 1; i < nn[0]; i++) {
+            for (i = 1; i < nn[0]; i++) {
                 index = nn[i];
                 nnn[nn[i]]++;
             }
         }
-        for(i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
             nplus = npn[i];
-            arr = new int[nplus+nnn[i]+1];
+            arr = new int[nplus + nnn[i] + 1];
             arr[0] = nplus;
             nnn[i] += nplus;
             this.influences[i] = arr;
@@ -74,43 +75,43 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.vcVariableMin = Utils.Min(nnn);
         this.vcVariableMax = Utils.Max(nnn);
         this.vcVariableEntropy = Utils.entropy(nnn);*/
-        for(long constraint : constraints) {
+        for (long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
-            for(i = 1; i < np[0]; i++) {
+            for (i = 1; i < np[0]; i++) {
                 index = np[i];
                 this.influences[index][npn[index]--] = j;
             }
-            for(i = 1; i < nn[0]; i++) {
+            for (i = 1; i < nn[0]; i++) {
                 index = nn[i];
                 this.influences[index][nnn[index]--] = j;
             }
             j++;
         }
-        for(i = 0, j = 0; i < n; j++) {
-            k = Math.min(n,i+64);
-            for(; i < k; i++) {
-                for(l = 1; l < influences.length; l++) {
+        for (i = 0, j = 0; i < n; j++) {
+            k = Math.min(n, i + 64);
+            for (; i < k; i++) {
+                for (l = 1; l < influences.length; l++) {
                     blockCache.size();
                 }
             }
             arr = new int[blockCache.size()];
             k = 0;
-            for(int val : blockCache) {
+            for (int val : blockCache) {
                 arr[k++] = val;
             }
             blockCache.clear();
             Arrays.sort(arr);
             this.blockInfluences[j] = arr;
         }
-        this.ratio1 = (double) this.c/this.v;
-        this.ratio2 = this.ratio1*this.ratio1;
-        this.ratio3 = this.ratio1*this.ratio2;
-        this.ratioReciprocal1 = (double) this.v/this.c;
-        this.ratioReciprocal2 = this.ratioReciprocal1*this.ratioReciprocal1;
-        this.ratioReciprocal3 = this.ratioReciprocal1*this.ratioReciprocal2;
-        this.linearizedRatio1 = Math.abs(4.26-this.ratio1);
-        this.linearizedRatio2 = this.linearizedRatio1*this.linearizedRatio1;
-        this.linearizedRatio3 = this.linearizedRatio1*this.linearizedRatio2;
+        this.ratio1 = (double) this.c / this.v;
+        this.ratio2 = this.ratio1 * this.ratio1;
+        this.ratio3 = this.ratio1 * this.ratio2;
+        this.ratioReciprocal1 = (double) this.v / this.c;
+        this.ratioReciprocal2 = this.ratioReciprocal1 * this.ratioReciprocal1;
+        this.ratioReciprocal3 = this.ratioReciprocal1 * this.ratioReciprocal2;
+        this.linearizedRatio1 = Math.abs(4.26 - this.ratio1);
+        this.linearizedRatio2 = this.linearizedRatio1 * this.linearizedRatio1;
+        this.linearizedRatio3 = this.linearizedRatio1 * this.linearizedRatio2;
     }
 
     ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, int[] vc, double[] stats) {
@@ -140,7 +141,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.vcClauseMax = stats[17];
         this.vcClauseEntropy = stats[18];
     }
-    
+
     @Override
     public Heuristic<ThreeSatSolution> getHeuristic(int index) {
         return (Heuristic<ThreeSatSolution>) this.getHeuristics()[index];
@@ -367,15 +368,20 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
-        SerialisationUtils.writeLongArray(dos,constraints);
+        SerialisationUtils.writeLongArray(dos, constraints);
         SerialisationUtils.writeIntArray2d(dos, influences);
         SerialisationUtils.writeIntArray2d(dos, blockInfluences);
-        SerialisationUtils.writeIntArray(dos, v,c);
-        SerialisationUtils.writeDoubleArray(dos,ratio1, ratio2, ratio3,
+        SerialisationUtils.writeIntArray(dos, v, c);
+        SerialisationUtils.writeDoubleArray(dos, ratio1, ratio2, ratio3,
                 ratioReciprocal1, ratioReciprocal2, ratioReciprocal3,
                 linearizedRatio1, linearizedRatio2, linearizedRatio3,
                 vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy,
                 vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("3SAT %s",ClauseUtils.clausesToString(this.constraints));
     }
     
 }

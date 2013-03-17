@@ -19,7 +19,7 @@ public class ParallelHyFlex {
         
         Communication.initializeCommunication(args);
         try {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(128,500);
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(128,10);// = new ThreeSatProblemGenerator(128,500);
         HyperHeuristic dummy;
         if(Communication.getCommunication().getRank() == 0) {
             ThreeSatProblem tsp = tspg.generateProblem();

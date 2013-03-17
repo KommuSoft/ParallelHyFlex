@@ -26,21 +26,29 @@ public class ClauseUtils {
         return deg;
     }
     
+    public static String clausesToString(long[] constraints) {
+        StringBuilder sb = new StringBuilder();
+        for(long clause : constraints) {
+            sb.append(String.format("(%s)",clauseToString(clause)));
+        }
+        return sb.toString();
+    }
+    
     public static boolean isHornClause (long clause) {
         long vals = (clause>>60)&7;
         return Utils.countOnes(vals)<2;
     }
 
     public static boolean isValidClause(long clause) {
-        long inda = clause & 0x0FFFFF;
-        long indb = (clause >> 20) & 0x0FFFFF;
-        long indc = (clause >> 40) & 0x0FFFFF;
-        if (inda > indb || indc > indb) {
+        long inda = getIndex0(clause);
+        long indb = getIndex1(clause);
+        long indc = getIndex2(clause);
+        if (inda > indb || indb > indc) {
             return false;
         }
-        long vala = (clause >> 60) & 1;
-        long valb = (clause >> 61) & 1;
-        long valc = (clause >> 62) & 1;
+        long vala = getValue0(clause);
+        long valb = getValue1(clause);
+        long valc = getValue2(clause);
         return (inda != indb || vala == valb) && (indb != indc || valb == valc) && (inda != indc || vala == valc);//TODO: optional third part? (indices are sorted)
     }
 
@@ -84,7 +92,11 @@ public class ClauseUtils {
     public static int getValueI(long clause, int i) {
         return (int) ((clause >> (62 - i)) & 0x01);
     }
-
+    
+    public static long setValue(long fill, int i, long bit) {
+        return (fill&(~(0x01L << (62 - i))))|(bit << (62 - i));
+    }
+    
     public static int getValue0(long clause) {
         return (int) ((clause >> 62) & 0x01);
     }
@@ -155,12 +167,12 @@ public class ClauseUtils {
     }
 
     public static String clauseToString(long clause) {
-        long inda = clause & 0x0FFFFF;
-        long indb = (clause >> 20) & 0x0FFFFF;
-        long indc = (clause >> 40) & 0x0FFFFF;
-        long vala = (clause >> 60) & 1;
-        long valb = (clause >> 61) & 1;
-        long valc = (clause >> 62) & 1;
+        long inda = getIndex0(clause);
+        long indb = getIndex1(clause);
+        long indc = getIndex2(clause);
+        long vala = getValue0(clause);
+        long valb = getValue1(clause);
+        long valc = getValue2(clause);
         return String.format("[%s]=%s or [%s]=%s or [%s]=%s", inda, vala, indb, valb, indc, valc);
     }
 }
