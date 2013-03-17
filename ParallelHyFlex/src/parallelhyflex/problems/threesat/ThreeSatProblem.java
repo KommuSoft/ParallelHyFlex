@@ -59,12 +59,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         }
         for(i = 0; i < n; i++) {
             nplus = npn[i];
-            arr = new int[nplus+nnn[i]];
+            arr = new int[nplus+nnn[i]+1];
             arr[0] = nplus;
             nnn[i] += nplus;
             this.influences[i] = arr;
         }
-        this.vcClauseMean = Utils.Mean(degclause);
+        /*this.vcClauseMean = Utils.Mean(degclause);
         this.vcClauseVariation = Utils.Variation(degclause,this.vcClauseMean);
         this.vcClauseMin = Utils.Min(degclause);
         this.vcClauseMax = Utils.Max(degclause);
@@ -73,7 +73,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.vcVariableVariation = Utils.Variation(nnn,this.vcVariableMean);
         this.vcVariableMin = Utils.Min(nnn);
         this.vcVariableMax = Utils.Max(nnn);
-        this.vcVariableEntropy = Utils.entropy(nnn);
+        this.vcVariableEntropy = Utils.entropy(nnn);*/
         for(long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for(i = 1; i < np[0]; i++) {

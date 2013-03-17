@@ -30,29 +30,26 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
         if(Communication.getCommunication().getRank() == 0) {
             this.problem = problem;
             this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
-            int nw = this.getWritableMemory();
-            for(int i = 0; i < nw; i++) {
-                this.initializeSolution(i);
-            }
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DataOutputStream dos = new DataOutputStream(baos);
             problem.write(dos);
             dos.close();
             byte[][] data = new byte[][] {baos.toByteArray()};
-            Communication.BC(data,0,1,MPI.OBJECT,0);
             baos.close();
-        }
-        else {
-            throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
-        }
-    }
-    public HyperHeuristic (ProblemReader<TSolution,TProblem> problemReader) throws ProtocolException, IOException {
-        if(Communication.getCommunication().getRank() == 0) {
-            this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
+            Communication.BC(data,0,1,MPI.OBJECT,0);
             int nw = this.getWritableMemory();
             for(int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
+        }
+        else {
+            Communication.Log("FU");
+            throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
+        }
+    }
+    public HyperHeuristic (ProblemReader<TSolution,TProblem> problemReader) throws ProtocolException, IOException {
+        if(Communication.getCommunication().getRank() != 0) {
+            this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
             byte[][] data = new byte[1][];
             Communication.BC(data,0,1,MPI.OBJECT,0);
             ByteArrayInputStream bais = new ByteArrayInputStream(data[0]);
@@ -60,8 +57,13 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
             this.problem = problemReader.readAndGenerate(dis);
             dis.close();
             bais.close();
+            int nw = this.getWritableMemory();
+            for(int i = 0; i < nw; i++) {
+                this.initializeSolution(i);
+            }
         }
         else {
+            Communication.Log("FU");
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
         }
     }
