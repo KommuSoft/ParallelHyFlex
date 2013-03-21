@@ -1,6 +1,8 @@
 package parallelhyflex.problems.threesat;
 
-import parallelhyflex.problemdependent.EnforceableConstraintBase;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import parallelhyflex.problemdependent.WritableEnforceableConstraintBase;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
@@ -8,12 +10,19 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatEnforceableConstraint1 extends EnforceableConstraintBase<ThreeSatSolution,ThreeSatProblem> {
+public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableConstraintBase<ThreeSatSolution,ThreeSatProblem> {
 
     private long data;
+    public static final long MASK_BIT = 0x8000000000000000L;
+    public static final long MASK = 0x7FFFFFFFFFFFFFFFL;
     
-    public ThreeSatEnforceableConstraint1 (ThreeSatProblem problem) {
+    public ThreeSatWritableEnforceableConstraint1 (ThreeSatProblem problem) {
         super(problem);
+    }
+
+    ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long data) {
+        this(problem);
+        this.data = data;
     }
 
     @Override
@@ -36,5 +45,10 @@ public class ThreeSatEnforceableConstraint1 extends EnforceableConstraintBase<Th
     @Override
     public boolean isSatisfied(ThreeSatSolution solution) {
         return solution.satisfiesClause(data);
+    }
+
+    @Override
+    public void write(DataOutputStream dos) throws IOException {
+        dos.writeLong(MASK_BIT|this.data);
     }
 }
