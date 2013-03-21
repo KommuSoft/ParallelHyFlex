@@ -21,7 +21,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private long[] constraints;
     private int[][] influences;
     private int[][] blockInfluences;
-    private double[] indexWeight;
+    private double[] indexCDF;
     private int v, c;
     private double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
     private double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy;
@@ -59,16 +59,17 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
                 nnn[nn[i]]++;
             }
         }
-        this.indexWeight = new double[n];
+        this.indexCDF = new double[n];
         for (i = 0; i < n; i++) {
             nplus = npn[i];
             int total = nplus + nnn[i];
-            this.indexWeight[i] = total*Utils.pqEntropy((double) nplus/total);
+            this.indexCDF[i] = total*Utils.pqEntropy((double) nplus/total);
             arr = new int[total + 1];
             arr[0] = nplus;
             nnn[i] = total;
             this.influences[i] = arr;
         }
+        Utils.unnormalizedWeightsToCDF(this.indexCDF);
         this.vcClauseMean = Utils.mean(degclause);
         this.vcClauseVariation = Utils.variation(degclause,this.vcClauseMean);
         this.vcClauseMin = Utils.min(degclause);
@@ -118,12 +119,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.linearizedRatio3 = this.linearizedRatio1 * this.linearizedRatio2;
     }
 
-    ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, double[] indexWeight, int[] vc, double[] stats) {
+    ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, double[] indexCDF, int[] vc, double[] stats) {
         this();
         this.constraints = constraints;
         this.influences = influences;
         this.blockInfluences = blockInfluences;
-        this.indexWeight = indexWeight;
+        this.indexCDF = indexCDF;
         this.v = vc[0];
         this.c = vc[1];
         this.ratio1 = stats[0];
@@ -376,7 +377,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         SerialisationUtils.writeLongArray(dos, constraints);
         SerialisationUtils.writeIntArray2d(dos, influences);
         SerialisationUtils.writeIntArray2d(dos, blockInfluences);
-        SerialisationUtils.writeDoubleArray(dos, indexWeight);
+        SerialisationUtils.writeDoubleArray(dos, getIndexCDF());
         SerialisationUtils.writeIntArray(dos, v, c);
         SerialisationUtils.writeDoubleArray(dos, ratio1, ratio2, ratio3,
                 ratioReciprocal1, ratioReciprocal2, ratioReciprocal3,
@@ -397,6 +398,13 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     @Override
     public String toString() {
         return String.format("3SAT %s",ClauseUtils.clausesToString(this.constraints));
+    }
+
+    /**
+     * @return the indexCDF
+     */
+    public double[] getIndexCDF() {
+        return indexCDF;
     }
     
 }

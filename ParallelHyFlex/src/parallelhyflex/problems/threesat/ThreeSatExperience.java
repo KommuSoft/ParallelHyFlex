@@ -16,5 +16,10 @@ public class ThreeSatExperience extends ExperienceBase<ThreeSatSolution,ThreeSat
     public void join(ThreeSatSolution solution) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void amnesia() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

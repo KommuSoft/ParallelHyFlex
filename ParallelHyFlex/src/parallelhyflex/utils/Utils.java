@@ -4,6 +4,8 @@
  */
 package parallelhyflex.utils;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -181,6 +183,38 @@ public class Utils {
 
     public static <T> T randomElement(List<T> list) {
         return list.get(StaticRandom.nextInt(list.size()));
+    }
+    
+    public static void unnormalizedWeightsToCDF (double[] weights) {
+        double suminv = 0.0d;
+        double min = 0.0d;
+        for(double w : weights) {
+            min = Math.min(w,min);
+            suminv += w;
+        }
+        suminv -= min*weights.length;
+        suminv = 1/suminv;
+        double c = 0.0d;
+        for(int i = 0; i < weights.length; i++) {
+            c += (weights[i]-min)*suminv;
+            weights[i] = c;
+        }
+    }
+    public static int getRandomIndexFromCDF (double[] cdf, Collection<Integer> without) {
+        int index;
+        do {
+            index = getRandomIndexFromCDF(cdf);
+        }
+        while(without.contains(index));
+        return index;
+    }
+    public static int getRandomIndexFromCDF (double[] cdf) {
+        double rand = StaticRandom.nextDouble();
+        int index = Arrays.binarySearch(cdf,rand);
+        if(index < 0) {
+            index = ~index;
+        }
+        return index;
     }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {

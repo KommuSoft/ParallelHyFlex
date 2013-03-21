@@ -66,10 +66,10 @@ public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,
         long[] constraints = SerialisationUtils.readLongArray(dis);
         int[][] influences = SerialisationUtils.readIntArray2d(dis);
         int[][] blockInfluences = SerialisationUtils.readIntArray2d(dis);
-        double[] indexWeight = SerialisationUtils.readDoubleArray(dis);
+        double[] indexCDF = SerialisationUtils.readDoubleArray(dis);
         int[] vc = SerialisationUtils.readIntArray(dis);
         double[] stats = SerialisationUtils.readDoubleArray(dis);
-        return new ThreeSatProblem(constraints,influences,blockInfluences,indexWeight,vc,stats);
+        return new ThreeSatProblem(constraints,influences,blockInfluences,indexCDF,vc,stats);
     }
     
 }

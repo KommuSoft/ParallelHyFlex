@@ -7,5 +7,6 @@ package parallelhyflex.problemdependent;
 public interface Experience<TSolution extends Solution<TSolution>> {
     
     public void join (TSolution solution);
+    public void amnesia ();
     
 }
