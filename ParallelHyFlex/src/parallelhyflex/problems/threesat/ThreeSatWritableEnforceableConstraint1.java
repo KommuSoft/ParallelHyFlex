@@ -30,7 +30,7 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
         CompactBitArray cba = solution.getCompactBitArray();
         if(!cba.satisfiesClause(constraint)) {
             int ii = Utils.StaticRandom.nextInt(3);
-            solution.swapBit(ii,this.getProblem());
+            solution.swapBit(ClauseUtils.getIndexI(this.getConstraint(), ii),this.getProblem());
         }
     }
 
@@ -39,7 +39,6 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
         CompactBitArray cba = solution.getCompactBitArray();
         ThreeSatProblem tsp = this.getProblem();
         if(cba.satisfiesClause(getConstraint())) {
-            //TODO: set index
             int index = ClauseUtils.getIndex0(this.constraint);
             if(cba.getBit(index) == ClauseUtils.getValue0(this.constraint)) {
                 solution.swapBit(index,tsp);

@@ -46,54 +46,66 @@ public class ThreeSatWritableEnforceableConstraint2Test {
      * Test of enforceTrue method, of class ThreeSatWritableEnforceableConstraint2.
      */
     @Test
-    public void testEnforceTrue() {
-        System.out.println("enforceTrue");
-        ThreeSatSolution solution = null;
-        ThreeSatWritableEnforceableConstraint2 instance = null;
-        instance.enforceTrue(solution);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testEnforceTrue1() {
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10,42);
+        ThreeSatProblem tsp = tspg.generateProblem();
+        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
+        ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+        ThreeSatSolution tss = tsg.generateSolution();
+        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp,tss.clone(),5);
+        tswec.enforceTrue(tss);
+        Assert.assertTrue(tswec.isSatisfied(tss));
+    }
+    
+    /**
+     * Test of enforceTrue method, of class ThreeSatWritableEnforceableConstraint2.
+     */
+    @Test
+    public void testEnforceTrue2() {
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10,42);
+        ThreeSatProblem tsp = tspg.generateProblem();
+        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
+        ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+        ThreeSatSolution tss = tsg.generateSolution();
+        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp,tss.clone(),5);
+        for(int i = 0; i < 1000000000; i++) {
+            ThreeSatSolution tss2 = tsg.generateSolution();
+            tswec.enforceTrue(tss2);
+            Assert.assertTrue(tswec.isSatisfied(tss2));
+        }
     }
 
     /**
      * Test of enforceFalse method, of class ThreeSatWritableEnforceableConstraint2.
      */
     @Test
-    public void testEnforceFalse() {
-        System.out.println("enforceFalse");
-        ThreeSatSolution solution = null;
-        ThreeSatWritableEnforceableConstraint2 instance = null;
-        instance.enforceFalse(solution);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testEnforceFalse1() {
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10,42);
+        ThreeSatProblem tsp = tspg.generateProblem();
+        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
+        ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+        ThreeSatSolution tss = tsg.generateSolution();
+        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp,tss.clone(),5);
+        tswec.enforceFalse(tss);
+        Assert.assertFalse(tswec.isSatisfied(tss));
     }
-
+    
     /**
-     * Test of getRoot method, of class ThreeSatWritableEnforceableConstraint2.
+     * Test of enforceFalse method, of class ThreeSatWritableEnforceableConstraint2.
      */
     @Test
-    public void testGetRoot() {
-        System.out.println("getRoot");
-        ThreeSatWritableEnforceableConstraint2 instance = null;
-        ThreeSatSolution expResult = null;
-        ThreeSatSolution result = instance.getRoot();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getMaxDistance method, of class ThreeSatWritableEnforceableConstraint2.
-     */
-    @Test
-    public void testGetMaxDistance() {
-        System.out.println("getMaxDistance");
-        ThreeSatWritableEnforceableConstraint2 instance = null;
-        int expResult = 0;
-        int result = instance.getMaxDistance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testEnforceFalse2() {
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10,42);
+        ThreeSatProblem tsp = tspg.generateProblem();
+        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
+        ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+        ThreeSatSolution tss = tsg.generateSolution();
+        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp,tss.clone(),5);
+        for(int i = 0; i < 1000000000; i++) {
+            ThreeSatSolution tss2 = tsg.generateSolution();
+            tswec.enforceFalse(tss2);
+            Assert.assertFalse(tswec.isSatisfied(tss2));
+        }
     }
 
     /**
