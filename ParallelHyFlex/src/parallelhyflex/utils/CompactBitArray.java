@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class CompactBitArray implements ICompactBitArray {
 
     public static final long BLOCK_MASK = 0xFFFFFFFFFFFFFFBFL;
+
     public final long[] values;
     private int n;
 
@@ -218,6 +219,15 @@ public class CompactBitArray implements ICompactBitArray {
         for (int i = 0; i < values.length; i++) {
             os.writeLong(values[i]);
         }
+    }
+    public static CompactBitArray fromDataInputStream(DataInputStream dis) throws IOException {
+        int n = dis.readInt();
+        int j = (n + 63) >> 6;
+        long[] values = new long[j];
+        for(int i = 0; i < j; i++) {
+            values[i] = dis.readLong();
+        }
+        return new CompactBitArray(n,values);
     }
 
     @Override

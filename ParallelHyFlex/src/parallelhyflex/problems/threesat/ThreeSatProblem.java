@@ -378,6 +378,15 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
                 vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy,
                 vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy);
     }
+    
+    @Override
+    public boolean equals (Object obj) {
+        if(obj instanceof ThreeSatProblem) {
+            ThreeSatProblem tsp = (ThreeSatProblem) obj;
+            return Utils.arrayEquality(this.getConstraints(),tsp.getConstraints());
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

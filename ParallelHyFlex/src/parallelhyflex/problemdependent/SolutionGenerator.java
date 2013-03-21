@@ -8,7 +8,7 @@ package parallelhyflex.problemdependent;
  *
  * @author kommusoft
  */
-public interface SolutionGenerator<TSolution extends Solution> {
+public interface SolutionGenerator<TSolution extends Solution<TSolution>> extends SolutionReader<TSolution> {
     
     public TSolution generateSolution ();
     public void setSeed (long seed);

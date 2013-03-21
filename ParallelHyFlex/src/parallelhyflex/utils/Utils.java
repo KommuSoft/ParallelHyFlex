@@ -15,6 +15,18 @@ import java.util.Random;
  */
 public class Utils {
 
+    public static boolean arrayEquality(long[] a, long[] b) {
+        if(a.length != b.length) {
+            return false;
+        }
+        for(int i = 0; i < a.length; i++) {
+            if(a[i] != b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private Utils() {
     }
     public static final Random StaticRandom = new Random();
@@ -25,6 +37,18 @@ public class Utils {
             sb.append(inp.charAt(i));
         }
         return sb.toString();
+    }
+    
+    public static<T> boolean arrayEquality (T[] a, T... b) {
+        if(a.length != b.length) {
+            return false;
+        }
+        for(int i = 0; i < a.length; i++) {
+            if(!a[i].equals(b[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static <T> void randomPermutate(T[] vals) {

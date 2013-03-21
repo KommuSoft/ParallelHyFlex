@@ -108,11 +108,12 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
 
     @Override
     public boolean equalSolution(ThreeSatSolution other) {
-        return this.getCompactBitArray().equals(other.getCompactBitArray());
+        return (this.conflictingClauses == other.conflictingClauses && this.getCompactBitArray().equals(other.getCompactBitArray()));
     }
 
     @Override
     public void write(DataOutputStream os) throws IOException {
+        os.writeInt(this.getConflictingClauses());
         this.getCompactBitArray().writeSolution(os);
     }
 

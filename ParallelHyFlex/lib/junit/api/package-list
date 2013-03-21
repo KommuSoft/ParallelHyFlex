@@ -1,0 +1,6 @@
+junit.awtui
+junit.extensions
+junit.framework
+junit.runner
+junit.swingui
+junit.textui
