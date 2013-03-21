@@ -7,3 +7,9 @@
 
 # Temporary files #
 *~
+
+#Test results
+ParallelHyFlex/build/test/results/*
+
+#API files
+ParallelHyFlex/lib/junit_4/*

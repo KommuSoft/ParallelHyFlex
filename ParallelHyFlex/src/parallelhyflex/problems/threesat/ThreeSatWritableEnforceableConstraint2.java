@@ -2,6 +2,7 @@ package parallelhyflex.problems.threesat;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import parallelhyflex.problemdependent.WritableEnforceableConstraintBase;
 
 /**
@@ -59,4 +60,22 @@ public class ThreeSatWritableEnforceableConstraint2 extends WritableEnforceableC
         dos.writeLong((long) this.maxDistance);
         this.root.write(dos);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ThreeSatWritableEnforceableConstraint2) {
+            ThreeSatWritableEnforceableConstraint2 ob = (ThreeSatWritableEnforceableConstraint2) obj;
+            return (this.maxDistance == ob.maxDistance && this.root.equalSolution(ob.root));
+        } else {
+            return false;
+        }
+    }
+
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.root);
+        hash = 67 * hash + this.maxDistance;
+        return hash;
+    }
+
 }

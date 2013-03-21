@@ -12,7 +12,7 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableConstraintBase<ThreeSatSolution,ThreeSatProblem> {
 
-    private long data;
+    private long constraint;
     public static final long MASK_BIT = 0x8000000000000000L;
     public static final long MASK = 0x7FFFFFFFFFFFFFFFL;
     
@@ -20,15 +20,15 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
         super(problem);
     }
 
-    ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long data) {
+    ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long constraint) {
         this(problem);
-        this.data = data;
+        this.constraint = constraint;
     }
 
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
-        if(!cba.satisfiesClause(data)) {
+        if(!cba.satisfiesClause(constraint)) {
             int ii = Utils.StaticRandom.nextInt(3);
             ClauseUtils.swapBit(ii, this.getProblem().getInfluences()[ii], cba, this.getProblem().getConstraints(), solution);
         }
@@ -37,18 +37,50 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
-        if(cba.satisfiesClause(data)) {
+        if(cba.satisfiesClause(getConstraint())) {
             //TODO: set index
         }
     }
 
     @Override
     public boolean isSatisfied(ThreeSatSolution solution) {
-        return solution.satisfiesClause(data);
+        return solution.satisfiesClause(getConstraint());
     }
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
-        dos.writeLong(MASK_BIT|this.data);
+        dos.writeLong(MASK_BIT|this.getConstraint());
     }
+    
+    @Override
+    public boolean equals (Object obj) {
+        if(obj instanceof ThreeSatWritableEnforceableConstraint1) {
+            return this.getConstraint() == ((ThreeSatWritableEnforceableConstraint1) obj).getConstraint();
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (int) (this.getConstraint() ^ (this.getConstraint() >>> 32));
+        return hash;
+    }
+
+    /**
+     * @return the data
+     */
+    public long getConstraint() {
+        return constraint;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(long data) {
+        this.constraint = data;
+    }
+    
 }

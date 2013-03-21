@@ -24,18 +24,8 @@ public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,
     public ThreeSatProblem generateProblem () {
         long[] constraints = new long[k];
         CompactBitArray cba = CompactBitArray.randomInstance(this.n);
-        long ia, ib, ic, i0, i1, i2;
         for(int i = 0; i < k;) {
-            i0 = Utils.StaticRandom.nextInt(n);
-            i1 = Utils.StaticRandom.nextInt(n);
-            i2 = Utils.StaticRandom.nextInt(n);
-            ia = Math.min(i0,Math.min(i1,i2));
-            ic = Math.max(i0,Math.max(i1,i2));
-            ib = i0+i1+i2-ia-ic;
-            long fill = (((long) Utils.StaticRandom.nextInt(8))<<60)|(ia<<40)|(ib<<20)|ic;
-            int ci = Utils.StaticRandom.nextInt(3);
-            long index = ClauseUtils.getIndexI(fill,ci);
-            fill = ClauseUtils.setValue(fill,ci,cba.getBit(index));
+            long fill = ClauseUtils.generateTrueClause(cba);
             if(ClauseUtils.isValidClause(fill)) {
                 constraints[i++] = fill;
             }
