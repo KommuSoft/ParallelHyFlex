@@ -15,19 +15,19 @@ import java.util.Random;
  */
 public class Utils {
 
+    private Utils() {
+    }
+
     public static boolean arrayEquality(long[] a, long[] b) {
-        if(a.length != b.length) {
+        if (a.length != b.length) {
             return false;
         }
-        for(int i = 0; i < a.length; i++) {
-            if(a[i] != b[i]) {
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] != b[i]) {
                 return false;
             }
         }
         return true;
-    }
-
-    private Utils() {
     }
     public static final Random StaticRandom = new Random();
 
@@ -38,13 +38,13 @@ public class Utils {
         }
         return sb.toString();
     }
-    
-    public static<T> boolean arrayEquality (T[] a, T... b) {
-        if(a.length != b.length) {
+
+    public static <T> boolean arrayEquality(T[] a, T... b) {
+        if (a.length != b.length) {
             return false;
         }
-        for(int i = 0; i < a.length; i++) {
-            if(!a[i].equals(b[i])) {
+        for (int i = 0; i < a.length; i++) {
+            if (!a[i].equals(b[i])) {
                 return false;
             }
         }
@@ -61,121 +61,131 @@ public class Utils {
             vals[ind] = tmp;
         }
     }
-    
-    public static int countOnes (long data) {
+
+    public static int countOnes(long data) {
         int ones = 0;
-        while(data != 0) {
-            ones += data&1;
+        while (data != 0) {
+            ones += data & 1;
             data >>= 1;
         }
         return ones;
     }
-    
-    public static double Mean (double[] vals) {
+
+    public static double mean(double[] vals) {
         double sum = 0.0d;
-        for(double d : vals) {
+        for (double d : vals) {
             sum += d;
         }
-        return sum/vals.length;
+        return sum / vals.length;
     }
-    
-    public static double Mean (int[] vals) {
+
+    public static double mean(int[] vals) {
         double sum = 0.0d;
-        for(double d : vals) {
+        for (double d : vals) {
             sum += d;
         }
-        return sum/vals.length;
+        return sum / vals.length;
     }
-    
-    public static double Variation (double[] vals) {
-        double mean = Mean(vals);
-        return Variation(vals,mean);
+
+    public static double variation(double[] vals) {
+        double mean = mean(vals);
+        return variation(vals, mean);
     }
-    
-    public static double Variation (int[] vals) {
-        double mean = Mean(vals);
-        return Variation(vals,mean);
+
+    public static double variation(int[] vals) {
+        double mean = mean(vals);
+        return variation(vals, mean);
     }
-    
-    public static double Variation (double[] vals, double mean) {
+
+    public static double variation(double[] vals, double mean) {
         double sum = 0.0d;
-        for(double d : vals) {
-            sum += (d-mean)*(d-mean);
+        for (double d : vals) {
+            sum += (d - mean) * (d - mean);
         }
-        return sum/vals.length;
+        return sum / vals.length;
     }
-    
-    public static double Variation (int[] vals, double mean) {
+
+    public static double variation(int[] vals, double mean) {
         double sum = 0.0d;
-        for(double d : vals) {
-            sum += (d-mean)*(d-mean);
+        for (double d : vals) {
+            sum += (d - mean) * (d - mean);
         }
-        return sum/vals.length;
+        return sum / vals.length;
     }
-    
-    public static double Min (double[] vals) {
+
+    public static double min(double[] vals) {
         double min = Double.POSITIVE_INFINITY;
-        for(double d : vals) {
-            if(d < min) {
+        for (double d : vals) {
+            if (d < min) {
                 min = d;
             }
         }
         return min;
     }
-    public static double Min (int[] vals) {
+
+    public static double min(int[] vals) {
         double min = Double.POSITIVE_INFINITY;
-        for(double d : vals) {
-            if(d < min) {
+        for (double d : vals) {
+            if (d < min) {
                 min = d;
             }
         }
         return min;
     }
-    public static double Max (double[] vals) {
+
+    public static double max(double[] vals) {
         double max = Double.NEGATIVE_INFINITY;
-        for(double d : vals) {
-            if(d > max) {
+        for (double d : vals) {
+            if (d > max) {
                 max = d;
             }
         }
         return max;
     }
-    public static double Max (int[] vals) {
+
+    public static double max(int[] vals) {
         double max = Double.NEGATIVE_INFINITY;
-        for(double d : vals) {
-            if(d > max) {
+        for (double d : vals) {
+            if (d > max) {
                 max = d;
             }
         }
         return max;
     }
-    
-    public static double entropy (int[] vals) {
-        HashMap<Integer,Integer> frequency = new HashMap<>();
-        for(int val : vals) {
-            if(!frequency.containsKey(val)) {
-                frequency.put(val,1);
-            }
-            else {
-                frequency.put(val,frequency.get(val)+1);
+
+    public static double entropy(int[] vals) {
+        HashMap<Integer, Integer> frequency = new HashMap<>();
+        for (int val : vals) {
+            if (!frequency.containsKey(val)) {
+                frequency.put(val, 1);
+            } else {
+                frequency.put(val, frequency.get(val) + 1);
             }
         }
         double sum = 0.0;
-        for(int freq : frequency.values()) {
-            double p = (double) freq/vals.length;
-            sum -= p*Math.log(p);
+        for (int freq : frequency.values()) {
+            double p = (double) freq / vals.length;
+            sum -= p * Math.log(p);
         }
-        return sum/Math.log(2.0d);
+        return sum / Math.log(2.0d);
     }
     
-    public static<T> T randomElement (List<T> list) {
+    public static double pqEntropy (double p) {
+        if(p < 1e-9 || p > 1-1e-9) {
+            return 0.0d;
+        }
+        else {
+            return ((p-1)*Math.log(1-p)-p*Math.log(p))/Math.log(2);
+        }
+    }
+
+    public static <T> T randomElement(List<T> list) {
         return list.get(StaticRandom.nextInt(list.size()));
     }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {
-        return new Iterator<Integer> ()
-        {
-            
+        return new Iterator<Integer>() {
+
             private int modulo;
             private int value = 0;
             private int offset;
@@ -188,10 +198,10 @@ public class Utils {
             @Override
             public Integer next() {
                 int val = this.value++;
-                return (val+offset)%modulo;
+                return (val + offset) % modulo;
             }
-            
-            public Iterator<Integer> setValues (int modulo, int offset) {
+
+            public Iterator<Integer> setValues(int modulo, int offset) {
                 this.modulo = modulo;
                 this.offset = offset;
                 return this;
@@ -201,7 +211,6 @@ public class Utils {
             public void remove() {
                 throw new UnsupportedOperationException("Cannot remove from a virtual list.");
             }
-            
         }.setValues(modulo, offset);
     }
 }

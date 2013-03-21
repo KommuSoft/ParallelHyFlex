@@ -21,6 +21,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private long[] constraints;
     private int[][] influences;
     private int[][] blockInfluences;
+    private double[] indexWeight;
     private int v, c;
     private double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
     private double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy;
@@ -58,23 +59,26 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
                 nnn[nn[i]]++;
             }
         }
+        this.indexWeight = new double[n];
         for (i = 0; i < n; i++) {
             nplus = npn[i];
-            arr = new int[nplus + nnn[i] + 1];
+            int total = nplus + nnn[i];
+            this.indexWeight[i] = total*Utils.pqEntropy((double) nplus/total);
+            arr = new int[total + 1];
             arr[0] = nplus;
-            nnn[i] += nplus;
+            nnn[i] = total;
             this.influences[i] = arr;
         }
-        /*this.vcClauseMean = Utils.Mean(degclause);
-        this.vcClauseVariation = Utils.Variation(degclause,this.vcClauseMean);
-        this.vcClauseMin = Utils.Min(degclause);
-        this.vcClauseMax = Utils.Max(degclause);
+        this.vcClauseMean = Utils.mean(degclause);
+        this.vcClauseVariation = Utils.variation(degclause,this.vcClauseMean);
+        this.vcClauseMin = Utils.min(degclause);
+        this.vcClauseMax = Utils.max(degclause);
         this.vcClauseEntropy = Utils.entropy(degclause);
-        this.vcVariableMean = Utils.Mean(nnn);
-        this.vcVariableVariation = Utils.Variation(nnn,this.vcVariableMean);
-        this.vcVariableMin = Utils.Min(nnn);
-        this.vcVariableMax = Utils.Max(nnn);
-        this.vcVariableEntropy = Utils.entropy(nnn);*/
+        this.vcVariableMean = Utils.mean(nnn);
+        this.vcVariableVariation = Utils.variation(nnn,this.vcVariableMean);
+        this.vcVariableMin = Utils.min(nnn);
+        this.vcVariableMax = Utils.max(nnn);
+        this.vcVariableEntropy = Utils.entropy(nnn);
         for (long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for (i = 1; i < np[0]; i++) {
@@ -114,11 +118,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.linearizedRatio3 = this.linearizedRatio1 * this.linearizedRatio2;
     }
 
-    ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, int[] vc, double[] stats) {
+    ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, double[] indexWeight, int[] vc, double[] stats) {
         this();
         this.constraints = constraints;
         this.influences = influences;
         this.blockInfluences = blockInfluences;
+        this.indexWeight = indexWeight;
         this.v = vc[0];
         this.c = vc[1];
         this.ratio1 = stats[0];
@@ -371,6 +376,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         SerialisationUtils.writeLongArray(dos, constraints);
         SerialisationUtils.writeIntArray2d(dos, influences);
         SerialisationUtils.writeIntArray2d(dos, blockInfluences);
+        SerialisationUtils.writeDoubleArray(dos, indexWeight);
         SerialisationUtils.writeIntArray(dos, v, c);
         SerialisationUtils.writeDoubleArray(dos, ratio1, ratio2, ratio3,
                 ratioReciprocal1, ratioReciprocal2, ratioReciprocal3,
