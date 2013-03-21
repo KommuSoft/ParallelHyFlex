@@ -12,6 +12,10 @@ public class ClauseUtils {
     private ClauseUtils() {
     }
     
+    public static long generateClause (int index0, int index1, int index2, boolean value0, boolean value1, boolean value2) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     public static long generateTrueClause(CompactBitArray cba) {
         int n = cba.getLength();
         long i0 = Utils.StaticRandom.nextInt(n);
