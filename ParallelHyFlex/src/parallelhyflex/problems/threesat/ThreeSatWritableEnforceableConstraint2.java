@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 import parallelhyflex.problemdependent.WritableEnforceableConstraintBase;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -27,18 +28,38 @@ public class ThreeSatWritableEnforceableConstraint2 extends WritableEnforceableC
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
-        //TODO: make gap closer
+        if(distance > this.getMaxDistance()) {
+            for(int i = distance; i > maxDistance; i--) {
+                int index = Utils.StaticRandom.nextInt(solution.getLength());
+                if(solution.getBit(index) != this.getRoot().getBit(index)) {
+                    solution.swapBit(index,this.getProblem());
+                }
+                else {
+                    i++;
+                }
+            }
+        }
     }
 
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
-        //TODO: make gap wider
+        if(distance <= this.getMaxDistance()) {
+            for(int i = distance; i <= maxDistance; i++) {
+                int index = Utils.StaticRandom.nextInt(solution.getLength());
+                if(solution.getBit(index) == this.getRoot().getBit(index)) {
+                    solution.swapBit(index,this.getProblem());
+                }
+                else {
+                    i--;
+                }
+            }
+        }
     }
 
     @Override
     public boolean isSatisfied(ThreeSatSolution solution) {
-        return this.calculateDistance(solution) <= this.getMaxDistance();
+        return this.getProblem().getDistanceFunction(0).evaluateDistanceSmallerThanOrEqual(this.getRoot(), solution,this.getMaxDistance());
     }
 
     /**

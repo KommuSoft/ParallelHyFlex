@@ -15,5 +15,4 @@ ParallelHyFlex/build/test/results/*
 ParallelHyFlex/lib/junit_4/*
 
 # Project files #
-ParallelHyFlex/build/classes/*
-ParallelHyFlex/build/test/classes/*
+ParallelHyFlex/build/*

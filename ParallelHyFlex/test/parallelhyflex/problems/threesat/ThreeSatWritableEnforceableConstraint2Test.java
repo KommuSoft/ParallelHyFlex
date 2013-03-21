@@ -68,7 +68,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
         ThreeSatSolutionGenerator tsg = tsp.getGenerator();
         ThreeSatSolution tss = tsg.generateSolution();
         ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp,tss.clone(),5);
-        for(int i = 0; i < 1000000000; i++) {
+        for(int i = 0; i < 20000000; i++) {
             ThreeSatSolution tss2 = tsg.generateSolution();
             tswec.enforceTrue(tss2);
             Assert.assertTrue(tswec.isSatisfied(tss2));
@@ -101,7 +101,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
         ThreeSatSolutionGenerator tsg = tsp.getGenerator();
         ThreeSatSolution tss = tsg.generateSolution();
         ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp,tss.clone(),5);
-        for(int i = 0; i < 1000000000; i++) {
+        for(int i = 0; i < 20000000; i++) {
             ThreeSatSolution tss2 = tsg.generateSolution();
             tswec.enforceFalse(tss2);
             Assert.assertFalse(tswec.isSatisfied(tss2));
