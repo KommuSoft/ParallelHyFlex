@@ -69,21 +69,6 @@ public class ThreeSatWritableEnforceableConstraint2Test {
     }
 
     /**
-     * Test of isSatisfied method, of class ThreeSatWritableEnforceableConstraint2.
-     */
-    @Test
-    public void testIsSatisfied() {
-        System.out.println("isSatisfied");
-        ThreeSatSolution solution = null;
-        ThreeSatWritableEnforceableConstraint2 instance = null;
-        boolean expResult = false;
-        boolean result = instance.isSatisfied(solution);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getRoot method, of class ThreeSatWritableEnforceableConstraint2.
      */
     @Test

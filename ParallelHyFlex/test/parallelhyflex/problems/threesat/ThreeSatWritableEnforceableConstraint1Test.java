@@ -43,12 +43,7 @@ public class ThreeSatWritableEnforceableConstraint1Test {
      */
     @Test
     public void testEnforceTrue() {
-        System.out.println("enforceTrue");
-        ThreeSatSolution solution = null;
-        ThreeSatWritableEnforceableConstraint1 instance = null;
-        instance.enforceTrue(solution);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -60,21 +55,6 @@ public class ThreeSatWritableEnforceableConstraint1Test {
         ThreeSatSolution solution = null;
         ThreeSatWritableEnforceableConstraint1 instance = null;
         instance.enforceFalse(solution);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isSatisfied method, of class ThreeSatWritableEnforceableConstraint1.
-     */
-    @Test
-    public void testIsSatisfied() {
-        System.out.println("isSatisfied");
-        ThreeSatSolution solution = null;
-        ThreeSatWritableEnforceableConstraint1 instance = null;
-        boolean expResult = false;
-        boolean result = instance.isSatisfied(solution);
-        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
