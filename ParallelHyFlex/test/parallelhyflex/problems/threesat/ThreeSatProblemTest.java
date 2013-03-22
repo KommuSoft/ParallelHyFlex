@@ -11,6 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import parallelhyflex.TestParameters;
 
 /**
  *
@@ -39,18 +40,20 @@ public class ThreeSatProblemTest {
 
     @Test
     public void testSerializationDeserialization() throws IOException {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(100,420);
-        ThreeSatProblem tsp = tspg.generateProblem();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        tsp.write(dos);
-        dos.close();
-        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        baos.close();
-        DataInputStream dis = new DataInputStream(bais);
-        ThreeSatProblem tsp2 = tspg.readAndGenerate(dis);
-        Assert.assertEquals(tsp, tsp2);
-        dis.close();
-        bais.close();
+        for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(100,420);
+            ThreeSatProblem tsp = tspg.generateProblem();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            DataOutputStream dos = new DataOutputStream(baos);
+            tsp.write(dos);
+            dos.close();
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            baos.close();
+            DataInputStream dis = new DataInputStream(bais);
+            ThreeSatProblem tsp2 = tspg.readAndGenerate(dis);
+            Assert.assertEquals(tsp, tsp2);
+            dis.close();
+            bais.close();
+        }
     }
 }
