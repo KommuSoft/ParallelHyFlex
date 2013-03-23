@@ -136,7 +136,7 @@ public class ClauseUtils {
 
     /**
      * Retrieves the influences of a certain clause towards certain variables
-     * @param clause the clause to analyse
+     * @param clause the clause to analyze
      * @param positive A 4-array where the first element is the number of variables and the next three elements the indices of the variables.
      * @param negative A 4-array where the first element is the number of variables and the next three elements the indices of the variables.
      */
@@ -183,6 +183,16 @@ public class ClauseUtils {
             index = Math.max(index, (int) (clause & 0x0FFFFF));
         }
         return index;
+    }
+    
+    public static int getNumberOfFailedClauses (CompactBitArray cba, long[] clauses) {
+        int number = 0;
+        for(long clause : clauses) {
+            if(!cba.satisfiesClause(clause)) {
+                number++;
+            }
+        }
+        return number;
     }
 
     public static String clauseToString(long clause) {
