@@ -10,6 +10,8 @@ import parallelhyflex.problemdependent.Heuristic;
 import parallelhyflex.problemdependent.ObjectiveFunction;
 import parallelhyflex.problemdependent.ProblemBase;
 import parallelhyflex.problemdependent.SolutionGenerator;
+import parallelhyflex.utils.ProbabilityUtils;
+import parallelhyflex.utils.StatisticsUtils;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -63,23 +65,23 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         for (i = 0; i < n; i++) {
             nplus = npn[i];
             int total = nplus + nnn[i];
-            this.indexCDF[i] = total*Utils.pqEntropy((double) nplus/total);
+            this.indexCDF[i] = total*StatisticsUtils.pqEntropy((double) nplus/total);
             arr = new int[total + 1];
             arr[0] = nplus;
             nnn[i] = total;
             this.influences[i] = arr;
         }
-        Utils.unnormalizedWeightsToCDF(this.indexCDF);
-        this.vcClauseMean = Utils.mean(degclause);
-        this.vcClauseVariation = Utils.variation(degclause,this.vcClauseMean);
-        this.vcClauseMin = Utils.min(degclause);
-        this.vcClauseMax = Utils.max(degclause);
-        this.vcClauseEntropy = Utils.entropy(degclause);
-        this.vcVariableMean = Utils.mean(nnn);
-        this.vcVariableVariation = Utils.variation(nnn,this.vcVariableMean);
-        this.vcVariableMin = Utils.min(nnn);
-        this.vcVariableMax = Utils.max(nnn);
-        this.vcVariableEntropy = Utils.entropy(nnn);
+        ProbabilityUtils.unnormalizedWeightsToCDF(this.indexCDF);
+        this.vcClauseMean = StatisticsUtils.mean(degclause);
+        this.vcClauseVariation = StatisticsUtils.variation(degclause,this.vcClauseMean);
+        this.vcClauseMin = StatisticsUtils.min(degclause);
+        this.vcClauseMax = StatisticsUtils.max(degclause);
+        this.vcClauseEntropy = StatisticsUtils.entropy(degclause);
+        this.vcVariableMean = StatisticsUtils.mean(nnn);
+        this.vcVariableVariation = StatisticsUtils.variation(nnn,this.vcVariableMean);
+        this.vcVariableMin = StatisticsUtils.min(nnn);
+        this.vcVariableMax = StatisticsUtils.max(nnn);
+        this.vcVariableEntropy = StatisticsUtils.entropy(nnn);
         for (long constraint : constraints) {
             ClauseUtils.setInfluences(constraint, np, nn);
             for (i = 1; i < np[0]; i++) {

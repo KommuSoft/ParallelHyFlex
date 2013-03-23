@@ -4,11 +4,7 @@
  */
 package parallelhyflex.utils;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -18,6 +14,15 @@ import java.util.Random;
 public class Utils {
 
     private Utils() {
+    }
+    
+    public static int countOnes(long data) {
+        int ones = 0;
+        while (data != 0) {
+            ones += data & 1;
+            data >>= 1;
+        }
+        return ones;
     }
 
     public static boolean arrayEquality(long[] a, long[] b) {
@@ -51,191 +56,6 @@ public class Utils {
             }
         }
         return true;
-    }
-
-    public static <T> void randomPermutate(T[] vals) {
-        T tmp;
-        int ind;
-        for (int i = 0, j = vals.length; j > 1; i++, j--) {
-            ind = i + Utils.StaticRandom.nextInt(j);
-            tmp = vals[i];
-            vals[i] = vals[ind];
-            vals[ind] = tmp;
-        }
-    }
-
-    public static int countOnes(long data) {
-        int ones = 0;
-        while (data != 0) {
-            ones += data & 1;
-            data >>= 1;
-        }
-        return ones;
-    }
-
-    public static double mean(double[] vals) {
-        double sum = 0.0d;
-        for (double d : vals) {
-            sum += d;
-        }
-        return sum / vals.length;
-    }
-    
-    public static double mean(Collection<Double> vals) {
-        double sum = 0.0d;
-        for (double d : vals) {
-            sum += d;
-        }
-        return sum / vals.size();
-    }
-
-    public static double mean(int[] vals) {
-        double sum = 0.0d;
-        for (double d : vals) {
-            sum += d;
-        }
-        return sum / vals.length;
-    }
-
-    public static double variation(double[] vals) {
-        double mean = mean(vals);
-        return variation(vals, mean);
-    }
-    
-    public static double variation(Collection<Double> vals) {
-        double mean = mean(vals);
-        return variation(vals, mean);
-    }
-
-    public static double variation(int[] vals) {
-        double mean = mean(vals);
-        return variation(vals, mean);
-    }
-
-    public static double variation(double[] vals, double mean) {
-        double sum = 0.0d;
-        for (double d : vals) {
-            sum += (d - mean) * (d - mean);
-        }
-        return sum / vals.length;
-    }
-    
-    public static double variation(Collection<Double> vals, double mean) {
-        double sum = 0.0d;
-        for (double d : vals) {
-            sum += (d - mean) * (d - mean);
-        }
-        return sum / vals.size();
-    }
-
-    public static double variation(int[] vals, double mean) {
-        double sum = 0.0d;
-        for (double d : vals) {
-            sum += (d - mean) * (d - mean);
-        }
-        return sum / vals.length;
-    }
-
-    public static double min(double[] vals) {
-        double min = Double.POSITIVE_INFINITY;
-        for (double d : vals) {
-            if (d < min) {
-                min = d;
-            }
-        }
-        return min;
-    }
-
-    public static double min(int[] vals) {
-        double min = Double.POSITIVE_INFINITY;
-        for (double d : vals) {
-            if (d < min) {
-                min = d;
-            }
-        }
-        return min;
-    }
-
-    public static double max(double[] vals) {
-        double max = Double.NEGATIVE_INFINITY;
-        for (double d : vals) {
-            if (d > max) {
-                max = d;
-            }
-        }
-        return max;
-    }
-
-    public static double max(int[] vals) {
-        double max = Double.NEGATIVE_INFINITY;
-        for (double d : vals) {
-            if (d > max) {
-                max = d;
-            }
-        }
-        return max;
-    }
-
-    public static double entropy(int[] vals) {
-        HashMap<Integer, Integer> frequency = new HashMap<>();
-        for (int val : vals) {
-            if (!frequency.containsKey(val)) {
-                frequency.put(val, 1);
-            } else {
-                frequency.put(val, frequency.get(val) + 1);
-            }
-        }
-        double sum = 0.0;
-        for (int freq : frequency.values()) {
-            double p = (double) freq / vals.length;
-            sum -= p * Math.log(p);
-        }
-        return sum / Math.log(2.0d);
-    }
-    
-    public static double pqEntropy (double p) {
-        if(p < 1e-9 || p > 1-1e-9) {
-            return 0.0d;
-        }
-        else {
-            return ((p-1)*Math.log(1-p)-p*Math.log(p))/Math.log(2);
-        }
-    }
-
-    public static <T> T randomElement(List<T> list) {
-        return list.get(StaticRandom.nextInt(list.size()));
-    }
-    
-    public static void unnormalizedWeightsToCDF (double[] weights) {
-        double suminv = 0.0d;
-        double min = 0.0d;
-        for(double w : weights) {
-            min = Math.min(w,min);
-            suminv += w;
-        }
-        suminv -= min*weights.length;
-        suminv = 1/suminv;
-        double c = 0.0d;
-        for(int i = 0; i < weights.length; i++) {
-            c += (weights[i]-min)*suminv;
-            weights[i] = c;
-        }
-    }
-    public static int getRandomIndexFromCDF (double[] cdf, Collection<Integer> without) {
-        int index;
-        do {
-            index = getRandomIndexFromCDF(cdf);
-        }
-        while(without.contains(index));
-        return index;
-    }
-    public static int getRandomIndexFromCDF (double[] cdf) {
-        double rand = StaticRandom.nextDouble();
-        int index = Arrays.binarySearch(cdf,rand);
-        if(index < 0) {
-            index = ~index;
-        }
-        return index;
     }
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {

@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent;
 
 import java.util.ArrayList;
-import parallelhyflex.utils.Utils;
+import parallelhyflex.utils.ProbabilityUtils;
 
 /**
  *
@@ -21,7 +21,7 @@ public class EnforceableConstraintsSearchSpaceBase<TSolution extends Solution<TS
             constraint.enforceFalse(solution);
         }
         if(this.getPositive().size() > 0) {
-            Utils.randomElement(getPositive()).enforceTrue(solution);
+            ProbabilityUtils.randomElement(getPositive()).enforceTrue(solution);
         }
     }
 

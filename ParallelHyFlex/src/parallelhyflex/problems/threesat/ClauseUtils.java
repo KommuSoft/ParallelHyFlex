@@ -1,6 +1,7 @@
 package parallelhyflex.problems.threesat;
 
 import parallelhyflex.utils.CompactBitArray;
+import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -64,9 +65,9 @@ public class ClauseUtils {
     }
     
     public static long generateCompletelyTrueClause (CompactBitArray cba, double[] cdf) {
-        long i0 = Utils.getRandomIndexFromCDF(cdf);
-        long i1 = Utils.getRandomIndexFromCDF(cdf);
-        long i2 = Utils.getRandomIndexFromCDF(cdf);
+        long i0 = ProbabilityUtils.getRandomIndexFromCDF(cdf);
+        long i1 = ProbabilityUtils.getRandomIndexFromCDF(cdf);
+        long i2 = ProbabilityUtils.getRandomIndexFromCDF(cdf);
         long ia = Math.min(i0,Math.min(i1,i2));
         long ic = Math.max(i0,Math.max(i1,i2));
         long ib = i0+i1+i2-ia-ic;
