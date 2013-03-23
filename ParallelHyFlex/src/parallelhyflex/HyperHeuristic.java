@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
+import parallelhyflex.problemdependent.Experience;
 import parallelhyflex.problemdependent.Solution;
 import parallelhyflex.problemdependent.Problem;
 import parallelhyflex.problemdependent.ProblemReader;
@@ -18,6 +19,7 @@ import parallelhyflex.problemdependent.ProblemReader;
 public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> {
     
     private final ProxyMemory<TSolution> proxyMemory;
+    private final Experience<TSolution> experience;
     private final TProblem problem;
     
     /**
@@ -26,9 +28,10 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
      * @param problem 
      * @throws ProtocolException If this constructor is initialized by a machine with a rank different from zero!
      */
-    public HyperHeuristic (TProblem problem) throws ProtocolException, IOException {
+    public HyperHeuristic (TProblem problem, Experience<TSolution> experience) throws ProtocolException, IOException {
         if(Communication.getCommunication().getRank() == 0) {
             this.problem = problem;
+            this.experience = experience;
             this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DataOutputStream dos = new DataOutputStream(baos);
@@ -47,8 +50,9 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
         }
     }
-    public HyperHeuristic (ProblemReader<TSolution,TProblem> problemReader) throws ProtocolException, IOException {
+    public HyperHeuristic (ProblemReader<TSolution,TProblem> problemReader, Experience<TSolution> experience) throws ProtocolException, IOException {
         if(Communication.getCommunication().getRank() != 0) {
+            this.experience = experience;
             this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
             byte[][] data = new byte[1][];
             Communication.BC(data,0,1,MPI.OBJECT,0);

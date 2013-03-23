@@ -16,6 +16,10 @@ public class ProbabilityUtils {
         return list.get(Utils.StaticRandom.nextInt(list.size()));
     }
     
+    public static int fromBenfordDistribution (int D) {
+        return (int) Math.floor(Math.pow(D+1,Utils.StaticRandom.nextDouble()));
+    }
+    
     public static void unnormalizedWeightsToCDF (double[] weights) {
         double suminv = 0.0d;
         double min = 0.0d;
