@@ -12,8 +12,21 @@ public class ClauseUtils {
     private ClauseUtils() {
     }
     
-    public static long generateClause (int index0, int index1, int index2, boolean value0, boolean value1, boolean value2) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static long generate0Clause (long index0, long index1, long index2) {
+        return (index0<<40)|(index1<<20)|(index2);
+    }
+    public static long generateClause (long index0, long index1, long index2, boolean value0, boolean value1, boolean value2) {
+        long val = generate0Clause(index0,index1,index2);
+        if(value0) {
+            val |= 1L<<62;
+        }
+        if(value1) {
+            val |= 1L<<61;
+        }
+        if(value2) {
+            val |= 1L<<60;
+        }
+        return val;
     }
     
     public static long generateTrueClause(CompactBitArray cba) {
@@ -24,10 +37,25 @@ public class ClauseUtils {
         long ia = Math.min(i0,Math.min(i1,i2));
         long ic = Math.max(i0,Math.max(i1,i2));
         long ib = i0+i1+i2-ia-ic;
-        long fill = (((long) Utils.StaticRandom.nextInt(8))<<60)|(ia<<40)|(ib<<20)|ic;
+        long fill = (((long) Utils.StaticRandom.nextInt(8))<<60)|generate0Clause(ia,ib,ic);
         int ci = Utils.StaticRandom.nextInt(3);
         long index = ClauseUtils.getIndexI(fill,ci);
         fill = ClauseUtils.setValue(fill,ci,cba.getBit(index));
+        return fill;
+    }
+    
+    public static long generateCompletelyTrueClause (CompactBitArray cba) {
+        int n = cba.getLength();
+        long i0 = Utils.StaticRandom.nextInt(n);
+        long i1 = Utils.StaticRandom.nextInt(n);
+        long i2 = Utils.StaticRandom.nextInt(n);
+        long ia = Math.min(i0,Math.min(i1,i2));
+        long ic = Math.max(i0,Math.max(i1,i2));
+        long ib = i0+i1+i2-ia-ic;
+        long fill = generate0Clause(ia,ib,ic);
+        for(int i = 0; i < 3; i++) {
+            fill = ClauseUtils.setValue(fill,i,cba.getBit(ClauseUtils.getIndexI(fill,i)));
+        }
         return fill;
     }
 
@@ -63,6 +91,9 @@ public class ClauseUtils {
         long indb = getIndex1(clause);
         long indc = getIndex2(clause);
         if (inda > indb || indb > indc) {
+            return false;
+        }
+        if(indb == indc && inda != indb) {
             return false;
         }
         long vala = getValue0(clause);

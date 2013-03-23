@@ -17,9 +17,9 @@ import parallelhyflex.TestParameters;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicL1Test {
+public class ThreeSatHeuristicM3Test {
     
-    public ThreeSatHeuristicL1Test() {
+    public ThreeSatHeuristicM3Test() {
     }
     
     @BeforeClass
@@ -39,35 +39,18 @@ public class ThreeSatHeuristicL1Test {
     }
 
     /**
-     * Test of applyHeuristicLocally method, of class ThreeSatHeuristicL1.
+     * Test of applyHeuristicLocally method, of class ThreeSatHeuristicM3.
      */
     @Test
     public void testApplyHeuristicLocallyConflictingClauses() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
-            ThreeSatHeuristicL1 tshm1 = new ThreeSatHeuristicL1(tsp);
+            ThreeSatHeuristicM3 tshm1 = new ThreeSatHeuristicM3(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             tshm1.applyHeuristicLocally(tss);
             Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(),tsp.getConstraints()),tss.getConflictingClauses());
-        }
-    }
-    
-    /**
-     * Test of applyHeuristicLocally method, of class ThreeSatHeuristicL1.
-     */
-    @Test
-    public void testApplyHeuristicLocallyImprovementConflictingClauses() {
-        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
-            ThreeSatProblem tsp = tspg.generateProblem();
-            ThreeSatHeuristicL1 tshm1 = new ThreeSatHeuristicL1(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
-            ThreeSatSolution tss = tsg.generateSolution();
-            int old = tss.getConflictingClauses();
-            tshm1.applyHeuristicLocally(tss);
-            Assert.assertTrue(old >= tss.getConflictingClauses());
         }
     }
 }
