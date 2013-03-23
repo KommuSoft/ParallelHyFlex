@@ -5,7 +5,6 @@
 package parallelhyflex.problems.threesat;
 
 import parallelhyflex.problemdependent.InstanceHypothesisGeneratorBase;
-import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -20,10 +19,11 @@ public class ThreeSatInstanceHypothesisGenerator extends InstanceHypothesisGener
     @Override
     public ThreeSatWritableEnforceableConstraint1 generate(ThreeSatSolution variable) {
         double[] cdf = this.getProblem().getIndexCDF();
-        int index0 = Utils.getRandomIndexFromCDF(cdf);
-        int index1 = Utils.getRandomIndexFromCDF(cdf);
-        int index2 = Utils.getRandomIndexFromCDF(cdf);
-        throw new UnsupportedOperationException("Not supported yet.");
+        long clause;
+        do {
+        clause = ClauseUtils.generateCompletelyTrueClause(variable.getCompactBitArray(), cdf);
+        } while(!ClauseUtils.isValidClause(clause));
+        return new ThreeSatWritableEnforceableConstraint1(this.getProblem(),clause);
     }
     
 }

@@ -44,6 +44,14 @@ public class ClauseUtils {
         return fill;
     }
     
+    public static long generateCompletelyTrueClause (CompactBitArray cba, long index0, long index1, long index2) {
+        long fill = generate0Clause(index0,index1,index2);
+        for(int i = 0; i < 3; i++) {
+            fill = ClauseUtils.setValue(fill,i,cba.getBit(ClauseUtils.getIndexI(fill,i)));
+        }
+        return fill;
+    }
+    
     public static long generateCompletelyTrueClause (CompactBitArray cba) {
         int n = cba.getLength();
         long i0 = Utils.StaticRandom.nextInt(n);
@@ -52,11 +60,17 @@ public class ClauseUtils {
         long ia = Math.min(i0,Math.min(i1,i2));
         long ic = Math.max(i0,Math.max(i1,i2));
         long ib = i0+i1+i2-ia-ic;
-        long fill = generate0Clause(ia,ib,ic);
-        for(int i = 0; i < 3; i++) {
-            fill = ClauseUtils.setValue(fill,i,cba.getBit(ClauseUtils.getIndexI(fill,i)));
-        }
-        return fill;
+        return generateCompletelyTrueClause(cba,ia,ib,ic);
+    }
+    
+    public static long generateCompletelyTrueClause (CompactBitArray cba, double[] cdf) {
+        long i0 = Utils.getRandomIndexFromCDF(cdf);
+        long i1 = Utils.getRandomIndexFromCDF(cdf);
+        long i2 = Utils.getRandomIndexFromCDF(cdf);
+        long ia = Math.min(i0,Math.min(i1,i2));
+        long ic = Math.max(i0,Math.max(i1,i2));
+        long ib = i0+i1+i2-ia-ic;
+        return generateCompletelyTrueClause(cba,ia,ib,ic);
     }
 
     public static int degree(long clause) {
