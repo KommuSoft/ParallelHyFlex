@@ -80,6 +80,14 @@ public class Utils {
         }
         return sum / vals.length;
     }
+    
+    public static double mean(Collection<Double> vals) {
+        double sum = 0.0d;
+        for (double d : vals) {
+            sum += d;
+        }
+        return sum / vals.size();
+    }
 
     public static double mean(int[] vals) {
         double sum = 0.0d;
@@ -90,6 +98,11 @@ public class Utils {
     }
 
     public static double variation(double[] vals) {
+        double mean = mean(vals);
+        return variation(vals, mean);
+    }
+    
+    public static double variation(Collection<Double> vals) {
         double mean = mean(vals);
         return variation(vals, mean);
     }
@@ -105,6 +118,14 @@ public class Utils {
             sum += (d - mean) * (d - mean);
         }
         return sum / vals.length;
+    }
+    
+    public static double variation(Collection<Double> vals, double mean) {
+        double sum = 0.0d;
+        for (double d : vals) {
+            sum += (d - mean) * (d - mean);
+        }
+        return sum / vals.size();
     }
 
     public static double variation(int[] vals, double mean) {

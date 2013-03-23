@@ -29,10 +29,10 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
     public synchronized void checkInstance(TSolution solution, double evaluation) {
         if (this.getHypothesis().isSatisfied(solution)) {
             if(this.getBestEvaluations().size() < this.getHistorySize() || this.getBestEvaluations().peek() > evaluation) {
-                getBestEvaluations().add(evaluation);
-                while (getBestEvaluations().size() > this.getHistorySize()) {
+                if(this.getBestEvaluations().size() > this.historySize) {
                     this.getBestEvaluations().poll();
                 }
+                getBestEvaluations().offer(evaluation);
             }
         }
     }
