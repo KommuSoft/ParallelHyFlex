@@ -34,7 +34,7 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
         if(Communication.getCommunication().getRank() == 0) {
             this.problem = problem;
             this.experience = experience.generate(problem);
-            this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
+            this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed,this.experience);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DataOutputStream dos = new DataOutputStream(baos);
             problem.write(dos);
@@ -54,7 +54,7 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
     }
     public HyperHeuristic (ProblemReader<TSolution,TProblem> problemReader, Generator<TProblem,? extends WritableExperience<TSolution,TEC>> experience) throws ProtocolException, IOException {
         if(Communication.getCommunication().getRank() != 0) {
-            this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed);
+            this.proxyMemory = new ProxyMemory<>(10,MemoryExchangePolicy.StateAlwaysDistributed,this.experience);
             byte[][] data = new byte[1][];
             Communication.BC(data,0,1,MPI.OBJECT,0);
             ByteArrayInputStream bais = new ByteArrayInputStream(data[0]);

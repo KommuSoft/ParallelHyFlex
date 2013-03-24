@@ -65,6 +65,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     }
 
     protected void setSolution(int index, TSolution value) {
+        this.getWritableExperience().join(value);
         this.localSlots.setSolution(index,value);
     }
 
@@ -90,6 +91,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     }
 
     private void pushSolution(int to) {
+        this.getWritableExperience().join(this.getSolution(to));
         this.localSlots.pushSolution(to);
     }
 
