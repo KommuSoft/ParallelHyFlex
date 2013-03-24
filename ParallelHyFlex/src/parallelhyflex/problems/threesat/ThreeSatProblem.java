@@ -30,11 +30,13 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private final ThreeSatSolutionGenerator generator;
     private final Object[] distanceFunctions;
     private final Object[] heuristics;
+    private final Object[] objectives;
 
     private ThreeSatProblem() {
         this.generator = new ThreeSatSolutionGenerator(this);
         this.distanceFunctions = new Object[]{new ThreeSatDistance1(this), new ThreeSatDistance2(this)};
         this.heuristics = new Object[]{new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this)};
+        this.objectives = new Object[] {new ThreeSatObjectiveFunction1()};
     }
 
     public ThreeSatProblem(long[] constraints) {
@@ -97,8 +99,8 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         for (i = 0, j = 0; i < n; j++) {
             k = Math.min(n, i + 64);
             for (; i < k; i++) {
-                for (l = 1; l < influences.length; l++) {
-                    blockCache.size();
+                for (l = 1; l < influences[i].length; l++) {
+                    blockCache.add(influences[i][l]);
                 }
             }
             arr = new int[blockCache.size()];
@@ -162,12 +164,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
 
     @Override
     public ObjectiveFunction<ThreeSatSolution> getObjectiveFunction(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (ObjectiveFunction<ThreeSatSolution>) this.objectives[index];
     }
 
     @Override
     public int getNumberOfObjectiveFunctions() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.objectives.length;
     }
 
     @Override

@@ -125,7 +125,6 @@ public class ThreeSatWritableEnforceableConstraint1Test {
             baos.close();
             DataInputStream dis = new DataInputStream(bais);
             EnforceableConstraint<ThreeSatSolution> tswec2 = tsweg.readAndGenerate(dis);
-            System.out.println(tswec2.toString());
             Assert.assertEquals(tswec, tswec2);
             dis.close();
             bais.close();

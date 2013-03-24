@@ -1,5 +1,6 @@
 package parallelhyflex.problems.threesat;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import parallelhyflex.HeuristicType;
 import parallelhyflex.problemdependent.HeuristicBase;
@@ -25,6 +26,8 @@ public class ThreeSatHeuristicR1 extends HeuristicBase<ThreeSatSolution,ThreeSat
         int[] binf = this.getProblem().getBlockInfluences()[iblock];
         int[][] inf = this.getProblem().getInfluences();
         
+        System.out.println(Arrays.toString(binf));
+        
         int oldfail = 0;
         for(int i = 0; i < binf.length; i++) {
             if(!cba.satisfiesClause(constraints[binf[i]])) {
@@ -32,7 +35,7 @@ public class ThreeSatHeuristicR1 extends HeuristicBase<ThreeSatSolution,ThreeSat
             }
         }
         
-        HashSet<Integer> activeConstraints = new HashSet<Integer>();
+        HashSet<Integer> activeConstraints = new HashSet<>();
         int ci;
         for(int i = 0; i < binf.length; i++) {
             ci = binf[i];

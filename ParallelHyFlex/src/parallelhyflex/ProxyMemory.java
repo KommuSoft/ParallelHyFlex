@@ -16,12 +16,11 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     
     private final MemorySlots<TSolution>[] solutionCache;
     private final MemorySlots localSlots;
-    private final WritableExperience<TSolution,?> writableExperience;
+    private WritableExperience<TSolution,?> writableExperience;
     private final int[][] others;
     private int totalMemory = 0;
 
-    public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy, WritableExperience<TSolution,?> writableExperience) {
-        this.writableExperience = writableExperience;
+    public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy) {
         MemoryExchangePolicy[] policies = MemoryExchangePolicy.values();
         int s = Communication.getCommunication().getSize();
         int r = Communication.getCommunication().getRank();
@@ -65,6 +64,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     }
 
     protected void setSolution(int index, TSolution value) {
+        Communication.Log(""+(this.getWritableExperience()==null));
         this.getWritableExperience().join(value);
         this.localSlots.setSolution(index,value);
     }
@@ -115,6 +115,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
      */
     public WritableExperience<TSolution,?> getWritableExperience() {
         return writableExperience;
+    }
+
+    /**
+     * @param writableExperience the writableExperience to set
+     */
+    public void setWritableExperience(WritableExperience<TSolution,?> writableExperience) {
+        this.writableExperience = writableExperience;
     }
     
     private class FetchThread extends Thread {
