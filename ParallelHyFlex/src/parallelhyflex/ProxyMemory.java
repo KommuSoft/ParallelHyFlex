@@ -6,6 +6,7 @@ import parallelhyflex.problemdependent.Heuristic;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import mpi.MPI;
+import parallelhyflex.problemdependent.WritableExperience;
 
 /**
  *
@@ -15,10 +16,12 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     
     private final MemorySlots<TSolution>[] solutionCache;
     private final MemorySlots localSlots;
+    private final WritableExperience<TSolution,?> writableExperience;
     private final int[][] others;
     private int totalMemory = 0;
 
-    public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy) {
+    public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy, WritableExperience<TSolution,?> writableExperience) {
+        this.writableExperience = writableExperience;
         MemoryExchangePolicy[] policies = MemoryExchangePolicy.values();
         int s = Communication.getCommunication().getSize();
         int r = Communication.getCommunication().getRank();
@@ -103,6 +106,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
             int siz = Communication.getCommunication().getSize();
             return siz-myr+rank;
         }
+    }
+
+    /**
+     * @return the writableExperience
+     */
+    public WritableExperience<TSolution,?> getWritableExperience() {
+        return writableExperience;
     }
     
     private class FetchThread extends Thread {

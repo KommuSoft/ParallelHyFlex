@@ -90,3 +90,4 @@ ParallelHyFlex/build/*
 *.exe
 *.dll
 *.exe.mdb
+/ParallelHyFlex/dist/
