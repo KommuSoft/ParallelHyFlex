@@ -4,7 +4,7 @@ package parallelhyflex.algebra;
  *
  * @author kommusoft
  */
-public class CloningGenerator<TArgument,TDestination extends IArgumentCloneable<TArgument,TDestination>> implements Generator<TArgument,TDestination> {
+public class CloningGenerator<TArgument,TDestination extends IArgumentCloneable<? super TArgument,TDestination>> implements Generator<TArgument,TDestination> {
     
     private final TDestination origin;
     

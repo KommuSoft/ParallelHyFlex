@@ -16,6 +16,10 @@ public class WritableSetExperienceStore<TSolution extends Solution<TSolution>,TP
     public WritableSetExperienceStore (TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem,hypothesisGenerator,comparator,historySize,hypothesisSize,generationSize);
     }
+    
+    public WritableSetExperienceStore (TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator, int historySize, int hypothesisSize, int generationSize) {
+        super(problem,hypothesisGenerator,historySize,hypothesisSize,generationSize);
+    }
 
     public WritableSetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator) {
         super(problem,hypothesisGenerator,comparator);

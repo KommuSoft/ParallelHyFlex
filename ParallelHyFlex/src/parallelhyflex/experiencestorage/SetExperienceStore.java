@@ -37,6 +37,10 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>,TProblem e
         this.generationSize = generationSize;
         this.comparator = comparator;
     }
+    
+    public SetExperienceStore (TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator, int historySize, int hypothesisSize, int generationSize) {
+        this(problem,hypothesisGenerator,SetHypothesisItemComparator1.getInstance(),historySize,hypothesisSize,generationSize);
+    }
 
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator) {
         this(problem,hypothesisGenerator,comparator,5,20,5);

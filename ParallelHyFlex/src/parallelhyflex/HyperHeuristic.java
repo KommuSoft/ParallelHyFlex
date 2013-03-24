@@ -8,7 +8,6 @@ import java.io.IOException;
 import mpi.MPI;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problemdependent.Experience;
 import parallelhyflex.problemdependent.Solution;
 import parallelhyflex.problemdependent.Problem;
 import parallelhyflex.problemdependent.ProblemReader;
