@@ -134,7 +134,7 @@ public class ClauseUtils {
                 delta--;
             }
         }
-        delta *= (cba.swapGetBit(i) << 1) - 1;
+        delta *= 1-(cba.swapGetBit(i) << 1);
         from.addConfictingClauses(delta);
     }
 

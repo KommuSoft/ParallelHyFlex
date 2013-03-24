@@ -38,8 +38,8 @@ public class ThreeSatHeuristicL1 extends HeuristicBase<ThreeSatSolution,ThreeSat
                         delta--;
                     }
                 }
-                delta *= 1-(cba.getBit(i)<<1);
-                improved = delta > 0;
+                delta *= (cba.getBit(i)<<1)-1;
+                improved = delta < 0;
                 if(improved) {
                     cba.swap(i);
                     from.addConfictingClauses(delta);

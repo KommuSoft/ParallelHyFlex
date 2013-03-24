@@ -11,7 +11,7 @@ import parallelhyflex.problemdependent.WritableExperience;
  *
  * @author kommusoft
  */
-public class WritableSetExperienceStore<TSolution extends Solution<TSolution>,TProblem extends Problem<TSolution>, THypothesis extends WritableEnforceableConstraint<TSolution>> extends SetExperienceStore<TSolution,TProblem,THypothesis> implements WritableExperience<TSolution,THypothesis>, IArgumentCloneable<TProblem,WritableSetExperienceStore<TSolution,TProblem,THypothesis>> {
+public class WritableSetExperienceStore<TSolution extends Solution<TSolution>,TProblem extends Problem<TSolution>, THypothesis extends WritableEnforceableConstraint<TSolution>> extends SetExperienceStore<TSolution,TProblem,THypothesis> implements WritableExperience<TSolution,THypothesis> {
     
     public WritableSetExperienceStore (TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem,hypothesisGenerator,comparator,historySize,hypothesisSize,generationSize);
@@ -27,11 +27,6 @@ public class WritableSetExperienceStore<TSolution extends Solution<TSolution>,TP
     
     public WritableSetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution,THypothesis> hypothesisGenerator) {
         super(problem,hypothesisGenerator,SetHypothesisItemComparator1.getInstance());
-    }
-
-    @Override
-    public WritableSetExperienceStore<TSolution, TProblem, THypothesis> clone(TProblem argument) {
-        return new WritableSetExperienceStore<>(argument,this.getHypothesisGenerator(),this.getComparator(),this.getHistorySize(),this.getHypothesisSize(),this.getGenerationSize());
     }
     
 }

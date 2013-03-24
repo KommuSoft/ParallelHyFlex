@@ -49,6 +49,7 @@ public class ThreeSatHeuristicM1Test {
             ThreeSatHeuristicM1 tshm1 = new ThreeSatHeuristicM1(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
+            Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(),tsp.getConstraints()),tss.getConflictingClauses());
             tshm1.applyHeuristicLocally(tss);
             Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(),tsp.getConstraints()),tss.getConflictingClauses());
         }

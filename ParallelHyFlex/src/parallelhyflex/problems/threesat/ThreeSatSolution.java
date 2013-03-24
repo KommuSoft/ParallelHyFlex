@@ -25,11 +25,11 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     }
 
     public long getBit(int index) {
-        return this.getBit(index);
+        return this.getCompactBitArray().getBit(index);
     }
 
     public long getBit(long index) {
-        return this.getBit(index);
+        return this.getCompactBitArray().getBit(index);
     }
 
     public boolean satisfiesClause(long constraint) {

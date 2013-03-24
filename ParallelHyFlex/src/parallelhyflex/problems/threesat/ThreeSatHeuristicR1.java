@@ -42,7 +42,7 @@ public class ThreeSatHeuristicR1 extends HeuristicBase<ThreeSatSolution,ThreeSat
         }
         int np, nn, npa, nna;
         int[] tocheck;
-        for(int fixindex = ioff+63; fixindex >= ioff; fixindex--) {
+        for(int fixindex = Math.min(from.getLength()-1,ioff+63); fixindex >= ioff; fixindex--) {
             tocheck = inf[fixindex];
             np = tocheck[0];
             nn = tocheck.length;

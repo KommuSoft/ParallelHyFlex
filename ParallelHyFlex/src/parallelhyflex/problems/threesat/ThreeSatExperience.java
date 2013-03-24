@@ -1,12 +1,13 @@
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.algebra.IArgumentCloneable;
 import parallelhyflex.experiencestorage.WritableSetExperienceStore;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1> {
+public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1> implements IArgumentCloneable<ThreeSatProblem,ThreeSatExperience> {
     
     public ThreeSatExperience (ThreeSatProblem problem, int historySize, int hypothesisSize, int generationSize) {
         super(problem,new ThreeSatInstanceHypothesisGenerator1(problem),historySize,hypothesisSize,generationSize);
