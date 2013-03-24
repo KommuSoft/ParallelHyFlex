@@ -27,11 +27,12 @@ public class ParallelHyFlex {
             ThreeSatExperience exp = new ThreeSatExperience(null);
             ThreeSatSolutionGenerator tssg = new ThreeSatSolutionGenerator(null);
             CloningGenerator<ThreeSatProblem, ThreeSatExperience> generator = new CloningGenerator<ThreeSatProblem, ThreeSatExperience>(exp);
+            long timespan = 100000000;
             if (Communication.getCommunication().getRank() == 0) {
                 ThreeSatProblem tsp = tspg.generateProblem();
-                dummy = new HyperHeuristic(tsp, generator, tssg);
+                dummy = new HyperHeuristic(tsp, timespan, generator, tssg);
             } else {
-                dummy = new HyperHeuristic(tspg, generator, tssg);
+                dummy = new HyperHeuristic(tspg, timespan, generator, tssg);
             }
         } catch (Exception e) {
             Communication.Log(e.toString());

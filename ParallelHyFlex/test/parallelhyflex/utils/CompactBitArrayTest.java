@@ -265,7 +265,7 @@ public class CompactBitArrayTest {
     @Test
     public void testGetLength() {
         for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int length = Utils.StaticRandom.nextInt(997);
+            int length = 1+Utils.StaticRandom.nextInt(997);
             CompactBitArray instance = CompactBitArray.randomInstance(length);
             Assert.assertEquals(length,instance.getLength());
         }
@@ -277,7 +277,7 @@ public class CompactBitArrayTest {
     @Test
     public void testGetBlockLength() {
         for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int length = Utils.StaticRandom.nextInt(997);
+            int length = 1+Utils.StaticRandom.nextInt(997);
             int block = (int) Math.ceil(length/64.0d);
             CompactBitArray instance = CompactBitArray.randomInstance(length);
             Assert.assertEquals(block,instance.getBlockLength());
