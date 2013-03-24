@@ -22,7 +22,7 @@ import parallelhyflex.problemdependent.experience.WritableExperience;
  *
  * @author kommusoft
  */
-public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> {
+public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> {
 
     private final ProxyMemory<TSolution> proxyMemory;
     private final WritableExperience<TSolution, TEC> experience;
@@ -31,7 +31,7 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
     private final TProblem problem;
 
     /**
-     * @note: This constructor can only be initialized if the machine is the
+     * @note: This constructor can o, generator, tssgnly be initialized if the machine is the
      * root (has rank = 0), otherwise, one needs to construct this class with
      * the constructor with the ProblemReader
      * @param problem
@@ -133,6 +133,6 @@ public class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem exte
         return this.stopTime.after(new Date());
     }
 
-    public void execute() {
-    }
+    public abstract void execute();
+    
 }
