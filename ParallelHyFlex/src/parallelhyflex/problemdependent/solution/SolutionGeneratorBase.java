@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.solution;
 
 import parallelhyflex.problemdependent.problem.Problem;
-import parallelhyflex.ProblemPointerBase;
+import parallelhyflex.algebra.ProblemPointerBase;
 import java.util.Random;
 
 /**

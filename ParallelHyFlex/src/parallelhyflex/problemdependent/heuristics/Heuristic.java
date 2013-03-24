@@ -1,6 +1,5 @@
 package parallelhyflex.problemdependent.heuristics;
 
-import parallelhyflex.HeuristicType;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**

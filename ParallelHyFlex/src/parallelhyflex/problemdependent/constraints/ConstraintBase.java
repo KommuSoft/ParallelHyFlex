@@ -1,6 +1,6 @@
 package parallelhyflex.problemdependent.constraints;
 
-import parallelhyflex.ProblemPointerBase;
+import parallelhyflex.algebra.ProblemPointerBase;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.solution.Solution;
 

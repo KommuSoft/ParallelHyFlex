@@ -1,5 +1,7 @@
 package parallelhyflex;
 
+import parallelhyflex.memory.ProxyMemory;
+import parallelhyflex.memory.MemoryExchangePolicy;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

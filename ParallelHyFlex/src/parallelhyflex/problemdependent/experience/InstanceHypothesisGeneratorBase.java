@@ -1,6 +1,6 @@
 package parallelhyflex.problemdependent.experience;
 
-import parallelhyflex.ProblemPointerBase;
+import parallelhyflex.algebra.ProblemPointerBase;
 import parallelhyflex.experiencestorage.InstanceHypothesisGenerator;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.solution.Solution;

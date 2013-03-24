@@ -1,5 +1,7 @@
-package parallelhyflex;
+package parallelhyflex.memory;
 
+import parallelhyflex.memory.MemorySlots;
+import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.pushsenders.PushSender;
 import parallelhyflex.pushdeciders.PushDecider;

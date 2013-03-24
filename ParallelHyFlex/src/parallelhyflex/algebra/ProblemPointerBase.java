@@ -1,4 +1,4 @@
-package parallelhyflex;
+package parallelhyflex.algebra;
 
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.solution.Solution;

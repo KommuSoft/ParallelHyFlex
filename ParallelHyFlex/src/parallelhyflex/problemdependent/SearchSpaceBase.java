@@ -2,7 +2,7 @@ package parallelhyflex.problemdependent;
 
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.problem.Problem;
-import parallelhyflex.ProblemPointerBase;
+import parallelhyflex.algebra.ProblemPointerBase;
 
 /**
  *

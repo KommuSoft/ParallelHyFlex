@@ -1,4 +1,4 @@
-package parallelhyflex;
+package parallelhyflex.memory;
 
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.CompactBitArray;

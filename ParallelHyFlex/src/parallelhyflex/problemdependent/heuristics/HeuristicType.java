@@ -1,4 +1,4 @@
-package parallelhyflex;
+package parallelhyflex.problemdependent.heuristics;
 
 /**
  *
