@@ -4,6 +4,7 @@
  */
 package parallelhyflex.utils;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -16,6 +17,13 @@ public class Utils {
     private Utils() {
     }
     
+    public static int getLengthIndex (int[] cdfI, int index) {
+        int i = Arrays.binarySearch(cdfI, index);
+        if(i < 0) {
+            i = ~i;
+        }
+        return i;
+    }
     public static int countOnes(long data) {
         int ones = 0;
         while (data != 0) {

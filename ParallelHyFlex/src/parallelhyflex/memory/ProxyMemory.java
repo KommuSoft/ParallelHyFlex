@@ -10,6 +10,7 @@ import java.util.Arrays;
 import mpi.MPI;
 import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -22,6 +23,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     private final SolutionReader<TSolution> solutionReader;
     private WritableExperience<TSolution, ?> writableExperience;
     private final int[][] others;
+    private final int[] cdfI;
     private int totalMemory = 0;
 
     public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy, SolutionReader<TSolution> solutionReader) {
@@ -37,18 +39,21 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass().getSuperclass(), s);
         this.solutionCache[0x00] = this.localSlots;
         Communication.AG(out, 0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);
-        int sum = 0, ni;
+        int sum = this.others[r][0], ni;
+        cdfI = new int[s];
+        cdfI[0] = sum;
         int i = 1;
         for (int j = r + 1; j < s; i++, j++) {
             ni = this.others[j][0];
             sum += ni;
             solutionCache[i] = policies[this.others[j][1]].generateReceiver(ni);
+            cdfI[i] = sum;
         }
-        sum += this.others[r][0];
         for (int j = 0; j < r; i++, j++) {
             ni = this.others[j][0];
             sum += ni;
             solutionCache[i] = policies[this.others[j][1]].generateReceiver(ni);
+            cdfI[i] = sum;
         }
         this.totalMemory = sum;
         //Communication.Log(Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
@@ -64,8 +69,9 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     }
 
     public TSolution getSolution(int index) {
-        //return (TSolution) this.innerMemory[index];
-        throw new UnsupportedOperationException("Not yet implemented");
+        int ii = Utils.getLengthIndex(this.cdfI, index);
+        int ij = index-this.cdfI[ii];
+        return this.solutionCache[ii].getSolution(ij);
     }
 
     public void setSolution(int index, TSolution value) {
