@@ -2,9 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package parallelhyflex.problems.threesat;
+package parallelhyflex.problems.threesat.experience;
 
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.problemdependent.InstanceHypothesisGeneratorBase;
+import parallelhyflex.problems.threesat.ClauseUtils;
+import parallelhyflex.problems.threesat.ThreeSatProblem;
+import parallelhyflex.problems.threesat.ThreeSatSolution;
 
 /**
  *

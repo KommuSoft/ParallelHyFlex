@@ -1,5 +1,7 @@
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

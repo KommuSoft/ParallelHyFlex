@@ -1,6 +1,8 @@
-package parallelhyflex.problems.threesat;
+package parallelhyflex.problems.threesat.distance;
 
 import parallelhyflex.problemdependent.DistanceFunctionBase;
+import parallelhyflex.problems.threesat.ThreeSatProblem;
+import parallelhyflex.problems.threesat.ThreeSatSolution;
 import parallelhyflex.utils.Utils;
 
 /**

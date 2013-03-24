@@ -3,7 +3,7 @@ package parallelhyflex;
 import java.io.IOException;
 import parallelhyflex.algebra.CloningGenerator;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problems.threesat.ThreeSatExperience;
+import parallelhyflex.problems.threesat.experience.ThreeSatExperience;
 import parallelhyflex.problems.threesat.ThreeSatProblem;
 import parallelhyflex.problems.threesat.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.ThreeSatSolutionGenerator;

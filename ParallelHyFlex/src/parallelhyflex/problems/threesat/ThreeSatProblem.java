@@ -1,5 +1,12 @@
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicL1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM3;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicR1;
+import parallelhyflex.problems.threesat.distance.ThreeSatDistance2;
+import parallelhyflex.problems.threesat.distance.ThreeSatDistance1;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;

@@ -133,11 +133,11 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
         return cba;
     }
 
-    void addConfictingClauses(int delta) {
+    public void addConfictingClauses(int delta) {
         this.conflictingClauses += delta;
     }
 
-    void swapBit(int index, ThreeSatProblem problem) {
+    public void swapBit(int index, ThreeSatProblem problem) {
         ClauseUtils.swapBit(index, problem.getInfluences()[index], cba, problem.getConstraints(), this);
     }
 }

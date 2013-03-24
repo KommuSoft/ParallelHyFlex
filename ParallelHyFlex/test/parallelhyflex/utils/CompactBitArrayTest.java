@@ -128,7 +128,7 @@ public class CompactBitArrayTest {
                 if (j != index) {
                     Assert.assertEquals(instance.getBit(j), instance2.getBit(j));
                 } else {
-                    Assert.assertNotSame(instance.getBit(j),instance2.getBit(j));
+                    Assert.assertTrue(instance.getBit(j) != instance2.getBit(j));
                 }
             }
         }
@@ -151,7 +151,7 @@ public class CompactBitArrayTest {
                 if (j < index1 || j > index2) {
                     Assert.assertEquals(instance.getBit(j), instance2.getBit(j));
                 } else {
-                    Assert.assertNotSame(instance.getBit(j),instance2.getBit(j));
+                    Assert.assertTrue(instance.getBit(j) != instance2.getBit(j));
                 }
             }
         }

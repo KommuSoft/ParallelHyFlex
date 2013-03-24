@@ -4,6 +4,7 @@
  */
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;

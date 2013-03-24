@@ -1,8 +1,11 @@
-package parallelhyflex.problems.threesat;
+package parallelhyflex.problems.threesat.constraints;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import parallelhyflex.problemdependent.WritableEnforceableConstraintBase;
+import parallelhyflex.problems.threesat.ClauseUtils;
+import parallelhyflex.problems.threesat.ThreeSatProblem;
+import parallelhyflex.problems.threesat.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
@@ -15,13 +18,9 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
     private long constraint;
     public static final long MASK_BIT = 0x8000000000000000L;
     public static final long MASK = 0x7FFFFFFFFFFFFFFFL;
-    
-    public ThreeSatWritableEnforceableConstraint1 (ThreeSatProblem problem) {
-        super(problem);
-    }
 
-    ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long constraint) {
-        this(problem);
+    public ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long constraint) {
+        super(problem);
         this.constraint = constraint;
     }
 
