@@ -77,6 +77,10 @@ public class Communication {
     public static void Log (String message) {
         System.out.println("<"+Communication.MainCommunication.rank+"> "+message);
     }
+    
+    public static void Log(Exception e) {
+        Log("ERROR: "+e.toString());
+    }
 
     /**
      * @return the rank

@@ -25,9 +25,6 @@ public class ThreeSatHeuristicR1 extends HeuristicBase<ThreeSatSolution,ThreeSat
         long[] constraints = this.getProblem().getConstraints();
         int[] binf = this.getProblem().getBlockInfluences()[iblock];
         int[][] inf = this.getProblem().getInfluences();
-        
-        System.out.println(Arrays.toString(binf));
-        
         int oldfail = 0;
         for(int i = 0; i < binf.length; i++) {
             if(!cba.satisfiesClause(constraints[binf[i]])) {
