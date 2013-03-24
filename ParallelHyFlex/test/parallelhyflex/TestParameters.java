@@ -11,7 +11,7 @@ package parallelhyflex;
  */
 public class TestParameters {
     
-    public static final int LOOP_PARAMETER = 200000;
+    public static final int LOOP_PARAMETER = 1000000;
     
     private TestParameters () {}
     
