@@ -1,6 +1,6 @@
 package parallelhyflex;
 
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.pushdeciders.AlwaysPushDecider;
 import parallelhyflex.pushdeciders.IthPushDecider;
 import parallelhyflex.pushdeciders.ProbablePushDecider;

@@ -3,13 +3,13 @@ package parallelhyflex;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problemdependent.Solution;
-import parallelhyflex.problemdependent.Heuristic;
+import parallelhyflex.problemdependent.solution.Solution;
+import parallelhyflex.problemdependent.heuristics.Heuristic;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import mpi.MPI;
-import parallelhyflex.problemdependent.SolutionReader;
-import parallelhyflex.problemdependent.WritableExperience;
+import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.problemdependent.experience.WritableExperience;
 
 /**
  *

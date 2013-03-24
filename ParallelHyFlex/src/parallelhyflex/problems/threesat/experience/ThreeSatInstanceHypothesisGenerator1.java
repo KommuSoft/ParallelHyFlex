@@ -5,10 +5,10 @@
 package parallelhyflex.problems.threesat.experience;
 
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
-import parallelhyflex.problemdependent.InstanceHypothesisGeneratorBase;
+import parallelhyflex.problemdependent.experience.InstanceHypothesisGeneratorBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
-import parallelhyflex.problems.threesat.ThreeSatProblem;
-import parallelhyflex.problems.threesat.ThreeSatSolution;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
 /**
  *

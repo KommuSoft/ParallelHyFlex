@@ -2,10 +2,10 @@ package parallelhyflex.problems.threesat.constraints;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import parallelhyflex.problemdependent.WritableEnforceableConstraintBase;
+import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
-import parallelhyflex.problems.threesat.ThreeSatProblem;
-import parallelhyflex.problems.threesat.ThreeSatSolution;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 

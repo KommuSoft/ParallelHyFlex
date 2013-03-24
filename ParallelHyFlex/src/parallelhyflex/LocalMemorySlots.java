@@ -1,6 +1,6 @@
 package parallelhyflex;
 
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.pushsenders.PushSender;
 import parallelhyflex.pushdeciders.PushDecider;
 import parallelhyflex.utils.CompactBitArray;

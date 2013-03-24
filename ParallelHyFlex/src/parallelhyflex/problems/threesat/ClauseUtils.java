@@ -1,5 +1,6 @@
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;

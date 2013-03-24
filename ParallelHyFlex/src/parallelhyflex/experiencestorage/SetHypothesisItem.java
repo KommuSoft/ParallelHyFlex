@@ -2,8 +2,8 @@ package parallelhyflex.experiencestorage;
 
 import java.util.Objects;
 import java.util.PriorityQueue;
-import parallelhyflex.problemdependent.Constraint;
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.constraints.Constraint;
+import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.ReversedDoubleComparator;
 
 /**

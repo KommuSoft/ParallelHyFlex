@@ -4,9 +4,13 @@
  */
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint2;
-import parallelhyflex.problemdependent.EnforceableConstraint;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

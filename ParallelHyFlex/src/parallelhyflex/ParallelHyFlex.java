@@ -4,9 +4,9 @@ import java.io.IOException;
 import parallelhyflex.algebra.CloningGenerator;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.problems.threesat.experience.ThreeSatExperience;
-import parallelhyflex.problems.threesat.ThreeSatProblem;
-import parallelhyflex.problems.threesat.ThreeSatProblemGenerator;
-import parallelhyflex.problems.threesat.ThreeSatSolutionGenerator;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *

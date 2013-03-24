@@ -4,6 +4,10 @@
  */
 package parallelhyflex.problems.threesat;
 
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicR1;
 import junit.framework.Assert;
 import org.junit.After;

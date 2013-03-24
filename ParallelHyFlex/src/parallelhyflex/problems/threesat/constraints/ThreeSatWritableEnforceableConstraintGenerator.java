@@ -6,10 +6,10 @@ package parallelhyflex.problems.threesat.constraints;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import parallelhyflex.problemdependent.EnforceableConstraint;
-import parallelhyflex.problemdependent.EnforceableConstraintGeneratorBase;
-import parallelhyflex.problems.threesat.ThreeSatProblem;
-import parallelhyflex.problems.threesat.ThreeSatSolution;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraintGeneratorBase;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
 /**
  *

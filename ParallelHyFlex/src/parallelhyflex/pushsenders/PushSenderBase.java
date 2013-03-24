@@ -7,7 +7,7 @@ package parallelhyflex.pushsenders;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *

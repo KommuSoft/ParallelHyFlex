@@ -1,7 +1,7 @@
 package parallelhyflex;
 
-import parallelhyflex.problemdependent.Problem;
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.problem.Problem;
+import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *

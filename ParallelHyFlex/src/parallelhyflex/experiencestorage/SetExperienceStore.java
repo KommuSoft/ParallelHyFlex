@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import parallelhyflex.problemdependent.EnforceableConstraint;
-import parallelhyflex.problemdependent.ExperienceBase;
-import parallelhyflex.problemdependent.Problem;
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
+import parallelhyflex.problemdependent.experience.ExperienceBase;
+import parallelhyflex.problemdependent.problem.Problem;
+import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.ProbabilityUtils;
 
 /**

@@ -1,7 +1,7 @@
 package parallelhyflex.experiencestorage;
 
 import parallelhyflex.algebra.Generator;
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *

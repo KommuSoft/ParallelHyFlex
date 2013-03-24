@@ -1,6 +1,6 @@
 package parallelhyflex;
 
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.solution.Solution;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import mpi.MPI;

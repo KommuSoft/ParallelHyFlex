@@ -1,10 +1,10 @@
 package parallelhyflex.problems.threesat.heuristics;
 
 import parallelhyflex.HeuristicType;
-import parallelhyflex.problemdependent.HeuristicBase;
+import parallelhyflex.problemdependent.heuristics.HeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
-import parallelhyflex.problems.threesat.ThreeSatProblem;
-import parallelhyflex.problems.threesat.ThreeSatSolution;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 

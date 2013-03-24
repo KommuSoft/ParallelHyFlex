@@ -8,12 +8,12 @@ import java.io.IOException;
 import mpi.MPI;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problemdependent.Solution;
-import parallelhyflex.problemdependent.Problem;
-import parallelhyflex.problemdependent.ProblemReader;
-import parallelhyflex.problemdependent.SolutionReader;
-import parallelhyflex.problemdependent.WritableEnforceableConstraint;
-import parallelhyflex.problemdependent.WritableExperience;
+import parallelhyflex.problemdependent.solution.Solution;
+import parallelhyflex.problemdependent.problem.Problem;
+import parallelhyflex.problemdependent.problem.ProblemReader;
+import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
+import parallelhyflex.problemdependent.experience.WritableExperience;
 
 /**
  *

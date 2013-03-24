@@ -1,6 +1,6 @@
 package parallelhyflex.pushdeciders;
 
-import parallelhyflex.problemdependent.Solution;
+import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *
