@@ -10,9 +10,9 @@ import parallelhyflex.problemdependent.InstanceHypothesisGeneratorBase;
  *
  * @author kommusoft
  */
-public class ThreeSatInstanceHypothesisGenerator extends InstanceHypothesisGeneratorBase<ThreeSatSolution,ThreeSatWritableEnforceableConstraint1,ThreeSatProblem> {
+public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<ThreeSatSolution,ThreeSatWritableEnforceableConstraint1,ThreeSatProblem> {
     
-    public ThreeSatInstanceHypothesisGenerator (ThreeSatProblem problem) {
+    public ThreeSatInstanceHypothesisGenerator1 (ThreeSatProblem problem) {
         super(problem);
     }
 

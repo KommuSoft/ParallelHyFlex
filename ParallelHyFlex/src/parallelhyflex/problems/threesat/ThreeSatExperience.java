@@ -1,25 +1,15 @@
 package parallelhyflex.problems.threesat;
 
-import parallelhyflex.problemdependent.ExperienceBase;
+import parallelhyflex.experiencestorage.WritableSetExperienceStore;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatExperience extends ExperienceBase<ThreeSatSolution,ThreeSatProblem> {
+public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1> {
     
-    public ThreeSatExperience (ThreeSatProblem problem) {
-        super(problem);
-    }
-
-    @Override
-    public void join(ThreeSatSolution solution) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void amnesia() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public ThreeSatExperience (ThreeSatProblem problem, int historySize, int hypothesisSize, int generationSize) {
+        super(problem,new ThreeSatWritableEnforceableConstraint1(problem),historySize,hypothesisSize,generationSize);
     }
     
 }

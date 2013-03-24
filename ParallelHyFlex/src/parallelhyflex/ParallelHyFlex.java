@@ -25,7 +25,7 @@ public class ParallelHyFlex {
         try {
         ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(128,10);// = new ThreeSatProblemGenerator(128,500);
         HyperHeuristic dummy;
-        Experience exp = new SetExperienceStore<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1>();
+        //Experience exp = new SetExperienceStore<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1>(null);
         if(Communication.getCommunication().getRank() == 0) {
             ThreeSatProblem tsp = tspg.generateProblem();
             dummy = new HyperHeuristic(tsp);
