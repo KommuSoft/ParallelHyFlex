@@ -2,7 +2,7 @@ package parallelhyflex.problemdependent.constraints;
 
 import java.util.ArrayList;
 import parallelhyflex.problemdependent.problem.Problem;
-import parallelhyflex.problemdependent.SearchSpaceBase;
+import parallelhyflex.problemdependent.searchspace.SearchSpaceBase;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.ProbabilityUtils;
 

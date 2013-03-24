@@ -1,4 +1,4 @@
-package parallelhyflex.problemdependent;
+package parallelhyflex.problemdependent.searchspace;
 
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.problem.Problem;
