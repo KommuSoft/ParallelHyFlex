@@ -12,7 +12,6 @@ import java.util.Arrays;
 public class CompactBitArray implements ICompactBitArray {
 
     public static final long BLOCK_MASK = 0xFFFFFFFFFFFFFFBFL;
-
     public final long[] values;
     private int n;
 
@@ -74,25 +73,25 @@ public class CompactBitArray implements ICompactBitArray {
                 || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
                 || getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1));
     }
-    
-    public boolean SatisfiesClauseWithoutBlock (long constraint, int blockindex) {
+
+    public boolean SatisfiesClauseWithoutBlock(long constraint, int blockindex) {
         long index1 = (constraint >> 40) & 0xFFFFF, index2 = (constraint >> 20) & 0xFFFFF, index3 = constraint & 0x0FFFFF;
-        long pattern = (long) blockindex<<6;
-        return (((index1&BLOCK_MASK) != pattern && getBit(index1) == ((constraint >> 62) & 1))
-                || ((index2&BLOCK_MASK) != pattern && getBit(index2) == ((constraint >> 61) & 1))
-                || ((index3&BLOCK_MASK) != pattern && getBit(index3) == ((constraint >> 60) & 1)));
+        long pattern = (long) blockindex << 6;
+        return (((index1 & BLOCK_MASK) != pattern && getBit(index1) == ((constraint >> 62) & 1))
+                || ((index2 & BLOCK_MASK) != pattern && getBit(index2) == ((constraint >> 61) & 1))
+                || ((index3 & BLOCK_MASK) != pattern && getBit(index3) == ((constraint >> 60) & 1)));
     }
-    
-    public int getNumberOfFailingClauses (long[] constraints) {
+
+    public int getNumberOfFailingClauses(long[] constraints) {
         int nfail = 0;
-        for(long constraint : constraints) {
-            if(!satisfiesClause(constraint)) {
+        for (long constraint : constraints) {
+            if (!satisfiesClause(constraint)) {
                 nfail++;
             }
         }
         return nfail;
     }
-    
+
     @Override
     public void swap(int index) {
         int j = index >> 6;
@@ -104,46 +103,59 @@ public class CompactBitArray implements ICompactBitArray {
     @Override
     public void swapRange(int fromIndex, int toIndex) {
         int fj = fromIndex >> 6, tj = toIndex >> 6;
-        fromIndex -= fj << 6;
-        toIndex -= tj << 6;
-        for (int i = fj + 1; i < tj; i++) {
-            values[i] = ~values[i];
+        if (fj != tj) {
+            fromIndex -= fj << 6;
+            toIndex -= tj << 6;
+            for (int i = fj + 1; i < tj; i++) {
+                values[i] = ~values[i];
+            }
+            long mask = (0x2L << toIndex) - 0x01;
+            values[tj] ^= mask;
+            mask = 0xFFFFFFFFFFFFFFFFL << fromIndex;
+            values[fj] ^= mask;
+        } else {
+            values[tj] ^= ((0x2L << toIndex) - 0x01) & (0xFFFFFFFFFFFFFFFFL << fromIndex);
         }
-        long mask = (4L << toIndex) - 1;
-        values[tj] ^= mask;
-        mask = (2L << fromIndex) - 1;
-        values[fj] ^= ~mask;
-        //TODO: same master
     }
 
     @Override
     public void setRange(int fromIndex, int toIndex) {
         int fj = fromIndex >> 6, tj = toIndex >> 6;
-        fromIndex -= fj << 6;
-        toIndex -= tj << 6;
-        for (int i = fj + 1; i < tj; i++) {
-            values[i] = 0xFFFFFFFFFFFFFFFFL;
+        if (fj != tj) {
+            fromIndex -= fj << 6;
+            toIndex -= tj << 6;
+            for (int i = fj + 1; i < tj; i++) {
+                values[i] = 0xFFFFFFFFFFFFFFFFL;
+            }
+            //System.out.println(toIndex);
+            long mask = (0x2L << toIndex) - 0x01;
+            //System.out.println(Utils.stringReverse(String.format("%64s", Long.toBinaryString(mask)).replace(' ', '0')));
+            values[tj] |= mask;
+            mask = 0xFFFFFFFFFFFFFFFFL << fromIndex;
+            values[fj] |= mask;
+        } else {
+            long mask = ((0x2L << toIndex) - 0x01) & (0xFFFFFFFFFFFFFFFFL << fromIndex);
+            values[fj] |= mask;
         }
-        long mask = (4L << toIndex) - 1;
-        values[tj] |= mask;
-        mask = (2L << fromIndex) - 1;
-        values[fj] |= ~mask;
-        //TODO: same master
     }
 
     @Override
     public void resetRange(int fromIndex, int toIndex) {
         int fj = fromIndex >> 6, tj = toIndex >> 6;
-        fromIndex -= fj << 6;
-        toIndex -= tj << 6;
-        for (int i = fj + 1; i < tj; i++) {
-            values[i] = 0x0000000000000000L;
+        if (fj != tj) {
+            fromIndex -= fj << 6;
+            toIndex -= tj << 6;
+            for (int i = fj + 1; i < tj; i++) {
+                values[i] = 0x0000000000000000L;
+            }
+            long mask = (0x2L << toIndex) - 0x01;
+            values[tj] &= ~mask;
+            mask = 0xFFFFFFFFFFFFFFFFL << fromIndex;
+            values[fj] &= ~mask;
+        } else {
+            long mask = ((0x2L << toIndex) - 0x01) & (0xFFFFFFFFFFFFFFFFL << fromIndex);
+            values[tj] &= ~mask;
         }
-        long mask = (4L << toIndex) - 1;
-        values[tj] &= ~mask;
-        mask = (2L << fromIndex) - 1;
-        values[fj] &= mask;
-        //TODO: same master
     }
 
     @Override
@@ -183,6 +195,7 @@ public class CompactBitArray implements ICompactBitArray {
         return cba;
     }
 
+    @Override
     public void clearTail() {
         long tailmask = 64 + this.n - (this.values.length << 6);
         //TODO: remove tail
@@ -201,7 +214,7 @@ public class CompactBitArray implements ICompactBitArray {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.values.length; i++) {
-            sb.append(String.format("%s ", Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0'))));
+            sb.append(Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0')) + " ");
         }
         return sb.toString();
     }
@@ -220,14 +233,15 @@ public class CompactBitArray implements ICompactBitArray {
             os.writeLong(values[i]);
         }
     }
+
     public static CompactBitArray fromDataInputStream(DataInputStream dis) throws IOException {
         int n = dis.readInt();
         int j = (n + 63) >> 6;
         long[] values = new long[j];
-        for(int i = 0; i < j; i++) {
+        for (int i = 0; i < j; i++) {
             values[i] = dis.readLong();
         }
-        return new CompactBitArray(n,values);
+        return new CompactBitArray(n, values);
     }
 
     @Override
@@ -242,9 +256,9 @@ public class CompactBitArray implements ICompactBitArray {
     public int getLength() {
         return this.n;
     }
-    
+
     @Override
-    public int getBlockLength () {
+    public int getBlockLength() {
         return this.values.length;
     }
 
@@ -264,6 +278,6 @@ public class CompactBitArray implements ICompactBitArray {
         index -= j << 6;
         long mask = 1L << index;
         values[j] ^= mask;
-        return (int) ((values[j]>>index)&0x01);
+        return (int) ((values[j] >> index) & 0x01);
     }
 }

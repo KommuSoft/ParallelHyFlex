@@ -149,9 +149,9 @@ public class CompactBitArrayTest {
             instance2.swapRange(index1, index2);
             for (int j = 0; j < 997; j++) {
                 if (j < index1 || j > index2) {
-                    Assert.assertEquals(instance.getBit(j), instance2.getBit(j));
+                    Assert.assertEquals(String.format("With indices %s %s and %s",index1,index2,j),instance.getBit(j), instance2.getBit(j));
                 } else {
-                    Assert.assertTrue(instance.getBit(j) != instance2.getBit(j));
+                    Assert.assertTrue(String.format("With indices %s %s and %s",index1,index2,j),instance.getBit(j) != instance2.getBit(j));
                 }
             }
         }
@@ -172,9 +172,9 @@ public class CompactBitArrayTest {
             instance2.setRange(index1, index2);
             for (int j = 0; j < 997; j++) {
                 if (j < index1 || j > index2) {
-                    Assert.assertEquals(instance.getBit(j), instance2.getBit(j));
+                    Assert.assertEquals(String.format("With indices %s %s and %s",index1,index2,j),instance.getBit(j), instance2.getBit(j));
                 } else {
-                    Assert.assertEquals(1L,instance2.getBit(j));
+                    Assert.assertEquals(String.format("With indices %s %s and %s",index1,index2,j),1L,instance2.getBit(j));
                 }
             }
         }
@@ -195,9 +195,9 @@ public class CompactBitArrayTest {
             instance2.resetRange(index1, index2);
             for (int j = 0; j < 997; j++) {
                 if (j < index1 || j > index2) {
-                    Assert.assertEquals(instance.getBit(j), instance2.getBit(j));
+                    Assert.assertEquals(String.format("With indices %s %s and %s",index1,index2,j),instance.getBit(j), instance2.getBit(j));
                 } else {
-                    Assert.assertEquals(0L,instance2.getBit(j));
+                    Assert.assertEquals(String.format("With indices %s %s and %s",index1,index2,j),0L,instance2.getBit(j));
                 }
             }
         }
@@ -247,15 +247,16 @@ public class CompactBitArrayTest {
      * Test of equals method, of class CompactBitArray.
      */
     @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        CompactBitArray instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testEquals1() {
+        CompactBitArray instance = CompactBitArray.randomInstance(997);
+        CompactBitArray instance2 = instance.clone();
+        for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            Assert.assertEquals(instance,instance2);
+            int index = Utils.StaticRandom.nextInt(997);
+            instance2.swap(index);
+            Assert.assertNotSame(instance,instance2);
+            instance2.swap(index);
+        }
     }
 
     /**
@@ -263,13 +264,11 @@ public class CompactBitArrayTest {
      */
     @Test
     public void testGetLength() {
-        System.out.println("getLength");
-        CompactBitArray instance = null;
-        int expResult = 0;
-        int result = instance.getLength();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            int length = Utils.StaticRandom.nextInt(997);
+            CompactBitArray instance = CompactBitArray.randomInstance(length);
+            Assert.assertEquals(length,instance.getLength());
+        }
     }
 
     /**
@@ -277,13 +276,12 @@ public class CompactBitArrayTest {
      */
     @Test
     public void testGetBlockLength() {
-        System.out.println("getBlockLength");
-        CompactBitArray instance = null;
-        int expResult = 0;
-        int result = instance.getBlockLength();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            int length = Utils.StaticRandom.nextInt(997);
+            int block = (int) Math.ceil(length/64.0d);
+            CompactBitArray instance = CompactBitArray.randomInstance(length);
+            Assert.assertEquals(block,instance.getBlockLength());
+        }
     }
 
     /**
@@ -307,13 +305,19 @@ public class CompactBitArrayTest {
      */
     @Test
     public void testSwapGetBit() {
-        System.out.println("swapGetBit");
-        int index = 0;
-        CompactBitArray instance = null;
-        int expResult = 0;
-        int result = instance.swapGetBit(index);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        CompactBitArray instance = CompactBitArray.randomInstance(997);
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            int index = Utils.StaticRandom.nextInt(997);
+            CompactBitArray instance2 = instance.clone();
+            int bit = instance2.swapGetBit(index);
+            Assert.assertEquals(instance2.getBit(index), bit);
+            for (int j = 0; j < 997; j++) {
+                if (j != index) {
+                    Assert.assertEquals(instance.getBit(j), instance2.getBit(j));
+                } else {
+                    Assert.assertTrue(instance.getBit(j) != instance2.getBit(j));
+                }
+            }
+        }
     }
 }
