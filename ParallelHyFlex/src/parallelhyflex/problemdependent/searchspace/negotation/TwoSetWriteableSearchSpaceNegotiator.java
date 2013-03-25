@@ -13,7 +13,7 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>,TEC extends WritableEnforceableConstraint<TSolution>> extends MergingWritableSearchSpaceNegotiator<TSolution,TEC> {
     
-    private final TwoSetSearchSpace<TSolution> searchSpace = new TwoSetSearchSpace<TSolution>();
+    private final TwoSetSearchSpace<TSolution> searchSpace = new TwoSetSearchSpace<>();
     
     public TwoSetWriteableSearchSpaceNegotiator (ReadableGenerator<TEC> generator) {
         super(generator);
@@ -21,9 +21,16 @@ public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSo
 
     @Override
     protected SearchSpace<TSolution> innerNegotiate(Collection<TEC> own, Collection<TEC> others) {
-        this.searchSpace.replacePositive(own);
-        this.searchSpace.replaceNegative(others);
-        return this.searchSpace;
+        this.getSearchSpace().replacePositive(own);
+        this.getSearchSpace().replaceNegative(others);
+        return this.getSearchSpace();
+    }
+
+    /**
+     * @return the searchSpace
+     */
+    public TwoSetSearchSpace<TSolution> getSearchSpace() {
+        return searchSpace;
     }
     
 }

@@ -1,10 +1,14 @@
-\documentclass{beamer}
+\documentclass[handout]{beamer}
 \title{Parallelle Metaheuristieken}
 \author{Willem Van Onsem\\Promotor: prof. Bart Demoen}
 \date{27 maart 2013}
-\usepackage{tikz}
-\usetikzlibrary{shapes}
+\usepackage{tikz,amsfonts,amsmath}
+\usetikzlibrary{shapes,calc}
 \usepackage[dutch]{babel}
+\usetheme{Antibes}
+\newcommand{\sol}{\mathcal{S}}
+\newcommand{\constr}{\mathcal{C}}
+\newcommand{\RR}{\mathbb{R}}
 \begin{document}
 \begin{frame}
 \maketitle
@@ -13,19 +17,122 @@
 \tableofcontents
 \end{frame}
 \section{Inleiding}
+\begin{frame}{Inleiding}
+\begin{itemize}[<+->]
+ \item Belangrijk onderwerp in AI: optimalisatieproblemen
+ \item Meestal NP-hard dus intractable
+ \item Heuristieken bieden ``oplossing'', maar:
+ \begin{itemize}[<+->]
+  \item afhankelijk van instantie
+  \item meestal niet aanpasbaar naar gegeven tijd,...
+ \end{itemize}
+ \item Meer aanpasbaar: Metaheuristieken
+\end{itemize}
+\end{frame}
+\subsection{Metaheuristieken}
+\begin{frame}{Inleiding: Metaheuristieken}
+\begin{itemize}[<+->]
+ \item Oplossingsruimte $\sol$
+ \item Begin met een ``toevallige'' oplossing $s\in\sol$
+ \item Voer sequentie van metaheuristieken uit
+ \begin{equation}
+  h_i:\sol^{k_i}\rightarrow\sol
+ \end{equation}
+ \item Herhalen tot tijd op is
+ \item Beste oplossing tot dusver onthouden en teruggeven
+ \item Populaire implementaties:
+ \begin{itemize}[<+->]
+   \item Genetische algoritmen
+   \item Simulated Annealing
+   \item ...
+ \end{itemize}
+ \item Research: ``Operational Research''
+\end{itemize}
+\end{frame}
+\subsection{HyFlex}
+\begin{frame}{Inleiding: \emph{HyFlex}}
+\begin{itemize}[<+->]
+ \item Enkele formele modellen
+ \item Tot dusver vooral probleemafhankelijk denken
+ \item Belangrijk: $h_i$-functies
+ \item Naar algemene oplossingsmethodes: Hyperheuristieken
+ \begin{itemize}
+   \item Ontwikkel grote collectie van $h_i$-functies
+   \item Laat een algemeen probleemonafhankelijk systeem kiezen welke $h_i$ toe te passen
+ \end{itemize}
+ \item Implementatie voor research: \emph{HyFlex}
+ \item Competitie in 2011: \emph{CHeSC2011}
+\end{itemize}
+\end{frame}
+\begin{frame}{Inleiding: \emph{HyFlex}}
+\begin{figure}
+\begin{tikzpicture}
+\node[draw,rectangle,minimum width=6 cm, minimum height=2cm] (PI) at (0,1.1) {};
+\node[draw,rectangle,minimum width=6 cm, minimum height=2cm] (PD) at (0,-1.1) {};
+\coordinate (PDL) at ($(PD.north west)+(-0.5,0)$);
+\coordinate (PIL) at ($(PI.north west)+(-0.5,0)$);
+\draw[<->] (PDL |- PD.south west) to node[above,midway,sloped]{\tiny{Problem Dependent}} (PDL);
+\draw[<->] (PIL |- PI.south west) to node[above,midway,sloped]{\tiny{Problem Independent}} (PIL);
+\begin{scope}[red]
+  \node[draw,rectangle,minimum width=1cm, minimum height=0.75cm] (LL1) at (-2.35,-0.625) {};
+  \fill (-2.65,-0.55) circle (0.05cm) node[anchor=west] {\tiny{$h_0$}};
+  \fill (-2.35,-0.85) circle (0.05cm) node[anchor=west] {\tiny{$h_1$}};
+  \fill (-2.25,-0.65) circle (0.05cm) node[anchor=west] {\tiny{$h_2$}};
+  \draw (LL1.south) node[anchor=north] {\tiny{Mutation}};
+\end{scope}
+\begin{scope}[xshift=1.55 cm,orange]
+  \node[draw,rectangle,minimum width=1cm, minimum height=0.75cm] (LL2) at (-2.35,-0.625) {};
+  \fill (-2.65,-0.55) circle (0.05cm) node[anchor=west] {\tiny{$h_3$}};
+  \fill (-2.35,-0.85) circle (0.05cm) node[anchor=west] {\tiny{$h_4$}};
+  \fill (-2.25,-0.65) circle (0.05cm) node[anchor=west] {\tiny{$h_5$}};
+  \fill (-2.25,-0.35) circle (0.05cm) node[anchor=west] {\tiny{$h_6$}};
+  \draw (LL2.south) node[anchor=north] {\tiny{Local Search}};
+\end{scope}
+\begin{scope}[xshift=3.1 cm,green]
+  \node[draw,rectangle,minimum width=1cm, minimum height=0.75cm] (LL3) at (-2.35,-0.625) {};
+  \fill (-2.65,-0.55) circle (0.05cm) node[anchor=west] {\tiny{$h_7$}};
+  \fill (-2.35,-0.85) circle (0.05cm) node[anchor=west] {\tiny{$h_8$}};
+  \draw (LL3.south) node[anchor=north] {\tiny{Ruin Recreate}};
+\end{scope}
+\begin{scope}[xshift=4.75 cm,blue]
+  \node[draw,rectangle,minimum width=1cm, minimum height=0.75cm] (LL4) at (-2.35,-0.625) {};
+  \fill (-2.65,-0.55) circle (0.05cm) node[anchor=west] {\tiny{$h_9$}};
+  \draw (LL4.south) node[anchor=north] {\tiny{Crossover}};
+\end{scope}
+\fill[purple] (0,-1.75) circle (0.05cm) node[anchor=west] {\tiny{Equality function $=$}};
+\fill[brown] (-1.5,-1.5) circle (0.05cm) node[anchor=west] {\tiny{Objective function $O$}};
+\fill[gray] (-2.5,-1.85) circle (0.05cm) node[anchor=west] {\tiny{Initialization function $I$}};
+\node[draw,rectangle,fill=gray!20,minimum width=5.5 cm, minimum height=0.5cm] (MEM) at (0,0.5) {};
+\foreach\x in {-2.25,-1.75,...,2.25} {
+  \draw (\x,0.25) -- ++(0,0.5);
+}
+\foreach\x in {1,2,...,11} {
+  \draw (-2.75+0.5*\x-0.25,0.5) node {$s_{\x}$};
+}
+\draw (MEM.north) node[anchor=south] {\tiny{Memory}};
+\node[draw,rectangle,fill=gray!20,minimum width=5.5 cm, minimum height=0.5cm] (EXC) at (0,1.5) {Execution Mechanism};
+\end{tikzpicture}
+\caption{Structuur van \emph{HyFlex}}
+\end{figure}
+\end{frame}
 \section{ParHyFlex}
 \begin{frame}{ParHyFlex}
-\begin{itemize}
- \item Ontwikkeling van \emph{ParHyFlex}
- \item Parallelle versie van \emph{HyFlex}
- \begin{itemize}
-  \item Elke machine houdt een oplossingsruimte bij
-  \item Gebruikers ontwikkelen hyperheuristieken
-  \item Extra low-level features:
-  \begin{itemize}
-   \item Afstandsfuncties
-   \item Meerdere (virtuele) objectieven
-  \end{itemize}
+Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
+\begin{itemize}[<+->]
+ \item Elke machine houdt een oplossingsruimte bij
+ \item Gebruikers ontwikkelen (sequenti\"ele) hyperheuristieken
+ \item \emph{ParHyFlex}: zorgt voor uitvoering met goede speedup
+ \item Belangrijk: Intensification-Diversification cycle
+ \begin{itemize}[<+->]
+  \item Intensification: ``goede concepten'' delen
+  \item Diversification: niet in elkaars ``vaarwater'' zitten
+ \end{itemize}
+ \item Extra low-level features:
+ \begin{itemize}[<+->]
+  \item Afstandsfuncties $\delta_i:\sol^2\rightarrow\RR$
+  \item Afdwingbare constraints: $c_i:\sol\rightarrow\sol$
+  \item Hypothese generatoren: $g_i:\sol^k\rightarrow\constr:\sol^k\rightarrow\left(\sol\rightarrow\sol\right)$
+  \item Meerdere (virtuele) objectieven: $O_i:\sol\rightarrow\RR$
  \end{itemize}
 \end{itemize}
 \end{frame}
@@ -70,13 +177,13 @@
 \end{frame}
 \begin{frame}{ParHyFlex: Structuur}
 \emph{Problem Description} component:
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Metaprobleem overal gekend
  \item Specifiek probleem aanmaken op \emph{root}
  \item Broadcast naar andere machines
 \end{itemize}
 \emph{Geheugen} component:
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Slaat tussen-oplossingen op
  \item Lokaal lees-schrijf geheugen
  \item Vreemd lees geheugen
@@ -86,7 +193,7 @@
 \end{frame}
 \begin{frame}{ParHyFlex: Structuur}
 \emph{Experience} component:
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Vat zoekervaring samen
  \item Wisselt ervaring uit met andere machines
  \item Onderhandelt over nieuwe zoekruimte
@@ -95,7 +202,7 @@
  \item Amnesie implementeren
 \end{itemize}
 \emph{Search Space} component:
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Bewaakt de zoekruimte
  \item Past gegenereerde/ontvangen oplossingen aan
  \item Met behulp van \emph{Enforceable Constraints}
@@ -105,11 +212,11 @@
 \end{frame}
 \section{Probleem: 3SAT}
 \begin{frame}{Probleem: MAX3SAT}
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Prestaties framework testen op MAX3SAT
  \item Booleaanse optimalisatie
  \item Motivering:
- \begin{itemize}
+ \begin{itemize}[<+->]
   \item Eenvoudig probleem
   \item Veel bestaand onderzoek
   \item Veel aspecten \emph{inherent}
@@ -120,7 +227,7 @@
 \subsection{Componenten}
 \begin{frame}{Probleem: MAX3SAT: Componenten}
 \emph{Experience} component:
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Clause learner
  \item Genereren van clauses die waar zijn voor een oplossing
  \item Evaluatie op andere oplossingen
@@ -136,11 +243,11 @@
 \subsection{Probleemafhankelijke Componenten}
 \section{Communicatie}
 \begin{frame}{Communicatie}
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Parallelle bibliotheken gericht op computationele problemen
  \item Voorbeeld: Sorteren, Matrix-vermenigvuldiging
  \item Communicatie (aangepaste \emph{TCP})
- \begin{itemize}
+ \begin{itemize}[<+->]
   \item Betrouwbaar
   \item Synchroon (\emph{MPI}: optioneel)
   \item Sequenti\"eel (niet bij \emph{Tuple Space})
@@ -154,11 +261,11 @@
 \subsection{Betrouwbaar}
 \begin{frame}{Communicatie: Betrouwbaar}
 Betrouwbare communicatie?
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Parallelle setting: meestal goede verbinding
  \item Geen bewijs dat uitwisseling altijd iets oplevert
  \item Kost van betrouwbaarheid:
- \begin{itemize}
+ \begin{itemize}[<+->]
   \item \emph{ACK}-bericht
   \item Heruitsturen (na timeout!)
   \item Netwerk blijft ``outdated berichten sturen''
@@ -173,7 +280,7 @@ Betrouwbare communicatie?
 \subsection{Synchroon}
 \begin{frame}{Communicatie: Sequentieel}
 Synchroon communicatie?
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Hyperheuristiek en onderliggende heuristieken divers
  \item Kans om op hetzelfde moment barri\`ere tegen te komen nihiel
  \item Wachten zorgt voor ineffici\"ent CPU-gebruik
@@ -184,7 +291,7 @@ Synchroon communicatie?
 \subsection{Sequenti\"eel}
 \begin{frame}{Communicatie: Sequentieel}
 Sequentie\"ele communicatie?
-\begin{itemize}
+\begin{itemize}[<+->]
  \item We willen geheugen telkens up-to-date houden
  \item Oplossing uitwisselen indien reeds herzien?
  \item Levert extra bandbreedte op
@@ -195,7 +302,7 @@ Sequentie\"ele communicatie?
 \subsection{Atomair}
 \begin{frame}{Communicatie: Atomair}
 Atomaire communicatie?
-\begin{itemize}
+\begin{itemize}[<+->]
  \item Diverse communicatie (oplossingen, ervaring, toestand)
  \item Verschillende prioriteiten
  \item Kost van bericht: bericht zelf, aantal bytes minder relevant
