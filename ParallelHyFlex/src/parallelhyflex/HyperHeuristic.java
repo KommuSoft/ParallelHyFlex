@@ -18,6 +18,7 @@ import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
 
@@ -30,34 +31,37 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private final ProxyMemory<TSolution> proxyMemory;
     private final WritableExperience<TSolution, TEC> experience;
     private final Date startTime, stopTime;
-    private final long intervalTicks;
+    private final long durationTicks;
+    private long negotiationTicks;
     private final TProblem problem;
-    private SearchSpace<TSolution> searchSpace;
-    private SearchSpaceNegotiator<TSolution,TEC> negotiator;
+    private final SearchSpaceNegotiator<TSolution, TEC> negotiator;
 
     /**
-     * @note: This constructor can only be initialized if the
-     * machine is the root (has rank = 0), otherwise, one needs to construct
-     * this class with the constructor with the ProblemReader
+     * @note: This constructor can only be initialized if the machine is the
+     * root (has rank = 0), otherwise, one needs to construct this class with
+     * the constructor with the ProblemReader
      * @param problem
      * @throws ProtocolException If this constructor is initialized by a machine
      * with a rank different from zero!
      */
-    public HyperHeuristic(TProblem problem, long intervalTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SearchSpaceNegotiator<TSolution, TEC> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() == 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
-            this.intervalTicks = intervalTicks;
+            this.durationTicks = durationTicks;
+            this.negotiationTicks = negotiationTicks;
+            this.negotiator = negotiator;
             this.problem = problem;
             this.experience = experience.generate(problem);
             this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateAlwaysDistributed, solutionReader);
             this.proxyMemory.setWritableExperience(this.experience);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DataOutputStream dos = new DataOutputStream(baos);
-            problem.write(dos);
-            dos.close();
-            byte[][] data = new byte[][]{baos.toByteArray()};
-            baos.close();
+            byte[][] data;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                try (DataOutputStream dos = new DataOutputStream(baos)) {
+                    problem.write(dos);
+                }
+                data = new byte[][]{baos.toByteArray()};
+            }
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);
             int nw = this.getWritableMemory();
             for (int i = 0; i < nw; i++) {
@@ -71,28 +75,29 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     }
 
     /**
-     * @note: This constructor can only be initialized if the
-     * machine is not the root (has rank != 0), otherwise, one needs to construct
-     * this class with the constructor with the ProblemReader
+     * @note: This constructor can only be initialized if the machine is not the
+     * root (has rank != 0), otherwise, one needs to construct this class with
+     * the constructor with the ProblemReader
      * @param problemReader
-     * @param intervalTicks
+     * @param durationTicks
      * @param experience
      * @param solutionReader
-     * @throws ProtocolException If this constructor is called when the machine is not the root
-     * @throws IOException 
+     * @throws ProtocolException If this constructor is called when the machine
+     * is not the root
+     * @throws IOException
      */
-    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long intervalTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SearchSpaceNegotiator<TSolution, TEC> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() != 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
-            this.intervalTicks = intervalTicks;
+            this.durationTicks = durationTicks;
+            this.negotiationTicks = negotiationTicks;
+            this.negotiator = negotiator;
             this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateAlwaysBroadcasted, solutionReader);
             byte[][] data = new byte[1][];
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);
-            try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0])) {
-                DataInputStream dis = new DataInputStream(bais);
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0]); DataInputStream dis = new DataInputStream(bais)) {
                 this.problem = problemReader.readAndGenerate(dis);
-                dis.close();
             }
             this.experience = experience.generate(problem);
             this.proxyMemory.setWritableExperience(this.experience);
@@ -100,7 +105,6 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
-            //Communication.Log(this.problem.toString());
             this.startExecute();
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
@@ -143,7 +147,8 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         Date date = new Date();
         long time = date.getTime();
         this.startTime.setTime(time);
-        this.stopTime.setTime(time + intervalTicks);
+        this.stopTime.setTime(time + durationTicks);
+        new NegotiationThread().start();
         this.execute();
     }
 
@@ -216,5 +221,40 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     @Override
     public int getNumberOfHeuristicsOfType(HeuristicType type) {
         return this.problem.getNumberOfHeuristicsOfType(type);
+    }
+
+    /**
+     * @return the negotiationTicks
+     */
+    public long getNegotiationTicks() {
+        return negotiationTicks;
+    }
+
+    /**
+     * @param negotiationTicks the negotiationTicks to set
+     */
+    public void setNegotiationTicks(long negotiationTicks) {
+        this.negotiationTicks = negotiationTicks;
+    }
+
+    private class NegotiationThread extends Thread {
+
+        public NegotiationThread() {
+            this.setDaemon(true);
+        }
+
+        @Override
+        public void run() {
+            SearchSpace<TSolution> ss = new DummySearchSpace<>();
+            while (hasTimeLeft()) {
+                try {
+                    Thread.sleep(getNegotiationTicks());
+                } catch (Exception e) {
+                    Communication.Log(e);
+                }
+                ss = negotiator.negotiate(experience.generateEnforceableConstraints());
+                proxyMemory.setSearchSpace(ss);
+            }
+        }
     }
 }

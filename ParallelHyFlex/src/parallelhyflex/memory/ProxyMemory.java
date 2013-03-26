@@ -9,6 +9,8 @@ import java.lang.reflect.Array;
 import mpi.MPI;
 import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
+import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -21,6 +23,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     private final MemorySlots localSlots;
     private final SolutionReader<TSolution> solutionReader;
     private WritableExperience<TSolution, ?> writableExperience;
+    private SearchSpace<TSolution> searchSpace = new DummySearchSpace<>();
     private final int[][] others;
     private final int[] cdfI;
     private int totalMemory = 0;
@@ -134,6 +137,18 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         this.writableExperience = writableExperience;
     }
 
+    /**
+     * @param searchSpace the searchSpace to set
+     */
+    public void setSearchSpace(SearchSpace<TSolution> searchSpace) {
+        if(searchSpace != null) {
+            this.searchSpace = searchSpace;
+        }
+        else {
+            this.searchSpace = new DummySearchSpace<>();
+        }
+    }
+
     private class FetchThread extends Thread {
 
         public FetchThread() {
@@ -153,6 +168,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
                     bais = new ByteArrayInputStream((byte[]) buffer[2]);
                     dis = new DataInputStream(bais);
                     sol = solutionReader.readAndGenerate(dis);
+                    searchSpace.correct(sol);
                     solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
                     dis.close();
                     bais.close();
