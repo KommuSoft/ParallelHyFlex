@@ -18,6 +18,8 @@ import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.problemdependent.searchspace.SearchSpace;
+import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
 
 /**
  *
@@ -30,9 +32,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private final Date startTime, stopTime;
     private final long intervalTicks;
     private final TProblem problem;
+    private SearchSpace<TSolution> searchSpace;
+    private SearchSpaceNegotiator<TSolution,TEC> negotiator;
 
     /**
-     * @note: This constructor can o, generator, tssgnly be initialized if the
+     * @note: This constructor can only be initialized if the
      * machine is the root (has rank = 0), otherwise, one needs to construct
      * this class with the constructor with the ProblemReader
      * @param problem
@@ -66,6 +70,17 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         }
     }
 
+    /**
+     * @note: This constructor can only be initialized if the
+     * machine is not the root (has rank != 0), otherwise, one needs to construct
+     * this class with the constructor with the ProblemReader
+     * @param problemReader
+     * @param intervalTicks
+     * @param experience
+     * @param solutionReader
+     * @throws ProtocolException If this constructor is called when the machine is not the root
+     * @throws IOException 
+     */
     public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long intervalTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() != 0) {
             this.startTime = new Date();
