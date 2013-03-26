@@ -15,7 +15,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import parallelhyflex.TestParameters;
 
 /**
@@ -52,7 +51,7 @@ public class ThreeSatHeuristicR1Test {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatHeuristicR1 tshm1 = new ThreeSatHeuristicR1(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(),tsp.getConstraints()),tss.getConflictingClauses());
             tshm1.applyHeuristicLocally(tss);

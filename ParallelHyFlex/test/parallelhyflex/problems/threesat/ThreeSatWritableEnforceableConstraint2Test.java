@@ -57,7 +57,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
             tswec.enforceTrue(tss);
@@ -73,7 +73,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
         ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
         ThreeSatProblem tsp = tspg.generateProblem();
         ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-        ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+        ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
         ThreeSatSolution tss = tsg.generateSolution();
         ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
@@ -92,7 +92,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
             tswec.enforceFalse(tss);
@@ -108,7 +108,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
         ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
         ThreeSatProblem tsp = tspg.generateProblem();
         ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-        ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+        ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
         ThreeSatSolution tss = tsg.generateSolution();
         ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
@@ -127,7 +127,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss, 50);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -51,7 +51,7 @@ public class ThreeSatHeuristicC1Test {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatHeuristicC1 tshm1 = new ThreeSatHeuristicC1(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             tshm1.applyHeuristicLocally(tss);
             Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(),tsp.getConstraints()),tss.getConflictingClauses());

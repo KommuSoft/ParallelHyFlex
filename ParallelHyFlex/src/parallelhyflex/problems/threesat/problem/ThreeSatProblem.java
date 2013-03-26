@@ -16,7 +16,6 @@ import parallelhyflex.problemdependent.distance.DistanceFunction;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.problem.ObjectiveFunction;
 import parallelhyflex.problemdependent.problem.ProblemBase;
-import parallelhyflex.problemdependent.solution.SolutionGenerator;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
@@ -28,7 +27,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
+public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSolutionGenerator> {
 
     private long[] constraints;
     private int[][] influences;

@@ -10,20 +10,20 @@ import parallelhyflex.problemdependent.solution.SolutionGenerator;
  *
  * @author kommusoft
  */
-public abstract class ProblemBase<TSolution extends Solution<TSolution>> implements Problem<TSolution> {
+public abstract class ProblemBase<TSolution extends Solution<TSolution>,TSolGen extends SolutionGenerator<TSolution>> implements Problem<TSolution> {
 
     private double intensityOfMutation = 0.1d;
     private double depthOfSearch = 0.1d;
     private Heuristic[] heuristics;
     private ObjectiveFunction[] objectives;
     private DistanceFunction[] distances;
-    private SolutionGenerator<TSolution> solutionGenerator;
+    private TSolGen solutionGenerator;
     private final int[] ns;
 
     protected ProblemBase() {
         ns = new int[HeuristicType.values().length];
     }
-    protected ProblemBase(Heuristic[] heuristics, ObjectiveFunction[] objectives, DistanceFunction[] distances, SolutionGenerator<TSolution> solutionGenerator) {
+    protected ProblemBase(Heuristic[] heuristics, ObjectiveFunction[] objectives, DistanceFunction[] distances, TSolGen solutionGenerator) {
         this();
         this.heuristics = heuristics;
         this.objectives = objectives;
@@ -67,7 +67,7 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>> impleme
     }
 
     @Override
-    public SolutionGenerator<TSolution> getSolutionGenerator() {
+    public TSolGen getSolutionGenerator() {
         return this.solutionGenerator;
     }
 
@@ -143,7 +143,7 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>> impleme
     /**
      * @param solutionGenerator the solutionGenerator to set
      */
-    protected void setSolutionGenerator(SolutionGenerator<TSolution> solutionGenerator) {
+    protected void setSolutionGenerator(TSolGen solutionGenerator) {
         this.solutionGenerator = solutionGenerator;
     }
 }

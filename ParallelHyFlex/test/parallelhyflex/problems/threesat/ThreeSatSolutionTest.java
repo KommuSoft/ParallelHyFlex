@@ -51,7 +51,7 @@ public class ThreeSatSolutionTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(100, 420);
             ThreeSatProblem tsp = tspg.generateProblem();
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DataOutputStream dos = new DataOutputStream(baos);

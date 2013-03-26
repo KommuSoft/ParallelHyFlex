@@ -29,7 +29,7 @@ public class ThreeSatWritableEnforceableConstraintGenerator extends EnforceableC
         }
         else {
             int distance = (int) vala;
-            ThreeSatSolution tss = this.getProblem().getGenerator().readAndGenerate(dis);
+            ThreeSatSolution tss = this.getProblem().getSolutionGenerator().readAndGenerate(dis);
             return new ThreeSatWritableEnforceableConstraint2(this.getProblem(),tss,distance);
         }
     }
