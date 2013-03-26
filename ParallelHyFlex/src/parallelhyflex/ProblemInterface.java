@@ -21,6 +21,8 @@ public interface ProblemInterface<TSolution extends Solution<TSolution>> {
 
     int getNumberOfHeuristics();
     
+    int getNumberOfHeuristicsOfType(HeuristicType type);
+    
     int getNumberOfLocalSearchHeuristics ();
     
     int getNumberOfMutationHeuristics ();

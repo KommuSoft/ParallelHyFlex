@@ -32,9 +32,9 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private final TProblem problem;
 
     /**
-     * @note: This constructor can o, generator, tssgnly be initialized if the machine is the
-     * root (has rank = 0), otherwise, one needs to construct this class with
-     * the constructor with the ProblemReader
+     * @note: This constructor can o, generator, tssgnly be initialized if the
+     * machine is the root (has rank = 0), otherwise, one needs to construct
+     * this class with the constructor with the ProblemReader
      * @param problem
      * @throws ProtocolException If this constructor is initialized by a machine
      * with a rank different from zero!
@@ -131,8 +131,8 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.stopTime.setTime(time + intervalTicks);
         this.execute();
     }
-    
-    public boolean hasTimeLeft () {
+
+    public boolean hasTimeLeft() {
         return this.stopTime.after(new Date());
     }
 
@@ -172,25 +172,34 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     public void setIntensityOfMutation(double iom) {
         this.setIntensityOfMutation(iom);
     }
-    
-    public int getNumberOfLocalSearchHeuristics () {
+
+    @Override
+    public int getNumberOfLocalSearchHeuristics() {
         return this.problem.getNumberOfLocalSearchHeuristics();
     }
-    
-    public int getNumberOfMutationHeuristics () {
+
+    @Override
+    public int getNumberOfMutationHeuristics() {
         return this.problem.getNumberOfMutationHeuristics();
     }
-    
-    public int getNumberOfCrossoverHeuristics () {
+
+    @Override
+    public int getNumberOfCrossoverHeuristics() {
         return this.problem.getNumberOfCrossoverHeuristics();
     }
-    
-    public int getNumberOfRuinRecreateHeuristics () {
+
+    @Override
+    public int getNumberOfRuinRecreateHeuristics() {
         return this.problem.getNumberOfRuinRecreateHeuristics();
     }
-    
-    public HeuristicType getHeuristicType (int heuristic) {
+
+    @Override
+    public HeuristicType getHeuristicType(int heuristic) {
         return this.problem.getHeuristicType(heuristic);
     }
-    
+
+    @Override
+    public int getNumberOfHeuristicsOfType(HeuristicType type) {
+        return this.problem.getNumberOfHeuristicsOfType(type);
+    }
 }

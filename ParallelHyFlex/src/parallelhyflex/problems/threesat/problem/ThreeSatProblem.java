@@ -37,16 +37,13 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
     private int v, c;
     private double ratio1, ratio2, ratio3, ratioReciprocal1, ratioReciprocal2, ratioReciprocal3, linearizedRatio1, linearizedRatio2, linearizedRatio3;
     private double vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy, vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy;
-    private final ThreeSatSolutionGenerator generator;
-    private final Object[] distanceFunctions;
-    private final Object[] heuristics;
-    private final Object[] objectives;
 
     private ThreeSatProblem() {
-        this.generator = new ThreeSatSolutionGenerator(this);
-        this.distanceFunctions = new Object[]{new ThreeSatDistance1(this), new ThreeSatDistance2(this)};
-        this.heuristics = new Object[]{new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this)};
-        this.objectives = new Object[] {new ThreeSatObjectiveFunction1()};
+        super();
+        this.setHeuristics(new Heuristic[]{new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this)});
+        this.setObjectives(new ObjectiveFunction[] {new ThreeSatObjectiveFunction1()});
+        this.setDistances(new DistanceFunction[]{new ThreeSatDistance1(this), new ThreeSatDistance2(this)});
+        this.setSolutionGenerator(new ThreeSatSolutionGenerator(this));
     }
 
     public ThreeSatProblem(long[] constraints) {
@@ -160,41 +157,6 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         this.vcClauseMin = stats[16];
         this.vcClauseMax = stats[17];
         this.vcClauseEntropy = stats[18];
-    }
-
-    @Override
-    public Heuristic<ThreeSatSolution> getHeuristic(int index) {
-        return (Heuristic<ThreeSatSolution>) this.getHeuristics()[index];
-    }
-
-    @Override
-    public int getNumberOfHeuristics() {
-        return this.getHeuristics().length;
-    }
-
-    @Override
-    public ObjectiveFunction<ThreeSatSolution> getObjectiveFunction(int index) {
-        return (ObjectiveFunction<ThreeSatSolution>) this.objectives[index];
-    }
-
-    @Override
-    public int getNumberOfObjectiveFunctions() {
-        return this.objectives.length;
-    }
-
-    @Override
-    public DistanceFunction<ThreeSatSolution> getDistanceFunction(int index) {
-        return (DistanceFunction<ThreeSatSolution>) this.getDistanceFunctions()[index];
-    }
-
-    @Override
-    public int getNumberOfDistanceFunctions() {
-        return this.getDistanceFunctions().length;
-    }
-
-    @Override
-    public SolutionGenerator<ThreeSatSolution> getSolutionGenerator() {
-        return this.getGenerator();
     }
 
     /**
@@ -365,27 +327,6 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
         return vcClauseEntropy;
     }
 
-    /**
-     * @return the generator
-     */
-    public ThreeSatSolutionGenerator getGenerator() {
-        return generator;
-    }
-
-    /**
-     * @return the distanceFunctions
-     */
-    public Object[] getDistanceFunctions() {
-        return distanceFunctions;
-    }
-
-    /**
-     * @return the heuristics
-     */
-    public Object[] getHeuristics() {
-        return heuristics;
-    }
-
     @Override
     public void write(DataOutputStream dos) throws IOException {
         SerialisationUtils.writeLongArray(dos, constraints);
@@ -407,6 +348,13 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution> {
             return Utils.arrayEquality(this.getConstraints(),tsp.getConstraints());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Arrays.hashCode(this.constraints);
+        return hash;
     }
 
     @Override
