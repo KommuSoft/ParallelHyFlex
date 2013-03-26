@@ -120,7 +120,7 @@ public class ThreeSatWritableEnforceableConstraint1Test {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getGenerator();
+            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateTrueClause(tss.getCompactBitArray()));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
