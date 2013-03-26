@@ -10,6 +10,7 @@ import parallelhyflex.problems.threesat.experience.ThreeSatExperience;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -27,7 +28,11 @@ public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolutio
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int nh = this.getNumberOfHeuristics();
+        while(this.hasTimeLeft()) {
+            int heus = Utils.StaticRandom.nextInt(nh);
+            this.applyHeuristic(heus, 0, 0);
+        }
     }
     
 }

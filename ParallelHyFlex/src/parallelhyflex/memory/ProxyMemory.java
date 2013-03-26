@@ -70,12 +70,15 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
 
     public TSolution getSolution(int index) {
         int ii = Utils.getLengthIndex(this.cdfI, index);
-        int ij = index-this.cdfI[ii];
+        int ij = index;
+        if(ii > 0) {
+            ij -= this.cdfI[ii-1];
+        }
         return this.solutionCache[ii].getSolution(ij);
     }
 
     public void setSolution(int index, TSolution value) {
-        Communication.Log("" + (this.getWritableExperience() == null));
+        //Communication.Log("" + (this.getWritableExperience() == null));
         this.getWritableExperience().join(value);
         this.localSlots.setSolution(index, value);
     }
@@ -147,7 +150,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
             while (true) {
                 try {
                     Communication.RV(buffer, 0, 3, MPI.OBJECT, MPI.ANY_SOURCE, 0);
-                    Communication.Log("received " + Arrays.toString(buffer));
+                    //Communication.Log("received " + Arrays.toString(buffer));
                     bais = new ByteArrayInputStream((byte[]) buffer[2]);
                     dis = new DataInputStream(bais);
                     sol = solutionReader.readAndGenerate(dis);

@@ -17,12 +17,13 @@ import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.problemdependent.heuristics.HeuristicType;
 
 /**
  *
  * @author kommusoft
  */
-public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> {
+public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution> {
 
     private final ProxyMemory<TSolution> proxyMemory;
     private final WritableExperience<TSolution, TEC> experience;
@@ -58,7 +59,8 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
-            Communication.Log(this.problem.toString());
+            //Communication.Log(this.problem.toString());
+            this.startExecute();
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
         }
@@ -83,7 +85,8 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
-            Communication.Log(this.problem.toString());
+            //Communication.Log(this.problem.toString());
+            this.startExecute();
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
         }
@@ -134,5 +137,60 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     }
 
     public abstract void execute();
+
+    @Override
+    public double getDepthOfSearch() {
+        return this.problem.getDepthOfSearch();
+    }
+
+    @Override
+    public double getIntensityOfMutation() {
+        return this.problem.getIntensityOfMutation();
+    }
+
+    @Override
+    public int getNumberOfDistanceFunctions() {
+        return this.problem.getNumberOfDistanceFunctions();
+    }
+
+    @Override
+    public int getNumberOfHeuristics() {
+        return this.problem.getNumberOfHeuristics();
+    }
+
+    @Override
+    public int getNumberOfObjectiveFunctions() {
+        return this.problem.getNumberOfObjectiveFunctions();
+    }
+
+    @Override
+    public void setDepthOfSearch(double dos) {
+        this.setDepthOfSearch(dos);
+    }
+
+    @Override
+    public void setIntensityOfMutation(double iom) {
+        this.setIntensityOfMutation(iom);
+    }
+    
+    public int getNumberOfLocalSearchHeuristics () {
+        return this.problem.getNumberOfLocalSearchHeuristics();
+    }
+    
+    public int getNumberOfMutationHeuristics () {
+        return this.problem.getNumberOfMutationHeuristics();
+    }
+    
+    public int getNumberOfCrossoverHeuristics () {
+        return this.problem.getNumberOfCrossoverHeuristics();
+    }
+    
+    public int getNumberOfRuinRecreateHeuristics () {
+        return this.problem.getNumberOfRuinRecreateHeuristics();
+    }
+    
+    public HeuristicType getHeuristicType (int heuristic) {
+        return this.problem.getHeuristicType(heuristic);
+    }
     
 }
