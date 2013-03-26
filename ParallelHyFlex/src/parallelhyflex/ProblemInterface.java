@@ -20,23 +20,22 @@ public interface ProblemInterface<TSolution extends Solution<TSolution>> {
     int getNumberOfDistanceFunctions();
 
     int getNumberOfHeuristics();
-    
+
     int getNumberOfHeuristicsOfType(HeuristicType type);
-    
-    int getNumberOfLocalSearchHeuristics ();
-    
-    int getNumberOfMutationHeuristics ();
-    
-    int getNumberOfCrossoverHeuristics ();
-    
-    int getNumberOfRuinRecreateHeuristics ();
-    
-    HeuristicType getHeuristicType (int heuristic);
+
+    int getNumberOfLocalSearchHeuristics();
+
+    int getNumberOfMutationHeuristics();
+
+    int getNumberOfCrossoverHeuristics();
+
+    int getNumberOfRuinRecreateHeuristics();
+
+    HeuristicType getHeuristicType(int heuristic);
 
     int getNumberOfObjectiveFunctions();
 
     void setDepthOfSearch(double dos);
 
     void setIntensityOfMutation(double iom);
-    
 }

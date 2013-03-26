@@ -9,9 +9,9 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution,ThreeSatProblem> {
-    
-    public ThreeSatDistance1 (ThreeSatProblem problem) {
+public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution, ThreeSatProblem> {
+
+    public ThreeSatDistance1(ThreeSatProblem problem) {
         super(problem);
     }
 
@@ -20,8 +20,8 @@ public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution,Thr
         int dis = 0;
         long[] cba1 = solution1.getCompactBitArray().values;
         long[] cba2 = solution2.getCompactBitArray().values;
-        for(int i = 0; i < cba1.length; i++) {
-            dis += Utils.countOnes(cba1[i]^cba2[i]);
+        for (int i = 0; i < cba1.length; i++) {
+            dis += Utils.countOnes(cba1[i] ^ cba2[i]);
         }
         return dis;
     }
@@ -31,16 +31,14 @@ public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution,Thr
         int dis = 0;
         long[] cba1 = solution1.getCompactBitArray().values;
         long[] cba2 = solution2.getCompactBitArray().values;
-        for(int i = 0; i < cba1.length; i++) {
-            dis += Utils.countOnes(cba1[i]^cba2[i]);
-            if(dis > maxDistance) {
+        for (int i = 0; i < cba1.length; i++) {
+            dis += Utils.countOnes(cba1[i] ^ cba2[i]);
+            if (dis > maxDistance) {
                 return true;
-            }
-            else if(dis+((cba1.length-i)<<6)-64 <= maxDistance) {
+            } else if (dis + ((cba1.length - i) << 6) - 64 <= maxDistance) {
                 return true;
             }
         }
         return false;
     }
-    
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
  * @author kommusoft
  */
 public interface Readable {
-    
-    void read (DataInputStream dis) throws IOException;
-    
+
+    void read(DataInputStream dis) throws IOException;
 }

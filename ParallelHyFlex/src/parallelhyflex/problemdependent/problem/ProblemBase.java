@@ -10,7 +10,7 @@ import parallelhyflex.problemdependent.solution.SolutionGenerator;
  *
  * @author kommusoft
  */
-public abstract class ProblemBase<TSolution extends Solution<TSolution>,TSolGen extends SolutionGenerator<TSolution>> implements Problem<TSolution> {
+public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen extends SolutionGenerator<TSolution>> implements Problem<TSolution> {
 
     private double intensityOfMutation = 0.1d;
     private double depthOfSearch = 0.1d;
@@ -23,6 +23,7 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>,TSolGen 
     protected ProblemBase() {
         ns = new int[HeuristicType.values().length];
     }
+
     protected ProblemBase(Heuristic[] heuristics, ObjectiveFunction[] objectives, DistanceFunction[] distances, TSolGen solutionGenerator) {
         this();
         this.heuristics = heuristics;

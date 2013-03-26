@@ -8,7 +8,6 @@ import java.io.IOException;
  * @author kommusoft
  */
 public interface ReadableGenerator<TObject> {
-    
-    public TObject readAndGenerate (DataInputStream dis) throws IOException;
-    
+
+    public TObject readAndGenerate(DataInputStream dis) throws IOException;
 }

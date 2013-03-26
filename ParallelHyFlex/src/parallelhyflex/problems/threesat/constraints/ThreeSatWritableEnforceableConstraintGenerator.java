@@ -15,23 +15,21 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraintGenerator extends EnforceableConstraintGeneratorBase<ThreeSatSolution,ThreeSatProblem,EnforceableConstraint<ThreeSatSolution>> {
+public class ThreeSatWritableEnforceableConstraintGenerator extends EnforceableConstraintGeneratorBase<ThreeSatSolution, ThreeSatProblem, EnforceableConstraint<ThreeSatSolution>> {
 
-    public ThreeSatWritableEnforceableConstraintGenerator (ThreeSatProblem problem) {
+    public ThreeSatWritableEnforceableConstraintGenerator(ThreeSatProblem problem) {
         super(problem);
     }
-    
+
     @Override
     public EnforceableConstraint<ThreeSatSolution> readAndGenerate(DataInputStream dis) throws IOException {
         long vala = dis.readLong();
-        if((vala&ThreeSatWritableEnforceableConstraint1.MASK_BIT) != 0x00) {
-            return new ThreeSatWritableEnforceableConstraint1(this.getProblem(),ThreeSatWritableEnforceableConstraint1.MASK&vala);
-        }
-        else {
+        if ((vala & ThreeSatWritableEnforceableConstraint1.MASK_BIT) != 0x00) {
+            return new ThreeSatWritableEnforceableConstraint1(this.getProblem(), ThreeSatWritableEnforceableConstraint1.MASK & vala);
+        } else {
             int distance = (int) vala;
             ThreeSatSolution tss = this.getProblem().getSolutionGenerator().readAndGenerate(dis);
-            return new ThreeSatWritableEnforceableConstraint2(this.getProblem(),tss,distance);
+            return new ThreeSatWritableEnforceableConstraint2(this.getProblem(), tss, distance);
         }
     }
-    
 }

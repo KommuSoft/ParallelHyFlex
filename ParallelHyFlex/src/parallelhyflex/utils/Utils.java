@@ -16,14 +16,15 @@ public class Utils {
 
     private Utils() {
     }
-    
-    public static int getLengthIndex (int[] cdfI, int index) {
+
+    public static int getLengthIndex(int[] cdfI, int index) {
         int i = Arrays.binarySearch(cdfI, index);
-        if(i < 0) {
+        if (i < 0) {
             i = ~i;
         }
         return i;
     }
+
     public static int countOnes(long data) {
         int ones = 0;
         while (data != 0) {
@@ -68,7 +69,6 @@ public class Utils {
 
     public Iterator<Integer> getLimitedModuleEnumerable(int modulo, int offset) {
         return new Iterator<Integer>() {
-
             private int modulo;
             private int value = 0;
             private int offset;

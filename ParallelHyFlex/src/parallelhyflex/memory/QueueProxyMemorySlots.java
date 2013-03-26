@@ -9,16 +9,16 @@ import java.util.LinkedList;
  * @author kommusoft
  */
 public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extends ProxyMemorySlots<TSolution> {
-    
+
     protected final LinkedList<TSolution>[] solutionQueue;
-    
-    public QueueProxyMemorySlots (int memorySize, MemoryExchangePolicy policy) {
+
+    public QueueProxyMemorySlots(int memorySize, MemoryExchangePolicy policy) {
         super(policy);
         LinkedList<TSolution> dummy = new LinkedList<>();
         this.solutionQueue = (LinkedList<TSolution>[]) Array.newInstance(dummy.getClass(), memorySize);
-        if(memorySize > 0) {
+        if (memorySize > 0) {
             this.solutionQueue[0] = dummy;
-            for(int i = 1; i < memorySize; i++) {
+            for (int i = 1; i < memorySize; i++) {
                 this.solutionQueue[i] = new LinkedList<>();
             }
         }
@@ -26,10 +26,9 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
 
     @Override
     public TSolution getSolution(int index) {
-        if(this.solutionQueue[index].size() > 1) {
+        if (this.solutionQueue[index].size() > 1) {
             return this.solutionQueue[index].pop();
-        }
-        else {
+        } else {
             return this.solutionQueue[index].peek();
         }
     }
@@ -48,5 +47,4 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
     public TSolution peekSolution(int index) {
         return this.solutionQueue[index].peek();
     }
-    
 }

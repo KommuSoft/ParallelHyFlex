@@ -43,28 +43,31 @@ public class SerialisationUtils {
 
     public static long[] readLongArray(DataInputStream dis) throws IOException {
         long[] res = new long[dis.readInt()];
-        for(int i = 0; i < res.length; i++) {
+        for (int i = 0; i < res.length; i++) {
             res[i] = dis.readLong();
         }
         return res;
     }
+
     public static int[] readIntArray(DataInputStream dis) throws IOException {
         int[] res = new int[dis.readInt()];
-        for(int i = 0; i < res.length; i++) {
+        for (int i = 0; i < res.length; i++) {
             res[i] = dis.readInt();
         }
         return res;
     }
+
     public static double[] readDoubleArray(DataInputStream dis) throws IOException {
         double[] res = new double[dis.readInt()];
-        for(int i = 0; i < res.length; i++) {
+        for (int i = 0; i < res.length; i++) {
             res[i] = dis.readDouble();
         }
         return res;
     }
+
     public static int[][] readIntArray2d(DataInputStream dis) throws IOException {
         int[][] res = new int[dis.readInt()][];
-        for(int i = 0; i < res.length; i++) {
+        for (int i = 0; i < res.length; i++) {
             res[i] = readIntArray(dis);
         }
         return res;

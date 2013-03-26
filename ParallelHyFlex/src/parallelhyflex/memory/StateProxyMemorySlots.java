@@ -7,10 +7,10 @@ import parallelhyflex.problemdependent.solution.Solution;
  * @author kommusoft
  */
 public class StateProxyMemorySlots<TSolution extends Solution<TSolution>> extends ProxyMemorySlots<TSolution> {
-    
+
     private final Object[] memory;
-    
-    public StateProxyMemorySlots (int memorySize, MemoryExchangePolicy policy) {
+
+    public StateProxyMemorySlots(int memorySize, MemoryExchangePolicy policy) {
         super(policy);
         this.memory = new Object[memorySize];
     }
@@ -29,5 +29,4 @@ public class StateProxyMemorySlots<TSolution extends Solution<TSolution>> extend
     public int getSize() {
         return this.memory.length;
     }
-    
 }

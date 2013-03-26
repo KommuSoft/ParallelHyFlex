@@ -9,9 +9,9 @@ import parallelhyflex.utils.CompactBitArray;
  *
  * @author kommusoft
  */
-public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution,ThreeSatProblem> {
-    
-    public ThreeSatDistance2 (ThreeSatProblem problem) {
+public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution, ThreeSatProblem> {
+
+    public ThreeSatDistance2(ThreeSatProblem problem) {
         super(problem);
     }
 
@@ -20,8 +20,8 @@ public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution,Thr
         CompactBitArray cba1 = solution1.getCompactBitArray();
         CompactBitArray cba2 = solution2.getCompactBitArray();
         int dis = 0;
-        for(long constraint : this.getProblem().getConstraints()) {
-            if(cba1.satisfiesClause(constraint)^cba2.satisfiesClause(constraint)) {
+        for (long constraint : this.getProblem().getConstraints()) {
+            if (cba1.satisfiesClause(constraint) ^ cba2.satisfiesClause(constraint)) {
                 dis++;
             }
         }
@@ -34,18 +34,16 @@ public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution,Thr
         CompactBitArray cba2 = solution2.getCompactBitArray();
         int dis = 0;
         int n = this.getProblem().getConstraints().length;
-        for(long constraint : this.getProblem().getConstraints()) {
-            if(cba1.satisfiesClause(constraint)^cba2.satisfiesClause(constraint)) {
+        for (long constraint : this.getProblem().getConstraints()) {
+            if (cba1.satisfiesClause(constraint) ^ cba2.satisfiesClause(constraint)) {
                 dis++;
-                if(dis > maxDistance) {
+                if (dis > maxDistance) {
                     return false;
-                }
-                else if(dis+n-1 <= maxDistance) {
+                } else if (dis + n - 1 <= maxDistance) {
                     return true;
                 }
             }
         }
         return true;
     }
-    
 }

@@ -16,23 +16,22 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1> {
-    
+public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> {
+
     public SimpleThreeSatHyperHeuristic(ThreeSatProblem problem, long intervalTicks) throws ProtocolException, IOException {
-        super(problem,intervalTicks,new CloningGenerator<>(new ThreeSatExperience(null)),new ThreeSatSolutionGenerator(null));
+        super(problem, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), new ThreeSatSolutionGenerator(null));
     }
 
-    public SimpleThreeSatHyperHeuristic(ProblemReader<ThreeSatSolution,ThreeSatProblem> problemReader, long intervalTicks) throws ProtocolException, IOException {
-        super(problemReader,intervalTicks,new CloningGenerator<>(new ThreeSatExperience(null)),new ThreeSatSolutionGenerator(null));
+    public SimpleThreeSatHyperHeuristic(ProblemReader<ThreeSatSolution, ThreeSatProblem> problemReader, long intervalTicks) throws ProtocolException, IOException {
+        super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), new ThreeSatSolutionGenerator(null));
     }
 
     @Override
     public void execute() {
         int nh = this.getNumberOfHeuristics();
-        while(this.hasTimeLeft()) {
+        while (this.hasTimeLeft()) {
             int heus = Utils.StaticRandom.nextInt(nh);
             this.applyHeuristic(heus, 0, 0);
         }
     }
-    
 }

@@ -11,11 +11,11 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>,TEC extends WritableEnforceableConstraint<TSolution>> extends MergingWritableSearchSpaceNegotiator<TSolution,TEC> {
-    
+public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> extends MergingWritableSearchSpaceNegotiator<TSolution, TEC> {
+
     private final TwoSetSearchSpace<TSolution> searchSpace = new TwoSetSearchSpace<>();
-    
-    public TwoSetWriteableSearchSpaceNegotiator (ReadableGenerator<TEC> generator) {
+
+    public TwoSetWriteableSearchSpaceNegotiator(ReadableGenerator<TEC> generator) {
         super(generator);
     }
 
@@ -32,5 +32,4 @@ public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSo
     public TwoSetSearchSpace<TSolution> getSearchSpace() {
         return searchSpace;
     }
-    
 }

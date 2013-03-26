@@ -74,11 +74,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateAlwaysBroadcasted, solutionReader);
             byte[][] data = new byte[1][];
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);
-            ByteArrayInputStream bais = new ByteArrayInputStream(data[0]);
-            DataInputStream dis = new DataInputStream(bais);
-            this.problem = problemReader.readAndGenerate(dis);
-            dis.close();
-            bais.close();
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0])) {
+                DataInputStream dis = new DataInputStream(bais);
+                this.problem = problemReader.readAndGenerate(dis);
+                dis.close();
+            }
             this.experience = experience.generate(problem);
             this.proxyMemory.setWritableExperience(this.experience);
             int nw = this.getWritableMemory();
@@ -100,7 +100,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from1, from2, to);
     }
 
-    public void initializeSolution(int index) {
+    public final void initializeSolution(int index) {
         this.proxyMemory.setSolution(index, this.problem.getSolutionGenerator().generateSolution());
     }
 
@@ -112,7 +112,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         return this.proxyMemory.getMemorySize();
     }
 
-    public int getWritableMemory() {
+    public final int getWritableMemory() {
         return this.proxyMemory.getLocalMemorySize();
     }
 

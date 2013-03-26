@@ -8,8 +8,8 @@ import parallelhyflex.utils.CompactBitArray;
  * @author kommusoft
  */
 public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> extends MemorySlots<TSolution> {
-    
-    public ProxyMemorySlots (MemoryExchangePolicy policy) {
+
+    public ProxyMemorySlots(MemoryExchangePolicy policy) {
         super(policy);
     }
 
@@ -37,5 +37,4 @@ public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> ex
     public boolean willExchange(int index) {
         return false;
     }
-    
 }

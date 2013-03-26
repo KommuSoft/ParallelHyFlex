@@ -1,10 +1,8 @@
 package parallelhyflex.memory;
 
-import parallelhyflex.memory.MemorySlots;
-import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.problemdependent.solution.Solution;
-import parallelhyflex.pushsenders.PushSender;
-import parallelhyflex.pushdeciders.PushDecider;
+import parallelhyflex.memory.senders.PushSender;
+import parallelhyflex.memory.deciders.PushDecider;
 import parallelhyflex.utils.CompactBitArray;
 
 /**

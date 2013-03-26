@@ -13,5 +13,4 @@ public class ThreeSatObjectiveFunction1 implements ObjectiveFunction<ThreeSatSol
     public double evaluateSolution(ThreeSatSolution solution) {
         return solution.getConflictingClauses();
     }
-    
 }

@@ -1,9 +1,6 @@
 package parallelhyflex.memory;
 
 import parallelhyflex.problemdependent.solution.Solution;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import mpi.MPI;
 import parallelhyflex.utils.CompactBitArray;
 
 /**
@@ -11,10 +8,10 @@ import parallelhyflex.utils.CompactBitArray;
  * @author kommusoft
  */
 public abstract class MemorySlots<TSolution extends Solution<TSolution>> {
-    
+
     private final MemoryExchangePolicy policy;
-    
-    public MemorySlots (MemoryExchangePolicy policy) {
+
+    public MemorySlots(MemoryExchangePolicy policy) {
         this.policy = policy;
     }
 
@@ -31,16 +28,20 @@ public abstract class MemorySlots<TSolution extends Solution<TSolution>> {
     }
 
     public abstract void pushSolution(int index);
-    public abstract void setSolution (int index, TSolution sol);
-    public abstract TSolution getSolution (int index);
-    public TSolution peekSolution (int index) {
+
+    public abstract void setSolution(int index, TSolution sol);
+
+    public abstract TSolution getSolution(int index);
+
+    public TSolution peekSolution(int index) {
         return this.getSolution(index);
     }
-    abstract void receiveSolution (int index, TSolution sol);
-    
+
+    abstract void receiveSolution(int index, TSolution sol);
+
     @Override
-    public String toString () {
-        return String.format("MemorySlots[%s,%s,%s]",this.isLocal(),this.getPolicy(),this.getSize());
+    public String toString() {
+        return String.format("MemorySlots[%s,%s,%s]", this.isLocal(), this.getPolicy(), this.getSize());
     }
 
     public abstract int getSize();
@@ -49,7 +50,6 @@ public abstract class MemorySlots<TSolution extends Solution<TSolution>> {
      * @return the notExchangeMask
      */
     public abstract CompactBitArray getBlockingMask();
-    
-    public abstract boolean willExchange (int index);
-    
+
+    public abstract boolean willExchange(int index);
 }

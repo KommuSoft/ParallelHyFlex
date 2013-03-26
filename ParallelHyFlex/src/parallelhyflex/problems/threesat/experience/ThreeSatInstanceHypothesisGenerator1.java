@@ -14,9 +14,9 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<ThreeSatSolution,ThreeSatWritableEnforceableConstraint1,ThreeSatProblem> {
-    
-    public ThreeSatInstanceHypothesisGenerator1 (ThreeSatProblem problem) {
+public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<ThreeSatSolution, ThreeSatWritableEnforceableConstraint1, ThreeSatProblem> {
+
+    public ThreeSatInstanceHypothesisGenerator1(ThreeSatProblem problem) {
         super(problem);
     }
 
@@ -25,9 +25,8 @@ public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGene
         double[] cdf = this.getProblem().getIndexCDF();
         long clause;
         do {
-        clause = ClauseUtils.generateCompletelyTrueClause(variable.getCompactBitArray(), cdf);
-        } while(!ClauseUtils.isValidClause(clause));
-        return new ThreeSatWritableEnforceableConstraint1(this.getProblem(),clause);
+            clause = ClauseUtils.generateCompletelyTrueClause(variable.getCompactBitArray(), cdf);
+        } while (!ClauseUtils.isValidClause(clause));
+        return new ThreeSatWritableEnforceableConstraint1(this.getProblem(), clause);
     }
-    
 }

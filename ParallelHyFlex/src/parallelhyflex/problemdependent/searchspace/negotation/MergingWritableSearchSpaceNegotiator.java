@@ -21,8 +21,8 @@ import parallelhyflex.problemdependent.solution.Solution;
 public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements WritableSearchSpaceNegotiator<TSolution, TEC> {
 
     private final ReadableGenerator<TEC> generator;
-    
-    protected MergingWritableSearchSpaceNegotiator (ReadableGenerator<TEC> generator) {
+
+    protected MergingWritableSearchSpaceNegotiator(ReadableGenerator<TEC> generator) {
         this.generator = generator;
     }
 
@@ -34,7 +34,7 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
             byte[][] total = new byte[s][];
             total[r] = this.generatePacket(enforceableConstraints);
             Communication.AG(total, r, 1, MPI.OBJECT, total, 0, 1, MPI.OBJECT);
-            return innerNegotiate(enforceableConstraints,readPacket(total));
+            return innerNegotiate(enforceableConstraints, readPacket(total));
         } catch (Exception e) {
             return null;
         }
@@ -84,5 +84,4 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
     }
 
     protected abstract SearchSpace<TSolution> innerNegotiate(Collection<TEC> own, Collection<TEC> others);
-    
 }

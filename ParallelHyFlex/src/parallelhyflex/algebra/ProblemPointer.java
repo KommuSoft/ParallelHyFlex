@@ -7,8 +7,7 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public interface ProblemPointer<TSolution extends Solution<TSolution>,TProblem extends Problem<TSolution>> {
-    
-    public TProblem getProblem ();
-    
+public interface ProblemPointer<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> {
+
+    public TProblem getProblem();
 }

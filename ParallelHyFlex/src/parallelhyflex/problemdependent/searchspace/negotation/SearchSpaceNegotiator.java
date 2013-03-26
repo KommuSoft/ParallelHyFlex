@@ -9,8 +9,7 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public interface SearchSpaceNegotiator<TSolution extends Solution<TSolution>,TEC extends EnforceableConstraint<TSolution>> {
-    
-    SearchSpace<TSolution> negotiate (Collection<TEC> enforceableConstraints);
-    
+public interface SearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends EnforceableConstraint<TSolution>> {
+
+    SearchSpace<TSolution> negotiate(Collection<TEC> enforceableConstraints);
 }

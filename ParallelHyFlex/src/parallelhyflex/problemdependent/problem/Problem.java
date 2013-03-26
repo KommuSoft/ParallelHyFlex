@@ -12,10 +12,12 @@ import parallelhyflex.problemdependent.solution.SolutionGenerator;
  * @author kommusoft
  */
 public interface Problem<TSolution extends Solution<TSolution>> extends Writable, ProblemInterface<TSolution> {
-    
-    public Heuristic<TSolution> getHeuristic (int index);
-    public ObjectiveFunction<TSolution> getObjectiveFunction (int index);
-    public DistanceFunction<TSolution> getDistanceFunction (int index);
-    public SolutionGenerator<TSolution> getSolutionGenerator ();
-    
+
+    public Heuristic<TSolution> getHeuristic(int index);
+
+    public ObjectiveFunction<TSolution> getObjectiveFunction(int index);
+
+    public DistanceFunction<TSolution> getDistanceFunction(int index);
+
+    public SolutionGenerator<TSolution> getSolutionGenerator();
 }

@@ -7,6 +7,5 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public interface WritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>,TEC extends WritableEnforceableConstraint<TSolution>> extends SearchSpaceNegotiator<TSolution,TEC> {
-    
+public interface WritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> extends SearchSpaceNegotiator<TSolution, TEC> {
 }

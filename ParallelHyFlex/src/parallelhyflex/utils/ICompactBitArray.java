@@ -23,23 +23,22 @@ public interface ICompactBitArray {
     void resetRange(int fromIndex, int toIndex);
 
     boolean satisfiesClause(long constraint);
-    
-    boolean willSwap (long constraint, int index);
+
+    boolean willSwap(long constraint, int index);
 
     void set(int index, boolean value);
 
     void setRange(int fromIndex, int toIndex);
 
     void swap(int index);
-    
-    int swapGetBit (int index);
+
+    int swapGetBit(int index);
 
     void swapRange(int fromIndex, int toIndex);
 
     void writeSolution(DataOutputStream os) throws IOException;
-    
-    int getLength ();
-    
-    int getBlockLength ();
-    
+
+    int getLength();
+
+    int getBlockLength();
 }

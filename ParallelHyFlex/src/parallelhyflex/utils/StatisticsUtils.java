@@ -12,8 +12,9 @@ import java.util.HashMap;
  * @author kommusoft
  */
 public class StatisticsUtils {
-    
-    private StatisticsUtils () {}
+
+    private StatisticsUtils() {
+    }
 
     public static double mean(double[] vals) {
         double sum = 0.0d;
@@ -22,7 +23,7 @@ public class StatisticsUtils {
         }
         return sum / vals.length;
     }
-    
+
     public static double mean(Collection<Double> vals) {
         double sum = 0.0d;
         for (double d : vals) {
@@ -43,7 +44,7 @@ public class StatisticsUtils {
         double mean = mean(vals);
         return variation(vals, mean);
     }
-    
+
     public static double variation(Collection<Double> vals) {
         double mean = mean(vals);
         return variation(vals, mean);
@@ -61,7 +62,7 @@ public class StatisticsUtils {
         }
         return sum / vals.length;
     }
-    
+
     public static double variation(Collection<Double> vals, double mean) {
         double sum = 0.0d;
         for (double d : vals) {
@@ -87,7 +88,7 @@ public class StatisticsUtils {
         }
         return min;
     }
-    
+
     public static double min(Collection<Double> vals) {
         double min = Double.POSITIVE_INFINITY;
         for (double d : vals) {
@@ -117,7 +118,7 @@ public class StatisticsUtils {
         }
         return max;
     }
-    
+
     public static double max(Collection<Double> vals) {
         double max = Double.NEGATIVE_INFINITY;
         for (double d : vals) {
@@ -154,14 +155,12 @@ public class StatisticsUtils {
         }
         return sum / Math.log(2.0d);
     }
-    
-    public static double pqEntropy (double p) {
-        if(p < 1e-9 || p > 1-1e-9) {
+
+    public static double pqEntropy(double p) {
+        if (p < 1e-9 || p > 1 - 1e-9) {
             return 0.0d;
-        }
-        else {
-            return ((p-1)*Math.log(1-p)-p*Math.log(p))/Math.log(2);
+        } else {
+            return ((p - 1) * Math.log(1 - p) - p * Math.log(p)) / Math.log(2);
         }
     }
-    
 }

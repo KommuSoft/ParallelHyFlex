@@ -21,25 +21,25 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
     }
 
     public SetHypothesisItem(THypothesis hypothesis, int historySize) {
-        this.bestEvaluations = new PriorityQueue<>(historySize,ReversedDoubleComparator.getInstance());
+        this.bestEvaluations = new PriorityQueue<>(historySize, ReversedDoubleComparator.getInstance());
         this.hypo = hypothesis;
         this.historySize = historySize;
     }
 
     public synchronized void checkInstance(TSolution solution, double evaluation) {
         if (this.getHypothesis().isSatisfied(solution)) {
-            if(this.getBestEvaluations().size() < this.getHistorySize() || this.getBestEvaluations().peek() > evaluation) {
-                if(this.getBestEvaluations().size() > this.historySize) {
+            if (this.getBestEvaluations().size() < this.getHistorySize() || this.getBestEvaluations().peek() > evaluation) {
+                if (this.getBestEvaluations().size() > this.historySize) {
                     this.getBestEvaluations().poll();
                 }
                 getBestEvaluations().offer(evaluation);
             }
         }
     }
-    
+
     @Override
-    public boolean equals (Object obj) {
-        if(obj instanceof SetHypothesisItem) {
+    public boolean equals(Object obj) {
+        if (obj instanceof SetHypothesisItem) {
             SetHypothesisItem shi = (SetHypothesisItem) obj;
             return shi.getHypothesis().equals(this.getHypothesis());
         }
@@ -73,5 +73,4 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
     public int getHistorySize() {
         return historySize;
     }
-    
 }

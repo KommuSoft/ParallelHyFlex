@@ -9,14 +9,13 @@ import java.util.Comparator;
 public class ReversedDoubleComparator implements Comparator<Double> {
 
     private static final ReversedDoubleComparator singleInstance = new ReversedDoubleComparator();
-    
-    public static ReversedDoubleComparator getInstance () {
+
+    public static ReversedDoubleComparator getInstance() {
         return singleInstance;
     }
-    
+
     @Override
     public int compare(Double o1, Double o2) {
         return o2.compareTo(o1);
     }
-    
 }

@@ -2,33 +2,31 @@ package parallelhyflex.problems.threesat.problem;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.SerialisationUtils;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
-import parallelhyflex.utils.Utils;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,ThreeSatProblem> {
-    
+public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution, ThreeSatProblem> {
+
     private int n, k;
-    
-    public ThreeSatProblemGenerator (int n, int k) {
+
+    public ThreeSatProblemGenerator(int n, int k) {
         this.n = n;
         this.k = k;
     }
-    
-    public ThreeSatProblem generateProblem () {
+
+    public ThreeSatProblem generateProblem() {
         long[] constraints = new long[k];
         CompactBitArray cba = CompactBitArray.randomInstance(this.n);
-        for(int i = 0; i < k;) {
+        for (int i = 0; i < k;) {
             long fill = ClauseUtils.generateTrueClause(cba);
-            if(ClauseUtils.isValidClause(fill)) {
+            if (ClauseUtils.isValidClause(fill)) {
                 constraints[i++] = fill;
             }
         }
@@ -71,7 +69,6 @@ public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,
         double[] indexCDF = SerialisationUtils.readDoubleArray(dis);
         int[] vc = SerialisationUtils.readIntArray(dis);
         double[] stats = SerialisationUtils.readDoubleArray(dis);
-        return new ThreeSatProblem(constraints,influences,blockInfluences,indexCDF,vc,stats);
+        return new ThreeSatProblem(constraints, influences, blockInfluences, indexCDF, vc, stats);
     }
-    
 }

@@ -10,11 +10,11 @@ import java.util.HashMap;
  * @author kommusoft
  */
 public class ModifiedCompactBitArray implements ICompactBitArray {
-    
+
     private final CompactBitArray innercba;
-    private final HashMap<Integer,Long> differenceSet = new HashMap<>();
-    
-    public ModifiedCompactBitArray (CompactBitArray innercba) {
+    private final HashMap<Integer, Long> differenceSet = new HashMap<>();
+
+    public ModifiedCompactBitArray(CompactBitArray innercba) {
         this.innercba = innercba;
     }
 
@@ -25,45 +25,42 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
 
     @Override
     public boolean get(int index) {
-        int j = index>>6;
-        index -= j<<6;
-        long mask = 1L<<index;
+        int j = index >> 6;
+        index -= j << 6;
+        long mask = 1L << index;
         long value;
-        if(!differenceSet.containsKey(j)) {
+        if (!differenceSet.containsKey(j)) {
             value = this.innercba.values[j];
-        }
-        else {
+        } else {
             value = differenceSet.get(j);
         }
-        return (value&mask) != 0;
+        return (value & mask) != 0;
     }
 
     @Override
     public long getBit(int index) {
-        int j = index>>6;
-        index -= j<<6;
+        int j = index >> 6;
+        index -= j << 6;
         long value;
-        if(!differenceSet.containsKey(j)) {
+        if (!differenceSet.containsKey(j)) {
             value = this.innercba.values[j];
-        }
-        else {
+        } else {
             value = differenceSet.get(j);
         }
-        return (value>>index)&1;
+        return (value >> index) & 1;
     }
 
     @Override
     public long getBit(long index) {
-        int j = (int) (index>>6);
-        index -= j<<6;
+        int j = (int) (index >> 6);
+        index -= j << 6;
         long value;
-        if(!differenceSet.containsKey(j)) {
+        if (!differenceSet.containsKey(j)) {
             value = this.innercba.values[j];
-        }
-        else {
+        } else {
             value = differenceSet.get(j);
         }
-        return (value>>index)&1;
+        return (value >> index) & 1;
     }
 
     @Override
@@ -78,9 +75,9 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
 
     @Override
     public boolean satisfiesClause(long constraint) {
-        return (getBit(constraint&0x0FFFFF) == ((constraint>>60)&1) ||
-                getBit((constraint>>20)&0xFFFFF) == ((constraint>>61)&1) ||
-                getBit((constraint>>40)&0xFFFFF) == ((constraint>>62)&1));
+        return (getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1)
+                || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
+                || getBit((constraint >> 40) & 0xFFFFF) == ((constraint >> 62) & 1));
     }
 
     @Override
@@ -107,14 +104,14 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
     public void writeSolution(DataOutputStream os) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
-    public int getLength () {
+    public int getLength() {
         return this.innercba.getLength();
     }
-    
+
     @Override
-    public int getBlockLength () {
+    public int getBlockLength() {
         return this.innercba.getBlockLength();
     }
 
@@ -127,5 +124,4 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
     public int swapGetBit(int index) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

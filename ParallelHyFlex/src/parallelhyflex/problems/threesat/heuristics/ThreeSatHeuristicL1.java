@@ -7,13 +7,15 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
 
 /**
- * A local search heurstic, where the system looks for a bit when swapped increases the number of satisfied constraints.
+ * A local search heurstic, where the system looks for a bit when swapped
+ * increases the number of satisfied constraints.
+ *
  * @author kommusoft
  */
-public class ThreeSatHeuristicL1 extends HeuristicBase<ThreeSatSolution,ThreeSatProblem> {
-    
-    public ThreeSatHeuristicL1 (ThreeSatProblem problem) {
-        super(problem,HeuristicType.LocalSearch);
+public class ThreeSatHeuristicL1 extends HeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+
+    public ThreeSatHeuristicL1(ThreeSatProblem problem) {
+        super(problem, HeuristicType.LocalSearch);
     }
 
     @Override
@@ -25,31 +27,29 @@ public class ThreeSatHeuristicL1 extends HeuristicBase<ThreeSatSolution,ThreeSat
         boolean improved;
         do {
             improved = false;
-            for(i = 0; i < n; i++) {
+            for (i = 0; i < n; i++) {
                 tocheck = this.getProblem().getInfluences()[i];
                 delta = 0;
                 np = tocheck[0];
                 nn = tocheck.length;
-                for(j = 1; j <= np; j++) {
-                    if(cba.willSwap(constraints[tocheck[j]],i)) {
+                for (j = 1; j <= np; j++) {
+                    if (cba.willSwap(constraints[tocheck[j]], i)) {
                         delta++;
                     }
                 }
-                for(; j < nn; j++) {
-                    if(cba.willSwap(constraints[tocheck[j]],i)) {
+                for (; j < nn; j++) {
+                    if (cba.willSwap(constraints[tocheck[j]], i)) {
                         delta--;
                     }
                 }
-                delta *= (cba.getBit(i)<<1)-1;
+                delta *= (cba.getBit(i) << 1) - 1;
                 improved = delta < 0;
-                if(improved) {
+                if (improved) {
                     cba.swap(i);
                     from.addConfictingClauses(delta);
                     break;
                 }
             }
-        }
-        while(improved);
+        } while (improved);
     }
-    
 }

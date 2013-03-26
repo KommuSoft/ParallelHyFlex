@@ -27,7 +27,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSolutionGenerator> {
+public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolutionGenerator> {
 
     private long[] constraints;
     private int[][] influences;
@@ -40,7 +40,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSoluti
     private ThreeSatProblem() {
         super();
         this.setHeuristics(new Heuristic[]{new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this)});
-        this.setObjectives(new ObjectiveFunction[] {new ThreeSatObjectiveFunction1()});
+        this.setObjectives(new ObjectiveFunction[]{new ThreeSatObjectiveFunction1()});
         this.setDistances(new DistanceFunction[]{new ThreeSatDistance1(this), new ThreeSatDistance2(this)});
         this.setSolutionGenerator(new ThreeSatSolutionGenerator(this));
     }
@@ -73,7 +73,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSoluti
         for (i = 0; i < n; i++) {
             nplus = npn[i];
             int total = nplus + nnn[i];
-            this.indexCDF[i] = total*StatisticsUtils.pqEntropy((double) nplus/total);
+            this.indexCDF[i] = total * StatisticsUtils.pqEntropy((double) nplus / total);
             arr = new int[total + 1];
             arr[0] = nplus;
             nnn[i] = total;
@@ -81,12 +81,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSoluti
         }
         ProbabilityUtils.unnormalizedWeightsToCDF(this.indexCDF);
         this.vcClauseMean = StatisticsUtils.mean(degclause);
-        this.vcClauseVariation = StatisticsUtils.variation(degclause,this.vcClauseMean);
+        this.vcClauseVariation = StatisticsUtils.variation(degclause, this.vcClauseMean);
         this.vcClauseMin = StatisticsUtils.min(degclause);
         this.vcClauseMax = StatisticsUtils.max(degclause);
         this.vcClauseEntropy = StatisticsUtils.entropy(degclause);
         this.vcVariableMean = StatisticsUtils.mean(nnn);
-        this.vcVariableVariation = StatisticsUtils.variation(nnn,this.vcVariableMean);
+        this.vcVariableVariation = StatisticsUtils.variation(nnn, this.vcVariableMean);
         this.vcVariableMin = StatisticsUtils.min(nnn);
         this.vcVariableMax = StatisticsUtils.max(nnn);
         this.vcVariableEntropy = StatisticsUtils.entropy(nnn);
@@ -339,12 +339,12 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSoluti
                 vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy,
                 vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy);
     }
-    
+
     @Override
-    public boolean equals (Object obj) {
-        if(obj instanceof ThreeSatProblem) {
+    public boolean equals(Object obj) {
+        if (obj instanceof ThreeSatProblem) {
             ThreeSatProblem tsp = (ThreeSatProblem) obj;
-            return Utils.arrayEquality(this.getConstraints(),tsp.getConstraints());
+            return Utils.arrayEquality(this.getConstraints(), tsp.getConstraints());
         }
         return false;
     }
@@ -358,7 +358,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSoluti
 
     @Override
     public String toString() {
-        return String.format("3SAT %s",ClauseUtils.clausesToString(this.constraints));
+        return String.format("3SAT %s", ClauseUtils.clausesToString(this.constraints));
     }
 
     /**
@@ -367,5 +367,4 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution,ThreeSatSoluti
     public double[] getIndexCDF() {
         return indexCDF;
     }
-    
 }

@@ -13,7 +13,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableConstraintBase<ThreeSatSolution,ThreeSatProblem> {
+public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> {
 
     private long constraint;
     public static final long MASK_BIT = 0x8000000000000000L;
@@ -27,9 +27,9 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
-        if(!cba.satisfiesClause(constraint)) {
+        if (!cba.satisfiesClause(constraint)) {
             int ii = Utils.StaticRandom.nextInt(3);
-            solution.swapBit(ClauseUtils.getIndexI(this.getConstraint(), ii),this.getProblem());
+            solution.swapBit(ClauseUtils.getIndexI(this.getConstraint(), ii), this.getProblem());
         }
     }
 
@@ -37,18 +37,18 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
     public void enforceFalse(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
         ThreeSatProblem tsp = this.getProblem();
-        if(cba.satisfiesClause(getConstraint())) {
+        if (cba.satisfiesClause(getConstraint())) {
             int index = ClauseUtils.getIndex0(this.constraint);
-            if(cba.getBit(index) == ClauseUtils.getValue0(this.constraint)) {
-                solution.swapBit(index,tsp);
+            if (cba.getBit(index) == ClauseUtils.getValue0(this.constraint)) {
+                solution.swapBit(index, tsp);
             }
             index = ClauseUtils.getIndex1(this.constraint);
-            if(cba.getBit(index) == ClauseUtils.getValue1(this.constraint)) {
-                solution.swapBit(index,tsp);
+            if (cba.getBit(index) == ClauseUtils.getValue1(this.constraint)) {
+                solution.swapBit(index, tsp);
             }
             index = ClauseUtils.getIndex2(this.constraint);
-            if(cba.getBit(index) == ClauseUtils.getValue2(this.constraint)) {
-                solution.swapBit(index,tsp);
+            if (cba.getBit(index) == ClauseUtils.getValue2(this.constraint)) {
+                solution.swapBit(index, tsp);
             }
         }
     }
@@ -60,15 +60,14 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
-        dos.writeLong(MASK_BIT|this.getConstraint());
+        dos.writeLong(MASK_BIT | this.getConstraint());
     }
-    
+
     @Override
-    public boolean equals (Object obj) {
-        if(obj instanceof ThreeSatWritableEnforceableConstraint1) {
+    public boolean equals(Object obj) {
+        if (obj instanceof ThreeSatWritableEnforceableConstraint1) {
             return this.getConstraint() == ((ThreeSatWritableEnforceableConstraint1) obj).getConstraint();
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -93,5 +92,4 @@ public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableC
     public void setData(long data) {
         this.constraint = data;
     }
-    
 }

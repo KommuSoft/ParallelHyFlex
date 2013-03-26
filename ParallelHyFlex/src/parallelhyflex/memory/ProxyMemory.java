@@ -6,7 +6,6 @@ import parallelhyflex.communication.Communication;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
 import java.lang.reflect.Array;
-import java.util.Arrays;
 import mpi.MPI;
 import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.problemdependent.experience.WritableExperience;
@@ -71,8 +70,8 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
     public TSolution getSolution(int index) {
         int ii = Utils.getLengthIndex(this.cdfI, index);
         int ij = index;
-        if(ii > 0) {
-            ij -= this.cdfI[ii-1];
+        if (ii > 0) {
+            ij -= this.cdfI[ii - 1];
         }
         return this.solutionCache[ii].getSolution(ij);
     }
@@ -154,7 +153,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
                     bais = new ByteArrayInputStream((byte[]) buffer[2]);
                     dis = new DataInputStream(bais);
                     sol = solutionReader.readAndGenerate(dis);
-                    solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1],sol);
+                    solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
                     dis.close();
                     bais.close();
                 } catch (Exception e) {

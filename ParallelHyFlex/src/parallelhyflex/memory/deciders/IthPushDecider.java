@@ -1,4 +1,4 @@
-package parallelhyflex.pushdeciders;
+package parallelhyflex.memory.deciders;
 
 import parallelhyflex.problemdependent.solution.Solution;
 
@@ -7,11 +7,11 @@ import parallelhyflex.problemdependent.solution.Solution;
  * @author kommusoft
  */
 public class IthPushDecider<TSolution extends Solution<TSolution>> implements PushDecider<TSolution> {
-    
+
     private int[] counters;
     private int n;
-    
-    public IthPushDecider (int memorySize, int n) {
+
+    public IthPushDecider(int memorySize, int n) {
         this.n = n;
         this.counters = new int[memorySize];
     }
@@ -21,11 +21,10 @@ public class IthPushDecider<TSolution extends Solution<TSolution>> implements Pu
         int counter = this.counters[index];
         counter++;
         boolean result = counter >= this.n;
-        if(result) {
+        if (result) {
             counter = 0;
         }
         this.counters[index] = counter;
         return result;
     }
-    
 }

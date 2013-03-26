@@ -1,4 +1,4 @@
-package parallelhyflex.pushdeciders;
+package parallelhyflex.memory.deciders;
 
 import parallelhyflex.problemdependent.solution.Solution;
 
@@ -12,5 +12,4 @@ public class AlwaysPushDecider<TSolution extends Solution<TSolution>> implements
     public boolean decidePush(int index, TSolution sol) {
         return true;
     }
-    
 }
