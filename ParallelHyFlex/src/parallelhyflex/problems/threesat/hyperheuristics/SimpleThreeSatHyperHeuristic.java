@@ -5,12 +5,10 @@ import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.CloningGenerator;
 import parallelhyflex.algebra.Generator;
-import parallelhyflex.communication.ReadableGenerator;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.negotation.TwoSetWriteableSearchSpaceNegotiator;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator1;
 import parallelhyflex.problems.threesat.experience.ThreeSatExperience;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
@@ -31,8 +29,8 @@ public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolutio
         super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)),negoGenerator(),1000, new ThreeSatSolutionGenerator(null));
     }
     
-    private static Generator<ThreeSatProblem,TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution,ThreeSatProblem,WritableEnforceableConstraint<ThreeSatSolution>,ThreeSatWritableEnforceableConstraintGenerator>> negoGenerator () {
-        return new CloningGenerator(new TwoSetWriteableSearchSpaceNegotiator(new ThreeSatWritableEnforceableConstraintGenerator(null)));
+    private static Generator<ThreeSatProblem,TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1,ThreeSatWritableEnforceableConstraintGenerator1>> negoGenerator () {
+        return new CloningGenerator(new TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1,ThreeSatWritableEnforceableConstraintGenerator1>(new ThreeSatWritableEnforceableConstraintGenerator1(null)));
     }
 
     @Override
