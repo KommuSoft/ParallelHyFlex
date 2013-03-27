@@ -2,6 +2,8 @@ package parallelhyflex.problemdependent.searchspace;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.ProbabilityUtils;
@@ -13,26 +15,47 @@ import parallelhyflex.utils.ProbabilityUtils;
 public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends SearchSpaceBase<TSolution> {
 
     private final ArrayList<EnforceableConstraint<TSolution>> positive = new ArrayList<>();
+    private final ReentrantReadWriteLock posLock = new ReentrantReadWriteLock();
     private final ArrayList<EnforceableConstraint<TSolution>> negative = new ArrayList<>();
+    private final ReentrantReadWriteLock negLock = new ReentrantReadWriteLock();
 
     @Override
     public void correct(TSolution solution) {
-        for (EnforceableConstraint<TSolution> constraint : this.getPositive()) {
-            constraint.enforceTrue(solution);
+        Lock lo = this.posLock.readLock();
+        lo.lock();
+        try {
+            for (EnforceableConstraint<TSolution> constraint : this.getPositive()) {
+                constraint.enforceTrue(solution);
+            }
+        } finally {
+            lo.unlock();
         }
-        if (this.getNegative().size() > 0) {
-            ProbabilityUtils.randomElement(this.getNegative()).enforceFalse(solution);
+        lo = this.negLock.readLock();
+        lo.lock();
+        try {
+            if (this.getNegative().size() > 0) {
+                ProbabilityUtils.randomElement(this.getNegative()).enforceFalse(solution);
+            }
+        } finally {
+            lo.unlock();
         }
     }
 
     @Override
     public boolean isInSearchSpace(TSolution solution) {
-        for (EnforceableConstraint<TSolution> constraint : this.getNegative()) {
-            if (constraint.isSatisfied(solution)) {
-                return false;
+        //TODO: positive
+        Lock lo = this.negLock.readLock();
+        lo.lock();
+        try {
+            for (EnforceableConstraint<TSolution> constraint : this.getNegative()) {
+                if (!constraint.isSatisfied(solution)) {
+                    return true;
+                }
             }
+            return false;
+        } finally {
+            lo.unlock();
         }
-        return true;
     }
 
     /**
@@ -43,8 +66,14 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
     }
 
     public void replacePositive(Collection<? extends EnforceableConstraint<TSolution>> positive) {
-        this.positive.clear();
-        this.positive.addAll(positive);
+        Lock lo = this.posLock.writeLock();
+        lo.lock();
+        try {
+            this.positive.clear();
+            this.positive.addAll(positive);
+        } finally {
+            lo.unlock();
+        }
     }
 
     /**
@@ -55,7 +84,13 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
     }
 
     public void replaceNegative(Collection<? extends EnforceableConstraint<TSolution>> positive) {
-        this.negative.clear();
-        this.negative.addAll(positive);
+        Lock lo = this.negLock.writeLock();
+        lo.lock();
+        try {
+            this.negative.clear();
+            this.negative.addAll(positive);
+        } finally {
+            lo.unlock();
+        }
     }
 }

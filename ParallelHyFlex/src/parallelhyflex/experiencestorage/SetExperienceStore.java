@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.experience.ExperienceBase;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -22,6 +24,7 @@ import parallelhyflex.utils.ProbabilityUtils;
 public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, THypothesis extends EnforceableConstraint<TSolution>> extends ExperienceBase<TSolution, TProblem, THypothesis> {
 
     private final HashSet<SetHypothesisItem<TSolution, THypothesis>> hypothesis = new HashSet<>();
+    private final ReentrantReadWriteLock setLock;
     private final int historySize;
     private final int hypothesisSize;
     private final int generationSize;
@@ -30,6 +33,7 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
 
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem);
+        this.setLock = new ReentrantReadWriteLock();
         this.historySize = historySize;
         this.hypothesisSize = hypothesisSize;
         this.hypothesisGenerator = hypothesisGenerator;
@@ -52,14 +56,26 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
     @Override
     public void join(TSolution solution) {
         double eval = this.getProblem().getObjectiveFunction(0).evaluateSolution(solution);
-        for (SetHypothesisItem<TSolution, THypothesis> shi : getHypothesis()) {
-            shi.checkInstance(solution, eval);
+        Lock lo = this.setLock.readLock();
+        lo.lock();
+        try {
+            for (SetHypothesisItem<TSolution, THypothesis> shi : getHypothesis()) {
+                shi.checkInstance(solution, eval);
+            }
+        } finally {
+            lo.unlock();
         }
         if (getHypothesis().size() < this.getHypothesisSize()) {
             THypothesis hyp = this.getHypothesisGenerator().generate(solution);
             SetHypothesisItem<TSolution, THypothesis> shi = new SetHypothesisItem<>(hyp, this.getHistorySize());
             shi.checkInstance(solution, eval);
-            this.getHypothesis().add(shi);
+            lo = this.setLock.writeLock();
+            lo.lock();
+            try {
+                this.getHypothesis().add(shi);
+            } finally {
+                lo.unlock();
+            }
         }
     }
 
@@ -68,7 +84,13 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
         if (getHypothesis().size() > 0) {
             ArrayList<SetHypothesisItem<TSolution, THypothesis>> items = getSortedHypothesisList();
             int k = ProbabilityUtils.integerFromBenfordDistribution(items.size());
-            getHypothesis().remove(items.get(k));
+            Lock lo = this.setLock.writeLock();
+            lo.lock();
+            try {
+                getHypothesis().remove(items.get(k));
+            } finally {
+                lo.unlock();
+            }
         }
     }
 
@@ -78,11 +100,19 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
         if (getHypothesis().size() > 0) {
             ArrayList<SetHypothesisItem<TSolution, THypothesis>> items = getSortedHypothesisList();
             int K = Math.min(getHypothesis().size(), this.getGenerationSize());
-            for (int i = 0; i < K; i++) {
-                int k = ProbabilityUtils.integerFromUniformDistribution(items.size() - i);
-                generatedEcs.add(items.get(k).getHypothesis());
-                getHypothesis().remove(items.get(k));
-                items.set(k, items.get(items.size() - 1));
+            if(K > 0) {
+                Lock lo = this.setLock.writeLock();
+                lo.lock();
+                try {
+                    for (int i = 0; i < K; i++) {
+                        int k = ProbabilityUtils.integerFromUniformDistribution(items.size() - i);
+                        generatedEcs.add(items.get(k).getHypothesis());
+                        getHypothesis().remove(items.get(k));
+                        items.set(k, items.get(items.size() - 1));
+                    }
+                } finally {
+                    lo.unlock();
+                }
             }
         }
         return generatedEcs;
@@ -125,8 +155,14 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
 
     private ArrayList<SetHypothesisItem<TSolution, THypothesis>> getUnsortedHypothesisList() {
         ArrayList<SetHypothesisItem<TSolution, THypothesis>> items = new ArrayList<>(this.getHypothesis().size());
-        for (SetHypothesisItem<TSolution, THypothesis> shi : this.getHypothesis()) {
-            items.add(shi);
+        Lock lo = this.setLock.readLock();
+        lo.lock();
+        try {
+            for (SetHypothesisItem<TSolution, THypothesis> shi : this.getHypothesis()) {
+                items.add(shi);
+            }
+        } finally {
+            lo.unlock();
         }
         return items;
     }

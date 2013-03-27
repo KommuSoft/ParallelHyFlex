@@ -46,7 +46,6 @@ public class Communication {
 
     public static void finalizeCommunication() {
         Communication comm = MainCommunication;
-        MainCommunication = null;
         comm.finalize();
     }
 
@@ -84,7 +83,6 @@ public class Communication {
 
     public static void Log(Exception e) {
         Log("ERROR: " + e.toString());
-        e.printStackTrace();
     }
 
     /**
