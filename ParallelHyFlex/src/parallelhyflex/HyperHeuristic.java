@@ -44,16 +44,16 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * @throws ProtocolException If this constructor is initialized by a machine
      * with a rank different from zero!
      */
-    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SearchSpaceNegotiator<TSolution, TEC> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() == 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
             this.durationTicks = durationTicks;
             this.negotiationTicks = negotiationTicks;
-            this.negotiator = negotiator;
             this.problem = problem;
             this.experience = experience.generate(problem);
-            this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateAlwaysDistributed, solutionReader);
+            this.negotiator = negotiator.generate(this.problem);
+            this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateIthDistributed, solutionReader);
             this.proxyMemory.setWritableExperience(this.experience);
             byte[][] data;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -86,20 +86,20 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * is not the root
      * @throws IOException
      */
-    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, SearchSpaceNegotiator<TSolution, TEC> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() != 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
             this.durationTicks = durationTicks;
             this.negotiationTicks = negotiationTicks;
-            this.negotiator = negotiator;
-            this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateAlwaysBroadcasted, solutionReader);
+            this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateIthDistributed, solutionReader);
             byte[][] data = new byte[1][];
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);
             try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0]); DataInputStream dis = new DataInputStream(bais)) {
                 this.problem = problemReader.readAndGenerate(dis);
             }
-            this.experience = experience.generate(problem);
+            this.experience = experience.generate(this.problem);
+            this.negotiator = negotiator.generate(this.problem);
             this.proxyMemory.setWritableExperience(this.experience);
             int nw = this.getWritableMemory();
             for (int i = 0; i < nw; i++) {

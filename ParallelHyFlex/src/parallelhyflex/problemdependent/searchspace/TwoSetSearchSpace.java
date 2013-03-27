@@ -17,11 +17,11 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
 
     @Override
     public void correct(TSolution solution) {
-        for (EnforceableConstraint<TSolution> constraint : this.getNegative()) {
-            constraint.enforceFalse(solution);
+        for (EnforceableConstraint<TSolution> constraint : this.getPositive()) {
+            constraint.enforceTrue(solution);
         }
-        if (this.getPositive().size() > 0) {
-            ProbabilityUtils.randomElement(getPositive()).enforceTrue(solution);
+        if (this.getNegative().size() > 0) {
+            ProbabilityUtils.randomElement(this.getNegative()).enforceFalse(solution);
         }
     }
 

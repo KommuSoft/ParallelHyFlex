@@ -18,11 +18,11 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements WritableSearchSpaceNegotiator<TSolution, TEC> {
+public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>, TRG extends ReadableGenerator<TEC>> implements WritableSearchSpaceNegotiator<TSolution, TEC> {
 
-    private final ReadableGenerator<TEC> generator;
+    private final TRG generator;
 
-    protected MergingWritableSearchSpaceNegotiator(ReadableGenerator<TEC> generator) {
+    protected MergingWritableSearchSpaceNegotiator(TRG generator) {
         this.generator = generator;
     }
 
@@ -41,14 +41,15 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
     }
 
     public byte[] generatePacket(Collection<TEC> enforceableConstraints) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        DataOutputStream dos = new DataOutputStream(baos);
-        for (TEC c : enforceableConstraints) {
-            c.write(dos);
+        byte[] data;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            DataOutputStream dos = new DataOutputStream(baos);
+            for (TEC c : enforceableConstraints) {
+                c.write(dos);
+            }
+            dos.close();
+            data = baos.toByteArray();
         }
-        dos.close();
-        byte[] data = baos.toByteArray();
-        baos.close();
         return data;
     }
 
@@ -58,17 +59,17 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
         int r = Communication.getCommunication().getRank();
         for (int i = 0; i < r; i++) {
             try {
-                ByteArrayInputStream bais = new ByteArrayInputStream(datamatrix[i]);
-                readEntry(bais, tecs);
-                bais.close();
+                try (ByteArrayInputStream bais = new ByteArrayInputStream(datamatrix[i])) {
+                    readEntry(bais, tecs);
+                }
             } catch (Exception e) {
             }
         }
         for (int i = r + 1; i < s; i++) {
             try {
-                ByteArrayInputStream bais = new ByteArrayInputStream(datamatrix[i]);
-                readEntry(bais, tecs);
-                bais.close();
+                try (ByteArrayInputStream bais = new ByteArrayInputStream(datamatrix[i])) {
+                    readEntry(bais, tecs);
+                }
             } catch (Exception e) {
             }
         }
@@ -76,12 +77,19 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
     }
 
     private void readEntry(ByteArrayInputStream bais, HashSet<TEC> tecs) throws IOException {
-        DataInputStream dis = new DataInputStream(bais);
-        while (bais.available() > 0) {
-            tecs.add(this.generator.readAndGenerate(dis));
+        try (DataInputStream dis = new DataInputStream(bais)) {
+            while (bais.available() > 0) {
+                tecs.add(this.getGenerator().readAndGenerate(dis));
+            }
         }
-        dis.close();
     }
 
     protected abstract SearchSpace<TSolution> innerNegotiate(Collection<TEC> own, Collection<TEC> others);
+
+    /**
+     * @return the generator
+     */
+    protected TRG getGenerator() {
+        return generator;
+    }
 }

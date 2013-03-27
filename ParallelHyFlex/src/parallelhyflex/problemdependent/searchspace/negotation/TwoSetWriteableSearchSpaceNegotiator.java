@@ -1,8 +1,10 @@
 package parallelhyflex.problemdependent.searchspace.negotation;
 
 import java.util.Collection;
+import parallelhyflex.algebra.IArgumentCloneable;
 import parallelhyflex.communication.ReadableGenerator;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
+import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.searchspace.TwoSetSearchSpace;
 import parallelhyflex.problemdependent.solution.Solution;
@@ -11,11 +13,11 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> extends MergingWritableSearchSpaceNegotiator<TSolution, TEC> {
+public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>, TRG extends ReadableGenerator<TEC> & IArgumentCloneable<TProblem,TRG>> extends MergingWritableSearchSpaceNegotiator<TSolution, TEC, TRG> implements IArgumentCloneable<TProblem, TwoSetWriteableSearchSpaceNegotiator<TSolution, TProblem, TEC, TRG>> {
 
     private final TwoSetSearchSpace<TSolution> searchSpace = new TwoSetSearchSpace<>();
 
-    public TwoSetWriteableSearchSpaceNegotiator(ReadableGenerator<TEC> generator) {
+    public TwoSetWriteableSearchSpaceNegotiator(TRG generator) {
         super(generator);
     }
 
@@ -31,5 +33,10 @@ public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSo
      */
     public TwoSetSearchSpace<TSolution> getSearchSpace() {
         return searchSpace;
+    }
+
+    @Override
+    public TwoSetWriteableSearchSpaceNegotiator<TSolution, TProblem, TEC, TRG> clone(TProblem argument) {
+        return new TwoSetWriteableSearchSpaceNegotiator<>(this.getGenerator().clone(argument));
     }
 }

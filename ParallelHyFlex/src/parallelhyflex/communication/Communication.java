@@ -13,6 +13,7 @@ public class Communication {
 
     public static void initializeCommunication(String[] args) {
         MainCommunication = new Communication(args);
+        
     }
 
     public static int[] others() {
@@ -44,7 +45,9 @@ public class Communication {
     }
 
     public static void finalizeCommunication() {
-        MainCommunication.finalize();
+        Communication comm = MainCommunication;
+        MainCommunication = null;
+        comm.finalize();
     }
 
     public static void A2A(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
@@ -81,6 +84,7 @@ public class Communication {
 
     public static void Log(Exception e) {
         Log("ERROR: " + e.toString());
+        e.printStackTrace();
     }
 
     /**
