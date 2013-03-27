@@ -1,5 +1,9 @@
 package parallelhyflex.communication;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import mpi.*;
 
 /**
@@ -10,10 +14,13 @@ public class Communication {
 
     private static Communication MainCommunication;
     private static int[] other;
+    private static File logFile;
+    private static BufferedWriter logWriter;
 
-    public static void initializeCommunication(String[] args) {
+    public static void initializeCommunication(String[] args) throws IOException {
         MainCommunication = new Communication(args);
-        
+        logFile = new File("log" + MainCommunication.rank + ".txt");
+        logWriter = new BufferedWriter(new FileWriter(logFile));
     }
 
     public static int[] others() {
@@ -44,7 +51,8 @@ public class Communication {
         MPI.Finalize();
     }
 
-    public static void finalizeCommunication() {
+    public static void finalizeCommunication() throws IOException {
+        logWriter.close();
         Communication comm = MainCommunication;
         comm.finalize();
     }
@@ -79,6 +87,13 @@ public class Communication {
 
     public static void Log(String message) {
         System.out.println("<" + Communication.MainCommunication.rank + "> " + message);
+    }
+
+    public static void LogFile(String message) {
+        try {
+            logWriter.write(message);
+        } catch (Exception e) {
+        }
     }
 
     public static void Log(Exception e) {

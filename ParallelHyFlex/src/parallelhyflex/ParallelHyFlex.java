@@ -20,9 +20,10 @@ public class ParallelHyFlex {
 
         Communication.initializeCommunication(args);
         try {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(128, 10);// = new ThreeSatProblemGenerator(128,500);
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(238095, 1000000);// = new ThreeSatProblemGenerator(128,500);
             HyperHeuristic dummy;
-            long timespan = 10000;
+            long timespan = 360000;//six minutes
+            //long timespan = 7200000;//two hours
             if (Communication.getCommunication().getRank() == 0) {
                 ThreeSatProblem tsp = tspg.generateProblem();
                 dummy = new SimpleThreeSatHyperHeuristic(tsp, timespan);

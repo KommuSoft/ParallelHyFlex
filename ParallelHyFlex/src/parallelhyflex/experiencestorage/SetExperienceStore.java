@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import parallelhyflex.communication.Communication;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.experience.ExperienceBase;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -56,6 +57,7 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
     @Override
     public void join(TSolution solution) {
         double eval = this.getProblem().getObjectiveFunction(0).evaluateSolution(solution);
+        Communication.LogFile(""+eval);
         Lock lo = this.setLock.readLock();
         lo.lock();
         try {
