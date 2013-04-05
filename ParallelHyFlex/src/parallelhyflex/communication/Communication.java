@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 import mpi.*;
 
 /**
@@ -92,6 +93,16 @@ public class Communication {
     public static void LogFile(String message) {
         try {
             logWriter.write(message);
+            logWriter.newLine();
+            logWriter.flush();
+        } catch (Exception e) {
+        }
+    }
+    public static void LogFileTime(String message) {
+        try {
+            logWriter.write(new Date().getTime()+"\t"+message);
+            logWriter.newLine();
+            //logWriter.flush();
         } catch (Exception e) {
         }
     }

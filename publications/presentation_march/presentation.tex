@@ -1,8 +1,8 @@
-\documentclass[handout]{beamer}
+\documentclass{beamer}
 \title{Parallelle Metaheuristieken}
 \author{Willem Van Onsem\\Promotor: prof. Bart Demoen}
 \date{27 maart 2013}
-\usepackage{tikz,amsfonts,amsmath,multicol}
+\usepackage{tikz,amsfonts,amsmath,multicol,graphicx}
 \usetikzlibrary{shapes,calc}
 \usepackage[dutch]{babel}
 \usetheme{Antibes}
@@ -292,7 +292,7 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
 % \end{itemize}
 %\begin{columns}[T]
 %\begin{column}{.65\textwidth}
-  \begin{block}{{Memory} component}
+  \onslide<+->{\begin{block}{{Memory} component}
   \begin{itemize}[<+->]
   \item Slaat tussen-oplossingen op
   \item Lokaal lees-schrijf geheugen
@@ -300,7 +300,7 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
   \item Bewaakt door \emph{Search Space}
   \item Met uitwisselingsstrategie (reduceren van bandbreedte)
   \end{itemize}
-  \end{block}
+  \end{block}}
 %\end{column}
 %\begin{column}{.35\textwidth}
   \begin{figure}
@@ -318,21 +318,21 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
 \begin{frame}{\emph{ParHyFlex}: Componenten: Experience en Negotiator}
 \begin{columns}[T]
 \begin{column}{.65\textwidth}
-  \begin{block}{\emph{Experience} component}
+  \onslide<+->{\begin{block}{\emph{Experience} component}
   \begin{itemize}[<+->]
   \item Vat zoekervaring samen
   \item Vorm van amensie nodig
   \item Eenheid: \emph{Enforceable Constraints}
   \item Door: Hypothesegenerator
   \end{itemize}
-  \end{block}
-  \begin{block}{\emph{Negotiator} component}
-  \begin{itemize}
+  \end{block}}
+  \onslide<+->{\begin{block}{\emph{Negotiator} component}
+  \begin{itemize}[<+->]
   \item Ervaring uitwisselen
   \item Onderhandelt over nieuwe zoekruimte
   \item Past de actieve zoekruimte aan
   \end{itemize}
-  \end{block}
+  \end{block}}
 \end{column}
 \begin{column}{.35\textwidth}
   \begin{figure}
@@ -348,14 +348,14 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
 \end{frame}
 \subsubsection{Search Space}
 \begin{frame}{\emph{ParHyFlex}: Componenten: Search Space}
-\begin{block}{\emph{Search Space} component}
+\onslide<+->{\begin{block}{\emph{Search Space} component}
 \begin{itemize}[<+->]
  \item Bewaakt de zoekruimte
  \item Past ontvangen oplossingen aan
  \item Met behulp van \emph{Enforceable Constraints}
  \item Constraints worden \emph{fuzzy} afgedwongen
 \end{itemize}
-\end{block}
+\end{block}}
 \begin{figure}
 \begin{tikzpicture}
 \begin{scope}
@@ -382,13 +382,13 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
 \end{frame}
 \subsection{Constraints en Hypothesegenerator}
 \begin{frame}{Probleem: MAX3SAT: Hypothesegenerator}
-\begin{block}{\emph{Afdwingbare Constraint}}
+\onslide<+->{\begin{block}{\emph{Afdwingbare Constraint}}
 \begin{itemize}[<+->]
  \item Ook een 3SAT-clause
  \item Afdwingbaar: omkeren van variabelen
 \end{itemize}
-\end{block}
-\begin{block}{\emph{Hypothesegenerator}}
+\end{block}}
+\onslide<+->{\begin{block}{\emph{Hypothesegenerator}}
 \begin{itemize}[<+->]
  \item Clause learner (waar voor ``een'' oplossing)
  \item Variabelen clause random met verdeling:
@@ -396,25 +396,25 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
   p(x_i)\sim n_i\cdot\left(\mbox{entropy}\left(n_i^+,n_i^-\right)\right)
  \end{equation}
 \end{itemize}
-\end{block}
+\end{block}}
 \end{frame}
 \subsection{Componenten}
 \begin{frame}{Probleem: MAX3SAT: Componenten}
-\begin{block}{\emph{Experience} component}
+\onslide<+->{\begin{block}{\emph{Experience} component}
 \begin{itemize}[<+->]
  \item Set van ``actieve hypotheses''
  \item Evalueren van oplossingen tegenover hypotheses
  \item Amnesie: deel set ``vergeten'' (toeval)
 \end{itemize}
-\end{block}
-\begin{block}{\emph{Search Space} component}
+\end{block}}
+\onslide<+->{\begin{block}{\emph{Search Space} component}
 \begin{itemize}[<+->]
  \item 2 Sets: positieve en negatieve hypotheses
  \item Altijd alle positieve adwingen, minstens \'e\'en negatieve
  \item In toevallige volgorde
  \item Fuzzy: oudere constraints kunnen terug vervallen
 \end{itemize}
-\end{block}
+\end{block}}
 \end{frame}
 \section{Communicatie}
 \begin{frame}{Communicatie}
@@ -434,41 +434,50 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
 \end{itemize}
 \end{frame}
 \begin{frame}{Communicatie}
-\begin{block}{Betrouwbaar}
+\onslide<+->{\begin{block}{Betrouwbaar}
 \begin{itemize}[<+->]
  \item Parallelle setting: meestal goede verbinding
  \item Geen bewijs dat uitwisseling altijd iets oplevert
  \item Betrouwbaarheid kost iets
  \item Netwerk als buffer tegen verzadiging
 \end{itemize}
-\end{block}
-\begin{block}{Synchroon}
+\end{block}}
+\onslide<+->{\begin{block}{Synchroon}
 \begin{itemize}[<+->]
  \item Hyperheuristiek en onderliggende heuristieken divers (MIMD)
  \item Wachten zorgt voor ineffici\"ent CPU-gebruik
  \item ref. \emph{MPI} bevat assynchrone directieven
 \end{itemize}
-\end{block}
+\end{block}}
 \end{frame}
 \begin{frame}{Communicatie}
-\begin{block}{Sequentieel}
+\onslide<+->{\begin{block}{Sequentieel}
 \begin{itemize}[<+->]
  \item We willen geheugen telkens up-to-date houden
  \item Oplossing uitwisselen indien reeds herzien?
  \item ref. \emph{Tuple Space} paradigma's
 \end{itemize}
-\end{block}
-\begin{block}{Atomair}
+\end{block}}
+\onslide<+->{\begin{block}{Atomair}
 \begin{itemize}[<+->]
  \item Kost van bericht: bericht zelf, aantal bytes minder relevant
  \item Idee: opsparen van berichten en meesturen met anderen
  \item ref. \emph{Piggybacking} van \emph{ACK} in \emph{TCP}
 \end{itemize}
-\end{block}
+\end{block}}
+\end{frame}
+\section{Resultaat}
+\begin{frame}[fragile]{Resultaat}
+\begin{figure}
+\centering
+\includegraphics[height=0.7\textheight]{plot.pdf}
+%\includegraphics[width=\textwidth]{plot}
+\caption{Evolutie van een MAX3SAT(2 380,10 000)}
+\end{figure}
 \end{frame}
 \section{Conclusie}
 \begin{frame}{Conclusie}
-\begin{block}{Conclusie}
+\onslide<+->{\begin{block}{Conclusie}
 \begin{itemize}[<+->]
  \item \emph{ParHyFlex} is een parallelle variant van \emph{HyFlex}
  \item Framework voor \emph{HyperHeuristieken}
@@ -476,6 +485,6 @@ Doel: Ontwikkelen van Parallelle variant: \emph{ParHyFlex}
  \item ``Probleemonafhankelijk'' met \emph{Afdwingbare constraints}
  \item Communicatieparadigma's moeten aangepast worden
 \end{itemize}
-\end{block}
+\end{block}}
 \end{frame}
 \end{document}

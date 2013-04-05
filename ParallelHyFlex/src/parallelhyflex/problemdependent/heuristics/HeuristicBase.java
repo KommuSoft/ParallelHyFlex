@@ -18,13 +18,13 @@ public abstract class HeuristicBase<TSolution extends Solution<TSolution>, TProb
     }
 
     public HeuristicBase(HeuristicType type, TProblem problem) {
-        super(type);
-        this.problem = problem;
+        this(problem,type);
     }
 
     /**
      * @return the problem
      */
+    @Override
     public TProblem getProblem() {
         return problem;
     }

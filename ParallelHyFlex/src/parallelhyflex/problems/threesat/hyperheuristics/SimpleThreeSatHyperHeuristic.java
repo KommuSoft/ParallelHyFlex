@@ -5,6 +5,7 @@ import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.CloningGenerator;
 import parallelhyflex.algebra.Generator;
+import parallelhyflex.communication.Communication;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.negotation.TwoSetWriteableSearchSpaceNegotiator;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
@@ -34,9 +35,10 @@ public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolutio
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         int nh = this.getNumberOfHeuristics();
         while (this.hasTimeLeft()) {
+            //Communication.Log("New iteration!");
             int heus = Utils.StaticRandom.nextInt(nh);
             this.applyHeuristic(heus, 0, 0);
         }

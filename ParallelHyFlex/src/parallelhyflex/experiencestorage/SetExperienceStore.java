@@ -31,6 +31,7 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
     private final int generationSize;
     private final InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator;
     private final Comparator<SetHypothesisItem> comparator;
+    private double mineval = Double.POSITIVE_INFINITY;
 
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem);
@@ -57,7 +58,8 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
     @Override
     public void join(TSolution solution) {
         double eval = this.getProblem().getObjectiveFunction(0).evaluateSolution(solution);
-        Communication.LogFile(""+eval);
+        mineval = Math.min(mineval, eval);
+        Communication.LogFileTime(""+eval+"\t"+mineval);
         Lock lo = this.setLock.readLock();
         lo.lock();
         try {

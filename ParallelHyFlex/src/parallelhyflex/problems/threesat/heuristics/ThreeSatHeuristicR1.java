@@ -1,8 +1,7 @@
 package parallelhyflex.problems.threesat.heuristics;
 
 import java.util.HashSet;
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
-import parallelhyflex.problemdependent.heuristics.HeuristicBase;
+import parallelhyflex.problemdependent.heuristics.RuinRecreateHeuristicBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
@@ -15,10 +14,10 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicR1 extends HeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicR1 extends RuinRecreateHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
     public ThreeSatHeuristicR1(ThreeSatProblem problem) {
-        super(problem, HeuristicType.RuinRecreate);
+        super(problem);
     }
 
     @Override

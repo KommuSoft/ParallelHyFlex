@@ -105,7 +105,6 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
-            this.startExecute();
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
         }
@@ -143,20 +142,31 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         return this.proxyMemory.peekSolution(solution1).equalSolution(this.proxyMemory.peekSolution(solution2));
     }
 
-    private void startExecute() {
+    public final void startExecute() {
         Date date = new Date();
         long time = date.getTime();
         this.startTime.setTime(time);
         this.stopTime.setTime(time + durationTicks);
-        new NegotiationThread().start();
+        NegotiationThread nt = new NegotiationThread();
+        //Communication.Log("Started!");
+        nt.start();
         this.execute();
+        nt.stop();
+        //Communication.Log("Halted!");
     }
 
     public boolean hasTimeLeft() {
         return this.stopTime.after(new Date());
     }
+    
+    public long remaingTime () {
+        return this.stopTime.getTime()-new Date().getTime();
+    }
+    public long elapsedTime () {
+        return new Date().getTime()-this.startTime.getTime();
+    }
 
-    public abstract void execute();
+    protected abstract void execute();
 
     @Override
     public double getDepthOfSearch() {

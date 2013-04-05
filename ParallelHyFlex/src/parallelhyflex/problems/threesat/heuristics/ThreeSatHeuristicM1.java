@@ -1,7 +1,6 @@
 package parallelhyflex.problems.threesat.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
-import parallelhyflex.problemdependent.heuristics.HeuristicBase;
+import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
@@ -14,11 +13,11 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicM1 extends HeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicM1 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
     //swaps a random variable
 
     public ThreeSatHeuristicM1(ThreeSatProblem problem) {
-        super(problem, HeuristicType.Mutation);
+        super(problem);
     }
 
     @Override

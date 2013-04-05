@@ -1,7 +1,6 @@
 package parallelhyflex.problems.threesat.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
-import parallelhyflex.problemdependent.heuristics.HeuristicBase;
+import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
@@ -12,10 +11,10 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicM3 extends HeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicM3 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
     public ThreeSatHeuristicM3(ThreeSatProblem problem) {
-        super(problem, HeuristicType.Mutation);
+        super(problem);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package parallelhyflex.problems.threesat.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
-import parallelhyflex.problemdependent.heuristics.HeuristicBase;
+import parallelhyflex.problemdependent.heuristics.LocalSearchHeuristicBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
@@ -12,10 +11,10 @@ import parallelhyflex.utils.CompactBitArray;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicL1 extends HeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
     public ThreeSatHeuristicL1(ThreeSatProblem problem) {
-        super(problem, HeuristicType.LocalSearch);
+        super(problem);
     }
 
     @Override
