@@ -22,7 +22,6 @@ public class ThreeSatHeuristicC1 extends CrossoverHeuristicBase<ThreeSatSolution
 
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from1, ThreeSatSolution from2) {
-        //TODO: implement
         CompactBitArray cba1 = from1.getCompactBitArray();
         CompactBitArray cba2 = from2.getCompactBitArray();
         double prob = (double) from2.getConflictingClauses() / (from1.getConflictingClauses() + from2.getConflictingClauses());

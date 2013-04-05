@@ -1,20 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package parallelhyflex.problems.threesat;
+package parallelhyflex.problems.threesat.constraint;
 
 import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint2;
-import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import junit.framework.Assert;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import java.io.DataOutputStream;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,14 +18,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parallelhyflex.TestParameters;
+import parallelhyflex.problems.threesat.ClauseUtils;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraint2Test {
+public class ThreeSatWritableEnforceableConstraint1Test {
 
-    public ThreeSatWritableEnforceableConstraint2Test() {
+    public ThreeSatWritableEnforceableConstraint1Test() {
     }
 
     @BeforeClass
@@ -49,7 +46,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
     }
 
     /**
-     * Test of enforceTrue method, of class ThreeSatWritableEnforceableConstraint2.
+     * Test of enforceTrue method, of class ThreeSatWritableEnforceableConstraint1.
      */
     @Test
     public void testEnforceTrue1() {
@@ -59,14 +56,14 @@ public class ThreeSatWritableEnforceableConstraint2Test {
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
-            ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
+            ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateTrueClause(tss.getCompactBitArray()));
             tswec.enforceTrue(tss);
-            Assert.assertTrue(tswec.isSatisfied(tss));
+            Assert.assertTrue(tss.getCompactBitArray().satisfiesClause(tswec.getConstraint()));
         }
     }
 
     /**
-     * Test of enforceTrue method, of class ThreeSatWritableEnforceableConstraint2.
+     * Test of enforceTrue method, of class ThreeSatWritableEnforceableConstraint1.
      */
     @Test
     public void testEnforceTrue2() {
@@ -75,16 +72,16 @@ public class ThreeSatWritableEnforceableConstraint2Test {
         ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
         ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
         ThreeSatSolution tss = tsg.generateSolution();
-        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
+        ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateTrueClause(tss.getCompactBitArray()));
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             ThreeSatSolution tss2 = tsg.generateSolution();
             tswec.enforceTrue(tss2);
-            Assert.assertTrue(tswec.isSatisfied(tss2));
+            Assert.assertTrue(tss2.getCompactBitArray().satisfiesClause(tswec.getConstraint()));
         }
     }
 
     /**
-     * Test of enforceFalse method, of class ThreeSatWritableEnforceableConstraint2.
+     * Test of enforceFalse method, of class ThreeSatWritableEnforceableConstraint1.
      */
     @Test
     public void testEnforceFalse1() {
@@ -94,15 +91,12 @@ public class ThreeSatWritableEnforceableConstraint2Test {
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
-            ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
+            ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateCompletelyTrueClause(tss.getCompactBitArray()));
             tswec.enforceFalse(tss);
-            Assert.assertFalse(tswec.isSatisfied(tss));
+            Assert.assertFalse(ClauseUtils.clauseToString(tswec.getConstraint()),tss.getCompactBitArray().satisfiesClause(tswec.getConstraint()));
         }
     }
 
-    /**
-     * Test of enforceFalse method, of class ThreeSatWritableEnforceableConstraint2.
-     */
     @Test
     public void testEnforceFalse2() {
         ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
@@ -110,11 +104,11 @@ public class ThreeSatWritableEnforceableConstraint2Test {
         ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
         ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
         ThreeSatSolution tss = tsg.generateSolution();
-        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
+        ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateTrueClause(tss.getCompactBitArray()));
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             ThreeSatSolution tss2 = tsg.generateSolution();
             tswec.enforceFalse(tss2);
-            Assert.assertFalse(tswec.isSatisfied(tss2));
+            Assert.assertFalse(tss2.getCompactBitArray().satisfiesClause(tswec.getConstraint()));
         }
     }
 
@@ -129,7 +123,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
-            ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss, 50);
+            ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateCompletelyTrueClause(tss.getCompactBitArray()));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DataOutputStream dos = new DataOutputStream(baos);
             tswec.write(dos);

@@ -4,6 +4,7 @@ import parallelhyflex.problemdependent.heuristics.LocalSearchHeuristicBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
+import parallelhyflex.utils.Utils;
 
 /**
  * A local search heurstic, where the system looks for a bit when swapped
@@ -23,10 +24,11 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
         int[] tocheck;
         long[] constraints = this.getProblem().getConstraints();
         CompactBitArray cba = from.getCompactBitArray();
-        boolean improved;
+        boolean improved, nextrun;
+        int kappa = (int) Math.round(Math.pow(this.getProblem().getV(), 1.0-this.getDepthOfSearch()));
         do {
-            improved = false;
-            for (i = 0; i < n; i++) {
+            nextrun = false;
+            for (i = Utils.StaticRandom.nextInt(kappa); i < n; i += kappa) {
                 tocheck = this.getProblem().getInfluences()[i];
                 delta = 0;
                 np = tocheck[0];
@@ -46,9 +48,9 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
                 if (improved) {
                     cba.swap(i);
                     from.addConfictingClauses(delta);
-                    break;
                 }
+                nextrun |= improved;
             }
-        } while (improved);
+        } while (nextrun);
     }
 }
