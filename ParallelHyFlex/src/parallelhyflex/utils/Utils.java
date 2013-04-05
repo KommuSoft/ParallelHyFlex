@@ -4,8 +4,8 @@
  */
 package parallelhyflex.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -68,117 +68,63 @@ public class Utils {
         return true;
     }
 
-    public static Iterator<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
-        return new Iterator<Integer>() {
-            private int modulo;
-            private int value = 0;
-            private int offset;
-            private int delta;
+    public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
+        return new Iterable<Integer>() {
+            private int offset, delta, modulo;
 
             @Override
-            public boolean hasNext() {
-                return value < modulo;
+            public Iterator<Integer> iterator() {
+                return new Iterator<Integer>() {
+                    private int modulo;
+                    private int value = 0;
+                    private int offset;
+                    private int delta;
+
+                    @Override
+                    public boolean hasNext() {
+                        return value < modulo;
+                    }
+
+                    @Override
+                    public Integer next() {
+                        int val = this.value;
+                        this.value += delta;
+                        return (this.value + offset) % modulo;
+                    }
+
+                    public Iterator<Integer> setValues(int modulo, int delta, int offset) {
+                        this.modulo = modulo;
+                        this.delta = delta;
+                        this.offset = offset;
+                        return this;
+                    }
+
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException("Cannot remove from a virtual list.");
+                    }
+                }.setValues(offset, delta, modulo);
+
             }
 
-            @Override
-            public Integer next() {
-                int val = this.value;
-                this.value += delta;
-                return (this.value + offset) % modulo;
-            }
-
-            public Iterator<Integer> setValues(int modulo, int delta, int offset) {
-                this.modulo = modulo;
-                this.delta = delta;
+            private Iterable<Integer> setValues(int offset, int delta, int modulo) {
                 this.offset = offset;
+                this.delta = delta;
+                this.modulo = modulo;
                 return this;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException("Cannot remove from a virtual list.");
             }
         }.setValues(offset, delta, modulo);
     }
 
-    public static Iterator<Integer> getLimitedModuloEnumerable(int offset, int modulo) {
+    public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int modulo) {
         return getLimitedModuloEnumerable(offset, 1, modulo);
     }
-    public static<T> Collection<T> fromIterator (Iterator<T> iterator) {
-        return new Collection<T>() {
-            
-            private Iterator<T> iterator;
-
-            @Override
-            public int size() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean isEmpty() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean contains(Object o) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public Iterator<T> iterator() {
-                return this.iterator;
-            }
-
-            @Override
-            public Object[] toArray() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public <T> T[] toArray(T[] a) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean add(T e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean remove(Object o) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean containsAll(Collection<?> c) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean addAll(Collection<? extends T> c) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean removeAll(Collection<?> c) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean retainAll(Collection<?> c) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void clear() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-            
-            private Collection<T> setIterator (Iterator<T> iterator) {
-                this.iterator = iterator;
-                return this;
-            }
-            
-        }.setIterator(iterator);
+    
+    public static<T> ArrayList<T> toArrayList (Iterable<T> iterable) {
+        ArrayList<T> list = new ArrayList<>();
+        for(T t : iterable) {
+            list.add(t);
+        }
+        return list;
     }
 }

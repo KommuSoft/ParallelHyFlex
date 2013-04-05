@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.problems.threesat.heuristics;
 
 import parallelhyflex.problemdependent.heuristics.LocalSearchHeuristicBase;
@@ -14,12 +10,12 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicL2 extends LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicL3 extends LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
-    public ThreeSatHeuristicL2(ThreeSatProblem problem) {
+    public ThreeSatHeuristicL3(ThreeSatProblem problem) {
         super(problem);
     }
-    
+
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength(), delta, j, np, nn;
@@ -27,7 +23,8 @@ public class ThreeSatHeuristicL2 extends LocalSearchHeuristicBase<ThreeSatSoluti
         long[] constraints = this.getProblem().getConstraints();
         CompactBitArray cba = from.getCompactBitArray();
         boolean improved, nextrun;
-        for(Integer i : Utils.getLimitedModuloEnumerable(Utils.StaticRandom.nextInt(n), (int) Math.round(Math.pow(this.getProblem().getV(), 1.0-this.getDepthOfSearch())), n)) {
+        int maxindex = -1, maximprove = 0;
+        for (Integer i : Utils.getLimitedModuloEnumerable(Utils.StaticRandom.nextInt(n), (int) Math.round(Math.pow(this.getProblem().getV(), 1.0 - this.getDepthOfSearch())), n)) {
             tocheck = this.getProblem().getInfluences()[i];
             delta = 0;
             np = tocheck[0];
@@ -44,11 +41,14 @@ public class ThreeSatHeuristicL2 extends LocalSearchHeuristicBase<ThreeSatSoluti
             }
             delta *= (cba.getBit(i) << 1) - 1;
             improved = delta < 0;
-            if (improved) {
-                cba.swap(i);
-                from.addConfictingClauses(delta);
+            if (delta < maximprove) {
+                maximprove = delta;
+                maxindex = i;
             }
         }
+        if (maxindex != -1) {
+            cba.swap(maxindex);
+            from.addConfictingClauses(maximprove);
+        }
     }
-    
 }

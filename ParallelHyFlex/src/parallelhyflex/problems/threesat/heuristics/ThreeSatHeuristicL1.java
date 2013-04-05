@@ -20,15 +20,15 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
 
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
-        int n = from.getLength(), i, delta, j, np, nn;
+        int n = from.getLength(), delta, j, np, nn;
         int[] tocheck;
         long[] constraints = this.getProblem().getConstraints();
         CompactBitArray cba = from.getCompactBitArray();
         boolean improved, nextrun;
-        int kappa = (int) Math.round(Math.pow(this.getProblem().getV(), 1.0-this.getDepthOfSearch()));
+        int kappa = (int) Math.round(Math.pow(this.getProblem().getV(), 1.0 - this.getDepthOfSearch()));
         do {
             nextrun = false;
-            for (i = Utils.StaticRandom.nextInt(kappa); i < n; i += kappa) {
+            for (Integer i : Utils.getLimitedModuloEnumerable(Utils.StaticRandom.nextInt(n), kappa, n)) {
                 tocheck = this.getProblem().getInfluences()[i];
                 delta = 0;
                 np = tocheck[0];
