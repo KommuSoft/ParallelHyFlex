@@ -13,6 +13,25 @@ public class ClauseUtils {
 
     private ClauseUtils() {
     }
+    
+    public static int calculateLoss(Integer i, CompactBitArray cba, long[] constraints, int[] tocheck) {
+        int delta, np, nn, j;
+        delta = 0;
+        np = tocheck[0];
+        nn = tocheck.length;
+        for (j = 1; j <= np; j++) {
+            if (cba.willSwap(constraints[tocheck[j]], i)) {
+                delta++;
+            }
+        }
+        for (; j < nn; j++) {
+            if (cba.willSwap(constraints[tocheck[j]], i)) {
+                delta--;
+            }
+        }
+        delta *= (cba.getBit(i) << 1) - 1;
+        return delta;
+    }
 
     public static long generate0Clause(long index0, long index1, long index2) {
         return (index0 << 40) | (index1 << 20) | (index2);

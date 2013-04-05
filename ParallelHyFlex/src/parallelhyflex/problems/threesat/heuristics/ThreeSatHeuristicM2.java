@@ -10,9 +10,9 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution,ThreeSatProblem> {
-    
-    public ThreeSatHeuristicM2 (ThreeSatProblem problem) {
+public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+
+    public ThreeSatHeuristicM2(ThreeSatProblem problem) {
         super(problem);
     }
 
@@ -22,28 +22,19 @@ public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution,
         int c = problem.getC();
         long[] clauses = problem.getConstraints();
         do {
-        enforceClause(c, from, clauses, problem);
+            enforceClause(c, from, clauses, problem);
         } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
     }
 
     private void enforceClause(int c, ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
         int c0 = Utils.StaticRandom.nextInt(c);
-        for(int i = c0; i < c; i++) {
-            if(!from.satisfiesClause(clauses[i])) {
+        for (Integer i : Utils.getLimitedModuloEnumerable(c0, c)) {
+            if (!from.satisfiesClause(clauses[i])) {
                 int k = Utils.StaticRandom.nextInt(3);
-                int index = ClauseUtils.getIndexI(clauses[i],k);
-                from.swapBit(index,problem);
-                return;
-            }
-        }
-        for(int i = 0; i < c0; i++) {
-            if(!from.satisfiesClause(clauses[i])) {
-                int k = Utils.StaticRandom.nextInt(3);
-                int index = ClauseUtils.getIndexI(clauses[i],k);
-                from.swapBit(index,problem);
+                int index = ClauseUtils.getIndexI(clauses[i], k);
+                from.swapBit(index, problem);
                 return;
             }
         }
     }
-    
 }

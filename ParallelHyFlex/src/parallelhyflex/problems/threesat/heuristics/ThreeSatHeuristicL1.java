@@ -1,6 +1,7 @@
 package parallelhyflex.problems.threesat.heuristics;
 
 import parallelhyflex.problemdependent.heuristics.LocalSearchHeuristicBase;
+import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
@@ -21,7 +22,7 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength(), delta, j, np, nn;
-        int[] tocheck;
+        int[][] influences = this.getProblem().getInfluences();
         long[] constraints = this.getProblem().getConstraints();
         CompactBitArray cba = from.getCompactBitArray();
         boolean improved, nextrun;
@@ -29,21 +30,7 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
         do {
             nextrun = false;
             for (Integer i : Utils.getLimitedModuloEnumerable(Utils.StaticRandom.nextInt(n), kappa, n)) {
-                tocheck = this.getProblem().getInfluences()[i];
-                delta = 0;
-                np = tocheck[0];
-                nn = tocheck.length;
-                for (j = 1; j <= np; j++) {
-                    if (cba.willSwap(constraints[tocheck[j]], i)) {
-                        delta++;
-                    }
-                }
-                for (; j < nn; j++) {
-                    if (cba.willSwap(constraints[tocheck[j]], i)) {
-                        delta--;
-                    }
-                }
-                delta *= (cba.getBit(i) << 1) - 1;
+                delta = ClauseUtils.calculateLoss(i, cba, constraints, influences[i]);
                 improved = delta < 0;
                 if (improved) {
                     cba.swap(i);
