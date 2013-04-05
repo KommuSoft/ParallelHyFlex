@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.problems.threesat.constraint;
 
 import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
@@ -54,7 +50,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
     @Test
     public void testEnforceTrue1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
@@ -70,7 +66,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
      */
     @Test
     public void testEnforceTrue2() {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
         ThreeSatProblem tsp = tspg.generateProblem();
         ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
         ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
@@ -89,7 +85,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
     @Test
     public void testEnforceFalse1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
@@ -105,7 +101,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
      */
     @Test
     public void testEnforceFalse2() {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
+        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
         ThreeSatProblem tsp = tspg.generateProblem();
         ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
         ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
@@ -124,7 +120,7 @@ public class ThreeSatWritableEnforceableConstraint2Test {
     @Test
     public void testSerializeDeserialize() throws Exception {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();

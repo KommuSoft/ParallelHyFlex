@@ -30,14 +30,12 @@ public class ThreeSatWritableEnforceableConstraint2 extends WritableEnforceableC
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
-        if (distance > this.getMaxDistance()) {
-            for (int i = distance; i > maxDistance; i--) {
-                int index = Utils.StaticRandom.nextInt(solution.getLength());
-                if (solution.getBit(index) != this.getRoot().getBit(index)) {
-                    solution.swapBit(index, this.getProblem());
-                } else {
-                    i++;
-                }
+        for (int i = distance; i > maxDistance; i--) {
+            int index = Utils.StaticRandom.nextInt(solution.getLength());
+            if (solution.getBit(index) != this.getRoot().getBit(index)) {
+                solution.swapBit(index, this.getProblem());
+            } else {
+                i++;
             }
         }
     }
@@ -45,14 +43,12 @@ public class ThreeSatWritableEnforceableConstraint2 extends WritableEnforceableC
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
-        if (distance <= this.getMaxDistance()) {
-            for (int i = distance; i <= maxDistance; i++) {
-                int index = Utils.StaticRandom.nextInt(solution.getLength());
-                if (solution.getBit(index) == this.getRoot().getBit(index)) {
-                    solution.swapBit(index, this.getProblem());
-                } else {
-                    i--;
-                }
+        for (int i = distance; i <= maxDistance; i++) {
+            int index = Utils.StaticRandom.nextInt(solution.getLength());
+            if (solution.getBit(index) == this.getRoot().getBit(index)) {
+                solution.swapBit(index, this.getProblem());
+            } else {
+                i--;
             }
         }
     }
