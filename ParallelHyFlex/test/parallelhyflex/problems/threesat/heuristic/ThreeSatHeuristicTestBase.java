@@ -8,41 +8,19 @@ import junit.framework.Assert;
 import parallelhyflex.TestParameters;
 import parallelhyflex.problemdependent.heuristics.HeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicL1;
+import parallelhyflex.problems.threesat.ThreeSatTestBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *
  * @author kommusoft
  */
-public abstract class ThreeSatHeuristicTestBase {
+public abstract class ThreeSatHeuristicTestBase extends ThreeSatTestBase {
 
-    protected ThreeSatProblemGenerator tspg;
-    protected ThreeSatProblem tsp;
-    protected ThreeSatSolutionGenerator tsg;
-    protected ThreeSatSolution tss;
     protected HeuristicBase<ThreeSatSolution, ThreeSatProblem> hb;
 
-    protected void renewProblemGenerator() {
-        tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES,TestParameters.NUMBER_OF_CLAUSES);
-    }
-
-    protected void renewProblem() {
-        tsp = tspg.generateProblem();
-    }
-
-    protected void renewSolutionGenerator() {
-        tsg = tsp.getSolutionGenerator();
-    }
-
-    protected void renewSolution() {
-        tss = tsg.generateSolution();
-    }
-    
-    public abstract HeuristicBase<ThreeSatSolution,ThreeSatProblem> renewHeuristic ();
+    public abstract HeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic();
 
     public void testApplyHeuristicLocallyConflictingClauses() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
@@ -55,7 +33,7 @@ public abstract class ThreeSatHeuristicTestBase {
             Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(), tsp.getClauses()), tss.getConflictingClauses());
         }
     }
-    
+
     public void testApplyHeuristicLocallyImprovementConflictingClauses() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();

@@ -2,7 +2,6 @@ package parallelhyflex.problems.threesat.constraints;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
@@ -13,7 +12,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraint1 extends WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnforceableConstraint {
 
     private long constraint;
     public static final long MASK_BIT = 0x8000000000000000L;

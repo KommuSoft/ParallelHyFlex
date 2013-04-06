@@ -3,18 +3,16 @@ package parallelhyflex.problems.threesat.constraints;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Objects;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
-import parallelhyflex.utils.Utils;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraint2 extends WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnforceableConstraint {
 
     private final ThreeSatSolution root;
     private final int maxDistance;
