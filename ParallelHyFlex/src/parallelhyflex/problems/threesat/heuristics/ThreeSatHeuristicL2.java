@@ -24,7 +24,7 @@ public class ThreeSatHeuristicL2 extends LocalSearchHeuristicBase<ThreeSatSoluti
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength(), delta;
-        long[] constraints = this.getProblem().getConstraints();
+        long[] constraints = this.getProblem().getClauses();
         int[][] influences = this.getProblem().getInfluences();
         CompactBitArray cba = from.getCompactBitArray();
         boolean improved;

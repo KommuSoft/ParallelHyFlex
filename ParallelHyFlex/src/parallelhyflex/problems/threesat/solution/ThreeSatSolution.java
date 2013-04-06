@@ -140,6 +140,6 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     }
 
     public void swapBit(int index, ThreeSatProblem problem) {
-        ClauseUtils.swapBit(index, problem.getInfluences()[index], cba, problem.getConstraints(), this);
+        ClauseUtils.swapBit(index, problem.getInfluences()[index], cba, problem.getClauses(), this);
     }
 }

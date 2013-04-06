@@ -29,7 +29,7 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolutionGenerator> {
 
-    private long[] constraints;
+    private long[] clauses;
     private int[][] influences;
     private int[][] blockInfluences;
     private double[] indexCDF;
@@ -47,8 +47,8 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
 
     public ThreeSatProblem(long[] constraints) {
         this();
-        this.constraints = constraints;
-        this.c = this.constraints.length;
+        this.clauses = constraints;
+        this.c = this.clauses.length;
         int n = ClauseUtils.getLargestIndex(constraints) + 1;
         this.v = n;
         int[] npn = new int[n], nnn = new int[n], np = new int[4], nn = new int[4], arr;
@@ -131,7 +131,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
 
     ThreeSatProblem(long[] constraints, int[][] influences, int[][] blockInfluences, double[] indexCDF, int[] vc, double[] stats) {
         this();
-        this.constraints = constraints;
+        this.clauses = constraints;
         this.influences = influences;
         this.blockInfluences = blockInfluences;
         this.indexCDF = indexCDF;
@@ -175,8 +175,8 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
     /**
      * @return the constraints
      */
-    public long[] getConstraints() {
-        return constraints;
+    public long[] getClauses() {
+        return clauses;
     }
 
     /**
@@ -328,7 +328,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
-        SerialisationUtils.writeLongArray(dos, constraints);
+        SerialisationUtils.writeLongArray(dos, clauses);
         SerialisationUtils.writeIntArray2d(dos, influences);
         SerialisationUtils.writeIntArray2d(dos, blockInfluences);
         SerialisationUtils.writeDoubleArray(dos, getIndexCDF());
@@ -344,7 +344,7 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
     public boolean equals(Object obj) {
         if (obj instanceof ThreeSatProblem) {
             ThreeSatProblem tsp = (ThreeSatProblem) obj;
-            return Utils.arrayEquality(this.getConstraints(), tsp.getConstraints());
+            return Utils.arrayEquality(this.getClauses(), tsp.getClauses());
         }
         return false;
     }
@@ -352,13 +352,13 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Arrays.hashCode(this.constraints);
+        hash = 59 * hash + Arrays.hashCode(this.clauses);
         return hash;
     }
 
     @Override
     public String toString() {
-        return String.format("3SAT %s", ClauseUtils.clausesToString(this.constraints));
+        return String.format("3SAT %s", ClauseUtils.clausesToString(this.clauses));
     }
 
     /**

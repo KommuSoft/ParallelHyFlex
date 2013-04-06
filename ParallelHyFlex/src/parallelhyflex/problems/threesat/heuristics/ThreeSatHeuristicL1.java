@@ -23,7 +23,7 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength(), delta, j, np, nn;
         int[][] influences = this.getProblem().getInfluences();
-        long[] constraints = this.getProblem().getConstraints();
+        long[] constraints = this.getProblem().getClauses();
         CompactBitArray cba = from.getCompactBitArray();
         boolean improved, nextrun;
         int kappa = (int) Math.round(Math.pow(this.getProblem().getV(), 1.0 - this.getDepthOfSearch()));

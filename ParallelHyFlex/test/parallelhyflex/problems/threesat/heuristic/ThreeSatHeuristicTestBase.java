@@ -52,7 +52,7 @@ public abstract class ThreeSatHeuristicTestBase {
             this.renewSolutionGenerator();
             this.renewSolution();
             this.applyHeuristic();
-            Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(), tsp.getConstraints()), tss.getConflictingClauses());
+            Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(), tsp.getClauses()), tss.getConflictingClauses());
         }
     }
     

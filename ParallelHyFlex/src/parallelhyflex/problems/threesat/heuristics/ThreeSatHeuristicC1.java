@@ -30,6 +30,6 @@ public class ThreeSatHeuristicC1 extends CrossoverHeuristicBase<ThreeSatSolution
                 cba1.values[i] = cba2.values[i];
             }
         }
-        from1.recalculateConflictingClauses(this.getProblem().getConstraints());//TODO: only recalculate influenced clauses
+        from1.recalculateConflictingClauses(this.getProblem().getClauses());//TODO: only recalculate influenced clauses
     }
 }

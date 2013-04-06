@@ -21,7 +21,7 @@ public class ThreeSatHeuristicR2 extends RuinRecreateHeuristicBase<ThreeSatSolut
     
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
-        long[] clauses = this.getProblem().getConstraints();
+        long[] clauses = this.getProblem().getClauses();
         int ci = ClauseUtils.getFalseClauseIndex(from, clauses);
         long clause = clauses[ci];
         int maxval = 0x01 << ClauseUtils.degree(clause);

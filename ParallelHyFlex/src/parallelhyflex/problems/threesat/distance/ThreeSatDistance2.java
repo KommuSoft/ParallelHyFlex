@@ -20,7 +20,7 @@ public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution, Th
         CompactBitArray cba1 = solution1.getCompactBitArray();
         CompactBitArray cba2 = solution2.getCompactBitArray();
         int dis = 0;
-        for (long constraint : this.getProblem().getConstraints()) {
+        for (long constraint : this.getProblem().getClauses()) {
             if (cba1.satisfiesClause(constraint) ^ cba2.satisfiesClause(constraint)) {
                 dis++;
             }
@@ -33,8 +33,8 @@ public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution, Th
         CompactBitArray cba1 = solution1.getCompactBitArray();
         CompactBitArray cba2 = solution2.getCompactBitArray();
         int dis = 0;
-        int n = this.getProblem().getConstraints().length;
-        for (long constraint : this.getProblem().getConstraints()) {
+        int n = this.getProblem().getClauses().length;
+        for (long constraint : this.getProblem().getClauses()) {
             if (cba1.satisfiesClause(constraint) ^ cba2.satisfiesClause(constraint)) {
                 dis++;
                 if (dis > maxDistance) {

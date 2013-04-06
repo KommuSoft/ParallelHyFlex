@@ -25,7 +25,7 @@ public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSol
         ThreeSatProblem problem = this.getProblem();
         CompactBitArray cba = CompactBitArray.randomInstance(problem.getV());
         int nfail = 0;
-        long[] clauses = problem.getConstraints();
+        long[] clauses = problem.getClauses();
         for (int i = 0; i < clauses.length; i++) {
             if (!cba.satisfiesClause(clauses[i])) {
                 nfail++;
