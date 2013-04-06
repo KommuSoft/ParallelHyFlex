@@ -32,7 +32,7 @@ public class Utils {
         while (data != 0) {
             System.out.println("inc"+data);
             ones += data & 1;
-            data >>= 1;
+            data >>>= 1;
         }
         return ones;
     }
