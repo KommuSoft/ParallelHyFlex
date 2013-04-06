@@ -214,7 +214,7 @@ public class CompactBitArray implements ICompactBitArray {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.values.length; i++) {
-            sb.append(Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0')) + " ");
+            sb.append(Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0'))).append(" ");
         }
         return sb.toString();
     }
@@ -279,5 +279,11 @@ public class CompactBitArray implements ICompactBitArray {
         long mask = 1L << index;
         values[j] ^= mask;
         return (int) ((values[j] >> index) & 0x01);
+    }
+
+    public void setAll(int[] indices, int val) {
+        for(int i = 0; i < indices.length; i++) {
+            this.set(indices[i],((val>>i)&0x01) != 0x00);
+        }
     }
 }

@@ -5,6 +5,7 @@ import parallelhyflex.problemdependent.heuristics.RuinRecreateHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.utils.CompactBitArray;
 
 /**
  * A ruin-recreate heuristic where an entire block of 64 consecutive bits are
@@ -20,18 +21,43 @@ public class ThreeSatHeuristicR2 extends RuinRecreateHeuristicBase<ThreeSatSolut
 
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
-        long[] constraints = this.getProblem().getConstraints();
-        int ci = ClauseUtils.getFalseClauseIndex(from,constraints);
-        long clause = constraints[ci];
+        long[] clauses = this.getProblem().getConstraints();
+        int ci = ClauseUtils.getFalseClauseIndex(from, clauses);
+        long clause = clauses[ci];
+        int maxval = 0x01 << ClauseUtils.degree(clause);
+        int[] indices = ClauseUtils.getUniqueIndices(clause);
         int[][] infl = this.getProblem().getInfluences();
         int[] infli;
+        int oldunsat = 0;
         HashSet<Integer> influencedClauses = new HashSet<>();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0x00; i < indices.length; i++) {
             //TODO: more strict filter (only constraints who are not influenced by secondary variables)
-            infli = infl[i];
-            for(int j = 0; j < infli.length; j++) {
-                influencedClauses.add(infli[j]);
+            infli = infl[indices[i]];
+            for (int j = 0; j < infli.length; j++) {
+                int k = infli[j];
+                if (influencedClauses.add(k) && !from.satisfiesClause(clauses[k])) {
+                    oldunsat++;
+                }
             }
         }
+        CompactBitArray cba = from.getCompactBitArray();
+        int unsat;
+        int minval = -0x01;
+        int minunsat = Integer.MAX_VALUE;
+        for (int val = 0x00; val < maxval; val++) {
+            cba.setAll(indices,val);
+            unsat = 0;
+            for(Integer i : influencedClauses) {
+                if(!cba.satisfiesClause(clauses[i])) {
+                    unsat++;
+                }
+            }
+            if(unsat < minunsat) {
+                minunsat = unsat;
+                minval = val;
+            }
+        }
+        cba.setAll(indices, minval);
+        from.addConfictingClauses(minunsat-oldunsat);
     }
 }
