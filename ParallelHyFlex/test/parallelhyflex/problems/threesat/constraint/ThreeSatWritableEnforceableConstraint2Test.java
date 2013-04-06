@@ -40,18 +40,9 @@ public class ThreeSatWritableEnforceableConstraint2Test extends ThreeSatWritable
      * ThreeSatWritableEnforceableConstraint2.
      */
     @Test
+    @Override
     public void testEnforceTrue2() {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
-        ThreeSatProblem tsp = tspg.generateProblem();
-        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-        ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
-        ThreeSatSolution tss = tsg.generateSolution();
-        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
-        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatSolution tss2 = tsg.generateSolution();
-            tswec.enforceTrue(tss2);
-            Assert.assertTrue(tswec.isSatisfied(tss2));
-        }
+        super.testEnforceTrue2();
     }
 
     /**
@@ -69,18 +60,9 @@ public class ThreeSatWritableEnforceableConstraint2Test extends ThreeSatWritable
      * ThreeSatWritableEnforceableConstraint2.
      */
     @Test
+    @Override
     public void testEnforceFalse2() {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
-        ThreeSatProblem tsp = tspg.generateProblem();
-        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-        ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
-        ThreeSatSolution tss = tsg.generateSolution();
-        ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
-        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatSolution tss2 = tsg.generateSolution();
-            tswec.enforceFalse(tss2);
-            Assert.assertFalse(tswec.isSatisfied(tss2));
-        }
+        super.testEnforceFalse2();
     }
 
     /**

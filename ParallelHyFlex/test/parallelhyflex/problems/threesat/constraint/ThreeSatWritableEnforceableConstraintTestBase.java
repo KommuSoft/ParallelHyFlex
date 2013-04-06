@@ -6,28 +6,22 @@ package parallelhyflex.problems.threesat.constraint;
 
 import junit.framework.Assert;
 import parallelhyflex.TestParameters;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
-import parallelhyflex.problemdependent.heuristics.HeuristicBase;
 import parallelhyflex.problems.threesat.ThreeSatTestBase;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint2;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *
  * @author kommusoft
  */
 public abstract class ThreeSatWritableEnforceableConstraintTestBase extends ThreeSatTestBase {
-    
+
     protected WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> tswec;
-    
+    protected ThreeSatSolution tss2;
+
     public abstract WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWritableEnforceableConstraint();
-    
+
     public void testEnforceTrue1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
@@ -40,7 +34,25 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
             Assert.assertFalse(tswec.isNotSatisfied(tss));
         }
     }
-    
+
+    public void testEnforceTrue2() {
+        this.renewProblemGenerator();
+        this.renewProblem();
+        this.renewSolutionGenerator();
+        this.renewSolution();
+        tswec = this.renewWritableEnforceableConstraint();
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            this.renewSolution2();
+            tswec.enforceTrue(tss2);
+            Assert.assertTrue(tswec.isSatisfied(tss2));
+            Assert.assertFalse(tswec.isNotSatisfied(tss2));
+        }
+    }
+
+    protected void renewSolution2() {
+        this.tss2 = tsg.generateSolution();
+    }
+
     public void testEnforceFalse1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
@@ -53,5 +65,18 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
             Assert.assertTrue(tswec.isNotSatisfied(tss));
         }
     }
-    
+
+    public void testEnforceFalse2() {
+        this.renewProblemGenerator();
+        this.renewProblem();
+        this.renewSolutionGenerator();
+        this.renewSolution();
+        tswec = this.renewWritableEnforceableConstraint();
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            this.renewSolution2();
+            tswec.enforceFalse(tss2);
+            Assert.assertFalse(tswec.isSatisfied(tss2));
+            Assert.assertTrue(tswec.isNotSatisfied(tss2));
+        }
+    }
 }

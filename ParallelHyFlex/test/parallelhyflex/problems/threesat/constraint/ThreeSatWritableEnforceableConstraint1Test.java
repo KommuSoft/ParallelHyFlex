@@ -37,19 +37,14 @@ public class ThreeSatWritableEnforceableConstraint1Test extends ThreeSatWritable
      * Test of enforceTrue method, of class
      * ThreeSatWritableEnforceableConstraint1.
      */
+    /**
+     * Test of enforceFalse method, of class
+     * ThreeSatWritableEnforceableConstraint2.
+     */
     @Test
+    @Override
     public void testEnforceTrue2() {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
-        ThreeSatProblem tsp = tspg.generateProblem();
-        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-        ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
-        ThreeSatSolution tss = tsg.generateSolution();
-        ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateTrueClause(tss.getCompactBitArray()));
-        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatSolution tss2 = tsg.generateSolution();
-            tswec.enforceTrue(tss2);
-            Assert.assertTrue(tss2.getCompactBitArray().satisfiesClause(tswec.getConstraint()));
-        }
+        super.testEnforceTrue2();
     }
 
     /**
@@ -62,19 +57,14 @@ public class ThreeSatWritableEnforceableConstraint1Test extends ThreeSatWritable
         super.testEnforceFalse1();
     }
 
+    /**
+     * Test of enforceFalse method, of class
+     * ThreeSatWritableEnforceableConstraint2.
+     */
     @Test
+    @Override
     public void testEnforceFalse2() {
-        ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
-        ThreeSatProblem tsp = tspg.generateProblem();
-        ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-        ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
-        ThreeSatSolution tss = tsg.generateSolution();
-        ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateTrueClause(tss.getCompactBitArray()));
-        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatSolution tss2 = tsg.generateSolution();
-            tswec.enforceFalse(tss2);
-            Assert.assertFalse(tss2.getCompactBitArray().satisfiesClause(tswec.getConstraint()));
-        }
+        super.testEnforceFalse2();
     }
 
     /**
