@@ -24,7 +24,6 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
 
     public void testEnforceTrue1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            System.out.println(i);
             this.renewProblemGenerator();
             this.renewProblem();
             this.renewSolutionGenerator();
@@ -43,7 +42,6 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
         this.renewSolution();
         tswec = this.renewWritableEnforceableConstraint();
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            System.out.println(i);
             this.renewSolution2();
             tswec.enforceTrue(tss2);
             Assert.assertTrue(tswec.isSatisfied(tss2));
@@ -57,7 +55,6 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
 
     public void testEnforceFalse1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            System.out.println(i);
             this.renewProblemGenerator();
             this.renewProblem();
             this.renewSolutionGenerator();
@@ -76,7 +73,6 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
         this.renewSolution();
         tswec = this.renewWritableEnforceableConstraint();
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            System.out.println(i);
             this.renewSolution2();
             tswec.enforceFalse(tss2);
             Assert.assertFalse(tswec.isSatisfied(tss2));
