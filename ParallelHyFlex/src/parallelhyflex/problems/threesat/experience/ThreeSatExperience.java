@@ -1,8 +1,8 @@
 package parallelhyflex.problems.threesat.experience;
 
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.algebra.IArgumentCloneable;
 import parallelhyflex.experiencestorage.WritableSetExperienceStore;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 

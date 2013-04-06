@@ -5,8 +5,8 @@
 package parallelhyflex.problems.threesat.heuristic;
 
 import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
-import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
 /**
  *

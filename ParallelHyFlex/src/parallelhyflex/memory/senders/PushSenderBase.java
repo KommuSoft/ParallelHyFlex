@@ -20,12 +20,12 @@ public abstract class PushSenderBase<TSolution extends Solution<TSolution>> impl
         data[0] = Communication.getCommunication().getRank();
         data[1] = index;
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DataOutputStream dos = new DataOutputStream(baos);
-            solution.write(dos);
-            dos.close();
-            data[2] = baos.toByteArray();
-            baos.close();
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                DataOutputStream dos = new DataOutputStream(baos);
+                solution.write(dos);
+                dos.close();
+                data[2] = baos.toByteArray();
+            }
         } catch (Exception e) {
             Communication.Log(e);
         }

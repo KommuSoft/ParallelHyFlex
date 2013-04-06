@@ -1,8 +1,8 @@
 package parallelhyflex.problemdependent.solution;
 
-import parallelhyflex.problemdependent.problem.Problem;
-import parallelhyflex.algebra.ProblemPointerBase;
 import java.util.Random;
+import parallelhyflex.algebra.ProblemPointerBase;
+import parallelhyflex.problemdependent.problem.Problem;
 
 /**
  *
@@ -16,6 +16,7 @@ public abstract class SolutionGeneratorBase<TSolution extends Solution<TSolution
         super(problem);
     }
 
+    @Override
     public void setSeed(long seed) {
         this.random.setSeed(seed);
     }

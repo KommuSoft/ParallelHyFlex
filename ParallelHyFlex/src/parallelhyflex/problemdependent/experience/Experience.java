@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.experience;
 
-import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import java.util.Collection;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**

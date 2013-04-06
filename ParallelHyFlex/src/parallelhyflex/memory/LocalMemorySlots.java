@@ -1,8 +1,8 @@
 package parallelhyflex.memory;
 
-import parallelhyflex.problemdependent.solution.Solution;
-import parallelhyflex.memory.senders.PushSender;
 import parallelhyflex.memory.deciders.PushDecider;
+import parallelhyflex.memory.senders.PushSender;
+import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.CompactBitArray;
 
 /**

@@ -4,10 +4,10 @@
  */
 package parallelhyflex.problems.threesat.solution;
 
-import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import java.io.DataInputStream;
 import java.io.IOException;
 import parallelhyflex.problemdependent.solution.SolutionGeneratorBase;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.utils.CompactBitArray;
 
 /**

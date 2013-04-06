@@ -1,9 +1,9 @@
 package parallelhyflex.problemdependent.problem;
 
 import parallelhyflex.ProblemInterface;
+import parallelhyflex.communication.Writable;
 import parallelhyflex.problemdependent.distance.DistanceFunction;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
-import parallelhyflex.communication.Writable;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionGenerator;
 

@@ -1,7 +1,5 @@
 package parallelhyflex;
 
-import parallelhyflex.memory.ProxyMemory;
-import parallelhyflex.memory.MemoryExchangePolicy;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -11,16 +9,18 @@ import java.util.Date;
 import mpi.MPI;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problemdependent.solution.Solution;
-import parallelhyflex.problemdependent.problem.Problem;
-import parallelhyflex.problemdependent.problem.ProblemReader;
-import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.memory.MemoryExchangePolicy;
+import parallelhyflex.memory.ProxyMemory;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.problemdependent.problem.Problem;
+import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
+import parallelhyflex.problemdependent.solution.Solution;
+import parallelhyflex.problemdependent.solution.SolutionReader;
 
 /**
  *

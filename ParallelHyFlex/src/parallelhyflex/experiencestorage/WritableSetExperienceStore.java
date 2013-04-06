@@ -1,10 +1,10 @@
 package parallelhyflex.experiencestorage;
 
 import java.util.Comparator;
-import parallelhyflex.problemdependent.problem.Problem;
-import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.problemdependent.problem.Problem;
+import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *

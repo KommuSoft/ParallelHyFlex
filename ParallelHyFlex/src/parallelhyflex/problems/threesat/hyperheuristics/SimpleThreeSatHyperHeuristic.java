@@ -5,7 +5,6 @@ import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.CloningGenerator;
 import parallelhyflex.algebra.Generator;
-import parallelhyflex.communication.Communication;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.negotation.TwoSetWriteableSearchSpaceNegotiator;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
@@ -23,11 +22,11 @@ import parallelhyflex.utils.Utils;
 public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> {
 
     public SimpleThreeSatHyperHeuristic(ThreeSatProblem problem, long intervalTicks) throws ProtocolException, IOException {
-        super(problem, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)),negoGenerator(),1000, new ThreeSatSolutionGenerator(null));
+        super(problem, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)),negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
     }
 
     public SimpleThreeSatHyperHeuristic(ProblemReader<ThreeSatSolution, ThreeSatProblem> problemReader, long intervalTicks) throws ProtocolException, IOException {
-        super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)),negoGenerator(),1000, new ThreeSatSolutionGenerator(null));
+        super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)),negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
     }
     
     private static Generator<ThreeSatProblem,TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution,ThreeSatProblem,ThreeSatWritableEnforceableConstraint1,ThreeSatWritableEnforceableConstraintGenerator1>> negoGenerator () {

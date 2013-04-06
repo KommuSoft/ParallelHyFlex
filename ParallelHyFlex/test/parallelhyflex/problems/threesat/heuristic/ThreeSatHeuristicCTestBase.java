@@ -4,9 +4,9 @@
  */
 package parallelhyflex.problems.threesat.heuristic;
 
-import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problemdependent.heuristics.CrossoverHeuristicBase;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
 /**
  *

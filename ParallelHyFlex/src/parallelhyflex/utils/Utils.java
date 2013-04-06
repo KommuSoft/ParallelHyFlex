@@ -27,8 +27,10 @@ public class Utils {
     }
 
     public static int countOnes(long data) {
+        System.out.println("counting ones of "+data);
         int ones = 0;
         while (data != 0) {
+            System.out.println("inc"+data);
             ones += data & 1;
             data >>= 1;
         }

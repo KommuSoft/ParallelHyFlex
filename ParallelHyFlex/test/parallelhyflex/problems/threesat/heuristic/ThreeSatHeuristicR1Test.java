@@ -4,11 +4,11 @@
  */
 package parallelhyflex.problems.threesat.heuristic;
 
-import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import org.junit.Test;
 import parallelhyflex.problemdependent.heuristics.RuinRecreateHeuristicBase;
 import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicR1;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
 /**
  *

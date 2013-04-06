@@ -2,15 +2,15 @@ package parallelhyflex.memory;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import parallelhyflex.communication.Communication;
-import parallelhyflex.problemdependent.solution.Solution;
-import parallelhyflex.problemdependent.heuristics.Heuristic;
 import java.lang.reflect.Array;
 import mpi.MPI;
-import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.communication.Communication;
 import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
+import parallelhyflex.problemdependent.solution.Solution;
+import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.utils.Utils;
 
 /**

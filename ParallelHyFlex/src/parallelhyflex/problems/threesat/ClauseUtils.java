@@ -96,9 +96,9 @@ public class ClauseUtils {
     }
 
     public static int degree(long clause) {
-        long inda = clause & 0x0FFFFF;
-        long indb = (clause >> 20) & 0x0FFFFF;
-        long indc = (clause >> 40) & 0x0FFFFF;
+        long inda = clause & 0x0F_FFFF;
+        long indb = (clause >> 20) & 0x0F_FFFF;
+        long indc = (clause >> 40) & 0x0F_FFFF;
         int deg = 1;
         if (inda != indb) {
             deg++;
@@ -110,9 +110,9 @@ public class ClauseUtils {
     }
     public static int[] getUniqueIndices (long clause) {
         int[] ind = new int[degree(clause)];
-        long inda = clause & 0x0FFFFF;
-        long indb = (clause >> 20) & 0x0FFFFF;
-        long indc = (clause >> 40) & 0x0FFFFF;
+        long inda = clause & 0x0F_FFFF;
+        long indb = (clause >> 20) & 0x0F_FFFF;
+        long indc = (clause >> 40) & 0x0F_FFFF;
         ind[0] = (int) inda;
         int deg = 1;
         if (inda != indb) {
@@ -175,19 +175,19 @@ public class ClauseUtils {
     }
 
     public static int getIndexI(long clause, int i) {
-        return (int) ((clause >> (40 - 20 * i)) & 0x0FFFFF);
+        return (int) ((clause >> (40 - 20 * i)) & 0x0F_FFFF);
     }
 
     public static int getIndex0(long clause) {
-        return (int) ((clause >> 40) & 0x0FFFFF);
+        return (int) ((clause >> 40) & 0x0F_FFFF);
     }
 
     public static int getIndex1(long clause) {
-        return (int) ((clause >> 20) & 0x0FFFFF);
+        return (int) ((clause >> 20) & 0x0F_FFFF);
     }
 
     public static int getIndex2(long clause) {
-        return (int) (clause & 0x0FFFFF);
+        return (int) (clause & 0x0F_FFFF);
     }
 
     public static int getValueI(long clause, int i) {
@@ -211,9 +211,9 @@ public class ClauseUtils {
     }
 
     public static void setIndices(long clause, int[] indices) {
-        indices[2] = (int) (clause & 0x0FFFFF);
-        indices[1] = (int) ((clause >> 20) & 0x0FFFFF);
-        indices[0] = (int) ((clause >> 40) & 0x0FFFFF);
+        indices[2] = (int) (clause & 0x0F_FFFF);
+        indices[1] = (int) ((clause >> 20) & 0x0F_FFFF);
+        indices[0] = (int) ((clause >> 40) & 0x0F_FFFF);
     }
 
     /**
@@ -228,23 +228,23 @@ public class ClauseUtils {
     public static void setInfluences(long clause, int[] positive, int[] negative) {
         int ip = 1;
         int in = 1;
-        int ia = (int) (clause & 0x0FFFFF);
-        int ib = (int) ((clause >> 20) & 0x0FFFFF);
-        int ic = (int) ((clause >> 40) & 0x0FFFFF);
-        if ((clause & 0x1000000000000000L) != 0x00) {
+        int ia = (int) (clause & 0x0F_FFFF);
+        int ib = (int) ((clause >> 20) & 0x0F_FFFF);
+        int ic = (int) ((clause >> 40) & 0x0F_FFFF);
+        if ((clause & 0x1000_0000_0000_0000L) != 0x00) {
             positive[ip++] = ia;
         } else {
             negative[in++] = ia;
         }
         if (ia != ib) {
-            if ((clause & 0x2000000000000000L) != 0x00) {
+            if ((clause & 0x2000_0000_0000_0000L) != 0x00) {
                 positive[ip++] = ib;
             } else {
                 negative[in++] = ib;
             }
         }
         if (ib != ic) {
-            if ((clause & 0x4000000000000000L) != 0x00) {
+            if ((clause & 0x4000_0000_0000_0000L) != 0x00) {
                 positive[ip++] = ic;
             } else {
                 negative[in++] = ic;
@@ -257,7 +257,7 @@ public class ClauseUtils {
     public static int getLargestIndex(Iterable<Long> clauses) {
         int index = 0;
         for (long clause : clauses) {
-            index = Math.max(index, (int) (clause & 0x0FFFFF));
+            index = Math.max(index, (int) (clause & 0x0F_FFFF));
         }
         return index;
     }
@@ -265,7 +265,7 @@ public class ClauseUtils {
     public static int getLargestIndex(long[] clauses) {
         int index = 0;
         for (long clause : clauses) {
-            index = Math.max(index, (int) (clause & 0x0FFFFF));
+            index = Math.max(index, (int) (clause & 0x0F_FFFF));
         }
         return index;
     }

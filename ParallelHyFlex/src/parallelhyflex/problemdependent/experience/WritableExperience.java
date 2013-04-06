@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.experience;
 
-import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
+import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *

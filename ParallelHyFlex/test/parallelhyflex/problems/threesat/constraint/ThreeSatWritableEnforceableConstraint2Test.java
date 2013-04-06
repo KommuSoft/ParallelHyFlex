@@ -1,20 +1,20 @@
 package parallelhyflex.problems.threesat.constraint;
 
-import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
-import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint2;
-import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import junit.framework.Assert;
 import java.io.DataOutputStream;
+import junit.framework.Assert;
 import org.junit.Test;
 import parallelhyflex.TestParameters;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint2;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *
@@ -78,12 +78,13 @@ public class ThreeSatWritableEnforceableConstraint2Test extends ThreeSatWritable
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
             ThreeSatWritableEnforceableConstraint2 tswec = new ThreeSatWritableEnforceableConstraint2(tsp, tss, 50);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DataOutputStream dos = new DataOutputStream(baos);
-            tswec.write(dos);
-            dos.close();
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            baos.close();
+            ByteArrayInputStream bais;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                DataOutputStream dos = new DataOutputStream(baos);
+                tswec.write(dos);
+                dos.close();
+                bais = new ByteArrayInputStream(baos.toByteArray());
+            }
             DataInputStream dis = new DataInputStream(bais);
             EnforceableConstraint<ThreeSatSolution> tswec2 = tsweg.readAndGenerate(dis);
             Assert.assertEquals(tswec, tswec2);

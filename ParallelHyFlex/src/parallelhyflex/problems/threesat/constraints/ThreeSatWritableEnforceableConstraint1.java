@@ -15,8 +15,8 @@ import parallelhyflex.utils.Utils;
 public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnforceableConstraint {
 
     private long constraint;
-    public static final long MASK_BIT = 0x8000000000000000L;
-    public static final long MASK = 0x7FFFFFFFFFFFFFFFL;
+    public static final long MASK_BIT = 0x8000_0000_0000_0000L;
+    public static final long MASK = 0x7FFF_FFFF_FFFF_FFFFL;
 
     public ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long constraint) {
         super(problem);

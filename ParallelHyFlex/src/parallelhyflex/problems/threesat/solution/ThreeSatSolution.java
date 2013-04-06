@@ -1,11 +1,11 @@
 package parallelhyflex.problems.threesat.solution;
 
-import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problems.threesat.ClauseUtils;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.utils.CompactBitArray;
 
 /**

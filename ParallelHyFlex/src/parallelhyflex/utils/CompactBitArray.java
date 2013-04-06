@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 public class CompactBitArray implements ICompactBitArray {
 
-    public static final long BLOCK_MASK = 0xFFFFFFFFFFFFFFBFL;
+    public static final long BLOCK_MASK = 0xFFFF_FFFF_FFFF_FFBFL;
     public final long[] values;
     private int n;
 
@@ -70,20 +70,20 @@ public class CompactBitArray implements ICompactBitArray {
 
     @Override
     public boolean satisfiesClause(long constraint) {
-        return (getBit((constraint >> 40) & 0xFFFFF) == ((constraint >> 62) & 1)
-                || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
-                || getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1));
+        return (getBit((constraint >> 40) & 0xF_FFFF) == ((constraint >> 62) & 1)
+                || getBit((constraint >> 20) & 0xF_FFFF) == ((constraint >> 61) & 1)
+                || getBit(constraint & 0x0F_FFFF) == ((constraint >> 60) & 1));
     }
     
     public boolean satisfiesClauseWithout(long constraint, Collection<Integer> nonIndices) {
-        int index1 = (int) (constraint >> 40) & 0xFFFFF, index2 = (int) (constraint >> 20) & 0xFFFFF, index3 = (int) (constraint & 0x0FFFFF);
+        int index1 = (int) (constraint >> 40) & 0xF_FFFF, index2 = (int) (constraint >> 20) & 0xF_FFFF, index3 = (int) (constraint & 0x0F_FFFF);
         return ((!nonIndices.contains(index1) && getBit(index1) == ((constraint >> 62) & 1))
                 || (!nonIndices.contains(index2) && getBit(index2) == ((constraint >> 61) & 1))
                 || (!nonIndices.contains(index3) && getBit(index3) == ((constraint >> 60) & 1)));
     }
 
     public boolean satisfiesClauseWithoutBlock(long constraint, int blockindex) {
-        long index1 = (constraint >> 40) & 0xFFFFF, index2 = (constraint >> 20) & 0xFFFFF, index3 = constraint & 0x0FFFFF;
+        long index1 = (constraint >> 40) & 0xF_FFFF, index2 = (constraint >> 20) & 0xF_FFFF, index3 = constraint & 0x0F_FFFF;
         long pattern = (long) blockindex << 6;
         return (((index1 & BLOCK_MASK) != pattern && getBit(index1) == ((constraint >> 62) & 1))
                 || ((index2 & BLOCK_MASK) != pattern && getBit(index2) == ((constraint >> 61) & 1))
@@ -119,10 +119,10 @@ public class CompactBitArray implements ICompactBitArray {
             }
             long mask = (0x2L << toIndex) - 0x01;
             values[tj] ^= mask;
-            mask = 0xFFFFFFFFFFFFFFFFL << fromIndex;
+            mask = 0xFFFF_FFFF_FFFF_FFFFL << fromIndex;
             values[fj] ^= mask;
         } else {
-            values[tj] ^= ((0x2L << toIndex) - 0x01) & (0xFFFFFFFFFFFFFFFFL << fromIndex);
+            values[tj] ^= ((0x2L << toIndex) - 0x01) & (0xFFFF_FFFF_FFFF_FFFFL << fromIndex);
         }
     }
 
@@ -133,16 +133,16 @@ public class CompactBitArray implements ICompactBitArray {
             fromIndex -= fj << 6;
             toIndex -= tj << 6;
             for (int i = fj + 1; i < tj; i++) {
-                values[i] = 0xFFFFFFFFFFFFFFFFL;
+                values[i] = 0xFFFF_FFFF_FFFF_FFFFL;
             }
             //System.out.println(toIndex);
             long mask = (0x2L << toIndex) - 0x01;
             //System.out.println(Utils.stringReverse(String.format("%64s", Long.toBinaryString(mask)).replace(' ', '0')));
             values[tj] |= mask;
-            mask = 0xFFFFFFFFFFFFFFFFL << fromIndex;
+            mask = 0xFFFF_FFFF_FFFF_FFFFL << fromIndex;
             values[fj] |= mask;
         } else {
-            long mask = ((0x2L << toIndex) - 0x01) & (0xFFFFFFFFFFFFFFFFL << fromIndex);
+            long mask = ((0x2L << toIndex) - 0x01) & (0xFFFF_FFFF_FFFF_FFFFL << fromIndex);
             values[fj] |= mask;
         }
     }
@@ -154,14 +154,14 @@ public class CompactBitArray implements ICompactBitArray {
             fromIndex -= fj << 6;
             toIndex -= tj << 6;
             for (int i = fj + 1; i < tj; i++) {
-                values[i] = 0x0000000000000000L;
+                values[i] = 0x0000_0000_0000_0000L;
             }
             long mask = (0x2L << toIndex) - 0x01;
             values[tj] &= ~mask;
-            mask = 0xFFFFFFFFFFFFFFFFL << fromIndex;
+            mask = 0xFFFF_FFFF_FFFF_FFFFL << fromIndex;
             values[fj] &= ~mask;
         } else {
-            long mask = ((0x2L << toIndex) - 0x01) & (0xFFFFFFFFFFFFFFFFL << fromIndex);
+            long mask = ((0x2L << toIndex) - 0x01) & (0xFFFF_FFFF_FFFF_FFFFL << fromIndex);
             values[tj] &= ~mask;
         }
     }
@@ -272,9 +272,9 @@ public class CompactBitArray implements ICompactBitArray {
 
     @Override
     public boolean willSwap(long constraint, int index) {
-        long index1 = (constraint >> 40) & 0xFFFFF;
-        long index2 = (constraint >> 20) & 0xFFFFF;
-        long index3 = constraint & 0xFFFFF;
+        long index1 = (constraint >> 40) & 0xF_FFFF;
+        long index2 = (constraint >> 20) & 0xF_FFFF;
+        long index3 = constraint & 0xF_FFFF;
         return ((index1 == index || getBit(index1) != ((constraint >> 62) & 1))
                 && (index2 == index || getBit(index2) != ((constraint >> 61) & 1))
                 && (index3 == index || getBit(index3) != ((constraint >> 60) & 1)));

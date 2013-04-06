@@ -20,9 +20,9 @@ public class ParallelHyFlex {
 
         Communication.initializeCommunication(args);
         try {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(2380, 10000);// = new ThreeSatProblemGenerator(128,500);
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(2_380, 10_000);// = new ThreeSatProblemGenerator(128,500);
             HyperHeuristic dummy;
-            long timespan = 10000;//ten seconds
+            long timespan = 10_000;//ten seconds
             //long timespan = 360000;//six minutes
             //long timespan = 7200000;//two hours
             if (Communication.getCommunication().getRank() == 0) {
@@ -32,7 +32,7 @@ public class ParallelHyFlex {
                 dummy = new SimpleThreeSatHyperHeuristic(tspg, timespan);
             }
             dummy.startExecute();
-        } catch (Exception e) {
+        } catch (ProtocolException | IOException e) {
             Communication.Log(e.toString());
             e.printStackTrace();
         }

@@ -75,9 +75,9 @@ public class ModifiedCompactBitArray implements ICompactBitArray {
 
     @Override
     public boolean satisfiesClause(long constraint) {
-        return (getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1)
-                || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
-                || getBit((constraint >> 40) & 0xFFFFF) == ((constraint >> 62) & 1));
+        return (getBit(constraint & 0x0F_FFFF) == ((constraint >> 60) & 1)
+                || getBit((constraint >> 20) & 0xF_FFFF) == ((constraint >> 61) & 1)
+                || getBit((constraint >> 40) & 0xF_FFFF) == ((constraint >> 62) & 1));
     }
 
     @Override

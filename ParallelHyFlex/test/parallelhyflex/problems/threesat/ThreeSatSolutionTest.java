@@ -4,10 +4,6 @@
  */
 package parallelhyflex.problems.threesat;
 
-import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
-import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
-import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -20,6 +16,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parallelhyflex.TestParameters;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *
@@ -53,12 +53,13 @@ public class ThreeSatSolutionTest {
             ThreeSatProblem tsp = tspg.generateProblem();
             ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
             ThreeSatSolution tss = tsg.generateSolution();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            DataOutputStream dos = new DataOutputStream(baos);
-            tss.write(dos);
-            dos.close();
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            baos.close();
+            ByteArrayInputStream bais;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                DataOutputStream dos = new DataOutputStream(baos);
+                tss.write(dos);
+                dos.close();
+                bais = new ByteArrayInputStream(baos.toByteArray());
+            }
             DataInputStream dis = new DataInputStream(bais);
             ThreeSatSolution tss2 = tsg.readAndGenerate(dis);
             Assert.assertEquals(tss, tss2);

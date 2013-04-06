@@ -1,12 +1,5 @@
 package parallelhyflex.problems.threesat.problem;
 
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicL1;
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM3;
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM1;
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicR1;
-import parallelhyflex.problems.threesat.distance.ThreeSatDistance2;
-import parallelhyflex.problems.threesat.distance.ThreeSatDistance1;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,6 +10,13 @@ import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.problem.ObjectiveFunction;
 import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
+import parallelhyflex.problems.threesat.distance.ThreeSatDistance1;
+import parallelhyflex.problems.threesat.distance.ThreeSatDistance2;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicL1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM3;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicR1;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 import parallelhyflex.utils.ProbabilityUtils;

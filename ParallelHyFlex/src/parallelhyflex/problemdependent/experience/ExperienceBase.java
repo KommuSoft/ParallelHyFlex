@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.experience;
 
-import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.algebra.ProblemPointerBase;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.solution.Solution;
 
