@@ -38,7 +38,7 @@ public class ThreeSatHeuristicR1 extends RuinRecreateHeuristicBase<ThreeSatSolut
         int ci;
         for (int i = 0; i < binf.length; i++) {
             ci = binf[i];
-            if (!cba.SatisfiesClauseWithoutBlock(constraints[ci], iblock)) {
+            if (!cba.satisfiesClauseWithoutBlock(constraints[ci], iblock)) {
                 activeConstraints.add(ci);
             }
         }

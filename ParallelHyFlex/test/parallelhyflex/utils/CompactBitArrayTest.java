@@ -93,7 +93,7 @@ public class CompactBitArrayTest {
         int blockindex = 0;
         CompactBitArray instance = null;
         boolean expResult = false;
-        boolean result = instance.SatisfiesClauseWithoutBlock(constraint, blockindex);
+        boolean result = instance.satisfiesClauseWithoutBlock(constraint, blockindex);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

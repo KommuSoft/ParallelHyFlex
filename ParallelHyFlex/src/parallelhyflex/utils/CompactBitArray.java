@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  *
@@ -73,8 +74,15 @@ public class CompactBitArray implements ICompactBitArray {
                 || getBit((constraint >> 20) & 0xFFFFF) == ((constraint >> 61) & 1)
                 || getBit(constraint & 0x0FFFFF) == ((constraint >> 60) & 1));
     }
+    
+    public boolean satisfiesClauseWithout(long constraint, Collection<Integer> nonIndices) {
+        int index1 = (int) (constraint >> 40) & 0xFFFFF, index2 = (int) (constraint >> 20) & 0xFFFFF, index3 = (int) (constraint & 0x0FFFFF);
+        return ((!nonIndices.contains(index1) && getBit(index1) == ((constraint >> 62) & 1))
+                || (!nonIndices.contains(index2) && getBit(index2) == ((constraint >> 61) & 1))
+                || (!nonIndices.contains(index3) && getBit(index3) == ((constraint >> 60) & 1)));
+    }
 
-    public boolean SatisfiesClauseWithoutBlock(long constraint, int blockindex) {
+    public boolean satisfiesClauseWithoutBlock(long constraint, int blockindex) {
         long index1 = (constraint >> 40) & 0xFFFFF, index2 = (constraint >> 20) & 0xFFFFF, index3 = constraint & 0x0FFFFF;
         long pattern = (long) blockindex << 6;
         return (((index1 & BLOCK_MASK) != pattern && getBit(index1) == ((constraint >> 62) & 1))
