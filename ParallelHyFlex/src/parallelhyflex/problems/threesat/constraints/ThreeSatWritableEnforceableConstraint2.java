@@ -4,8 +4,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
+import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -30,26 +32,22 @@ public class ThreeSatWritableEnforceableConstraint2 extends WritableEnforceableC
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
+        CompactBitArray rootcba = this.root.getCompactBitArray();
+        CompactBitArray solucba = solution.getCompactBitArray();
         for (int i = distance; i > maxDistance; i--) {
-            int index = Utils.StaticRandom.nextInt(solution.getLength());
-            if (solution.getBit(index) != this.getRoot().getBit(index)) {
-                solution.swapBit(index, this.getProblem());
-            } else {
-                i++;
-            }
+            int index = ClauseUtils.getNonEqualVariableIndex(rootcba,solucba);
+            solution.swapBit(index, this.getProblem());
         }
     }
 
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
+        CompactBitArray rootcba = this.root.getCompactBitArray();
+        CompactBitArray solucba = solution.getCompactBitArray();
         for (int i = distance; i <= maxDistance; i++) {
-            int index = Utils.StaticRandom.nextInt(solution.getLength());
-            if (solution.getBit(index) == this.getRoot().getBit(index)) {
-                solution.swapBit(index, this.getProblem());
-            } else {
-                i--;
-            }
+            int index = ClauseUtils.getEqualVariableIndex(rootcba,solucba);
+            solution.swapBit(index, this.getProblem());
         }
     }
 

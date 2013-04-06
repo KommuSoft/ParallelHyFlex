@@ -283,8 +283,43 @@ public class ClauseUtils {
     public static int getFalseClauseIndex (ThreeSatSolution from, long[] clauses) {
         int c = clauses.length;
         int c0 = Utils.StaticRandom.nextInt(c);
-        for (Integer i : Utils.getLimitedModuloEnumerable(c0, c)) {
+        for(int i = c0; i < c; i++) {
             if (!from.satisfiesClause(clauses[i])) {
+                return i;
+            }
+        }
+        for(int i = 0; i < c0; i++) {
+            if (!from.satisfiesClause(clauses[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static int getNonEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
+        int v = cba1.getLength();
+        int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
+        for(int i = v0; i < v; i++) {
+            if (cba1.getBit(i) != cba2.getBit(i)) {
+                return i;
+            }
+        }
+        for(int i = 0; i < v0; i++) {
+            if (cba1.getBit(i) != cba2.getBit(i)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static int getEqualVariableIndex(CompactBitArray cba1, CompactBitArray cba2) {
+        int v = cba1.getLength();
+        int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
+        for(int i = v0; i < v; i++) {
+            if (cba1.getBit(i) == cba2.getBit(i)) {
+                return i;
+            }
+        }
+        for(int i = 0; i < v0; i++) {
+            if (cba1.getBit(i) == cba2.getBit(i)) {
                 return i;
             }
         }
