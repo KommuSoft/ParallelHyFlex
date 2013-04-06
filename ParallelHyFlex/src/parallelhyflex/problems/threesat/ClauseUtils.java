@@ -108,6 +108,21 @@ public class ClauseUtils {
         }
         return deg;
     }
+    public static int[] getUniqueIndices (long clause) {
+        int[] ind = new int[degree(clause)];
+        long inda = clause & 0x0FFFFF;
+        long indb = (clause >> 20) & 0x0FFFFF;
+        long indc = (clause >> 40) & 0x0FFFFF;
+        ind[0] = (int) inda;
+        int deg = 1;
+        if (inda != indb) {
+            ind[deg++] = (int) indb;
+        }
+        if (indb != indc) {
+            ind[deg++] = (int) indc;
+        }
+        return ind;
+    }
 
     public static String clausesToString(long[] constraints) {
         StringBuilder sb = new StringBuilder();
@@ -263,6 +278,17 @@ public class ClauseUtils {
             }
         }
         return number;
+    }
+    
+    public static int getFalseClauseIndex (ThreeSatSolution from, long[] clauses) {
+        int c = clauses.length;
+        int c0 = Utils.StaticRandom.nextInt(c);
+        for (Integer i : Utils.getLimitedModuloEnumerable(c0, c)) {
+            if (!from.satisfiesClause(clauses[i])) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static String clauseToString(long clause) {

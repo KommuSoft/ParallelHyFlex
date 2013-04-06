@@ -19,22 +19,16 @@ public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution,
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         ThreeSatProblem problem = this.getProblem();
-        int c = problem.getC();
         long[] clauses = problem.getConstraints();
         do {
-            enforceClause(c, from, clauses, problem);
+            enforceClause(from, clauses, problem);
         } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
     }
 
-    private void enforceClause(int c, ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
-        int c0 = Utils.StaticRandom.nextInt(c);
-        for (Integer i : Utils.getLimitedModuloEnumerable(c0, c)) {
-            if (!from.satisfiesClause(clauses[i])) {
-                int k = Utils.StaticRandom.nextInt(3);
-                int index = ClauseUtils.getIndexI(clauses[i], k);
-                from.swapBit(index, problem);
-                return;
-            }
-        }
+    private void enforceClause(ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
+        int i = ClauseUtils.getFalseClauseIndex(from, clauses);
+        int k = Utils.StaticRandom.nextInt(3);
+        int index = ClauseUtils.getIndexI(clauses[i], k);
+        from.swapBit(index, problem);
     }
 }

@@ -23,11 +23,9 @@ public class ThreeSatHeuristicL3 extends LocalSearchHeuristicBase<ThreeSatSoluti
         int[][] influences = this.getProblem().getInfluences();
         long[] constraints = this.getProblem().getConstraints();
         CompactBitArray cba = from.getCompactBitArray();
-        boolean improved, nextrun;
         int maxindex = -1, maximprove = 0;
         for (Integer i : Utils.getLimitedModuloEnumerable(Utils.StaticRandom.nextInt(n), (int) Math.round(Math.pow(this.getProblem().getV(), 1.0 - this.getDepthOfSearch())), n)) {
             delta = ClauseUtils.calculateLoss(i, cba, constraints, influences[i]);
-            improved = delta < 0;
             if (delta < maximprove) {
                 maximprove = delta;
                 maxindex = i;
