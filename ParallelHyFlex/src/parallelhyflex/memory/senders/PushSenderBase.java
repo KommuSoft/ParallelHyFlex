@@ -14,6 +14,8 @@ import parallelhyflex.problemdependent.solution.Solution;
  * @author kommusoft
  */
 public abstract class PushSenderBase<TSolution extends Solution<TSolution>> implements PushSender<TSolution> {
+    
+    public static final int SendTag = 0x00;
 
     public Object[] generatePacket(int index, TSolution solution) {
         Object[] data = new Object[3];
@@ -29,6 +31,6 @@ public abstract class PushSenderBase<TSolution extends Solution<TSolution>> impl
         } catch (Exception e) {
             Communication.Log(e);
         }
-        return data;
+        return new Object[] {data};
     }
 }

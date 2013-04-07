@@ -156,13 +156,9 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.stopTime.setTime(time + durationTicks);
         NegotiationThread nt = new NegotiationThread();
         FetchThread ft = new FetchThread();
-        //Communication.Log("Started!");
         nt.start();
         ft.start();
         this.execute();
-        nt.stop();
-        ft.stop();
-        //Communication.Log("Halted!");
     }
 
     public boolean hasTimeLeft() {
@@ -280,14 +276,14 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
         @Override
         public void run() {
-            Object[] buffer = new Object[3];
+            Object[] buffer = new Object[1];
             TSolution sol;
             ByteArrayInputStream bais;
             DataInputStream dis;
             while (true) {
                 try {
-                    Status status = Communication.RV(buffer, 0, 3, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
-                    prr.routePacket(status.source, status.tag, buffer);
+                    Status status = Communication.RV(buffer, 0, 1, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
+                    prr.routePacket(status.source, status.tag, buffer[0x00]);
                 } catch (Exception e) {
                     Communication.Log(e);
                 }

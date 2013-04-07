@@ -36,7 +36,12 @@ public class PacketRouterBase implements PacketRouter {
     @Override
     public void routePacket(int sender, int tag, Object data) {
         for(PacketReceiver pr : tagMapper.get(tag)) {
+            try {
             pr.receivePacket(sender, tag, data);
+            }
+            catch(Exception e) {
+                Communication.Log(e);
+            }
         }
     }
     

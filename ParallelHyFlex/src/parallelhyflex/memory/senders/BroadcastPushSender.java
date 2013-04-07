@@ -14,7 +14,7 @@ public class BroadcastPushSender<TSolution extends Solution<TSolution>> extends 
     public void sendSolution(int index, TSolution solution) {
         Object[] data = this.generatePacket(index, solution);
         for (int other : Communication.others()) {
-            Communication.NbS(data, 0, 3, MPI.OBJECT, other, 0);
+            Communication.NbS(data, 0, 1, MPI.OBJECT, other, PushSenderBase.SendTag);
         }
     }
 }
