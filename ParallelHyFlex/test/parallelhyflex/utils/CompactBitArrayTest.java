@@ -8,6 +8,7 @@ import org.junit.Assert;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import parallelhyflex.TestParameters;
+import parallelhyflex.problems.threesat.ClauseUtils;
 
 /**
  *
@@ -50,14 +51,23 @@ public class CompactBitArrayTest {
      */
     @Test
     public void testSatisfiesClause() {
-        System.out.println("satisfiesClause");
-        long constraint = 0L;
-        CompactBitArray instance = null;
-        boolean expResult = false;
-        boolean result = instance.satisfiesClause(constraint);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        CompactBitArray cba = new CompactBitArray(new long[] {0x05});
+        long clause = ClauseUtils.generateClause(0, 1, 2, false, false, false);
+        Assert.assertTrue(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, false, false, true);
+        Assert.assertTrue(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, false, true, false);
+        Assert.assertFalse(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, false, true, true);
+        Assert.assertTrue(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, true, false, false);
+        Assert.assertTrue(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, true, false, true);
+        Assert.assertTrue(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, true, true, false);
+        Assert.assertTrue(cba.satisfiesClause(clause));
+        clause = ClauseUtils.generateClause(0, 1, 2, true, true, true);
+        Assert.assertTrue(cba.satisfiesClause(clause));
     }
 
     /**
@@ -81,14 +91,16 @@ public class CompactBitArrayTest {
      */
     @Test
     public void testGetNumberOfFailingClauses() {
-        System.out.println("getNumberOfFailingClauses");
-        long[] constraints = null;
-        CompactBitArray instance = null;
-        int expResult = 0;
-        int result = instance.getNumberOfFailingClauses(constraints);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        CompactBitArray cba = new CompactBitArray(new long[] {0x05});
+        long[] clauses = new long[] {ClauseUtils.generateClause(0, 1, 2, false, false, false),
+            ClauseUtils.generateClause(0, 1, 2, false, false, true),
+            ClauseUtils.generateClause(0, 1, 2, false, true, false),
+            ClauseUtils.generateClause(0, 1, 2, false, true, true),
+            ClauseUtils.generateClause(0, 1, 2, true, false, false),
+            ClauseUtils.generateClause(0, 1, 2, true, false, true),
+            ClauseUtils.generateClause(0, 1, 2, true, true, false),
+            ClauseUtils.generateClause(0, 1, 2, true, true, true)};
+        Assert.assertEquals(1,cba.getNumberOfFailingClauses(clauses));
     }
 
     /**
@@ -266,15 +278,15 @@ public class CompactBitArrayTest {
      */
     @Test
     public void testWillSwap() {
-        System.out.println("willSwap");
-        long constraint = 0L;
-        int index = 0;
-        CompactBitArray instance = null;
-        boolean expResult = false;
-        boolean result = instance.willSwap(constraint, index);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        CompactBitArray cba = new CompactBitArray(new long[] {0x05});
+        long clause = ClauseUtils.generateClause(0, 1, 2, false, true, false);
+        Assert.assertTrue(cba.willSwap(clause,0));
+        Assert.assertTrue(cba.willSwap(clause,1));
+        Assert.assertTrue(cba.willSwap(clause,2));
+        clause = ClauseUtils.generateClause(0, 1, 2, false, false, false);
+        Assert.assertFalse(cba.willSwap(clause,0));
+        Assert.assertTrue(cba.willSwap(clause,1));
+        Assert.assertFalse(cba.willSwap(clause,2));
     }
 
     /**

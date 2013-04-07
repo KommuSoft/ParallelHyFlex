@@ -5,6 +5,7 @@
 package parallelhyflex.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class UtilsTest {
         Assert.assertEquals(64,Utils.countOnes(0xFFFFFFFFFFFFFFFFL));
         Assert.assertEquals(32,Utils.countOnes(0xF0F0F0F0F0F0F0F0L));
         Assert.assertEquals(32,Utils.countOnes(0x0F0F0F0F0F0F0F0FL));
-        Assert.assertEquals(34,Utils.countOnes(0x0123456789ABCDEFL));
+        Assert.assertEquals(32,Utils.countOnes(0x0123456789ABCDEFL));
     }
 
     /**

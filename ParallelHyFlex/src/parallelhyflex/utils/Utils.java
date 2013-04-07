@@ -89,10 +89,10 @@ public class Utils {
                     public Integer next() {
                         int val = this.value;
                         this.value += delta;
-                        return (this.value + offset) % modulo;
+                        return (val + offset) % modulo;
                     }
 
-                    public Iterator<Integer> setValues(int modulo, int delta, int offset) {
+                    public Iterator<Integer> setValues(int offset, int delta, int modulo) {
                         this.modulo = modulo;
                         this.delta = delta;
                         this.offset = offset;
