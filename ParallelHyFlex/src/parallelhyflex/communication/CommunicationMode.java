@@ -26,5 +26,8 @@ public enum CommunicationMode {
     private boolean isQueued () {
         return ((mode&0xf0) != 0x00);
     }
+    public int getType () {
+        return this.mode&0x0f;
+    }
     
 }

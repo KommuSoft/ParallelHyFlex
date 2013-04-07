@@ -16,6 +16,9 @@ public class SetHypothesisItemComparator1 implements Comparator<SetHypothesisIte
         return staticInstance;
     }
 
+    private SetHypothesisItemComparator1() {
+    }
+
     @Override
     public int compare(SetHypothesisItem o1, SetHypothesisItem o2) {
         if (!o1.equals(o2)) {
