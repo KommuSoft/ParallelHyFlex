@@ -8,6 +8,7 @@ import java.util.Arrays;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.PacketReceiver;
+import parallelhyflex.memory.senders.PushSenderBase;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
@@ -152,7 +153,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     @Override
     public int[] getPacketTags() {
-        return new int[] {0};
+        return new int[] {PushSenderBase.SendTag};
     }
 
     @Override

@@ -85,6 +85,12 @@ public class Communication {
     public static Request NbS(Object buf, int offset, int count, Datatype type, int dest, int tag) {
         return MPI.COMM_WORLD.Isend(buf, offset, count, type, dest, tag);
     }
+    
+    public static void NbB(Object buf, int offset, int count, Datatype type, int tag) {
+        for (int root : Communication.others()) {
+            Communication.NbS(buf, offset, count, type, root, tag);
+        }
+    }
 
     public static void Log(String message) {
         System.out.println("<" + Communication.MainCommunication.rank + "> " + message);

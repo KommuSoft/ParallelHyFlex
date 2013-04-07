@@ -7,13 +7,14 @@ package parallelhyflex.memory.senders;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import parallelhyflex.communication.Communication;
+import parallelhyflex.communication.SendTagged;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *
  * @author kommusoft
  */
-public abstract class PushSenderBase<TSolution extends Solution<TSolution>> implements PushSender<TSolution> {
+public abstract class PushSenderBase<TSolution extends Solution<TSolution>> implements PushSender<TSolution>, SendTagged {
     
     public static final int SendTag = 0x00;
 
@@ -32,5 +33,10 @@ public abstract class PushSenderBase<TSolution extends Solution<TSolution>> impl
             Communication.Log(e);
         }
         return new Object[] {data};
+    }
+
+    @Override
+    public int getSendTag() {
+        return SendTag;
     }
 }
