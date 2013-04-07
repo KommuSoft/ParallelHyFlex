@@ -29,39 +29,24 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
 
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
-        System.out.println("enforcetrue");
         int distance = this.calculateDistance(solution);
-        System.out.println("- A"+distance);
         CompactBitArray rootcba = this.root.getCompactBitArray();
-        System.out.println("- B");
         CompactBitArray solucba = solution.getCompactBitArray();
-        System.out.println("- C");
         for (int i = distance; i > maxDistance; i--) {
-            System.out.println("distance="+i);
             int index = ClauseUtils.getNonEqualVariableIndex(rootcba,solucba);
-            System.out.println("- D");
             solution.swapBit(index, this.getProblem());
-            System.out.println("- E");
         }
     }
 
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
-        System.out.println("enforcefalse");
         int distance = this.calculateDistance(solution);
-        System.out.println("- A"+distance);
         CompactBitArray rootcba = this.root.getCompactBitArray();
-        System.out.println("- B");
         CompactBitArray solucba = solution.getCompactBitArray();
-        System.out.println("- C");
         for (int i = distance; i <= maxDistance; i++) {
-            System.out.println("distance="+i);
             int index = ClauseUtils.getEqualVariableIndex(rootcba,solucba);
-            System.out.println("- D");
             solution.swapBit(index, this.getProblem());
-            System.out.println("- E");
         }
-        System.out.println("- F");
     }
 
     @Override

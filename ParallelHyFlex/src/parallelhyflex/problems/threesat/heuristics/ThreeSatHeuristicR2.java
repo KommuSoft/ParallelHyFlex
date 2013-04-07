@@ -33,13 +33,14 @@ public class ThreeSatHeuristicR2 extends RuinRecreateHeuristicBase<ThreeSatSolut
         int[][] infl = this.getProblem().getInfluences();
         int[] infli;
         int oldunsat = 0;
-        HashSet<Integer> influencedClauses = new HashSet<>();
+        HashSet<Long> influencedClauses = new HashSet<>();
         CompactBitArray cba = from.getCompactBitArray();
         for (int i = 0x00; i < indices.length; i++) {
             infli = infl[indices[i]];
             for (int j = 0; j < infli.length; j++) {
                 int k = infli[j];
-                if (cba.satisfiesClauseWithout(clauses[k], indhash) && influencedClauses.add(k) && !from.satisfiesClause(clauses[k])) {
+                clause = clauses[k];
+                if (!cba.satisfiesClauseWithout(clause, indhash) && influencedClauses.add(clause) && !from.satisfiesClause(clause)) {
                     oldunsat++;
                 }
             }
@@ -50,8 +51,8 @@ public class ThreeSatHeuristicR2 extends RuinRecreateHeuristicBase<ThreeSatSolut
         for (int val = 0x00; val < maxval; val++) {
             cba.setAll(indices, val);
             unsat = 0;
-            for (Integer i : influencedClauses) {
-                if (!cba.satisfiesClause(clauses[i])) {
+            for (Long clausei : influencedClauses) {
+                if (!cba.satisfiesClause(clausei)) {
                     unsat++;
                 }
             }
