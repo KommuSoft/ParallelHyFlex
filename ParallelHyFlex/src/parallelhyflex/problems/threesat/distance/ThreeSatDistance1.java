@@ -31,11 +31,15 @@ public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution, Th
         int dis = 0;
         long[] cba1 = solution1.getCompactBitArray().values;
         long[] cba2 = solution2.getCompactBitArray().values;
+        int upperbound = solution1.getLength();
+        int delta;
         for (int i = 0; i < cba1.length; i++) {
-            dis += Utils.countOnes(cba1[i] ^ cba2[i]);
+            delta = Utils.countOnes(cba1[i] ^ cba2[i]);
+            dis += delta;
+            upperbound += delta-64;
             if (dis > maxDistance) {
                 return true;
-            } else if (dis + ((cba1.length - i) << 6) - 64 <= maxDistance) {
+            } else if (upperbound <= maxDistance) {
                 return false;
             }
         }
