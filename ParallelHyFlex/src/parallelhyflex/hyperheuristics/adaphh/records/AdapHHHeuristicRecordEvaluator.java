@@ -23,7 +23,7 @@ public class AdapHHHeuristicRecordEvaluator implements HeuristicRecordEvaluator<
         double tspent = rec.getTspent();
         double tpspent = rec.getTpspent();
         double b = 0.0d;
-        double tremain = 10.0d;
+        double tremain = 10.0d;//TODO: parameterize
         for(AdapHHHeuristicRecord hr : variable.getItem2()) {
             if(hr.getCpbest() > 0) {
                 b = 1.0d;
@@ -32,6 +32,9 @@ public class AdapHHHeuristicRecordEvaluator implements HeuristicRecordEvaluator<
         }
         double var = cpbest+1;
         var *= w1*var*b*tremain;
+        var += w2*fpimp-w3*fpwrs;
+        var /= tpspent;
+        var += (w4*fimp-w5*fwrs)/tspent;
         return var;
     }
 }
