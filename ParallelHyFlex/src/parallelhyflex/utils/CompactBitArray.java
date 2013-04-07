@@ -294,4 +294,33 @@ public class CompactBitArray implements ICompactBitArray {
             this.set(indices[i],((val>>i)&0x01) != 0x00);
         }
     }
+    
+    public void andWith (CompactBitArray cba) {
+        long[] valb = cba.values;
+        for(int i = 0; i < values.length; i++) {
+            values[i] &= valb[i];
+        }
+    }
+    
+    public void orWith (CompactBitArray cba) {
+        long[] valb = cba.values;
+        for(int i = 0; i < values.length; i++) {
+            values[i] |= valb[i];
+        }
+    }
+    
+    public void xorWith (CompactBitArray cba) {
+        long[] valb = cba.values;
+        for(int i = 0; i < values.length; i++) {
+            values[i] ^= valb[i];
+        }
+    }
+    
+    public void swapFull () {
+        for(int i = 0; i < values.length; i++) {
+            values[i] = ~values[i];
+        }
+        this.clearTail();
+    }
+    
 }

@@ -9,6 +9,9 @@ import java.util.Date;
 import mpi.MPI;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
+import parallelhyflex.communication.PacketReceiver;
+import parallelhyflex.communication.PacketReceiverRegistrar;
+import parallelhyflex.communication.PacketReceiverRegistrarBase;
 import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.memory.ProxyMemory;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
@@ -26,7 +29,7 @@ import parallelhyflex.problemdependent.solution.SolutionReader;
  *
  * @author kommusoft
  */
-public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution> {
+public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution>, PacketReceiverRegistrar {
 
     private final ProxyMemory<TSolution> proxyMemory;
     private final WritableExperience<TSolution, TEC> experience;
@@ -35,6 +38,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private long negotiationTicks;
     private final TProblem problem;
     private final SearchSpaceNegotiator<TSolution, TEC> negotiator;
+    private final PacketReceiverRegistrarBase prr = new PacketReceiverRegistrarBase();
 
     /**
      * @note: This constructor can only be initialized if the machine is the
@@ -245,6 +249,21 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      */
     public void setNegotiationTicks(long negotiationTicks) {
         this.negotiationTicks = negotiationTicks;
+    }
+
+    @Override
+    public void registerPacketReceiver(PacketReceiver receiver) {
+        this.prr.registerPacketReceiver(receiver);
+    }
+
+    @Override
+    public void unregisterPacketReceiver(PacketReceiver receiver) {
+        this.prr.unregisterPacketReceiver(receiver);
+    }
+
+    @Override
+    public void routePacket(int sender, int tag, Object data) {
+        this.prr.routePacket(sender, tag, data);
     }
 
     private class NegotiationThread extends Thread {
