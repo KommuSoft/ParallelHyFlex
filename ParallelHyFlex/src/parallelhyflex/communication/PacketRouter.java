@@ -8,7 +8,7 @@ package parallelhyflex.communication;
  *
  * @author kommusoft
  */
-public interface PacketReceiverRegistrar {
+public interface PacketRouter {
     
     public void registerPacketReceiver (PacketReceiver receiver);
     public void unregisterPacketReceiver (PacketReceiver receiver);

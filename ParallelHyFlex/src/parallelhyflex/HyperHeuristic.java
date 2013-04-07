@@ -7,11 +7,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import mpi.MPI;
+import mpi.Status;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.PacketReceiver;
-import parallelhyflex.communication.PacketReceiverRegistrar;
-import parallelhyflex.communication.PacketReceiverRegistrarBase;
+import parallelhyflex.communication.PacketRouter;
+import parallelhyflex.communication.PacketRouterBase;
 import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.memory.ProxyMemory;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
@@ -29,7 +30,7 @@ import parallelhyflex.problemdependent.solution.SolutionReader;
  *
  * @author kommusoft
  */
-public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution>, PacketReceiverRegistrar {
+public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution>, PacketRouter {
 
     private final ProxyMemory<TSolution> proxyMemory;
     private final WritableExperience<TSolution, TEC> experience;
@@ -38,7 +39,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private long negotiationTicks;
     private final TProblem problem;
     private final SearchSpaceNegotiator<TSolution, TEC> negotiator;
-    private final PacketReceiverRegistrarBase prr = new PacketReceiverRegistrarBase();
+    private final PacketRouterBase prr = new PacketRouterBase();
 
     /**
      * @note: This constructor can only be initialized if the machine is the
@@ -58,6 +59,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.experience = experience.generate(problem);
             this.negotiator = negotiator.generate(this.problem);
             this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateIthDistributed, solutionReader);
+            this.registerPacketReceiver(this.proxyMemory);
             this.proxyMemory.setWritableExperience(this.experience);
             byte[][] data;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -97,6 +99,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.durationTicks = durationTicks;
             this.negotiationTicks = negotiationTicks;
             this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateIthDistributed, solutionReader);
+            this.registerPacketReceiver(this.proxyMemory);
             byte[][] data = new byte[1][];
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);
             try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0]); DataInputStream dis = new DataInputStream(bais)) {
@@ -152,10 +155,13 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.startTime.setTime(time);
         this.stopTime.setTime(time + durationTicks);
         NegotiationThread nt = new NegotiationThread();
+        FetchThread ft = new FetchThread();
         //Communication.Log("Started!");
         nt.start();
+        ft.start();
         this.execute();
         nt.stop();
+        ft.stop();
         //Communication.Log("Halted!");
     }
 
@@ -247,23 +253,46 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     /**
      * @param negotiationTicks the negotiationTicks to set
      */
-    public void setNegotiationTicks(long negotiationTicks) {
+    public final void setNegotiationTicks(long negotiationTicks) {
         this.negotiationTicks = negotiationTicks;
     }
 
     @Override
-    public void registerPacketReceiver(PacketReceiver receiver) {
+    public final void registerPacketReceiver(PacketReceiver receiver) {
         this.prr.registerPacketReceiver(receiver);
     }
 
     @Override
-    public void unregisterPacketReceiver(PacketReceiver receiver) {
+    public final void unregisterPacketReceiver(PacketReceiver receiver) {
         this.prr.unregisterPacketReceiver(receiver);
     }
 
     @Override
     public void routePacket(int sender, int tag, Object data) {
         this.prr.routePacket(sender, tag, data);
+    }
+    
+    private class FetchThread extends Thread {
+
+        public FetchThread() {
+            this.setDaemon(true);
+        }
+
+        @Override
+        public void run() {
+            Object[] buffer = new Object[3];
+            TSolution sol;
+            ByteArrayInputStream bais;
+            DataInputStream dis;
+            while (true) {
+                try {
+                    Status status = Communication.RV(buffer, 0, 3, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
+                    prr.routePacket(status.source, status.tag, buffer);
+                } catch (Exception e) {
+                    Communication.Log(e);
+                }
+            }
+        }
     }
 
     private class NegotiationThread extends Thread {

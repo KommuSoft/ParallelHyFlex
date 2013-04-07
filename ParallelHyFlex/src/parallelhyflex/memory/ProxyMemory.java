@@ -2,9 +2,12 @@ package parallelhyflex.memory;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
+import parallelhyflex.communication.PacketReceiver;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
@@ -17,7 +20,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ProxyMemory<TSolution extends Solution<TSolution>> {
+public class ProxyMemory<TSolution extends Solution<TSolution>> implements PacketReceiver {
 
     private final MemorySlots<TSolution>[] solutionCache;
     private final MemorySlots localSlots;
@@ -59,7 +62,6 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
         }
         this.totalMemory = sum;
         //Communication.Log(Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
-        new FetchThread().start();
     }
 
     public int getMemorySize() {
@@ -141,41 +143,26 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> {
      * @param searchSpace the searchSpace to set
      */
     public void setSearchSpace(SearchSpace<TSolution> searchSpace) {
-        if(searchSpace != null) {
+        if (searchSpace != null) {
             this.searchSpace = searchSpace;
-        }
-        else {
+        } else {
             this.searchSpace = new DummySearchSpace<>();
         }
     }
 
-    private class FetchThread extends Thread {
+    @Override
+    public int[] getPacketTags() {
+        return new int[] {0};
+    }
 
-        public FetchThread() {
-            this.setDaemon(true);
-        }
-
-        @Override
-        public void run() {
-            Object[] buffer = new Object[3];
-            TSolution sol;
-            ByteArrayInputStream bais;
-            DataInputStream dis;
-            while (true) {
-                try {
-                    Communication.RV(buffer, 0, 3, MPI.OBJECT, MPI.ANY_SOURCE, 0);
-                    //Communication.Log("received " + Arrays.toString(buffer));
-                    bais = new ByteArrayInputStream((byte[]) buffer[2]);
-                    dis = new DataInputStream(bais);
-                    sol = solutionReader.readAndGenerate(dis);
-                    searchSpace.correct(sol);
-                    solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
-                    dis.close();
-                    bais.close();
-                } catch (Exception e) {
-                    Communication.Log(e);
-                }
-            }
+    @Override
+    public void receivePacket(int from, int tag, Object data) throws IOException {
+        Object[] buffer = (Object[]) data;
+        Communication.Log("received " + Arrays.toString(buffer));
+        try (ByteArrayInputStream bais = new ByteArrayInputStream((byte[]) buffer[2]); DataInputStream dis = new DataInputStream(bais)) {
+            TSolution sol = solutionReader.readAndGenerate(dis);
+            searchSpace.correct(sol);
+            solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
         }
     }
 }

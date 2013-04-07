@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 
-public class PacketReceiverRegistrarBase implements PacketReceiverRegistrar {
+public class PacketRouterBase implements PacketRouter {
     
     private final HashMap<Integer,LinkedList<PacketReceiver>> tagMapper = new HashMap<>();
 
