@@ -8,6 +8,8 @@ import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
 /**
+ * A mutation heuristic where one or more a failing clause is made completely
+ * true
  *
  * @author kommusoft
  */
@@ -19,15 +21,16 @@ public class ThreeSatHeuristicM3 extends MutationHeuristicBase<ThreeSatSolution,
 
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
-        //TODO: implement something different
-        long[] constraints = this.getProblem().getClauses();
-        int[][] influences = this.getProblem().getInfluences();
-        CompactBitArray cba = from.getCompactBitArray();
-        long constraint = constraints[Utils.StaticRandom.nextInt(constraints.length)];
-        if (!cba.satisfiesClause(constraint)) {
-            int ii = ClauseUtils.getIndexI(constraint, Utils.StaticRandom.nextInt(3));
-            ClauseUtils.swapBit(ii, influences[ii], cba, constraints, from);
+        ThreeSatProblem problem = this.getProblem();
+        long[] clauses = problem.getClauses();
+        do {
+            enforceClause(from, clauses, problem);
+        } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
+    }
+
+    private void enforceClause(ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
+        for (Integer i : ClauseUtils.getUniqueIndices(clauses[ClauseUtils.getFalseClauseIndex(from, clauses)])) {
+            from.swapBit(i, problem);
         }
-        //TODO: search for other clause (if fails)
     }
 }
