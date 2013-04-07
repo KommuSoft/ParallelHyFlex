@@ -28,18 +28,19 @@ public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution, Th
 
     @Override
     public boolean evaluateDistanceSmallerThanOrEqual(ThreeSatSolution solution1, ThreeSatSolution solution2, double maxDistance) {
-        int dis = 0;
+        int dis = (int) Math.round(-maxDistance);
         long[] cba1 = solution1.getCompactBitArray().values;
         long[] cba2 = solution2.getCompactBitArray().values;
-        int upperbound = solution1.getLength();
+        int upperbound = solution1.getLength()+dis;
         int delta;
         for (int i = 0; i < cba1.length; i++) {
             delta = Utils.countOnes(cba1[i] ^ cba2[i]);
             dis += delta;
-            upperbound += delta-64;
-            if (dis > maxDistance) {
+            if (dis > 0) {
                 return true;
-            } else if (upperbound <= maxDistance) {
+            }
+            upperbound += delta-64;
+            if (upperbound <= 0) {
                 return false;
             }
         }
