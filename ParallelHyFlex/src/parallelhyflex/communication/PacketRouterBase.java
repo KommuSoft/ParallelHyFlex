@@ -2,6 +2,7 @@ package parallelhyflex.communication;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import mpi.MPI;
 
 
 public class PacketRouterBase implements PacketRouter {
@@ -43,6 +44,16 @@ public class PacketRouterBase implements PacketRouter {
                 Communication.Log(e);
             }
         }
+    }
+
+    @Override
+    public int[] getPacketTags() {
+        return new int[] {MPI.ANY_TAG};
+    }
+
+    @Override
+    public void receivePacket(int from, int tag, Object data) throws Exception {
+        this.routePacket(tag, tag, data);
     }
     
 }

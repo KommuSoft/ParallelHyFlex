@@ -268,6 +268,16 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.prr.routePacket(sender, tag, data);
     }
     
+    @Override
+    public int[] getPacketTags() {
+        return this.prr.getPacketTags();
+    }
+
+    @Override
+    public void receivePacket(int from, int tag, Object data) throws Exception {
+        this.prr.receivePacket(from, tag, data);
+    }
+    
     private class FetchThread extends Thread {
 
         public FetchThread() {
