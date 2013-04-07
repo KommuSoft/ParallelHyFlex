@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
+import parallelhyflex.algebra.Generator;
 
 /**
  *
@@ -127,4 +124,22 @@ public class Utils {
         }
         return list;
     }
+    
+    public static<T> boolean any (Iterable<T> collection, Generator<T,Boolean> predicate) {
+        for(T t : collection) {
+            if(predicate.generate(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static<T> boolean all (Iterable<T> collection, Generator<T,Boolean> predicate) {
+        for(T t : collection) {
+            if(!predicate.generate(t)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
 }
