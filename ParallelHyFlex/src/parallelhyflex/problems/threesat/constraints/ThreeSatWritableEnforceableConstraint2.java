@@ -32,7 +32,7 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         int distance = this.calculateDistance(solution);
         CompactBitArray rootcba = this.root.getCompactBitArray();
         CompactBitArray solucba = solution.getCompactBitArray();
-        for (int i = distance; i > maxDistance; i--) {
+        for (; distance > maxDistance; distance--) {
             int index = ClauseUtils.getNonEqualVariableIndex(rootcba,solucba);
             solution.swapBit(index, this.getProblem());
         }
@@ -43,10 +43,13 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         int distance = this.calculateDistance(solution);
         CompactBitArray rootcba = this.root.getCompactBitArray();
         CompactBitArray solucba = solution.getCompactBitArray();
-        for (int i = distance; i <= maxDistance; i++) {
-            int index = ClauseUtils.getEqualVariableIndex(rootcba,solucba);
-            solution.swapBit(index, this.getProblem());
+        System.out.println("Distance is now: "+this.getProblem().getDistanceFunction(0).evaluateDistance(this.root,solution));
+        System.out.println("starting loop");
+        for (; distance <= maxDistance; distance++) {
+            solution.swapBit(ClauseUtils.getEqualVariableIndex(rootcba,solucba), this.getProblem());
+            System.out.println("Distance is now: "+this.getProblem().getDistanceFunction(0).evaluateDistance(this.root,solution));
         }
+        System.out.println(String.format("end for (distance must be larger than %s)",maxDistance));
     }
 
     @Override

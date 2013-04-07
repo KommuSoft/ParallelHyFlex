@@ -36,7 +36,7 @@ public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution, Th
             if (dis > maxDistance) {
                 return true;
             } else if (dis + ((cba1.length - i) << 6) - 64 <= maxDistance) {
-                return true;
+                return false;
             }
         }
         return false;
