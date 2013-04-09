@@ -1,5 +1,6 @@
 package parallelhyflex.algebra;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.PriorityQueue;
@@ -80,6 +81,20 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
      */
     public int getTime() {
         return time;
+    }
+
+    @Override
+    public int getNumberOfTabuedIndividuals() {
+        return this.tabuQueue.size();
+    }
+
+    @Override
+    public boolean tabu(Collection<TIndividual> individuals, int ticks) {
+        boolean mod = false;
+        for(TIndividual ti : individuals) {
+            mod |= this.tabu(ti, ticks);
+        }
+        return mod;
     }
 
     private static class TabuedIndividual<T> implements Comparable<TabuedIndividual<?>> {

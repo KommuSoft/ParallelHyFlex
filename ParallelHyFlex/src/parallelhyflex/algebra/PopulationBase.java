@@ -1,9 +1,13 @@
 package parallelhyflex.algebra;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 
 public class PopulationBase<TIndividual> implements Population<TIndividual> {
@@ -94,6 +98,26 @@ public class PopulationBase<TIndividual> implements Population<TIndividual> {
         for(TIndividual ind : this.collection) {
             procedure.execute(ind);
         }
+    }
+
+    @Override
+    public SortedSet<TIndividual> getBests(Comparator<? super TIndividual> comparator, int length) {
+        SortedSet<TIndividual> sortedset = new TreeSet<>(comparator);
+        for(TIndividual ind : this.collection) {
+            if(sortedset.size() < length) {
+                sortedset.add(ind);
+            }
+            else if(comparator.compare(ind,sortedset.last()) < 0x00) {
+                sortedset.remove(sortedset.last());
+                sortedset.add(ind);
+            }
+        }
+        return sortedset;
+    }
+
+    @Override
+    public SortedSet<TIndividual> getWorsts(Comparator<? super TIndividual> comparator, int length) {
+        return this.getBests(new ReversedComparator<>(comparator), length);
     }
     
 }
