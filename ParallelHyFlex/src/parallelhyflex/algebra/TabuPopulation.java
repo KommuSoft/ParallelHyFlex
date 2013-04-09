@@ -6,10 +6,11 @@ package parallelhyflex.algebra;
  */
 public interface TabuPopulation<TIndividual> extends Population<TIndividual> {
     
-    public void tabu (TIndividual individual, int ticks);
+    public boolean tabu (TIndividual individual, int ticks);
+    public boolean tabu (Predicate<TIndividual> predicate, int ticks);
     public boolean isTabued (TIndividual individual);
-    public void tabuTick ();
+    public boolean tabuTick ();
     public int getRemainingTabuTicks (TIndividual individual);
-    public void untabu (TIndividual individual);
+    public boolean untabu (TIndividual individual);
     
 }

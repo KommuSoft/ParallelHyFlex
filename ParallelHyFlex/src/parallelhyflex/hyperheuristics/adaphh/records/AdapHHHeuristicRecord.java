@@ -1,5 +1,6 @@
 package parallelhyflex.hyperheuristics.adaphh.records;
 
+import parallelhyflex.algebra.Phasable;
 import parallelhyflex.algebra.Tabuable;
 import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
 
@@ -7,7 +8,7 @@ import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
  *
  * @author kommusoft
  */
-public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable {
+public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable, Phasable {
 
     private int cpbest = 0;
     private double fimp = 0.0d, fwrs = 0.0d;
@@ -45,6 +46,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         this.tabuDuration = tabuDurationOffset;
     }
 
+    @Override
     public void newPhase() {
         this.setCpbest(0);
         this.setFpimp(0.0d);

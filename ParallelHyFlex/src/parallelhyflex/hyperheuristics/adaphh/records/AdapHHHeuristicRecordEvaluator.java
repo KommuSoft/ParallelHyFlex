@@ -1,12 +1,12 @@
 package parallelhyflex.hyperheuristics.adaphh.records;
 
-import parallelhyflex.hyperheuristics.records.HeuristicRecordEvaluatorBase;
+import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordEvaluatorBase;
 
 /**
  *
  * @author kommusoft
  */
-public class AdapHHHeuristicRecordEvaluator extends HeuristicRecordEvaluatorBase<AdapHHHeuristicRecord> {
+public class AdapHHHeuristicRecordEvaluator extends EvaluatedHeuristicRecordEvaluatorBase<AdapHHHeuristicRecord> {
 
     public static final double w1 = 16.0d, w2 = 8.0d, w3 = 4.0d, w4 = 2.0d, w5 = 1.0d;//TODO: exact parameters
     
