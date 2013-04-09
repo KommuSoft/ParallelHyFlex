@@ -19,8 +19,13 @@ public class EvaluatedHeuristicRecordBase extends HeuristicRecordBase implements
     }
 
     @Override
-    public double setEvaluation(double evaluation) {
+    public void setEvaluation(double evaluation) {
         this.evaluation = evaluation;
+    }
+
+    @Override
+    public int compareTo(EvaluatedHeuristicRecord o) {
+        return ((Double) this.getEvaluation()).compareTo(o.getEvaluation());
     }
     
 }

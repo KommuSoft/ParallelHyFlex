@@ -1,20 +1,48 @@
 package parallelhyflex.hyperheuristics.adaphh.records;
 
-import parallelhyflex.hyperheuristics.records.HeuristicRecordBase;
+import parallelhyflex.algebra.Tabuable;
+import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
 
 /**
  *
  * @author kommusoft
  */
-public class AdapHHHeuristicRecord extends HeuristicRecordBase {
+public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable {
 
     private int cpbest = 0;
     private double fimp = 0.0d, fwrs = 0.0d;
     private double fpimp = 0.0d, fpwrs = 0.0d;
     private double tspent = 0.0d, tpspent = 0.0d;
+    private final int tabuDurationOffset, tabuDurationLimit;
+    private int tabuDuration;
+
+    /**
+     * 
+     * @param heuristicIndex The index of the heuristic
+     */
+    public AdapHHHeuristicRecord(int heuristicIndex) {
+        this(heuristicIndex, 5);
+    }
+
+    /**
+     *
+     * @param heuristicIndex The index of the heuristic
+     * @param tabuDurationOffset According to the paper of Mustafa Misir, the tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
+     */
+    public AdapHHHeuristicRecord(int heuristicIndex, int tabuDurationOffset) {
+        this(heuristicIndex, tabuDurationOffset, 2*tabuDurationOffset);
+    }
     
-    public AdapHHHeuristicRecord (int heuristicIndex) {
+    /**
+     *
+     * @param heuristicIndex The index of the heuristic
+     * @param tabuDurationOffset According to the paper of Mustafa Misir, the tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
+     */
+    public AdapHHHeuristicRecord(int heuristicIndex, int tabuDurationOffset, int tabuDurationLimit) {
         super(heuristicIndex);
+        this.tabuDurationOffset = tabuDurationOffset;
+        this.tabuDurationLimit = tabuDurationLimit;
+        this.tabuDuration = tabuDurationOffset;
     }
 
     public void newPhase() {
@@ -140,4 +168,20 @@ public class AdapHHHeuristicRecord extends HeuristicRecordBase {
     public void setTpspent(double tpspent) {
         this.tpspent = tpspent;
     }
+
+    public void incrementTabuDuration() {
+        this.tabuDuration = Math.min(this.getTabuDuration()+1,this.tabuDurationLimit);
+    }
+    
+    public void resetTabuDuration () {
+        this.tabuDuration = this.tabuDurationOffset;
+    }
+
+    /**
+     * @return the tabuDuration
+     */
+    public int getTabuDuration() {
+        return tabuDuration;
+    }
+    
 }
