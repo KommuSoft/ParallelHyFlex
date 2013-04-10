@@ -26,7 +26,7 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
     
     @Override
     public boolean tabu(Predicate<TIndividual> predicate, int ticks) {
-        Stack<TIndividual> tabulist = new Stack<TIndividual>();
+        Stack<TIndividual> tabulist = new Stack<>();
         boolean mod = false;
         for(TIndividual ti : this) {
             if(predicate.generate(ti)) {
@@ -103,7 +103,7 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
 
     @Override
     public Collection<TIndividual> getTabuedIndividuals() {
-        HashSet<TIndividual> tabued = new HashSet<TIndividual>();
+        HashSet<TIndividual> tabued = new HashSet<>();
         for(TabuedIndividual<TIndividual> ti : this.tabuQueue) {
             tabued.add(ti.getIndividual());
         }
@@ -115,7 +115,7 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         private final int freetime;
         private final T individual;
 
-        public TabuedIndividual(int freetime, T individual) {
+        TabuedIndividual(int freetime, T individual) {
             this.freetime = freetime;
             this.individual = individual;
         }

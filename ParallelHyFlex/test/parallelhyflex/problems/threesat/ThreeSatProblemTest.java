@@ -21,15 +21,15 @@ import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
  */
 public class ThreeSatProblemTest {
     
-    public ThreeSatProblemTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+    }
+
+        public ThreeSatProblemTest() {
     }
     
     @Before

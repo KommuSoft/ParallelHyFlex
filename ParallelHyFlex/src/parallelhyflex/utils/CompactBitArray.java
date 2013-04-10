@@ -13,6 +13,25 @@ import java.util.Collection;
 public class CompactBitArray implements ICompactBitArray {
 
     public static final long BLOCK_MASK = 0xFFFF_FFFF_FFFF_FFBFL;
+
+    public static CompactBitArray randomInstance(int n) {
+        CompactBitArray cba = new CompactBitArray(n);
+        for (int i = cba.values.length - 1; i >= 0; i--) {
+            cba.values[i] = Utils.StaticRandom.nextLong();
+        }
+        cba.clearTail();
+        return cba;
+    }
+
+    public static CompactBitArray fromDataInputStream(DataInputStream dis) throws IOException {
+        int n = dis.readInt();
+        int j = (n + 63) >> 6;
+        long[] values = new long[j];
+        for (int i = 0; i < j; i++) {
+            values[i] = dis.readLong();
+        }
+        return new CompactBitArray(n, values);
+    }
     public final long[] values;
     private int n;
 
@@ -194,15 +213,6 @@ public class CompactBitArray implements ICompactBitArray {
         return false;
     }
 
-    public static CompactBitArray randomInstance(int n) {
-        CompactBitArray cba = new CompactBitArray(n);
-        for (int i = cba.values.length - 1; i >= 0; i--) {
-            cba.values[i] = Utils.StaticRandom.nextLong();
-        }
-        cba.clearTail();
-        return cba;
-    }
-
     @Override
     public void clearTail() {
         long tailmask = 64 + this.n - (this.values.length << 6);
@@ -242,16 +252,6 @@ public class CompactBitArray implements ICompactBitArray {
         }
     }
 
-    public static CompactBitArray fromDataInputStream(DataInputStream dis) throws IOException {
-        int n = dis.readInt();
-        int j = (n + 63) >> 6;
-        long[] values = new long[j];
-        for (int i = 0; i < j; i++) {
-            values[i] = dis.readLong();
-        }
-        return new CompactBitArray(n, values);
-    }
-
     @Override
     public void readSolution(DataInputStream is) throws IOException {
         this.n = is.readInt();
@@ -289,20 +289,20 @@ public class CompactBitArray implements ICompactBitArray {
         return (int) ((values[j] >> index) & 0x01);
     }
 
-    public void setAll(int[] indices, int val) {
+        public void setAll(int[] indices, int val) {
         for(int i = 0; i < indices.length; i++) {
             this.set(indices[i],((val>>i)&0x01) != 0x00);
         }
     }
-    
-    public void andWith (CompactBitArray cba) {
+
+        public void andWith(CompactBitArray cba) {
         long[] valb = cba.values;
         for(int i = 0; i < values.length; i++) {
             values[i] &= valb[i];
         }
     }
-    
-    public void orWith (CompactBitArray cba) {
+
+    public void orWith(CompactBitArray cba) {
         long[] valb = cba.values;
         for(int i = 0; i < values.length; i++) {
             values[i] |= valb[i];

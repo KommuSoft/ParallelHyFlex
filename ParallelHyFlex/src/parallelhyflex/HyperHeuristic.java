@@ -283,7 +283,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     
     private class FetchThread extends Thread {
 
-        public FetchThread() {
+        FetchThread() {
             this.setDaemon(true);
         }
 
@@ -306,7 +306,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
     private class NegotiationThread extends Thread {
 
-        public NegotiationThread() {
+        NegotiationThread() {
             this.setDaemon(true);
         }
 

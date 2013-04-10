@@ -21,16 +21,16 @@ import parallelhyflex.utils.Utils;
  */
 public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> {
 
+    private static Generator<ThreeSatProblem, TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1, ThreeSatWritableEnforceableConstraintGenerator1>> negoGenerator() {
+        return new CloningGenerator(new TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1, ThreeSatWritableEnforceableConstraintGenerator1>(new ThreeSatWritableEnforceableConstraintGenerator1(null)));
+    }
+
     public SimpleThreeSatHyperHeuristic(ThreeSatProblem problem, long intervalTicks) throws ProtocolException, IOException {
         super(problem, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
     }
 
     public SimpleThreeSatHyperHeuristic(ProblemReader<ThreeSatSolution, ThreeSatProblem> problemReader, long intervalTicks) throws ProtocolException, IOException {
         super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
-    }
-
-    private static Generator<ThreeSatProblem, TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1, ThreeSatWritableEnforceableConstraintGenerator1>> negoGenerator() {
-        return new CloningGenerator(new TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1, ThreeSatWritableEnforceableConstraintGenerator1>(new ThreeSatWritableEnforceableConstraintGenerator1(null)));
     }
 
     @Override

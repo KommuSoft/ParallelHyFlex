@@ -14,12 +14,10 @@ import parallelhyflex.algebra.tuples.Tuple2;
  * @author kommusoft
  */
 public class Utils {
+    public static final Random StaticRandom = new Random();
 
     public static double border(double min, double val, double max) {
         return Math.min(Math.min(max, val),max);
-    }
-
-    private Utils() {
     }
 
     public static int getLengthIndex(int[] cdfI, int index) {
@@ -50,7 +48,6 @@ public class Utils {
         }
         return true;
     }
-    public static final Random StaticRandom = new Random();
 
     public static String stringReverse(String inp) {
         StringBuilder sb = new StringBuilder();
@@ -72,7 +69,7 @@ public class Utils {
         return true;
     }
 
-    public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
+    public static  Iterable<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
         return new Iterable<Integer>() {
             private int offset, delta, modulo;
 
@@ -149,23 +146,23 @@ public class Utils {
         }
         return true;
     }
-    
-    public static<TFrom,TTo> HashMap<TFrom,TTo> generateMapping (Collection<TFrom> collection, Generator<TFrom,TTo> generator) {
+
+    public static <TFrom, TTo> HashMap<TFrom,TTo> generateMapping(Collection<TFrom> collection, Generator<TFrom,TTo> generator) {
         HashMap<TFrom,TTo> mapping = new HashMap<>();
         for(TFrom from : collection) {
             mapping.put(from,generator.generate(from));
         }
         return mapping;
     }
+    
     public static<TFrom,TTo> ArrayList<TTo> generateMappedArrayList (Iterable<TFrom> iterable, Generator<TFrom,TTo> generator) {
-        ArrayList<TTo> result = new ArrayList<TTo>();
+        ArrayList<TTo> result = new ArrayList<>();
         for(TFrom x : iterable) {
             result.add(generator.generate(x));
         }
         return result;
     }
-    
-    public static <T> T Fold (Generator<Tuple2<? extends T, ? extends T>,? extends T> function, Iterable<? extends T> iterable) {
+    public static<T> T Fold (Generator<Tuple2<? extends T, ? extends T>,? extends T> function, Iterable<? extends T> iterable) {
         Iterator<? extends T> it = iterable.iterator();
         if(it.hasNext()) {
             T temp = it.next();
@@ -178,6 +175,9 @@ public class Utils {
         else {
             return null;
         }
+    }
+    
+    private  Utils () {
     }
     
 }

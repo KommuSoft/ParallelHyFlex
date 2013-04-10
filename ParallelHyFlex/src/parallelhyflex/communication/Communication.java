@@ -31,26 +31,6 @@ public class Communication {
     public static Communication getCommunication() {
         return MainCommunication;
     }
-    private final int rank;
-    private final int size;
-
-    private Communication(String[] args) {
-        MPI.Init(args);
-        rank = MPI.COMM_WORLD.Rank();
-        size = MPI.COMM_WORLD.Size();
-        other = new int[size - 1];
-        for (int i = 0; i < rank; i++) {
-            other[i] = i;
-        }
-        for (int i = rank + 1; i < size; i++) {
-            other[i - 1] = i;
-        }
-    }
-
-    @Override
-    public void finalize() {
-        MPI.Finalize();
-    }
 
     public static void finalizeCommunication() throws IOException {
         logWriter.close();
@@ -58,7 +38,7 @@ public class Communication {
         comm.finalize();
     }
 
-    public static void A2A(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
+        public static void A2A(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
         MPI.COMM_WORLD.Alltoall(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
     }
 
@@ -104,6 +84,7 @@ public class Communication {
         } catch (Exception e) {
         }
     }
+
     public static void LogFileTime(String message) {
         try {
             logWriter.write(new Date().getTime()+"\t"+message);
@@ -115,6 +96,25 @@ public class Communication {
 
     public static void Log(Exception e) {
         Log("ERROR: " + e.toString());
+    }
+    private final int rank;
+    private final int size;
+    private Communication(String[] args) {
+        MPI.Init(args);
+        rank = MPI.COMM_WORLD.Rank();
+        size = MPI.COMM_WORLD.Size();
+        other = new int[size - 1];
+        for (int i = 0; i < rank; i++) {
+            other[i] = i;
+        }
+        for (int i = rank + 1; i < size; i++) {
+            other[i - 1] = i;
+        }
+    }
+
+    @Override
+    public void finalize() {
+        MPI.Finalize();
     }
 
     /**

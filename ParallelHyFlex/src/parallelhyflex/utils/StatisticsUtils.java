@@ -13,9 +13,6 @@ import java.util.HashMap;
  */
 public class StatisticsUtils {
 
-    private StatisticsUtils() {
-    }
-
     public static double mean(double[] vals) {
         double sum = 0.0d;
         for (double d : vals) {
@@ -162,5 +159,8 @@ public class StatisticsUtils {
         } else {
             return ((p - 1) * Math.log(1 - p) - p * Math.log(p)) / Math.log(2);
         }
+    }
+
+    private StatisticsUtils() {
     }
 }

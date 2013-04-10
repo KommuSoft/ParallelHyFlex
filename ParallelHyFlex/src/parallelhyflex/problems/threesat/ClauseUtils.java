@@ -11,9 +11,6 @@ import parallelhyflex.utils.Utils;
  */
 public class ClauseUtils {
 
-    private ClauseUtils() {
-    }
-    
     public static int calculateLoss(Integer i, CompactBitArray cba, long[] constraints, int[] tocheck) {
         int delta, np, nn, j;
         delta = 0;
@@ -108,7 +105,8 @@ public class ClauseUtils {
         }
         return deg;
     }
-    public static int[] getUniqueIndices (long clause) {
+
+    public static int[] getUniqueIndices(long clause) {
         int[] ind = new int[degree(clause)];
         long inda = clause & 0x0F_FFFF;
         long indb = (clause >> 20) & 0x0F_FFFF;
@@ -123,8 +121,7 @@ public class ClauseUtils {
         }
         return ind;
     }
-
-    public static String clausesToString(long[] constraints) {
+    public static String clausesToString (long[] constraints) {
         StringBuilder sb = new StringBuilder();
         for (long clause : constraints) {
             sb.append(String.format("(%s)", clauseToString(clause)));
@@ -279,8 +276,8 @@ public class ClauseUtils {
         }
         return number;
     }
-    
-    public static int getFalseClauseIndex (ThreeSatSolution from, long[] clauses) {
+
+    public static int getFalseClauseIndex(ThreeSatSolution from, long[] clauses) {
         int c = clauses.length;
         int c0 = Utils.StaticRandom.nextInt(c);
         for(int i = c0; i < c; i++) {
@@ -295,6 +292,7 @@ public class ClauseUtils {
         }
         return -1;
     }
+    
     public static int getNonEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
         int v = cba1.getLength();
         int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
@@ -310,7 +308,7 @@ public class ClauseUtils {
         }
         return -1;
     }
-    public static int getEqualVariableIndex(CompactBitArray cba1, CompactBitArray cba2) {
+    public static int getEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
         int v = cba1.getLength();
         int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
         for(int i = v0; i < v; i++) {
@@ -325,7 +323,6 @@ public class ClauseUtils {
         }
         return -1;
     }
-
     public static String clauseToString(long clause) {
         long inda = getIndex0(clause);
         long indb = getIndex1(clause);
@@ -334,5 +331,8 @@ public class ClauseUtils {
         long valb = getValue1(clause);
         long valc = getValue2(clause);
         return String.format("[%s]=%s or [%s]=%s or [%s]=%s", inda, vala, indb, valb, indc, valc);
+    }
+
+    private ClauseUtils() {
     }
 }

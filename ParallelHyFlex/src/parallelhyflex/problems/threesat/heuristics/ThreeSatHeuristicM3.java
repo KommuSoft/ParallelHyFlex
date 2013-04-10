@@ -4,7 +4,6 @@ import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
-import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
 /**

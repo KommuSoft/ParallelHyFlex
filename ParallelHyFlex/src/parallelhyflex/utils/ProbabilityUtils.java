@@ -10,9 +10,6 @@ import java.util.List;
  */
 public class ProbabilityUtils {
 
-    private ProbabilityUtils() {
-    }
-
     public static <T> T randomElement(List<T> list) {
         return list.get(Utils.StaticRandom.nextInt(list.size()));
     }
@@ -22,7 +19,7 @@ public class ProbabilityUtils {
      * @param D
      * @return an Integer in the interval [0,D[
      */
-    public static int integerFromBenfordDistribution(int D) {
+    public static  int integerFromBenfordDistribution(int D) {
         return (int) Math.floor(Math.pow(D + 1, Utils.StaticRandom.nextDouble())) - 1;
     }
 
@@ -66,5 +63,8 @@ public class ProbabilityUtils {
             index = ~index;
         }
         return index;
+    }
+
+    private ProbabilityUtils() {
     }
 }

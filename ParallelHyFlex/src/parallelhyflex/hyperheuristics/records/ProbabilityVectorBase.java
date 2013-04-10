@@ -5,8 +5,8 @@
 package parallelhyflex.hyperheuristics.records;
 
 import java.util.Arrays;
-import parallelhyflex.algebra.generators.ConstantGenerator;
 import parallelhyflex.algebra.Generator;
+import parallelhyflex.algebra.generators.ConstantGenerator;
 import parallelhyflex.utils.Utils;
 
 public class ProbabilityVectorBase implements ProbabilityVector {

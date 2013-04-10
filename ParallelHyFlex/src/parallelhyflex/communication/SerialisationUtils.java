@@ -10,9 +10,6 @@ import java.io.IOException;
  */
 public class SerialisationUtils {
 
-    private SerialisationUtils() {
-    }
-
     public static void writeLongArray(DataOutputStream dos, long... array) throws IOException {
         dos.writeInt(array.length);
         for (long v : array) {
@@ -71,5 +68,8 @@ public class SerialisationUtils {
             res[i] = readIntArray(dis);
         }
         return res;
+    }
+
+    private SerialisationUtils() {
     }
 }

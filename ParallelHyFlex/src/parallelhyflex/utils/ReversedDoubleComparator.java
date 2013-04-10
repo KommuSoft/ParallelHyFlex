@@ -10,11 +10,11 @@ public class ReversedDoubleComparator implements Comparator<Double> {
 
     private static final ReversedDoubleComparator singleInstance = new ReversedDoubleComparator();
 
-    private ReversedDoubleComparator() {
-    }
-
     public static ReversedDoubleComparator getInstance() {
         return singleInstance;
+    }
+
+    private ReversedDoubleComparator() {
     }
 
     @Override
