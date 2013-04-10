@@ -5,9 +5,11 @@
 package parallelhyflex.hyperheuristics.adaphh;
 
 import java.io.IOException;
+import java.util.Date;
 import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
+import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdaptiveDynamicHeuristicSetStrategy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
@@ -65,6 +67,13 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
             }
             endPhase();
         }
+    }
+    
+    private void executeHeuristic (AdapHHHeuristicRecord record) {
+        long oldticks = new Date().getTime();
+        //TODO: execute heuristic
+        long dt = new Date().getTime()-oldticks;
+        record.processed(dt);
     }
     
     private void iteration () {

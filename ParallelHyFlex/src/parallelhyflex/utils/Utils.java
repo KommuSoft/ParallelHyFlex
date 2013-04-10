@@ -2,9 +2,12 @@ package parallelhyflex.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import parallelhyflex.algebra.Generator;
+import parallelhyflex.algebra.Tuple2;
 
 /**
  *
@@ -116,30 +119,61 @@ public class Utils {
     public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int modulo) {
         return getLimitedModuloEnumerable(offset, 1, modulo);
     }
-    
-    public static<T> ArrayList<T> toArrayList (Iterable<T> iterable) {
+
+    public static <T> ArrayList<T> toArrayList(Iterable<T> iterable) {
         ArrayList<T> list = new ArrayList<>();
-        for(T t : iterable) {
+        for (T t : iterable) {
             list.add(t);
         }
         return list;
     }
-    
-    public static<T> boolean any (Iterable<T> collection, Generator<T,Boolean> predicate) {
-        for(T t : collection) {
-            if(predicate.generate(t)) {
+
+    public static <T> boolean any(Iterable<T> collection, Generator<T, Boolean> predicate) {
+        for (T t : collection) {
+            if (predicate.generate(t)) {
                 return true;
             }
         }
         return false;
     }
-    public static<T> boolean all (Iterable<T> collection, Generator<T,Boolean> predicate) {
-        for(T t : collection) {
-            if(!predicate.generate(t)) {
+
+    public static <T> boolean all(Iterable<T> collection, Generator<T, Boolean> predicate) {
+        for (T t : collection) {
+            if (!predicate.generate(t)) {
                 return false;
             }
         }
         return true;
+    }
+    
+    public static<TFrom,TTo> HashMap<TFrom,TTo> generateMapping (Collection<TFrom> collection, Generator<TFrom,TTo> generator) {
+        HashMap<TFrom,TTo> mapping = new HashMap<>();
+        for(TFrom from : collection) {
+            mapping.put(from,generator.generate(from));
+        }
+        return mapping;
+    }
+    public static<TFrom,TTo> ArrayList<TTo> generateMappedArrayList (Iterable<TFrom> iterable, Generator<TFrom,TTo> generator) {
+        ArrayList<TTo> result = new ArrayList<TTo>();
+        for(TFrom x : iterable) {
+            result.add(generator.generate(x));
+        }
+        return result;
+    }
+    
+    public static <T> T Fold (Generator<Tuple2<? extends T, ? extends T>,? extends T> function, Iterable<? extends T> iterable) {
+        Iterator<? extends T> it = iterable.iterator();
+        if(it.hasNext()) {
+            T temp = it.next();
+            while (it.hasNext()) {
+                temp = function.generate(new Tuple2<>(temp,it.next()));
+
+            }
+            return temp;
+        }
+        else {
+            return null;
+        }
     }
     
 }

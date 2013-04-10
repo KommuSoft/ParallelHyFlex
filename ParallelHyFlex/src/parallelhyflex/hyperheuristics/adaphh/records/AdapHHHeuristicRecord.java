@@ -10,10 +10,10 @@ import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
  */
 public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable, Phasable {
 
-    private int cpbest = 0, cmoves = 0;
+    private int cpbest = 0, cbest = 0, cmoves = 0;
     private double fimp = 0.0d, fwrs = 0.0d;
     private double fpimp = 0.0d, fpwrs = 0.0d;
-    private double tspent = 0.0d, tpspent = 0.0d;
+    private long tspent = 0x00, tpspent = 0x00;
     private final int tabuDurationOffset, tabuDurationLimit;
     private int tabuDuration;
 
@@ -51,16 +51,18 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         this.setCpbest(0);
         this.setFpimp(0.0d);
         this.setFpwrs(0.0d);
-        this.setTpspent(0.0d);
+        this.setTpspent(0x00);
     }
 
-    public void addTime(double dt) {
-        this.setTspent(this.getTspent() + dt);
-        this.setTpspent(this.getTpspent() + dt);
+    public void processed(long dt) {
+        this.cmoves++;
+        this.tspent += dt;
+        this.tpspent += dt;
     }
 
     public void newBest() {
-        this.setCpbest(this.getCpbest() + 1);
+        this.cbest++;
+        this.cpbest++;
     }
 
     public void addImprovement(double df) {
@@ -153,7 +155,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     /**
      * @param tspent the tspent to set
      */
-    public void setTspent(double tspent) {
+    public void setTspent(long tspent) {
         this.tspent = tspent;
     }
 
@@ -167,7 +169,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     /**
      * @param tpspent the tpspent to set
      */
-    public void setTpspent(double tpspent) {
+    public void setTpspent(long tpspent) {
         this.tpspent = tpspent;
     }
 
@@ -181,15 +183,6 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     
     public boolean shouldExclude () {
         return this.tabuDuration >= this.tabuDurationOffset;
-    }
-    
-    /**
-     * Calculates the exclusion metric based on equation (5) in the paper of Mustafa Misir [1]
-     * @param fastfactor Cmoves(fastest)/tspent(fastest)
-     * @return (tSpent(i)/Cmoves(i))/(tspent(fastest)/Cmoves(fastest)) (equation 5 in [1])
-     */
-    public double exc (double fastfactor) {
-        return (this.tspent/this.cmoves)*fastfactor;
     }
 
     /**
@@ -208,6 +201,20 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     @Override
     public void willUntabu() {
         
+    }
+
+    /**
+     * @return the cmoves
+     */
+    public int getCmoves() {
+        return cmoves;
+    }
+
+    /**
+     * @return the cbest
+     */
+    public int getCbest() {
+        return cbest;
     }
     
 }
