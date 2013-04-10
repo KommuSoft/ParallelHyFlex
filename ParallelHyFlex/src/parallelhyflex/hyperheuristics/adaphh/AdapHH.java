@@ -10,7 +10,9 @@ import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecord;
+import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecordEvaluator;
 import parallelhyflex.hyperheuristics.adaphh.records.AdaptiveDynamicHeuristicSetStrategy;
+import parallelhyflex.hyperheuristics.records.ProbabilityVectorBase;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -28,7 +30,9 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int PH_FACTOR = 500;
     public static final int PH_REQUESTED = 100;
     
-    private final AdaptiveDynamicHeuristicSetStrategy adhs = new AdaptiveDynamicHeuristicSetStrategy();
+    private final AdaptiveDynamicHeuristicSetStrategy adhs;
+    private final ProbabilityVectorBase heuristicSelector;
+    private boolean periodGlobalImprovement = false;
     
 
     /**
@@ -41,6 +45,8 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      */
     public AdapHH(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         super(problem,durationTicks,experience,negotiator,negotiationTicks,solutionReader);
+        this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
+        this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
     }
 
     /**
@@ -57,11 +63,14 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      */
     public AdapHH(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         super(problemReader,durationTicks,experience,negotiator,negotiationTicks,solutionReader);
+        this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
+        this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
     }
     
     @Override
     protected void execute() {
         while(this.hasTimeLeft()) {
+            this.periodGlobalImprovement = false;
             for(int i = PH_FACTOR*((int) Math.sqrt(2*this.adhs.size())); i > 0; i--) {
                 iteration();
             }
@@ -74,6 +83,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         //TODO: execute heuristic
         long dt = new Date().getTime()-oldticks;
         record.processed(dt);
+        //TODO: set global improvement
     }
     
     private void iteration () {
@@ -82,6 +92,13 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     
     private void endPhase () {
         
+    }
+
+    /**
+     * @return the periodGlobalImprovement
+     */
+    public boolean getPeriodGlobalImprovement() {
+        return periodGlobalImprovement;
     }
     
 }

@@ -11,7 +11,11 @@ import parallelhyflex.utils.StatisticsUtils;
  */
 public class AdaptiveDynamicHeuristicSetStrategy extends TabuableTabuPopulationBase<AdapHHHeuristicRecord> implements Phasable {
 
-    private AdapHHHeuristicRecordEvaluator evaluator = new AdapHHHeuristicRecordEvaluator();
+    private final AdapHHHeuristicRecordEvaluator evaluator;
+    
+    public AdaptiveDynamicHeuristicSetStrategy (AdapHHHeuristicRecordEvaluator evaluator) {
+        this.evaluator = evaluator;
+    }
 
     @Override
     public void newPhase() {

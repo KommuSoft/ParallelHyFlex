@@ -165,10 +165,13 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         return this.stopTime.after(new Date());
     }
     
-    public long remaingTime () {
+    public long getRemaingTime () {
         return this.stopTime.getTime()-new Date().getTime();
     }
-    public long elapsedTime () {
+    public long getTotalTime () {
+        return this.durationTicks;
+    }
+    public long getElapsedTime () {
         return new Date().getTime()-this.startTime.getTime();
     }
 
