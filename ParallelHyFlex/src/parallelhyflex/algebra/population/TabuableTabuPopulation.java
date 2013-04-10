@@ -1,6 +1,7 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.population;
 
 import java.util.Collection;
+import parallelhyflex.algebra.Tabuable;
 
 /**
  *

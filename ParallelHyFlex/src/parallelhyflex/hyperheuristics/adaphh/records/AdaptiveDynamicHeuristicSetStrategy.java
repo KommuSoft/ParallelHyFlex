@@ -2,7 +2,7 @@ package parallelhyflex.hyperheuristics.adaphh.records;
 
 import java.util.Collection;
 import parallelhyflex.algebra.Phasable;
-import parallelhyflex.algebra.TabuableTabuPopulationBase;
+import parallelhyflex.algebra.population.TabuableTabuPopulationBase;
 import parallelhyflex.utils.StatisticsUtils;
 
 /**

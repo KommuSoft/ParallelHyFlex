@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import parallelhyflex.algebra.Generator;
-import parallelhyflex.algebra.Tuple2;
+import parallelhyflex.algebra.tuples.Tuple2;
 
 /**
  *

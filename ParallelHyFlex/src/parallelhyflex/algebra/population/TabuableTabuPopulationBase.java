@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.population;
 
 import java.util.Collection;
+import parallelhyflex.algebra.Tabuable;
 
 
 public class TabuableTabuPopulationBase<TIndividual extends Tabuable> extends TabuPopulationBase<TIndividual> implements TabuableTabuPopulation<TIndividual> {

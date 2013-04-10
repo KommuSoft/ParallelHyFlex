@@ -1,4 +1,4 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.population;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import parallelhyflex.algebra.Predicate;
+import parallelhyflex.algebra.Procedure;
+import parallelhyflex.algebra.ReversedComparator;
 
 
 public class PopulationBase<TIndividual> implements Population<TIndividual> {

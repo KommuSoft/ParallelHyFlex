@@ -1,8 +1,10 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.population;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedSet;
+import parallelhyflex.algebra.Predicate;
+import parallelhyflex.algebra.Procedure;
 
 /**
  *

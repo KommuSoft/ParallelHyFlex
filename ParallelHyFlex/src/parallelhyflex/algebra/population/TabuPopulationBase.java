@@ -1,4 +1,4 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.population;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Stack;
+import parallelhyflex.algebra.Predicate;
 
 
 public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual> implements TabuPopulation<TIndividual> {

@@ -1,4 +1,4 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.tuples;
 
 /**
  *
