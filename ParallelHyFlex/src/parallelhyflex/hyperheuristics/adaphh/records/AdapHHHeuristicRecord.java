@@ -10,7 +10,7 @@ import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
  */
 public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable, Phasable {
 
-    private int cpbest = 0;
+    private int cpbest = 0, cmoves = 0;
     private double fimp = 0.0d, fwrs = 0.0d;
     private double fpimp = 0.0d, fpwrs = 0.0d;
     private double tspent = 0.0d, tpspent = 0.0d;
@@ -178,12 +178,36 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public void resetTabuDuration () {
         this.tabuDuration = this.tabuDurationOffset;
     }
+    
+    public boolean shouldExclude () {
+        return this.tabuDuration >= this.tabuDurationOffset;
+    }
+    
+    /**
+     * Calculates the exclusion metric based on equation (5) in the paper of Mustafa Misir [1]
+     * @param fastfactor Cmoves(fastest)/tspent(fastest)
+     * @return (tSpent(i)/Cmoves(i))/(tspent(fastest)/Cmoves(fastest)) (equation 5 in [1])
+     */
+    public double exc (double fastfactor) {
+        return (this.tspent/this.cmoves)*fastfactor;
+    }
 
     /**
      * @return the tabuDuration
      */
+    @Override
     public int getTabuDuration() {
         return tabuDuration;
+    }
+
+    @Override
+    public void willTabu() {
+        
+    }
+
+    @Override
+    public void willUntabu() {
+        
     }
     
 }

@@ -1,6 +1,7 @@
 package parallelhyflex.algebra;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.PriorityQueue;
@@ -43,14 +44,16 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
     }
 
     @Override
-    public boolean tabuTick() {
+    public Collection<TIndividual> tabuTick() {
+        HashSet<TIndividual> untabued = new HashSet<>();
+        TIndividual ind;
         this.time++;
-        boolean mod = false;
         while(this.tabuQueue.size() > 0 && this.tabuQueue.peek().freetime <= this.getTime()) {
-            this.add(this.tabuQueue.poll().individual);
-            mod = true;
+            ind = this.tabuQueue.poll().individual;
+            this.add(ind);
+            untabued.add(ind);
         }
-        return mod;
+        return untabued;
     }
 
     @Override
@@ -95,6 +98,15 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
             mod |= this.tabu(ti, ticks);
         }
         return mod;
+    }
+
+    @Override
+    public Collection<TIndividual> getTabuedIndividuals() {
+        HashSet<TIndividual> tabued = new HashSet<TIndividual>();
+        for(TabuedIndividual<TIndividual> ti : this.tabuQueue) {
+            tabued.add(ti.getIndividual());
+        }
+        return tabued;
     }
 
     private static class TabuedIndividual<T> implements Comparable<TabuedIndividual<?>> {

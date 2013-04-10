@@ -4,19 +4,11 @@
  */
 package parallelhyflex.hyperheuristics.adaphh;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Date;
-import mpi.MPI;
 import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
-import parallelhyflex.communication.Communication;
-import parallelhyflex.memory.MemoryExchangePolicy;
-import parallelhyflex.memory.ProxyMemory;
+import parallelhyflex.hyperheuristics.adaphh.records.AdaptiveDynamicHeuristicSetStrategy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -30,6 +22,12 @@ import parallelhyflex.problemdependent.solution.SolutionReader;
  * @author kommusoft
  */
 public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> extends HyperHeuristic<TSolution,TProblem,TEC> {
+    
+    public static final int PH_FACTOR = 500;
+    public static final int PH_REQUESTED = 100;
+    
+    private final AdaptiveDynamicHeuristicSetStrategy adhs = new AdaptiveDynamicHeuristicSetStrategy();
+    
 
     /**
      * @note: This constructor can only be initialized if the machine is the
@@ -61,7 +59,20 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     
     @Override
     protected void execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while(this.hasTimeLeft()) {
+            for(int i = PH_FACTOR*((int) Math.sqrt(2*this.adhs.size())); i > 0; i--) {
+                iteration();
+            }
+            endPhase();
+        }
+    }
+    
+    private void iteration () {
+        
+    }
+    
+    private void endPhase () {
+        
     }
     
 }

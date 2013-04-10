@@ -6,6 +6,8 @@ package parallelhyflex.algebra;
  */
 public interface Tabuable {
     
+    public void willTabu ();
+    public void willUntabu ();
     public int getTabuDuration ();
     
 }
