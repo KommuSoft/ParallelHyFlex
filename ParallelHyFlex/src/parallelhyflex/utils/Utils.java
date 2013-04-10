@@ -15,6 +15,10 @@ import parallelhyflex.algebra.tuples.Tuple2;
  */
 public class Utils {
 
+    public static double border(double min, double val, double max) {
+        return Math.min(Math.min(max, val),max);
+    }
+
     private Utils() {
     }
 

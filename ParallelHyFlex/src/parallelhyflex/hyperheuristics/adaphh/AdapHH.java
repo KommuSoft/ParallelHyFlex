@@ -20,6 +20,7 @@ import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -29,10 +30,16 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     
     public static final int PH_FACTOR = 500;
     public static final int PH_REQUESTED = 100;
+    public static final int LIST_SIZE = 10;
+    public static final double GAMMA_MIN = 0.02d;
+    public static final double GAMMA_MAX = 50.0d;
     
     private final AdaptiveDynamicHeuristicSetStrategy adhs;
+    private final AdapHHHeuristicRecord[] records;
     private final ProbabilityVectorBase heuristicSelector;
+    
     private boolean periodGlobalImprovement = false;
+    private int cPhase, cBestS, cBestR, pl;
     
 
     /**
@@ -47,6 +54,8 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         super(problem,durationTicks,experience,negotiator,negotiationTicks,solutionReader);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
+        this.records = new AdapHHHeuristicRecord[this.getNumberOfHeuristics()];
+        this.init();
     }
 
     /**
@@ -65,24 +74,29 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         super(problemReader,durationTicks,experience,negotiator,negotiationTicks,solutionReader);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
+        this.records = new AdapHHHeuristicRecord[this.getNumberOfHeuristics()];
+        this.init();
     }
     
     @Override
     protected void execute() {
         while(this.hasTimeLeft()) {
             this.periodGlobalImprovement = false;
-            for(int i = PH_FACTOR*((int) Math.sqrt(2*this.adhs.size())); i > 0; i--) {
+            this.pl = PH_FACTOR*((int) Math.sqrt(2*this.adhs.size()));
+            this.cPhase = 0;
+            for(int i = this.pl; i > 0; i--) {
                 iteration();
+                this.cPhase++;
             }
             endPhase();
         }
     }
     
-    private void executeHeuristic (AdapHHHeuristicRecord record) {
+    private void executeHeuristic (int heuristic) {
         long oldticks = new Date().getTime();
         //TODO: execute heuristic
         long dt = new Date().getTime()-oldticks;
-        record.processed(dt);
+        records[heuristic].processed(dt);
         //TODO: set global improvement
     }
     
@@ -90,8 +104,19 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         
     }
     
-    private void endPhase () {
+    private void relayHybridisation () {
+        double gamma = Utils.border(GAMMA_MIN,(this.cBestS+1.0d)/(this.cBestR+1.0d),GAMMA_MAX);
+        if(Utils.StaticRandom.nextDouble() < Math.pow((double) this.cPhase/this.pl, gamma)) {
+            //TODO: do relayHybridisation
+        }
+    }
+    
+    private void aILLAMoveAcceptance () {
         
+    }
+    
+    private void endPhase () {
+        this.adhs.newPhase();
     }
 
     /**
@@ -99,6 +124,13 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      */
     public boolean getPeriodGlobalImprovement() {
         return periodGlobalImprovement;
+    }
+
+    private void init() {
+        for(int i = 0; i < this.records.length; i++) {
+            this.records[i] = new AdapHHHeuristicRecord(i);
+            this.adhs.add(this.records[i]);
+        }
     }
     
 }
