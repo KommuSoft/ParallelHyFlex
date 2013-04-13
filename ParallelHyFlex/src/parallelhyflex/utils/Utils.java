@@ -1,10 +1,12 @@
 package parallelhyflex.utils;
 
+import com.google.common.collect.HashBiMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.tuples.Tuple2;
@@ -14,10 +16,11 @@ import parallelhyflex.algebra.tuples.Tuple2;
  * @author kommusoft
  */
 public class Utils {
+
     public static final Random StaticRandom = new Random();
 
     public static double border(double min, double val, double max) {
-        return Math.min(Math.min(max, val),max);
+        return Math.min(Math.min(max, val), max);
     }
 
     public static int getLengthIndex(int[] cdfI, int index) {
@@ -69,7 +72,7 @@ public class Utils {
         return true;
     }
 
-    public static  Iterable<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
+    public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
         return new Iterable<Integer>() {
             private int offset, delta, modulo;
 
@@ -147,37 +150,53 @@ public class Utils {
         return true;
     }
 
-    public static <TFrom, TTo> HashMap<TFrom,TTo> generateMapping(Collection<TFrom> collection, Generator<TFrom,TTo> generator) {
-        HashMap<TFrom,TTo> mapping = new HashMap<>();
-        for(TFrom from : collection) {
-            mapping.put(from,generator.generate(from));
+    public static <TFrom, TTo> HashMap<TFrom, TTo> generateMapping(Collection<TFrom> collection, Generator<TFrom, TTo> generator) {
+        HashMap<TFrom, TTo> mapping = new HashMap<>();
+        for (TFrom from : collection) {
+            mapping.put(from, generator.generate(from));
         }
         return mapping;
     }
-    
-    public static<TFrom,TTo> ArrayList<TTo> generateMappedArrayList (Iterable<TFrom> iterable, Generator<TFrom,TTo> generator) {
+
+    public static <TFrom, TTo> ArrayList<TTo> generateMappedArrayList(Iterable<TFrom> iterable, Generator<TFrom, TTo> generator) {
         ArrayList<TTo> result = new ArrayList<>();
-        for(TFrom x : iterable) {
+        for (TFrom x : iterable) {
             result.add(generator.generate(x));
         }
         return result;
     }
-    public static<T> T Fold (Generator<Tuple2<? extends T, ? extends T>,? extends T> function, Iterable<? extends T> iterable) {
+
+    public static <T> T Fold(Generator<Tuple2<? extends T, ? extends T>, ? extends T> function, Iterable<? extends T> iterable) {
         Iterator<? extends T> it = iterable.iterator();
-        if(it.hasNext()) {
+        if (it.hasNext()) {
             T temp = it.next();
             while (it.hasNext()) {
-                temp = function.generate(new Tuple2<>(temp,it.next()));
+                temp = function.generate(new Tuple2<>(temp, it.next()));
 
             }
             return temp;
-        }
-        else {
+        } else {
             return null;
         }
     }
-    
-    private  Utils () {
+
+    public static <T> HashMap<T, Integer> generateIndexHashMapper(Iterable<T> iterable) {
+        return generateIndexMapper(iterable, new HashMap<T, Integer>());
     }
-    
+
+    public static <T> HashBiMap<T, Integer> generateIndexHashBiMapper(Iterable<T> iterable) {
+        HashBiMap<T, Integer> map = HashBiMap.create();
+        return generateIndexMapper(iterable, map);
+    }
+
+    public static <T, TMap extends Map<T, Integer>> TMap generateIndexMapper(Iterable<T> iterable, TMap mapping) {
+        int index = 0;
+        for (T t : iterable) {
+            mapping.put(t, index++);
+        }
+        return mapping;
+    }
+
+    private Utils() {
+    }
 }

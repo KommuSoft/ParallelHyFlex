@@ -16,9 +16,11 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     private long tspent = 0x00, tpspent = 0x00;
     private final int tabuDurationOffset, tabuDurationLimit;
     private int tabuDuration;
+    private boolean tabued = true;
+    private int tabuEscapeCounter = 0;
 
     /**
-     * 
+     *
      * @param heuristicIndex The index of the heuristic
      */
     public AdapHHHeuristicRecord(int heuristicIndex) {
@@ -28,16 +30,18 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     /**
      *
      * @param heuristicIndex The index of the heuristic
-     * @param tabuDurationOffset According to the paper of Mustafa Misir, the tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
+     * @param tabuDurationOffset According to the paper of Mustafa Misir, the
+     * tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
      */
     public AdapHHHeuristicRecord(int heuristicIndex, int tabuDurationOffset) {
-        this(heuristicIndex, tabuDurationOffset, 2*tabuDurationOffset);
+        this(heuristicIndex, tabuDurationOffset, 2 * tabuDurationOffset);
     }
-    
+
     /**
      *
      * @param heuristicIndex The index of the heuristic
-     * @param tabuDurationOffset According to the paper of Mustafa Misir, the tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
+     * @param tabuDurationOffset According to the paper of Mustafa Misir, the
+     * tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
      */
     public AdapHHHeuristicRecord(int heuristicIndex, int tabuDurationOffset, int tabuDurationLimit) {
         super(heuristicIndex);
@@ -48,10 +52,10 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
 
     @Override
     public void newPhase() {
-        this.setCpbest(0);
-        this.setFpimp(0.0d);
-        this.setFpwrs(0.0d);
-        this.setTpspent(0x00);
+        if (!this.isTabued()) {
+            this.resetPhaseMemory();
+            this.tabuEscapeCounter++;
+        }
     }
 
     public void processed(long dt) {
@@ -66,13 +70,13 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public void addImprovement(double df) {
-        this.setFimp(this.getFimp() + df);
-        this.setFpimp(this.getFpimp() + df);
+        this.fpimp += df;
+        this.fimp += df;
     }
 
     public void addWorsening(double df) {
-        this.setFwrs(this.getFwrs() + df);
-        this.setFpwrs(this.getFpwrs() + df);
+        this.fwrs += df;
+        this.fpwrs += df;
     }
 
     /**
@@ -83,24 +87,10 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     /**
-     * @param cpbest the cpbest to set
-     */
-    public void setCpbest(int cpbest) {
-        this.cpbest = cpbest;
-    }
-
-    /**
      * @return the fimp
      */
     public double getFimp() {
         return fimp;
-    }
-
-    /**
-     * @param fimp the fimp to set
-     */
-    public void setFimp(double fimp) {
-        this.fimp = fimp;
     }
 
     /**
@@ -111,24 +101,10 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     /**
-     * @param fwrs the fwrs to set
-     */
-    public void setFwrs(double fwrs) {
-        this.fwrs = fwrs;
-    }
-
-    /**
      * @return the fpimp
      */
     public double getFpimp() {
         return fpimp;
-    }
-
-    /**
-     * @param fpimp the fpimp to set
-     */
-    public void setFpimp(double fpimp) {
-        this.fpimp = fpimp;
     }
 
     /**
@@ -139,24 +115,10 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     /**
-     * @param fpwrs the fpwrs to set
-     */
-    public void setFpwrs(double fpwrs) {
-        this.fpwrs = fpwrs;
-    }
-
-    /**
      * @return the tspent
      */
     public double getTspent() {
         return tspent;
-    }
-
-    /**
-     * @param tspent the tspent to set
-     */
-    public void setTspent(long tspent) {
-        this.tspent = tspent;
     }
 
     /**
@@ -166,22 +128,15 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         return tpspent;
     }
 
-    /**
-     * @param tpspent the tpspent to set
-     */
-    public void setTpspent(long tpspent) {
-        this.tpspent = tpspent;
+    public void incrementTabuDuration() {
+        this.tabuDuration = Math.min(this.getTabuDuration() + 1, this.tabuDurationLimit);
     }
 
-    public void incrementTabuDuration() {
-        this.tabuDuration = Math.min(this.getTabuDuration()+1,this.tabuDurationLimit);
-    }
-    
-    public void resetTabuDuration () {
+    public void resetTabuDuration() {
         this.tabuDuration = this.tabuDurationOffset;
     }
-    
-    public boolean shouldExclude () {
+
+    public boolean shouldExclude() {
         return this.tabuDuration >= this.tabuDurationOffset;
     }
 
@@ -195,12 +150,26 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
 
     @Override
     public void willTabu() {
-        
+        this.tabued = true;
+        if(this.getTabuEscapeCounter() <= 1) {
+            this.incrementTabuDuration();
+        }
+        else {
+            this.resetTabuDuration();
+        }
+        this.resetPhaseMemory();
+    }
+    
+    private void resetPhaseMemory () {
+        this.cpbest = 0;
+        this.fpimp = 0.0d;
+        this.fpwrs = 0.0d;
+        this.tpspent = 0;
     }
 
     @Override
     public void willUntabu() {
-        
+        this.tabued = false;
     }
 
     /**
@@ -219,12 +188,24 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
 
     public void processed(long dt, double delta) {
         this.processed(dt);
-        if(delta > 0.0d) {
+        if (delta > 0.0d) {
             this.addWorsening(delta);
-        }
-        else {
+        } else {
             this.addImprovement(-delta);
         }
     }
-    
+
+    /**
+     * @return the tabued
+     */
+    public boolean isTabued() {
+        return tabued;
+    }
+
+    /**
+     * @return the tabuEscapeCounter
+     */
+    public int getTabuEscapeCounter() {
+        return tabuEscapeCounter;
+    }
 }
