@@ -40,6 +40,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     
     private boolean periodGlobalImprovement = false;
     private int cPhase, cBestS, cBestR, pl;
+    private double globalOptimum = Double.NaN;
     
 
     /**
@@ -92,12 +93,27 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         }
     }
     
-    private void executeHeuristic (int heuristic) {
+    @Override
+    public void applyHeuristic (int heuristic, int from, int to) {
         long oldticks = new Date().getTime();
-        //TODO: execute heuristic
+        double oldeval = this.getObjectiveFunction(0,from);
+        super.applyHeuristic(heuristic, from, to);
         long dt = new Date().getTime()-oldticks;
-        records[heuristic].processed(dt);
-        //TODO: set global improvement
+        double neweval = this.getObjectiveFunction(0, to);
+        records[heuristic].processed(dt,neweval-oldeval);
+        this.checkImprovement(heuristic,neweval);
+    }
+    
+    @Override
+    public void applyHeuristic (int heuristic, int from1, int from2, int to) {
+        long oldticks = new Date().getTime();
+        double oldeval1 = this.getObjectiveFunction(0,from1);
+        double oldeval2 = this.getObjectiveFunction(0,from2);
+        super.applyHeuristic(heuristic, from1, from2, to);
+        double neweval = this.getObjectiveFunction(0, to);
+        long dt = new Date().getTime()-oldticks;
+        records[heuristic].processed(dt,neweval-0.5d*(oldeval1+oldeval2));
+        this.checkImprovement(heuristic,neweval);
     }
     
     private void iteration () {
@@ -130,6 +146,18 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         for(int i = 0; i < this.records.length; i++) {
             this.records[i] = new AdapHHHeuristicRecord(i);
             this.adhs.add(this.records[i]);
+        }
+        double globmin = Double.POSITIVE_INFINITY;
+        for(int i = 0; i < this.getReadableMemory(); i++) {
+            globmin = Math.min(globmin,this.getObjectiveFunction(0, i));
+        }
+        this.globalOptimum = globmin;
+    }
+
+    private void checkImprovement(int heuristic, double neweval) {
+        if(neweval < this.globalOptimum) {
+            this.globalOptimum = neweval;
+            this.records[heuristic].newBest();
         }
     }
     

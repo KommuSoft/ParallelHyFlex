@@ -216,5 +216,15 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public int getCbest() {
         return cbest;
     }
+
+    public void processed(long dt, double delta) {
+        this.processed(dt);
+        if(delta > 0.0d) {
+            this.addWorsening(delta);
+        }
+        else {
+            this.addImprovement(-delta);
+        }
+    }
     
 }
