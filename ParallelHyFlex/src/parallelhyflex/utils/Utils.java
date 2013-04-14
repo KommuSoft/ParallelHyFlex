@@ -72,7 +72,62 @@ public class Utils {
         return true;
     }
 
-    public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int delta, int modulo) {
+    public static Iterable<Integer> sequence(int from, int delta, int to) {
+        return new Iterable<Integer>() {
+            private int from, delta, to;
+
+            @Override
+            public Iterator<Integer> iterator() {
+                return new Iterator<Integer>() {
+                    private int to;
+                    private int delta;
+                    private int value;
+
+                    @Override
+                    public boolean hasNext() {
+                        return value + delta < to;
+                    }
+
+                    @Override
+                    public Integer next() {
+                        int val = this.value;
+                        this.value += delta;
+                        return val;
+                    }
+
+                    public Iterator<Integer> setValues(int from, int delta, int to) {
+                        this.delta = delta;
+                        this.value = from;
+                        this.to = to;
+                        return this;
+                    }
+
+                    @Override
+                    public void remove() {
+                        //Ignore remove (this is an automatically generated sequence)
+                    }
+                }.setValues(from, delta, to);
+
+            }
+
+            private Iterable<Integer> setValues(int from, int delta, int to) {
+                this.from = from;
+                this.delta = delta;
+                this.to = to;
+                return this;
+            }
+        }.setValues(from, delta, to);
+    }
+
+    public static Iterable<Integer> sequence(int to) {
+        return sequence(0, 1, to);
+    }
+
+    public static Iterable<Integer> sequence(int from, int to) {
+        return sequence(from, 1, to);
+    }
+
+    public static Iterable<Integer> sequenceModulo(int offset, int delta, int modulo) {
         return new Iterable<Integer>() {
             private int offset, delta, modulo;
 
@@ -120,8 +175,8 @@ public class Utils {
         }.setValues(offset, delta, modulo);
     }
 
-    public static Iterable<Integer> getLimitedModuloEnumerable(int offset, int modulo) {
-        return getLimitedModuloEnumerable(offset, 1, modulo);
+    public static Iterable<Integer> sequenceModulo(int offset, int modulo) {
+        return sequenceModulo(offset, 1, modulo);
     }
 
     public static <T> ArrayList<T> toArrayList(Iterable<T> iterable) {
@@ -166,7 +221,7 @@ public class Utils {
         return result;
     }
 
-    public static <T> T Fold(Generator<Tuple2<? extends T, ? extends T>, ? extends T> function, Iterable<? extends T> iterable) {
+    public static <T> T fold(Generator<Tuple2<? extends T, ? extends T>, ? extends T> function, Iterable<? extends T> iterable) {
         Iterator<? extends T> it = iterable.iterator();
         if (it.hasNext()) {
             T temp = it.next();

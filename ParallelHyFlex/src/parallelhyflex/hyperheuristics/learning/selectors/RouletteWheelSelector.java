@@ -12,10 +12,10 @@ public class RouletteWheelSelector implements Selector {
     public Integer generate(double[] probabilities) {
         double p = Utils.StaticRandom.nextDouble();
         int index = 0;
-        while(p > probabilities[index]) {
+        while(index < probabilities.length && p > probabilities[index]) {
             p -= probabilities[index++];
         }
-        return index;
+        return Math.min(index,probabilities.length-1);
     }
     
 }
