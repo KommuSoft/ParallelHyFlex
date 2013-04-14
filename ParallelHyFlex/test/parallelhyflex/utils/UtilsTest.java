@@ -5,6 +5,7 @@
 package parallelhyflex.utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -94,4 +95,120 @@ public class UtilsTest {
         ArrayList<Integer> a = Utils.toArrayList(Utils.sequenceModulo(4,10));
         Assert.assertArrayEquals(new Integer[] {4,5,6,7,8,9,0,1,2,3},a.toArray(new Integer[] {}));
     }
+    
+    @Test
+    public void testSequence1 () {
+        Iterable<Integer> iterable = Utils.sequence(5);
+        Iterator<Integer> iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(0,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(2,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(0,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(2,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(7);
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(0,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(2,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(5,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(6,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(0,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(2,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(5,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(6,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(0);
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+    }
+    
+    @Test
+    public void testSequence2 () {
+        Iterable<Integer> iterable = Utils.sequence(1,5);
+        Iterator<Integer> iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(2,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(2,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(3,7);
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(5,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(6,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(4,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(5,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(6,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(5,5);
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(8,3);
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+    }
+    
+    @Test
+    public void testSequence3 () {
+        Iterable<Integer> iterable = Utils.sequence(1,2,5);
+        Iterator<Integer> iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(1,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(3,3,7);
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(6,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(3,(int) iterator.next());
+        Assert.assertTrue(iterator.hasNext()); Assert.assertEquals(6,(int) iterator.next());
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(5,1,5);
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterable = Utils.sequence(8,3,3);
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+        iterator = iterable.iterator();
+        Assert.assertFalse(iterator.hasNext());
+    }
+    
 }

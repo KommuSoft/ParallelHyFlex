@@ -29,6 +29,9 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int PH_REQUESTED = 100;
     public static final int LIST_SIZE = 10;
     public static final int L_SIZE = 5;
+    public static final int S = 0;
+    public static final int Sa = 1;
+    public static final int Saa = 2;
     public static final double GAMMA_MIN = 0.02d;
     public static final double GAMMA_MAX = 50.0d;
     private final AdaptiveDynamicHeuristicSetStrategy adhs;
@@ -120,6 +123,14 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     private void relayHybridisation() {
         double gamma = Utils.border(GAMMA_MIN, (this.cBestS + 1.0d) / (this.cBestR + 1.0d), GAMMA_MAX);
         if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.cPhase / this.pl, gamma)) {
+            int lhh1 = this.learningAutomaton.getAction();
+            this.applyHeuristic(lhh1, S, Sa);
+            /*if() {
+                
+            }
+            else {
+                
+            }*/
             //TODO: do relayHybridisation
         }
     }
