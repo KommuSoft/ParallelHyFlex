@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.searchspace.negotation;
 
 import java.util.Collection;
-import parallelhyflex.algebra.IArgumentCloneable;
+import parallelhyflex.algebra.ArgumentCloneable;
 import parallelhyflex.communication.ReadableGenerator;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -13,7 +13,7 @@ import parallelhyflex.problemdependent.solution.Solution;
  *
  * @author kommusoft
  */
-public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>, TRG extends ReadableGenerator<TEC> & IArgumentCloneable<TProblem,TRG>> extends MergingWritableSearchSpaceNegotiator<TSolution, TEC, TRG> implements IArgumentCloneable<TProblem, TwoSetWriteableSearchSpaceNegotiator<TSolution, TProblem, TEC, TRG>> {
+public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>, TRG extends ReadableGenerator<TEC> & ArgumentCloneable<TProblem,TRG>> extends MergingWritableSearchSpaceNegotiator<TSolution, TEC, TRG> implements ArgumentCloneable<TProblem, TwoSetWriteableSearchSpaceNegotiator<TSolution, TProblem, TEC, TRG>> {
 
     private final TwoSetSearchSpace<TSolution> searchSpace = new TwoSetSearchSpace<>();
 

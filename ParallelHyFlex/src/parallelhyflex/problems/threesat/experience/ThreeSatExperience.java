@@ -1,6 +1,6 @@
 package parallelhyflex.problems.threesat.experience;
 
-import parallelhyflex.algebra.IArgumentCloneable;
+import parallelhyflex.algebra.ArgumentCloneable;
 import parallelhyflex.experiencestorage.WritableSetExperienceStore;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
@@ -10,7 +10,7 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> implements IArgumentCloneable<ThreeSatProblem, ThreeSatExperience> {
+public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> implements ArgumentCloneable<ThreeSatProblem, ThreeSatExperience> {
 
     public ThreeSatExperience(ThreeSatProblem problem, int historySize, int hypothesisSize, int generationSize) {
         super(problem, new ThreeSatInstanceHypothesisGenerator1(problem), historySize, hypothesisSize, generationSize);

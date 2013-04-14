@@ -1,12 +1,12 @@
-package parallelhyflex.learning;
+package parallelhyflex.hyperheuristics.learning;
 
 import com.google.common.collect.HashBiMap;
 import java.util.Collection;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.Procedure;
 import parallelhyflex.algebra.tuples.Tuple3;
-import parallelhyflex.learning.learningschemes.LinearLearningScheme;
-import parallelhyflex.learning.selectors.RouletteWheelSelector;
+import parallelhyflex.hyperheuristics.learning.learningschemes.LinearLearningScheme;
+import parallelhyflex.hyperheuristics.learning.selectors.RouletteWheelSelector;
 import parallelhyflex.utils.Utils;
 
 /**

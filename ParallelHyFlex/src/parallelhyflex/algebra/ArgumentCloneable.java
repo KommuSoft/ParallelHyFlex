@@ -4,7 +4,7 @@ package parallelhyflex.algebra;
  *
  * @author kommusoft
  */
-public interface IArgumentCloneable<TArgument, TDestination> {
+public interface ArgumentCloneable<TArgument, TDestination> {
 
     TDestination clone(TArgument argument);
 }

@@ -1,4 +1,4 @@
-package parallelhyflex.learning.learningschemes;
+package parallelhyflex.hyperheuristics.learning.learningschemes;
 
 import parallelhyflex.algebra.tuples.Tuple3;
 

@@ -1,10 +1,10 @@
-package parallelhyflex.communication;
+package parallelhyflex.algebra;
 
 /**
  *
  * @author kommusoft
  */
-public enum GlobalOperations {
+public enum ReduceOperator {
     Maximum,
     Minimum,
     Sum,

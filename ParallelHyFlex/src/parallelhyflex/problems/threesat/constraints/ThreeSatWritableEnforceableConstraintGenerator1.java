@@ -6,7 +6,7 @@ package parallelhyflex.problems.threesat.constraints;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import parallelhyflex.algebra.IArgumentCloneable;
+import parallelhyflex.algebra.ArgumentCloneable;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraintGeneratorBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
@@ -15,7 +15,7 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraintGenerator1 extends EnforceableConstraintGeneratorBase<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> implements IArgumentCloneable<ThreeSatProblem, ThreeSatWritableEnforceableConstraintGenerator1> {
+public class ThreeSatWritableEnforceableConstraintGenerator1 extends EnforceableConstraintGeneratorBase<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> implements ArgumentCloneable<ThreeSatProblem, ThreeSatWritableEnforceableConstraintGenerator1> {
     
     public ThreeSatWritableEnforceableConstraintGenerator1(ThreeSatProblem problem) {
         super(problem);

@@ -208,4 +208,8 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public int getTabuEscapeCounter() {
         return tabuEscapeCounter;
     }
+    
+    public double getCiMove () {
+        return (double) this.cmoves/(double) this.tspent;
+    }
 }

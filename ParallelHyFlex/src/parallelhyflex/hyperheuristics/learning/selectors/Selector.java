@@ -1,4 +1,4 @@
-package parallelhyflex.learning.selectors;
+package parallelhyflex.hyperheuristics.learning.selectors;
 
 import parallelhyflex.algebra.Generator;
 
