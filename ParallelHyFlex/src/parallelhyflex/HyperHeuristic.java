@@ -50,6 +50,18 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * with a rank different from zero!
      */
     public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+        this(problem,durationTicks,experience,negotiator,negotiationTicks,solutionReader,10,MemoryExchangePolicy.StateIthDistributed);
+    }
+    
+    /**
+     * @note: This constructor can only be initialized if the machine is the
+     * root (has rank = 0), otherwise, one needs to construct this class with
+     * the constructor with the ProblemReader
+     * @param problem
+     * @throws ProtocolException If this constructor is initialized by a machine
+     * with a rank different from zero!
+     */
+    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader, int localMemorySize, MemoryExchangePolicy localMemoryExchangePolicy) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() == 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
@@ -58,7 +70,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.problem = problem;
             this.experience = experience.generate(problem);
             this.negotiator = negotiator.generate(this.problem);
-            this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateIthDistributed, solutionReader);
+            this.proxyMemory = new ProxyMemory<>(localMemorySize, localMemoryExchangePolicy, solutionReader);
             this.registerPacketReceiver(this.proxyMemory);
             this.proxyMemory.setWritableExperience(this.experience);
             byte[][] data;
@@ -79,7 +91,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
         }
     }
-
+    
     /**
      * @note: This constructor can only be initialized if the machine is not the
      * root (has rank != 0), otherwise, one needs to construct this class with
@@ -93,12 +105,28 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * @throws IOException
      */
     public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+        this(problemReader,durationTicks,experience,negotiator,negotiationTicks,solutionReader,10,MemoryExchangePolicy.StateIthDistributed);
+    }
+
+    /**
+     * @note: This constructor can only be initialized if the machine is not the
+     * root (has rank != 0), otherwise, one needs to construct this class with
+     * the constructor with the ProblemReader
+     * @param problemReader
+     * @param durationTicks
+     * @param experience
+     * @param solutionReader
+     * @throws ProtocolException If this constructor is called when the machine
+     * is not the root
+     * @throws IOException
+     */
+    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader, int localMemorySize, MemoryExchangePolicy localMemoryExchangePolicy) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() != 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
             this.durationTicks = durationTicks;
             this.negotiationTicks = negotiationTicks;
-            this.proxyMemory = new ProxyMemory<>(10, MemoryExchangePolicy.StateIthDistributed, solutionReader);
+            this.proxyMemory = new ProxyMemory<>(localMemorySize, localMemoryExchangePolicy, solutionReader);
             this.registerPacketReceiver(this.proxyMemory);
             byte[][] data = new byte[1][];
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);

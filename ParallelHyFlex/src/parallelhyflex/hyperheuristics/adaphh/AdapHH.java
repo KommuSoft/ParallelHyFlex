@@ -31,6 +31,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int S = 0;
     public static final int Sa = 1;
     public static final int Saa = 2;
+    public static final int HISTORY_LENGTH = 5;
     public static final double GAMMA_MIN = 0.02d;
     public static final double GAMMA_MAX = 50.0d;
     public static final double LIST_PROBABILITY = 0.25d;
