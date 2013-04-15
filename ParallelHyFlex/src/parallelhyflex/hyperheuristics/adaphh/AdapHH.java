@@ -150,8 +150,9 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     }
 
     private void init() {
+        int durationoffset = (int) Math.round(Math.sqrt(2.0d*this.records.length));
         for (int i = 0; i < this.records.length; i++) {
-            this.records[i] = new AdapHHHeuristicRecord(i);
+            this.records[i] = new AdapHHHeuristicRecord(this,i,durationoffset);
             this.adhs.add(this.records[i]);
         }
         double globmin = Double.POSITIVE_INFINITY;

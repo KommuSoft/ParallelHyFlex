@@ -2,6 +2,7 @@ package parallelhyflex.hyperheuristics.adaphh.records;
 
 import parallelhyflex.algebra.Phasable;
 import parallelhyflex.algebra.Tabuable;
+import parallelhyflex.hyperheuristics.adaphh.AdapHH;
 import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
 
 /**
@@ -10,6 +11,7 @@ import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
  */
 public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable, Phasable {
 
+    private final AdapHH adaphh;
     private int cpbest = 0, cbest = 0, cmoves = 0;
     private double fimp = 0.0d, fwrs = 0.0d;
     private double fpimp = 0.0d, fpwrs = 0.0d;
@@ -23,8 +25,8 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      *
      * @param heuristicIndex The index of the heuristic
      */
-    public AdapHHHeuristicRecord(int heuristicIndex) {
-        this(heuristicIndex, 5);
+    public AdapHHHeuristicRecord(AdapHH adaphh, int heuristicIndex) {
+        this(adaphh,heuristicIndex, 5);
     }
 
     /**
@@ -33,8 +35,8 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * @param tabuDurationOffset According to the paper of Mustafa Misir, the
      * tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
      */
-    public AdapHHHeuristicRecord(int heuristicIndex, int tabuDurationOffset) {
-        this(heuristicIndex, tabuDurationOffset, 2 * tabuDurationOffset);
+    public AdapHHHeuristicRecord(AdapHH adaphh, int heuristicIndex, int tabuDurationOffset) {
+        this(adaphh,heuristicIndex, tabuDurationOffset, 2 * tabuDurationOffset);
     }
 
     /**
@@ -43,8 +45,9 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * @param tabuDurationOffset According to the paper of Mustafa Misir, the
      * tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
      */
-    public AdapHHHeuristicRecord(int heuristicIndex, int tabuDurationOffset, int tabuDurationLimit) {
+    public AdapHHHeuristicRecord(AdapHH adaphh, int heuristicIndex, int tabuDurationOffset, int tabuDurationLimit) {
         super(heuristicIndex);
+        this.adaphh = adaphh;
         this.tabuDurationOffset = tabuDurationOffset;
         this.tabuDurationLimit = tabuDurationLimit;
         this.tabuDuration = tabuDurationOffset;
