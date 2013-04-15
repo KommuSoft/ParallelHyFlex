@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import parallelhyflex.algebra.Predicate;
 import parallelhyflex.algebra.Procedure;
 import parallelhyflex.algebra.ReversedComparator;
+import parallelhyflex.utils.ProbabilityUtils;
 
 
 public class PopulationBase<TIndividual> implements Population<TIndividual> {
@@ -120,6 +121,11 @@ public class PopulationBase<TIndividual> implements Population<TIndividual> {
     @Override
     public SortedSet<TIndividual> getWorsts(Comparator<? super TIndividual> comparator, int length) {
         return this.getBests(new ReversedComparator<>(comparator), length);
+    }
+
+    @Override
+    public TIndividual getRandomIndividual() {
+        return ProbabilityUtils.randomElement(this.collection);
     }
     
 }

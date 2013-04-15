@@ -83,9 +83,9 @@ public class ClauseUtils {
     }
 
     public static long generateCompletelyTrueClause(CompactBitArray cba, double[] cdf) {
-        long i0 = ProbabilityUtils.getRandomIndexFromCDF(cdf);
-        long i1 = ProbabilityUtils.getRandomIndexFromCDF(cdf);
-        long i2 = ProbabilityUtils.getRandomIndexFromCDF(cdf);
+        long i0 = ProbabilityUtils.randomIndexFromCDF(cdf);
+        long i1 = ProbabilityUtils.randomIndexFromCDF(cdf);
+        long i2 = ProbabilityUtils.randomIndexFromCDF(cdf);
         long ia = Math.min(i0, Math.min(i1, i2));
         long ic = Math.max(i0, Math.max(i1, i2));
         long ib = i0 + i1 + i2 - ia - ic;

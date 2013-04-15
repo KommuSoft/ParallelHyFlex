@@ -2,7 +2,9 @@ package parallelhyflex.utils;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -48,21 +50,30 @@ public class ProbabilityUtils {
         }
     }
 
-    public static int getRandomIndexFromCDF(double[] cdf, Collection<Integer> without) {
+    public static int randomIndexFromCDF(double[] cdf, Collection<Integer> without) {
         int index;
         do {
-            index = getRandomIndexFromCDF(cdf);
+            index = randomIndexFromCDF(cdf);
         } while (without.contains(index));
         return index;
     }
 
-    public static int getRandomIndexFromCDF(double[] cdf) {
+    public static int randomIndexFromCDF(double[] cdf) {
         double rand = Utils.StaticRandom.nextDouble();
         int index = Arrays.binarySearch(cdf, rand);
         if (index < 0) {
             index = ~index;
         }
         return index;
+    }
+    
+    public static <T> T randomElement (Collection<T> set) {
+        int I = Utils.StaticRandom.nextInt(set.size());
+        Iterator<T> iterator = set.iterator();
+        for(int i = 0; i < I; i++) {
+            iterator.next();
+        }
+        return iterator.next();
     }
 
     private ProbabilityUtils() {

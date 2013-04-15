@@ -16,5 +16,6 @@ public interface Population<TIndividual> extends Collection<TIndividual> {
     public void processAll (Procedure<TIndividual> procedure);
     public SortedSet<TIndividual> getBests (Comparator<? super TIndividual> comparator, int length);
     public SortedSet<TIndividual> getWorsts (Comparator<? super TIndividual> comparator, int length);
+    public TIndividual getRandomIndividual ();
     
 }

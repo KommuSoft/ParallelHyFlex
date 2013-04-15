@@ -16,7 +16,7 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
     private int writePointer;
     private Object[] data;
 
-    public void CircularList(int capacity) {
+    public CircularList(int capacity) {
         this.data = new Object[capacity];
         this.readPointer = 0;
         this.writePointer = 0;
