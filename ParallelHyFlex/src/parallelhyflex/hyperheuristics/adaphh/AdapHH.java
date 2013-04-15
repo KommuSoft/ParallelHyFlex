@@ -1,6 +1,7 @@
 package parallelhyflex.hyperheuristics.adaphh;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
@@ -17,7 +18,6 @@ import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionReader;
-import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -124,7 +124,11 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
             globmin = Math.min(globmin, this.getObjectiveFunction(0, i));
         }
         this.globalOptimum = globmin;
-        this.getLearningAutomaton().reset(Utils.sequence(this.getNumberOfHeuristics()));
+        ArrayList<AdapHHHybridRelaxationHeuristicRecord> all = new ArrayList<>();
+        for (int i = 0; i < this.records.length; i++) {
+            all.add(new AdapHHHybridRelaxationHeuristicRecord(this, i));
+        }
+        this.getLearningAutomaton().reset(all);
     }
 
     public boolean checkImprovement(double neweval) {
