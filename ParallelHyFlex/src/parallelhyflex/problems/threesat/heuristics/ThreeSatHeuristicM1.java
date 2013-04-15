@@ -30,4 +30,9 @@ public class ThreeSatHeuristicM1 extends MutationHeuristicBase<ThreeSatSolution,
             ClauseUtils.swapRandomBit(n, influences, cba, constraints, from);
         } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
     }
+    
+    @Override
+    public boolean usesIntensityOfMutation() {
+        return true;
+    }
 }

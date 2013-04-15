@@ -25,6 +25,7 @@ import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.utils.CompactBitArray;
 
 /**
  *
@@ -157,8 +158,12 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.proxyMemory.setSolution(index, this.problem.getSolutionGenerator().generateSolution());
     }
 
-    public double getObjectiveFunction(int objective, int index) {
-        return this.problem.getObjectiveFunction(objective).evaluateSolution(this.proxyMemory.getSolution(index));
+    public double getObjectiveFunction(int objective, int solutionIndex) {
+        return this.problem.getObjectiveFunction(objective).evaluateSolution(this.proxyMemory.getSolution(solutionIndex));
+    }
+    
+    public double getObjectiveFunction (int solutionIndex) {
+        return this.getObjectiveFunction(0,solutionIndex);
     }
 
     public int getReadableMemory() {
@@ -307,6 +312,10 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     @Override
     public void receivePacket(int from, int tag, Object data) throws Exception {
         this.prr.receivePacket(from, tag, data);
+    }
+    
+    public CompactBitArray getExchangeBlockingMask () {
+        return this.proxyMemory.getExchangeBlockingMask();
     }
     
     private class FetchThread extends Thread {

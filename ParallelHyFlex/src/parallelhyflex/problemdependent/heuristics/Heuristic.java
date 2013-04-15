@@ -38,4 +38,12 @@ public abstract class Heuristic<TSolution extends Solution<TSolution>> {
     public HeuristicType getType() {
         return type;
     }
+    
+    public boolean usesDepthOfSearch () {
+        return false;
+    }
+    public boolean usesIntensityOfMutation () {
+        return false;
+    }
+    
 }

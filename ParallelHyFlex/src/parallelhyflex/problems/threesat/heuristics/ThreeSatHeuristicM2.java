@@ -31,4 +31,9 @@ public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution,
         int index = ClauseUtils.getIndexI(clauses[i], k);
         from.swapBit(index, problem);
     }
+    
+    @Override
+    public boolean usesIntensityOfMutation() {
+        return true;
+    }
 }

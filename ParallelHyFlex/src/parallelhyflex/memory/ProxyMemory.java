@@ -15,6 +15,7 @@ import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -166,4 +167,9 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
             solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
         }
     }
+    
+    public CompactBitArray getExchangeBlockingMask () {
+        return this.localSlots.getBlockingMask();
+    }
+    
 }

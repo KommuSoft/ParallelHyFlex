@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
+import parallelhyflex.communication.Communication;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecordEvaluator;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHybridRelaxationHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdaptiveDynamicHeuristicSetStrategy;
 import parallelhyflex.hyperheuristics.learning.LearningAutomaton;
 import parallelhyflex.hyperheuristics.records.ProbabilityVectorBase;
+import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -18,6 +20,7 @@ import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.negotation.SearchSpaceNegotiator;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionReader;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -55,7 +58,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * with a rank different from zero!
      */
     public AdapHH(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
-        super(problem, durationTicks, experience, negotiator, negotiationTicks, solutionReader);
+        super(problem, durationTicks, experience, negotiator, negotiationTicks, solutionReader, 3+HISTORY_LENGTH,MemoryExchangePolicy.QueuedProbableDistributed);
         this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
@@ -76,7 +79,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * @throws IOException
      */
     public AdapHH(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
-        super(problemReader, durationTicks, experience, negotiator, negotiationTicks, solutionReader);
+        super(problemReader, durationTicks, experience, negotiator, negotiationTicks, solutionReader, 3+HISTORY_LENGTH,MemoryExchangePolicy.QueuedProbableDistributed);
         this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
@@ -116,6 +119,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     }
 
     private void init() {
+        this.getExchangeBlockingMask().setRange(0,2);//block the exchange of temporary solutions
         int durationoffset = (int) Math.round(Math.sqrt(2.0d * this.records.length));
         for (int i = 0; i < this.records.length; i++) {
             this.records[i] = new AdapHHHeuristicRecord(this, i, durationoffset);
@@ -196,4 +200,11 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public AdaptiveDynamicHeuristicSetStrategy getAdhs() {
         return adhs;
     }
+    
+    public int getRandomHistorySolutionIndex () {
+        int a = Utils.StaticRandom.nextInt(Communication.getCommunication().getSize());
+        int b = Utils.StaticRandom.nextInt(HISTORY_LENGTH);
+        return (HISTORY_LENGTH+3)*a+b;
+    }
+    
 }

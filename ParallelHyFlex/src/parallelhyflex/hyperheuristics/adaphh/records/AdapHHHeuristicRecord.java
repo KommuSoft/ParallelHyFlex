@@ -5,6 +5,7 @@ import parallelhyflex.algebra.Phasable;
 import parallelhyflex.algebra.Tabuable;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
 import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
+import parallelhyflex.problemdependent.heuristics.HeuristicType;
 
 /**
  *
@@ -12,6 +13,7 @@ import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
  */
 public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implements Tabuable, Phasable {
 
+    private final boolean crossover;
     private final AdapHH adaphh;
     private int cpbest = 0, cbest = 0, cmoves = 0;
     private double fimp = 0.0d, fwrs = 0.0d;
@@ -48,6 +50,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      */
     public AdapHHHeuristicRecord(AdapHH adaphh, int heuristicIndex, int tabuDurationOffset, int tabuDurationLimit) {
         super(heuristicIndex);
+        this.crossover = adaphh.getHeuristicType(heuristicIndex).equals(HeuristicType.Crossover);
         this.adaphh = adaphh;
         this.tabuDurationOffset = tabuDurationOffset;
         this.tabuDurationLimit = tabuDurationLimit;
@@ -217,25 +220,22 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public void execute(int from, int to) {
-        long oldticks = new Date().getTime();
         double oldeval = this.getAdaphh().getObjectiveFunction(0, from);
-        this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from, to);
+        int from2 = 0;
+        if(this.isCrossover()) {
+            from2 = this.getAdaphh().getRandomHistorySolutionIndex();
+            oldeval = 0.5*(oldeval+this.getAdaphh().getObjectiveFunction(0,from2));
+        }
+        long oldticks = new Date().getTime();
+        if(this.isCrossover()) {
+            this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from, from2, to);
+        }
+        else {
+            this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from, to);
+        }
         long dt = new Date().getTime() - oldticks;
         double neweval = this.getAdaphh().getObjectiveFunction(0, to);
         this.processed(dt, neweval - oldeval);
-        if (this.getAdaphh().checkImprovement(neweval)) {
-            this.newBest();
-        }
-    }
-
-    public void execute(int from1, int from2, int to) {
-        long oldticks = new Date().getTime();
-        double oldeval1 = this.getAdaphh().getObjectiveFunction(0, from1);
-        double oldeval2 = this.getAdaphh().getObjectiveFunction(0, from2);
-        this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from1, from2, to);
-        long dt = new Date().getTime() - oldticks;
-        double neweval = this.getAdaphh().getObjectiveFunction(0, to);
-        this.processed(dt, neweval - 0.5d * (oldeval1 + oldeval2));
         if (this.getAdaphh().checkImprovement(neweval)) {
             this.newBest();
         }
@@ -246,5 +246,12 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      */
     public AdapHH getAdaphh() {
         return adaphh;
+    }
+
+    /**
+     * @return the crossover
+     */
+    public boolean isCrossover() {
+        return crossover;
     }
 }

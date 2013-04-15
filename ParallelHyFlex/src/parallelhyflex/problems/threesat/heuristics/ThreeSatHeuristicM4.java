@@ -48,4 +48,9 @@ public class ThreeSatHeuristicM4 extends MutationHeuristicBase<ThreeSatSolution,
             from.addConfictingClauses(mindelta);
         }
     }
+    
+    @Override
+    public boolean usesIntensityOfMutation() {
+        return true;
+    }
 }

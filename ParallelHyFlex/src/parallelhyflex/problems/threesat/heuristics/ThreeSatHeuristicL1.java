@@ -40,4 +40,9 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
             }
         } while (nextrun);
     }
+
+    @Override
+    public boolean usesDepthOfSearch() {
+        return true;
+    }
 }

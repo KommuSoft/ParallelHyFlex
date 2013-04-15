@@ -36,5 +36,10 @@ public class ThreeSatHeuristicL3 extends LocalSearchHeuristicBase<ThreeSatSoluti
             from.addConfictingClauses(maximprove);
         }
     }
+    
+    @Override
+    public boolean usesDepthOfSearch() {
+        return true;
+    }
 
 }

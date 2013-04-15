@@ -32,4 +32,9 @@ public class ThreeSatHeuristicM3 extends MutationHeuristicBase<ThreeSatSolution,
             from.swapBit(i, problem);
         }
     }
+    
+    @Override
+    public boolean usesIntensityOfMutation() {
+        return true;
+    }
 }
