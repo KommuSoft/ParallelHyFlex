@@ -1,12 +1,12 @@
 package parallelhyflex.hyperheuristics.adaphh;
 
 import java.io.IOException;
-import java.util.Date;
 import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecordEvaluator;
+import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHybridRelaxationHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdaptiveDynamicHeuristicSetStrategy;
 import parallelhyflex.hyperheuristics.learning.LearningAutomaton;
 import parallelhyflex.hyperheuristics.records.ProbabilityVectorBase;
@@ -34,10 +34,12 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int Saa = 2;
     public static final double GAMMA_MIN = 0.02d;
     public static final double GAMMA_MAX = 50.0d;
+    
     private final AdaptiveDynamicHeuristicSetStrategy adhs;
     private final AdapHHHeuristicRecord[] records;
     private final ProbabilityVectorBase heuristicSelector;
-    private final LearningAutomaton<Integer> learningAutomaton;
+    private final LearningAutomaton<AdapHHHybridRelaxationHeuristicRecord> learningAutomaton;
+    
     private boolean periodGlobalImprovement = false;
     private int cPhase, cBestS, cBestR, pl;
     private double globalOptimum = Double.NaN;
@@ -86,7 +88,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
             this.periodGlobalImprovement = false;
             this.pl = PH_FACTOR * ((int) Math.sqrt(2 * this.adhs.size()));
             this.cPhase = 0;
-            for (int i = this.pl; i > 0; i--) {
+            for (int i = this.getPl(); i > 0; i--) {
                 iteration();
                 this.cPhase++;
             }
@@ -94,45 +96,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         }
     }
 
-    @Override
-    public void applyHeuristic(int heuristic, int from, int to) {
-        long oldticks = new Date().getTime();
-        double oldeval = this.getObjectiveFunction(0, from);
-        super.applyHeuristic(heuristic, from, to);
-        long dt = new Date().getTime() - oldticks;
-        double neweval = this.getObjectiveFunction(0, to);
-        records[heuristic].processed(dt, neweval - oldeval);
-        this.checkImprovement(heuristic, neweval);
-    }
-
-    @Override
-    public void applyHeuristic(int heuristic, int from1, int from2, int to) {
-        long oldticks = new Date().getTime();
-        double oldeval1 = this.getObjectiveFunction(0, from1);
-        double oldeval2 = this.getObjectiveFunction(0, from2);
-        super.applyHeuristic(heuristic, from1, from2, to);
-        double neweval = this.getObjectiveFunction(0, to);
-        long dt = new Date().getTime() - oldticks;
-        records[heuristic].processed(dt, neweval - 0.5d * (oldeval1 + oldeval2));
-        this.checkImprovement(heuristic, neweval);
-    }
-
     private void iteration() {
-    }
-
-    private void relayHybridisation() {
-        double gamma = Utils.border(GAMMA_MIN, (this.cBestS + 1.0d) / (this.cBestR + 1.0d), GAMMA_MAX);
-        if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.cPhase / this.pl, gamma)) {
-            int lhh1 = this.learningAutomaton.getAction();
-            this.applyHeuristic(lhh1, S, Sa);
-            /*if() {
-                
-            }
-            else {
-                
-            }*/
-            //TODO: do relayHybridisation
-        }
     }
 
     private void aILLAMoveAcceptance() {
@@ -146,13 +110,13 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * @return the periodGlobalImprovement
      */
     public boolean getPeriodGlobalImprovement() {
-        return periodGlobalImprovement;
+        return isPeriodGlobalImprovement();
     }
 
     private void init() {
-        int durationoffset = (int) Math.round(Math.sqrt(2.0d*this.records.length));
+        int durationoffset = (int) Math.round(Math.sqrt(2.0d * this.records.length));
         for (int i = 0; i < this.records.length; i++) {
-            this.records[i] = new AdapHHHeuristicRecord(this,i,durationoffset);
+            this.records[i] = new AdapHHHeuristicRecord(this, i, durationoffset);
             this.adhs.add(this.records[i]);
         }
         double globmin = Double.POSITIVE_INFINITY;
@@ -160,13 +124,63 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
             globmin = Math.min(globmin, this.getObjectiveFunction(0, i));
         }
         this.globalOptimum = globmin;
-        this.learningAutomaton.reset(Utils.sequence(this.getNumberOfHeuristics()));
+        this.getLearningAutomaton().reset(Utils.sequence(this.getNumberOfHeuristics()));
     }
 
-    private void checkImprovement(int heuristic, double neweval) {
-        if (neweval < this.globalOptimum) {
+    public boolean checkImprovement(double neweval) {
+        if (neweval < this.getGlobalOptimum()) {
             this.globalOptimum = neweval;
-            this.records[heuristic].newBest();
+            return true;
         }
+        return false;
+    }
+
+    /**
+     * @return the learningAutomaton
+     */
+    public LearningAutomaton<AdapHHHybridRelaxationHeuristicRecord> getLearningAutomaton() {
+        return learningAutomaton;
+    }
+
+    /**
+     * @return the periodGlobalImprovement
+     */
+    public boolean isPeriodGlobalImprovement() {
+        return periodGlobalImprovement;
+    }
+
+    /**
+     * @return the cPhase
+     */
+    public int getCPhase() {
+        return cPhase;
+    }
+
+    /**
+     * @return the cBestS
+     */
+    public int getCBestS() {
+        return cBestS;
+    }
+
+    /**
+     * @return the cBestR
+     */
+    public int getCBestR() {
+        return cBestR;
+    }
+
+    /**
+     * @return the pl
+     */
+    public int getPl() {
+        return pl;
+    }
+
+    /**
+     * @return the globalOptimum
+     */
+    public double getGlobalOptimum() {
+        return globalOptimum;
     }
 }

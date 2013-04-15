@@ -1,5 +1,6 @@
 package parallelhyflex.hyperheuristics.adaphh.records;
 
+import java.util.Date;
 import parallelhyflex.algebra.Phasable;
 import parallelhyflex.algebra.Tabuable;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
@@ -26,7 +27,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * @param heuristicIndex The index of the heuristic
      */
     public AdapHHHeuristicRecord(AdapHH adaphh, int heuristicIndex) {
-        this(adaphh,heuristicIndex, 5);
+        this(adaphh, heuristicIndex, 5);
     }
 
     /**
@@ -36,7 +37,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * tabu-duration must be set to sqrt(2*n) with n the number of heuristics.
      */
     public AdapHHHeuristicRecord(AdapHH adaphh, int heuristicIndex, int tabuDurationOffset) {
-        this(adaphh,heuristicIndex, tabuDurationOffset, 2 * tabuDurationOffset);
+        this(adaphh, heuristicIndex, tabuDurationOffset, 2 * tabuDurationOffset);
     }
 
     /**
@@ -154,16 +155,15 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     @Override
     public void willTabu() {
         this.tabued = true;
-        if(this.getTabuEscapeCounter() <= 1) {
+        if (this.getTabuEscapeCounter() <= 1) {
             this.incrementTabuDuration();
-        }
-        else {
+        } else {
             this.resetTabuDuration();
         }
         this.resetPhaseMemory();
     }
-    
-    private void resetPhaseMemory () {
+
+    private void resetPhaseMemory() {
         this.cpbest = 0;
         this.fpimp = 0.0d;
         this.fpwrs = 0.0d;
@@ -211,8 +211,40 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public int getTabuEscapeCounter() {
         return tabuEscapeCounter;
     }
-    
-    public double getCiMove () {
-        return (double) this.cmoves/(double) this.tspent;
+
+    public double getCiMove() {
+        return (double) this.cmoves / (double) this.tspent;
+    }
+
+    public void execute(int from, int to) {
+        long oldticks = new Date().getTime();
+        double oldeval = this.getAdaphh().getObjectiveFunction(0, from);
+        this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from, to);
+        long dt = new Date().getTime() - oldticks;
+        double neweval = this.getAdaphh().getObjectiveFunction(0, to);
+        this.processed(dt, neweval - oldeval);
+        if (this.getAdaphh().checkImprovement(neweval)) {
+            this.newBest();
+        }
+    }
+
+    public void execute(int from1, int from2, int to) {
+        long oldticks = new Date().getTime();
+        double oldeval1 = this.getAdaphh().getObjectiveFunction(0, from1);
+        double oldeval2 = this.getAdaphh().getObjectiveFunction(0, from2);
+        this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from1, from2, to);
+        long dt = new Date().getTime() - oldticks;
+        double neweval = this.getAdaphh().getObjectiveFunction(0, to);
+        this.processed(dt, neweval - 0.5d * (oldeval1 + oldeval2));
+        if (this.getAdaphh().checkImprovement(neweval)) {
+            this.newBest();
+        }
+    }
+
+    /**
+     * @return the adaphh
+     */
+    public AdapHH getAdaphh() {
+        return adaphh;
     }
 }
