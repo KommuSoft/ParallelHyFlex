@@ -82,15 +82,15 @@ public class ThreeSatWritableEnforceableConstraint1Test extends ThreeSatWritable
             ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateCompletelyTrueClause(tss.getCompactBitArray()));
             ByteArrayInputStream bais;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                DataOutputStream dos = new DataOutputStream(baos);
-                tswec.write(dos);
-                dos.close();
+                try (DataOutputStream dos = new DataOutputStream(baos)) {
+                    tswec.write(dos);
+                }
                 bais = new ByteArrayInputStream(baos.toByteArray());
             }
-            DataInputStream dis = new DataInputStream(bais);
-            EnforceableConstraint<ThreeSatSolution> tswec2 = tsweg.readAndGenerate(dis);
-            Assert.assertEquals(tswec, tswec2);
-            dis.close();
+            try (DataInputStream dis = new DataInputStream(bais)) {
+                EnforceableConstraint<ThreeSatSolution> tswec2 = tsweg.readAndGenerate(dis);
+                Assert.assertEquals(tswec, tswec2);
+            }
             bais.close();
         }
     }
