@@ -28,12 +28,13 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int PH_FACTOR = 500;
     public static final int PH_REQUESTED = 100;
     public static final int LIST_SIZE = 10;
-    public static final int L_SIZE = 5;
     public static final int S = 0;
     public static final int Sa = 1;
     public static final int Saa = 2;
     public static final double GAMMA_MIN = 0.02d;
     public static final double GAMMA_MAX = 50.0d;
+    public static final double LIST_PROBABILITY = 0.25d;
+    public static final double LAMBDA1 = 0.5d;
     
     private final AdaptiveDynamicHeuristicSetStrategy adhs;
     private final AdapHHHeuristicRecord[] records;
@@ -54,7 +55,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      */
     public AdapHH(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         super(problem, durationTicks, experience, negotiator, negotiationTicks, solutionReader);
-        this.learningAutomaton = new LearningAutomaton<>();
+        this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
         this.records = new AdapHHHeuristicRecord[this.getNumberOfHeuristics()];
@@ -75,7 +76,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      */
     public AdapHH(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         super(problemReader, durationTicks, experience, negotiator, negotiationTicks, solutionReader);
-        this.learningAutomaton = new LearningAutomaton<>();
+        this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
         this.records = new AdapHHHeuristicRecord[this.getNumberOfHeuristics()];
@@ -86,7 +87,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     protected void execute() {
         while (this.hasTimeLeft()) {
             this.periodGlobalImprovement = false;
-            this.pl = PH_FACTOR * ((int) Math.sqrt(2 * this.adhs.size()));
+            this.pl = PH_FACTOR * ((int) Math.sqrt(2 * this.getAdhs().size()));
             this.cPhase = 0;
             for (int i = this.getPl(); i > 0; i--) {
                 iteration();
@@ -103,7 +104,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     }
 
     private void endPhase() {
-        this.adhs.newPhase();
+        this.getAdhs().newPhase();
     }
 
     /**
@@ -117,7 +118,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         int durationoffset = (int) Math.round(Math.sqrt(2.0d * this.records.length));
         for (int i = 0; i < this.records.length; i++) {
             this.records[i] = new AdapHHHeuristicRecord(this, i, durationoffset);
-            this.adhs.add(this.records[i]);
+            this.getAdhs().add(this.records[i]);
         }
         double globmin = Double.POSITIVE_INFINITY;
         for (int i = 0; i < this.getReadableMemory(); i++) {
@@ -186,5 +187,12 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      */
     public double getGlobalOptimum() {
         return globalOptimum;
+    }
+
+    /**
+     * @return the adhs
+     */
+    public AdaptiveDynamicHeuristicSetStrategy getAdhs() {
+        return adhs;
     }
 }

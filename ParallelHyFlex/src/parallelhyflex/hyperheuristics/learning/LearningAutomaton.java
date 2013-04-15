@@ -49,9 +49,23 @@ public class LearningAutomaton<TAction> {
         this(new LinearLearningScheme(lambda1, lambda2));
         this.reset(actions);
     }
+    
+    public LearningAutomaton(double lambda) {
+        this(lambda,lambda);
+    }
+
+    public LearningAutomaton(double lambda, Iterable<TAction> actions) {
+        this(lambda);
+        this.reset(actions);
+    }
 
     public LearningAutomaton() {
-        this(1.0d, 1.0d);
+        this(1.0d);
+    }
+    
+    public LearningAutomaton(Iterable<TAction> actions) {
+        this();
+        this.reset(actions);
     }
 
     public void reset() {
