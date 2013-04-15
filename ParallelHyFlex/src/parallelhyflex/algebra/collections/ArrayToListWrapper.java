@@ -1,4 +1,4 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.collections;
 
 import java.util.Arrays;
 import java.util.Collection;
