@@ -1,4 +1,4 @@
-package parallelhyflex.algebra;
+package parallelhyflex.algebra.collections;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,13 +11,15 @@ import java.util.Queue;
  * @author kommusoft
  */
 public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
-    
-    private int currentPointer;
+
+    private int readPointer;
+    private int writePointer;
     private Object[] data;
-    
-    public void CircularList (int capacity) {
+
+    public void CircularList(int capacity) {
         this.data = new Object[capacity];
-        this.currentPointer = 0;
+        this.readPointer = 0;
+        this.writePointer = 0;
     }
 
     @Override
@@ -32,11 +34,11 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
 
     @Override
     public boolean contains(Object o) {
-        if(o == null) {
+        if (o == null) {
             return false;
         }
-        for(int i = 0; i < data.length; i++) {
-            if(o.equals(this.data[i])) {
+        for (int i = 0; i < data.length; i++) {
+            if (o.equals(this.data[i])) {
                 return true;
             }
         }
@@ -51,8 +53,8 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
     @Override
     public Object[] toArray() {
         Object[] obj = new Object[data.length];
-        System.arraycopy(this.data, this.currentPointer, obj, 0, this.data.length-this.currentPointer);
-        System.arraycopy(this.data, 0, obj, this.data.length-this.currentPointer, this.currentPointer);
+        System.arraycopy(this.data, this.readPointer, obj, 0, this.data.length - this.readPointer);
+        System.arraycopy(this.data, 0, obj, this.data.length - this.readPointer, this.readPointer);
         return obj;
     }
 
@@ -63,52 +65,66 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
 
     @Override
     public boolean add(TItem e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.data[writePointer] = e;
+        this.incWritePointer();
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;//cannot directly remove
     }
 
     @Override
     public boolean containsAll(Collection<?> clctn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (Object o : clctn) {
+            if (!this.contains(o)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends TItem> clctn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (TItem t : clctn) {
+            this.add(t);
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(int i, Collection<? extends TItem> clctn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;//cannot insert
     }
 
     @Override
     public boolean removeAll(Collection<?> clctn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;//cannot remove given collections
     }
 
     @Override
     public boolean retainAll(Collection<?> clctn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;//cannot retain given collections
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.writePointer = 0;
+        this.readPointer = 0;
+        for (int i = 0; i < data.length; i++) {
+            data[i] = null;
+        }
     }
 
     @Override
     public TItem get(int i) {
-        return (TItem) this.data[(this.currentPointer+i)%this.data.length];
+        return (TItem) this.data[relReadPointer(i)];
     }
 
     @Override
     public TItem set(int i, TItem e) {
-        int index = (this.currentPointer+i)%this.data.length;
+        int index = relWritePointer(i);
         TItem res = (TItem) this.data[index];
         this.data[index] = e;
         return res;
@@ -116,22 +132,46 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
 
     @Override
     public void add(int i, TItem e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.set(i, e);
     }
 
     @Override
     public TItem remove(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.set(i, null);
     }
 
     @Override
     public int indexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (o != null) {
+            for (int i = 0; i < data.length-this.readPointer; i++) {
+                if (o.equals(data[i+this.readPointer])) {
+                    return i;
+                }
+            }
+            for (int i = -this.readPointer; i < 0; i++) {
+                if (o.equals(data[i+this.readPointer])) {
+                    return i+data.length;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (o != null) {
+            for (int i = -1; i >= -this.readPointer; i--) {
+                if (o.equals(data[i+this.readPointer])) {
+                    return i+data.length;
+                }
+            }
+            for (int i = data.length-this.readPointer-1; i > 0; i--) {
+                if (o.equals(data[i+this.readPointer])) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -151,27 +191,44 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
 
     @Override
     public boolean offer(TItem e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.data[this.writePointer] = e;
+        this.incWritePointer();
+        return true;
     }
 
     @Override
     public TItem remove() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TItem item = this.element();
+        this.incReadPointer();
+        return item;
     }
 
     @Override
     public TItem poll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.remove();
     }
 
     @Override
     public TItem element() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (TItem) this.data[this.readPointer];
     }
 
     @Override
     public TItem peek() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.element();
+    }
+
+    private int relReadPointer(int i) {
+        return (this.readPointer + i) % this.data.length;
+    }
+    private int relWritePointer(int i) {
+        return (this.writePointer + i) % this.data.length;
+    }
+    private void incReadPointer () {
+        this.readPointer = relReadPointer(1);
+    }
+    private void incWritePointer () {
+        this.readPointer = relReadPointer(1);
     }
     
 }
