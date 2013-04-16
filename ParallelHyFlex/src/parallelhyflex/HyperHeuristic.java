@@ -41,6 +41,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private final TProblem problem;
     private final SearchSpaceNegotiator<TSolution, TEC> negotiator;
     private final PacketRouterBase prr = new PacketRouterBase();
+    private final double[] bestObjectives;
 
     /**
      * @note: This constructor can only be initialized if the machine is the
@@ -83,6 +84,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             }
             Communication.BC(data, 0, 1, MPI.OBJECT, 0);
             int nw = this.getWritableMemory();
+            int O = this.problem.getNumberOfObjectiveFunctions();
+            this.bestObjectives = new double[O];
+            for(int i = 0; i < O; i++) {
+                this.bestObjectives[i] = Double.POSITIVE_INFINITY;
+            }
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
@@ -138,6 +144,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.negotiator = negotiator.generate(this.problem);
             this.proxyMemory.setWritableExperience(this.experience);
             int nw = this.getWritableMemory();
+            int O = this.problem.getNumberOfObjectiveFunctions();
+            this.bestObjectives = new double[O];
+            for(int i = 0; i < O; i++) {
+                this.bestObjectives[i] = Double.POSITIVE_INFINITY;
+            }
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
             }
@@ -148,14 +159,17 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
     public void applyHeuristic(int heuristic, int from, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from, to);
+        updateBestObjectives(to);
     }
 
     public void applyHeuristic(int heuristic, int from1, int from2, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from1, from2, to);
+        updateBestObjectives(to);
     }
 
     public final void initializeSolution(int index) {
         this.proxyMemory.setSolution(index, this.problem.getSolutionGenerator().generateSolution());
+        updateBestObjectives(index);
     }
 
     public double getObjectiveFunction(int objective, int solutionIndex) {
@@ -316,6 +330,12 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     
     public CompactBitArray getExchangeBlockingMask () {
         return this.proxyMemory.getExchangeBlockingMask();
+    }
+
+    private void updateBestObjectives(int to) {
+        for(int o = this.problem.getNumberOfObjectiveFunctions()-1; o >= 0; o--) {
+            this.bestObjectives[o] = this.getObjectiveFunction(o, to);
+        }
     }
     
     private class FetchThread extends Thread {

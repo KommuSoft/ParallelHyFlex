@@ -190,6 +190,21 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     private void resetPhaseMemory() {
+        if(this.fpimp == 0.0d && this.fpwrs == 0.0d) {
+            this.setPerformanceType(HeuristicPerformanceType.OnlyEqual);
+        }
+        else if(this.fpwrs == 0.0d) {
+            this.setPerformanceType(HeuristicPerformanceType.ImprovingOrEqual);
+        }
+        else if(this.fpimp == 0.0d) {
+            this.setPerformanceType(HeuristicPerformanceType.WorseningOrEqual);
+        }
+        else if(this.fpimp > this.fpwrs) {
+            this.setPerformanceType(HeuristicPerformanceType.ImprovingMore);
+        }
+        else {
+            this.setPerformanceType(HeuristicPerformanceType.WorseningMore);
+        }
         this.cpbest = 0;
         this.fpimp = 0.0d;
         this.fpwrs = 0.0d;
