@@ -4,8 +4,29 @@ import java.util.Date;
 import parallelhyflex.algebra.Phasable;
 import parallelhyflex.algebra.Tabuable;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_BEST_IM1;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_BEST_IM2;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_BEST_IOE;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_BEST_WM;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_EQUA_IM;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_EQUA_IOE1;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_EQUA_IOE2;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_IMPR_IM1;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_IMPR_IM2;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_IMPR_IOE;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_IMPR_WM;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_WORS_IM;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.THETA1;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.THETA2;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.THETA3;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.THETA4;
 import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordBase;
+import parallelhyflex.hyperheuristics.records.HeuristicPerformanceType;
+import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingMore;
+import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingOrEqual;
+import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.WorseningMore;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -23,6 +44,8 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     private int tabuDuration;
     private boolean tabued = true;
     private int tabuEscapeCounter = 0;
+    private double value = 0.6d;
+    private HeuristicPerformanceType performanceType = HeuristicPerformanceType.OnlyEqual;
 
     /**
      *
@@ -220,6 +243,8 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public void execute(int from, int to) {
+        adaphh.setDepthOfSearch(this.getValue());
+        adaphh.setIntensityOfMutation(this.getValue());
         double oldeval = this.getAdaphh().getObjectiveFunction(0, from);
         int from2 = 0;
         if(this.isCrossover()) {
@@ -254,4 +279,113 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public boolean isCrossover() {
         return crossover;
     }
+
+    /**
+     * @return the valuei
+     */
+    public double getValue() {
+        return value;
+    }
+
+    /**
+     * @param valuei the valuei to set
+     */
+    public void setValue(double valuei) {
+        this.value = Utils.border(0.2d,valuei,1.0d);
+    }
+    
+    
+    private void parameterAdaption(int sa, int sb, int s) {
+        double u = 1.0d;
+        double val = this.getValue();
+        double p = Utils.StaticRandom.nextDouble();
+        double fsa = this.getAdaphh().getObjectiveFunction(sa);
+        double fsb = this.getAdaphh().getObjectiveFunction(sb);
+        double fs = this.getAdaphh().getObjectiveFunction(s);
+        if (fsa < fsb) {
+            switch (getPerformanceType()) {
+                case ImprovingOrEqual:
+                    if(p < P_BEST_IOE) {
+                        u = 0.0d;
+                    }
+                    break;
+                case ImprovingMore:
+                    if(p < P_BEST_IM1) {
+                        u = -1.0d;
+                    }
+                    else if(p < P_BEST_IM2) {
+                        u = 0.0d;
+                    }
+                    break;
+                case WorseningMore:
+                    if(p < P_BEST_WM) {
+                        u = 0.0d;
+                    }
+                    break;
+            }
+            val += THETA1*u;
+        } else if (fsa < fs) {
+            switch (getPerformanceType()) {
+                case ImprovingOrEqual:
+                    if(p < P_IMPR_IOE) {
+                        u = 0.0d;
+                    }
+                    break;
+                case ImprovingMore:
+                    if(p < P_IMPR_IM1) {
+                        u = -1.0d;
+                    }
+                    else if(p < P_IMPR_IM2) {
+                        u = 0.0d;
+                    }
+                    break;
+                case WorseningMore:
+                    if(p < P_IMPR_WM) {
+                        u = -1.0d;
+                    }
+                    break;
+            }
+            val += THETA2*u;
+        } else if (fsa > fs) {
+            if (getPerformanceType().equals(HeuristicPerformanceType.ImprovingMore) && p < P_WORS_IM) {
+                u = 0.0d;
+            }
+            val -= THETA3*u;
+        } else {
+            switch (getPerformanceType()) {
+                case ImprovingOrEqual:
+                    if(p < P_EQUA_IOE1) {
+                        u = -1.0d;
+                    }
+                    else if(p < P_EQUA_IOE2) {
+                        u = 0.0d;
+                    }
+                    break;
+                case ImprovingMore:
+                    if(p < P_EQUA_IM) {
+                        u = 0.0d;
+                    }
+                    break;
+                default:
+                    u = -1.0d;
+            }
+            val -= THETA4*u;
+        }
+        this.setValue(val);
+    }
+
+    /**
+     * @return the performanceType
+     */
+    public HeuristicPerformanceType getPerformanceType() {
+        return performanceType;
+    }
+
+    /**
+     * @param performanceType the performanceType to set
+     */
+    public void setPerformanceType(HeuristicPerformanceType performanceType) {
+        this.performanceType = performanceType;
+    }
+    
 }

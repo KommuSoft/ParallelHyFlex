@@ -44,8 +44,8 @@ public abstract class ThreeSatWritableEnforceableConstraintTestBase extends Thre
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewSolution2();
             tswec.enforceTrue(tss2);
-            Assert.assertTrue(tswec.isSatisfied(tss2));
-            Assert.assertFalse(tswec.isNotSatisfied(tss2));
+            Assert.assertTrue(String.format("failed with 3SWEC=%s", tswec), tswec.isSatisfied(tss2));
+            Assert.assertFalse(String.format("failed with 3SWEC=%s", tswec), tswec.isNotSatisfied(tss2));
         }
     }
 
