@@ -161,6 +161,14 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from, to);
         updateBestObjectives(to);
     }
+    
+    public double getBestObjectiveSolution (int objective) {
+        return this.bestObjectives[objective];
+    }
+    
+    public double getBestObjectiveSolution () {
+        return this.getBestObjectiveSolution(0);
+    }
 
     public void applyHeuristic(int heuristic, int from1, int from2, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from1, from2, to);
@@ -336,6 +344,10 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         for(int o = this.problem.getNumberOfObjectiveFunctions()-1; o >= 0; o--) {
             this.bestObjectives[o] = this.getObjectiveFunction(o, to);
         }
+    }
+    
+    public void copySolution (int from, int to) {
+        this.proxyMemory.copySolution(from,to);
     }
     
     private class FetchThread extends Thread {

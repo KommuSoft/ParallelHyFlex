@@ -11,10 +11,6 @@ import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecordEvalua
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHybridRelaxationHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdaptiveDynamicHeuristicSetStrategy;
 import parallelhyflex.hyperheuristics.learning.LearningAutomaton;
-import parallelhyflex.hyperheuristics.records.HeuristicPerformanceType;
-import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingMore;
-import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingOrEqual;
-import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.WorseningMore;
 import parallelhyflex.hyperheuristics.records.ProbabilityVectorBase;
 import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
@@ -35,10 +31,17 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int PH_FACTOR = 500;
     public static final int PH_REQUESTED = 100;
     public static final int LIST_SIZE = 10;
-    public static final int S = 0;
-    public static final int Sa = 1;
-    public static final int Saa = 2;
+    public static final int S = 0;//S location
+    public static final int Sa = 1;//S' location
+    public static final int Saa = 2;//S'' location
+    public static final int Sb = 2;//best solution location
     public static final int HISTORY_LENGTH = 5;
+    public static final int LOCAL_MEMORY_SIZE = 4+HISTORY_LENGTH;//S, S', S'', Sb and HISTORY
+    public static final int NON_EXCHANGE_MEMORY_FROM = 1;
+    public static final int NON_EXCHANGE_MEMORY_TO = 2;
+    public static final int AILLA_K = 20;
+    public static final int AILLA_LBASE = 5;
+    public static final int AILLA_LINITIAL = 10;
     public static final double GAMMA_MIN = 0.02d;
     public static final double GAMMA_MAX = 50.0d;
     public static final double LIST_PROBABILITY = 0.25d;
@@ -76,7 +79,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * with a rank different from zero!
      */
     public AdapHH(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
-        super(problem, durationTicks, experience, negotiator, negotiationTicks, solutionReader, 3 + HISTORY_LENGTH, MemoryExchangePolicy.QueuedProbableDistributed);
+        super(problem, durationTicks, experience, negotiator, negotiationTicks, solutionReader, LOCAL_MEMORY_SIZE, MemoryExchangePolicy.QueuedProbableDistributed);
         this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
@@ -97,7 +100,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * @throws IOException
      */
     public AdapHH(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
-        super(problemReader, durationTicks, experience, negotiator, negotiationTicks, solutionReader, 3 + HISTORY_LENGTH, MemoryExchangePolicy.QueuedProbableDistributed);
+        super(problemReader, durationTicks, experience, negotiator, negotiationTicks, solutionReader, LOCAL_MEMORY_SIZE, MemoryExchangePolicy.QueuedProbableDistributed);
         this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
@@ -137,7 +140,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     }
 
     private void init() {
-        this.getExchangeBlockingMask().setRange(0, 2);//block the exchange of temporary solutions
+        this.getExchangeBlockingMask().setRange(NON_EXCHANGE_MEMORY_FROM, NON_EXCHANGE_MEMORY_TO);//block the exchange of temporary solutions
         int durationoffset = (int) Math.round(Math.sqrt(2.0d * this.records.length));
         for (int i = 0; i < this.records.length; i++) {
             this.records[i] = new AdapHHHeuristicRecord(this, i, durationoffset);

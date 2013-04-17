@@ -256,6 +256,14 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public double getCiMove() {
         return (double) this.cmoves / (double) this.tspent;
     }
+    
+    public void execute () {
+        this.execute(AdapHH.S,AdapHH.Sa);
+    }
+    
+    public void execute (int from) {
+        this.execute(from,from+1);
+    }
 
     public void execute(int from, int to) {
         adaphh.setDepthOfSearch(this.getValue());

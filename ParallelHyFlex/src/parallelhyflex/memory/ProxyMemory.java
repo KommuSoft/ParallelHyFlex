@@ -171,5 +171,9 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     public CompactBitArray getExchangeBlockingMask () {
         return this.localSlots.getBlockingMask();
     }
+
+    public void copySolution(int from, int to) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

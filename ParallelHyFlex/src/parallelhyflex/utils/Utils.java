@@ -85,7 +85,7 @@ public class Utils {
 
                     @Override
                     public boolean hasNext() {
-                        return value + delta < to;
+                        return value < to;
                     }
 
                     @Override
