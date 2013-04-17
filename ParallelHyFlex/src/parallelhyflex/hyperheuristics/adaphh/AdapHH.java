@@ -66,6 +66,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     private final AdapHHHeuristicRecord[] records;
     private final ProbabilityVectorBase heuristicSelector;
     private final LearningAutomaton<AdapHHHybridRelaxationHeuristicRecord> learningAutomaton;
+    private final AdaptiveIterationLimitedListbasedThresholdMoveAcceptor ailla;
     private boolean periodGlobalImprovement = false;
     private int cPhase, cBestS, cBestR, pl;
     private double globalOptimum = Double.NaN;
@@ -84,6 +85,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
         this.records = new AdapHHHeuristicRecord[this.getNumberOfHeuristics()];
+        this.ailla = new AdaptiveIterationLimitedListbasedThresholdMoveAcceptor(this);
         this.init();
     }
 
@@ -105,6 +107,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
         this.records = new AdapHHHeuristicRecord[this.getNumberOfHeuristics()];
+        this.ailla = new AdaptiveIterationLimitedListbasedThresholdMoveAcceptor(this);
         this.init();
     }
 
@@ -123,6 +126,11 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     }
 
     private void iteration() {
+        AdapHHHeuristicRecord adhr = this.getAdhs().getRandomIndividual();
+        adhr.execute();
+        this.ailla.acceptMove(Sa, S, Sb);
+        this.learningAutomaton.getAction().execute();
+        this.ailla.acceptMove(Saa, S, Sb);
     }
 
     private void aILLAMoveAcceptance() {

@@ -30,6 +30,7 @@ public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord
         this.nextHeuristic = new CircularList<>(AdapHH.LIST_SIZE);
     }
 
+    @Override
     public void execute() {
         double gamma = Utils.border(GAMMA_MIN, (this.getAdaphh().getCBestS() + 1.0d) / (this.getAdaphh().getCBestR() + 1.0d), GAMMA_MAX);
         if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.getAdaphh().getCPhase() / this.getAdaphh().getPl(), gamma)) {

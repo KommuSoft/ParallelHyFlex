@@ -42,6 +42,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private final SearchSpaceNegotiator<TSolution, TEC> negotiator;
     private final PacketRouterBase prr = new PacketRouterBase();
     private final double[] bestObjectives;
+    private final int[] bestObjectiveSolutionIndices;
 
     /**
      * @note: This constructor can only be initialized if the machine is the
@@ -86,8 +87,10 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             int nw = this.getWritableMemory();
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
+            this.bestObjectiveSolutionIndices = new int[O];
             for(int i = 0; i < O; i++) {
                 this.bestObjectives[i] = Double.POSITIVE_INFINITY;
+                this.bestObjectiveSolutionIndices[i] = 0;
             }
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
@@ -146,8 +149,10 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             int nw = this.getWritableMemory();
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
+            this.bestObjectiveSolutionIndices = new int[O];
             for(int i = 0; i < O; i++) {
                 this.bestObjectives[i] = Double.POSITIVE_INFINITY;
+                this.bestObjectiveSolutionIndices[i] = 0;
             }
             for (int i = 0; i < nw; i++) {
                 this.initializeSolution(i);
@@ -166,8 +171,16 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         return this.bestObjectives[objective];
     }
     
+    public int getBestObjectiveSolutionIndex (int objective) {
+        return this.bestObjectiveSolutionIndices[objective];
+    }
+    
     public double getBestObjectiveSolution () {
         return this.getBestObjectiveSolution(0);
+    }
+    
+    public int getBestObjectiveSolutionIndex () {
+        return this.getBestObjectiveSolutionIndex(0);
     }
 
     public void applyHeuristic(int heuristic, int from1, int from2, int to) {
@@ -342,7 +355,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
     private void updateBestObjectives(int to) {
         for(int o = this.problem.getNumberOfObjectiveFunctions()-1; o >= 0; o--) {
-            this.bestObjectives[o] = this.getObjectiveFunction(o, to);
+            double eval = this.getObjectiveFunction(o, to);
+            if(eval < this.bestObjectives[o]) {
+                this.bestObjectives[o] = eval;
+                this.bestObjectiveSolutionIndices[o] = to;
+            }
         }
     }
     
