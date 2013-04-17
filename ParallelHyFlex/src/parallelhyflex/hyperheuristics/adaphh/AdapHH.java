@@ -36,7 +36,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public static final int Saa = 2;//S'' location
     public static final int Sb = 2;//best solution location
     public static final int HISTORY_LENGTH = 5;
-    public static final int LOCAL_MEMORY_SIZE = 4+HISTORY_LENGTH;//S, S', S'', Sb and HISTORY
+    public static final int LOCAL_MEMORY_SIZE = 4 + HISTORY_LENGTH;//S, S', S'', Sb and HISTORY
     public static final int NON_EXCHANGE_MEMORY_FROM = 1;
     public static final int NON_EXCHANGE_MEMORY_TO = 2;
     public static final int AILLA_K = 20;
@@ -129,8 +129,11 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         AdapHHHeuristicRecord adhr = this.getAdhs().getRandomIndividual();
         adhr.execute();
         this.ailla.acceptMove(Sa, S, Sb);
-        this.learningAutomaton.getAction().execute();
-        this.ailla.acceptMove(Saa, S, Sb);
+        double gamma = Utils.border(GAMMA_MIN, (this.getCBestS() + 1.0d) / (this.getCBestR() + 1.0d), GAMMA_MAX);
+        if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.getCPhase() / this.getPl(), gamma)) {
+            this.learningAutomaton.getAction().execute();
+            this.ailla.acceptMove(Saa, S, Sb);
+        }
     }
 
     private void aILLAMoveAcceptance() {

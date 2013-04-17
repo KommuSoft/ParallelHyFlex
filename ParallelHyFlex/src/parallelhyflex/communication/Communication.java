@@ -80,7 +80,6 @@ public class Communication {
         try {
             logWriter.write(message);
             logWriter.newLine();
-            logWriter.flush();
         } catch (Exception e) {
         }
     }
@@ -89,7 +88,6 @@ public class Communication {
         try {
             logWriter.write(new Date().getTime()+"\t"+message);
             logWriter.newLine();
-            //logWriter.flush();
         } catch (Exception e) {
         }
     }

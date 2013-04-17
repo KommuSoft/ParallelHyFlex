@@ -172,8 +172,15 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
     }
 
     private ArrayList<SetHypothesisItem<TSolution, THypothesis>> getSortedHypothesisList() {
-        ArrayList<SetHypothesisItem<TSolution, THypothesis>> items = this.getUnsortedHypothesisList();
-        Collections.sort(items, this.getComparator());
+        ArrayList<SetHypothesisItem<TSolution, THypothesis>> items = null;
+        Lock lo = this.setLock.readLock();
+        lo.lock();
+        try {
+            items = this.getUnsortedHypothesisList();
+            Collections.sort(items, this.getComparator());
+        } finally {
+            lo.unlock();
+        }
         return items;
     }
 

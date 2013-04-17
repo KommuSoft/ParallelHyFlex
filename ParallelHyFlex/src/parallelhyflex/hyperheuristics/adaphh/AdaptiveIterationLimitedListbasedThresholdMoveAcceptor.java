@@ -4,7 +4,6 @@
  */
 package parallelhyflex.hyperheuristics.adaphh;
 
-import parallelhyflex.algebra.collections.CircularList;
 import parallelhyflex.algebra.collections.StridingList;
 
 /**

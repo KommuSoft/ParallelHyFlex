@@ -160,11 +160,14 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     @Override
     public void receivePacket(int from, int tag, Object data) throws IOException {
         Object[] buffer = (Object[]) data;
-        Communication.Log("received " + Arrays.toString(buffer));
+        //Communication.Log("received " + Arrays.toString(buffer));
         try (ByteArrayInputStream bais = new ByteArrayInputStream((byte[]) buffer[2]); DataInputStream dis = new DataInputStream(bais)) {
             TSolution sol = solutionReader.readAndGenerate(dis);
             searchSpace.correct(sol);
             solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
+        }
+        catch (Exception e) {
+            Communication.Log(e);
         }
     }
     

@@ -32,17 +32,13 @@ public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord
 
     @Override
     public void execute() {
-        double gamma = Utils.border(GAMMA_MIN, (this.getAdaphh().getCBestS() + 1.0d) / (this.getAdaphh().getCBestR() + 1.0d), GAMMA_MAX);
-        if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.getAdaphh().getCPhase() / this.getAdaphh().getPl(), gamma)) {
-            this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), AdapHH.S, AdapHH.Sa);
-            AdapHHHeuristicRecord adhr;
-            if (this.nextHeuristic.size() > 0 && Utils.StaticRandom.nextDouble() < AdapHH.LIST_PROBABILITY) {
-                adhr = ProbabilityUtils.randomElement(nextHeuristic);
-            } else {
-                adhr = this.getAdaphh().getAdhs().getRandomIndividual();
-            }
-            adhr.execute(AdapHH.Sa, AdapHH.Saa);
-            //TODO: do relayHybridisation
+        this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), AdapHH.S, AdapHH.Sa);
+        AdapHHHeuristicRecord adhr;
+        if (this.nextHeuristic.size() > 0 && Utils.StaticRandom.nextDouble() < AdapHH.LIST_PROBABILITY) {
+            adhr = ProbabilityUtils.randomElement(nextHeuristic);
+        } else {
+            adhr = this.getAdaphh().getAdhs().getRandomIndividual();
         }
+        adhr.execute(AdapHH.Sa, AdapHH.Saa);
     }
 }

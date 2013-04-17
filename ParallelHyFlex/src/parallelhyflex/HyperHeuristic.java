@@ -405,7 +405,9 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 } catch (Exception e) {
                     Communication.Log(e);
                 }
+                Communication.LogFileTime("START NEGOTIATIONS");
                 ss = negotiator.negotiate(experience.generateEnforceableConstraints());
+                Communication.LogFileTime("END NEGOTIATIONS");
                 proxyMemory.setSearchSpace(ss);
             }
         }
