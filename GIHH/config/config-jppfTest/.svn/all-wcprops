@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/FIT/!svn/ver/2/FITHyperHeuristicWithVisitTypesV2/config/config-mustafaTest
+END
+logging.properties
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/FIT/!svn/ver/2/FITHyperHeuristicWithVisitTypesV2/config/config-mustafaTest/logging.properties
+END
+jppf-client.properties
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/FIT/!svn/ver/2/FITHyperHeuristicWithVisitTypesV2/config/config-mustafaTest/jppf-client.properties
+END
+log4j-client.properties
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/FIT/!svn/ver/2/FITHyperHeuristicWithVisitTypesV2/config/config-mustafaTest/log4j-client.properties
+END
