@@ -1,5 +1,7 @@
 package parallelhyflex.algebra.collections;
 
+import java.util.Arrays;
+
 /**
  *
  * @author kommusoft
@@ -15,7 +17,8 @@ public class StridingList<TItem> {
     }
     
     public void add (TItem item) {
-        this.data[this.pointer++] = data;
+        this.data[this.pointer] = item;
+        this.pointer = (this.pointer+1)%data.length;
     }
     
     public TItem get (int index) {
@@ -24,6 +27,11 @@ public class StridingList<TItem> {
 
     public int size() {
         return data.length;
+    }
+
+    @Override
+    public String toString() {
+        return "StridingList{" + "data=" + Arrays.toString(data) + ", pointer=" + pointer + '}';
     }
     
 }

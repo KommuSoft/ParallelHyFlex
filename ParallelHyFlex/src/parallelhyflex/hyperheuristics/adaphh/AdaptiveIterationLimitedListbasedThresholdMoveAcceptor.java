@@ -17,6 +17,7 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
 
     public AdaptiveIterationLimitedListbasedThresholdMoveAcceptor(AdapHH adaphh) {
         super(adaphh);
+        this.l = 10;
         this.bestList = new StridingList<>(l);
         double best = adaphh.getBestObjectiveSolution();
         for (int i = 0; i < l; i++) {
@@ -45,9 +46,13 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
         } else {
             this.w_iterations++;
             this.adapt_iterations++;
-            if(w_iterations >= k && fsa <= this.bestList.get(this.bestList.size()-best_list_index)) {
-                this.getAdapHH().copySolution(sa, s);
-                this.w_iterations = 0;
+            if(w_iterations >= k) {
+                System.out.println(this.bestList);
+                double val = this.bestList.get(this.bestList.size()-best_list_index);
+                if(fsa < val) {
+                    this.getAdapHH().copySolution(sa, s);
+                    this.w_iterations = 0;
+                }
             }
         }
     }
