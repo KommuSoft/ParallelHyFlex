@@ -91,3 +91,4 @@ ParallelHyFlex/build/*
 *.dll
 *.exe.mdb
 /ParallelHyFlex/dist/
+/GIHH/nbproject/private/
