@@ -75,11 +75,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     }
 
     public TSolution getSolution(int index) {
-        int ii = Utils.getLengthIndex(this.cdfI, index);
+        int ii = Utils.getLengthIndex(this.cdfI, index+1);
+        System.out.println(String.format("cdfI %s",Arrays.toString(this.cdfI)));
         int ij = index;
         if (ii > 0) {
             ij -= this.cdfI[ii - 1];
         }
+        System.out.println(String.format("%s -> %s/%s",index,ii,ij));
         return this.solutionCache[ii].getSolution(ij);
     }
 
@@ -176,7 +178,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     }
 
     public void copySolution(int from, int to) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setSolution(to,this.getSolution(from));
     }
     
 }

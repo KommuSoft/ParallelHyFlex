@@ -1,10 +1,19 @@
 package parallelhyflex;
 
 import java.io.IOException;
+import parallelhyflex.algebra.CloningGenerator;
+import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.problems.threesat.hyperheuristics.SimpleThreeSatHyperHeuristic;
+import parallelhyflex.hyperheuristics.adaphh.AdapHH;
+import static parallelhyflex.hyperheuristics.adaphh.AdapHH.LOCAL_MEMORY_SIZE;
+import parallelhyflex.problemdependent.searchspace.negotation.TwoSetWriteableSearchSpaceNegotiator;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator1;
+import parallelhyflex.problems.threesat.experience.ThreeSatExperience;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *
@@ -19,6 +28,7 @@ public class ParallelHyFlex {
 
 
         Communication.initializeCommunication(args);
+        System.out.println("LMS="+LOCAL_MEMORY_SIZE);
         try {
             ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(2_380, 10_000);// = new ThreeSatProblemGenerator(128,500);
             HyperHeuristic dummy;
@@ -27,9 +37,9 @@ public class ParallelHyFlex {
             //long timespan = 7200000;//two hours
             if (Communication.getCommunication().getRank() == 0) {
                 ThreeSatProblem tsp = tspg.generateProblem();
-                dummy = new SimpleThreeSatHyperHeuristic(tsp, timespan);
+                dummy = new AdapHH(tsp, timespan, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
             } else {
-                dummy = new SimpleThreeSatHyperHeuristic(tspg, timespan);
+                dummy = new AdapHH(tspg, timespan, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
             }
             dummy.startExecute();
         } catch (ProtocolException | IOException e) {
@@ -37,5 +47,9 @@ public class ParallelHyFlex {
             e.printStackTrace();
         }
         Communication.finalizeCommunication();
+    }
+
+    private static Generator<ThreeSatProblem, TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1, ThreeSatWritableEnforceableConstraintGenerator1>> negoGenerator() {
+        return new CloningGenerator(new TwoSetWriteableSearchSpaceNegotiator<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1, ThreeSatWritableEnforceableConstraintGenerator1>(new ThreeSatWritableEnforceableConstraintGenerator1(null)));
     }
 }

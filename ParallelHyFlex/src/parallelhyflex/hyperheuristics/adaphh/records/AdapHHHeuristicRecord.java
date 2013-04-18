@@ -3,6 +3,7 @@ package parallelhyflex.hyperheuristics.adaphh.records;
 import java.util.Date;
 import parallelhyflex.algebra.Phasable;
 import parallelhyflex.algebra.Tabuable;
+import parallelhyflex.communication.Communication;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_BEST_IM1;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.P_BEST_IM2;
@@ -44,7 +45,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     private int tabuDuration;
     private boolean tabued = true;
     private int tabuEscapeCounter = 0;
-    private double value = 0.6d;
+    private double dosiom = 0.6d;
     private HeuristicPerformanceType performanceType = HeuristicPerformanceType.OnlyEqual;
 
     /**
@@ -190,19 +191,15 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     private void resetPhaseMemory() {
-        if(this.fpimp == 0.0d && this.fpwrs == 0.0d) {
+        if (this.fpimp == 0.0d && this.fpwrs == 0.0d) {
             this.setPerformanceType(HeuristicPerformanceType.OnlyEqual);
-        }
-        else if(this.fpwrs == 0.0d) {
+        } else if (this.fpwrs == 0.0d) {
             this.setPerformanceType(HeuristicPerformanceType.ImprovingOrEqual);
-        }
-        else if(this.fpimp == 0.0d) {
+        } else if (this.fpimp == 0.0d) {
             this.setPerformanceType(HeuristicPerformanceType.WorseningOrEqual);
-        }
-        else if(this.fpimp > this.fpwrs) {
+        } else if (this.fpimp > this.fpwrs) {
             this.setPerformanceType(HeuristicPerformanceType.ImprovingMore);
-        }
-        else {
+        } else {
             this.setPerformanceType(HeuristicPerformanceType.WorseningMore);
         }
         this.cpbest = 0;
@@ -256,29 +253,29 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public double getCiMove() {
         return (double) this.cmoves / (double) this.tspent;
     }
-    
-    public void execute () {
-        this.execute(AdapHH.S,AdapHH.Sa);
+
+    public void execute() {
+        this.execute(AdapHH.S, AdapHH.Sa);
     }
-    
-    public void execute (int from) {
-        this.execute(from,from+1);
+
+    public void execute(int from) {
+        this.execute(from, from + 1);
     }
 
     public void execute(int from, int to) {
-        adaphh.setDepthOfSearch(this.getValue());
-        adaphh.setIntensityOfMutation(this.getValue());
+        Communication.LogFileTime("FOO");
+        adaphh.setDepthOfSearch(this.getDOSIOM());
+        adaphh.setIntensityOfMutation(this.getDOSIOM());
         double oldeval = this.getAdaphh().getObjectiveFunction(0, from);
         int from2 = 0;
-        if(this.isCrossover()) {
+        if (this.isCrossover()) {
             from2 = this.getAdaphh().getRandomHistorySolutionIndex();
-            oldeval = 0.5*(oldeval+this.getAdaphh().getObjectiveFunction(0,from2));
+            oldeval = 0.5 * (oldeval + this.getAdaphh().getObjectiveFunction(0, from2));
         }
         long oldticks = new Date().getTime();
-        if(this.isCrossover()) {
+        if (this.isCrossover()) {
             this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from, from2, to);
-        }
-        else {
+        } else {
             this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), from, to);
         }
         long dt = new Date().getTime() - oldticks;
@@ -287,6 +284,8 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         if (this.getAdaphh().checkImprovement(neweval)) {
             this.newBest();
         }
+        this.parameterAdaption(to, AdapHH.Sb, from);
+        Communication.LogFileTime(String.format("%s set parameter to %s", this.getHeuristicIndex(),this.getDOSIOM()));
     }
 
     /**
@@ -306,21 +305,20 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     /**
      * @return the valuei
      */
-    public double getValue() {
-        return value;
+    public double getDOSIOM() {
+        return dosiom;
     }
 
     /**
      * @param valuei the valuei to set
      */
-    public void setValue(double valuei) {
-        this.value = Utils.border(0.2d,valuei,1.0d);
+    public void setDOSIOM(double valuei) {
+        this.dosiom = Utils.border(0.2d, valuei, 1.0d);
     }
-    
-    
+
     private void parameterAdaption(int sa, int sb, int s) {
         double u = 1.0d;
-        double val = this.getValue();
+        double val = this.getDOSIOM();
         double p = Utils.StaticRandom.nextDouble();
         double fsa = this.getAdaphh().getObjectiveFunction(sa);
         double fsb = this.getAdaphh().getObjectiveFunction(sb);
@@ -328,73 +326,70 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         if (fsa < fsb) {
             switch (getPerformanceType()) {
                 case ImprovingOrEqual:
-                    if(p < P_BEST_IOE) {
+                    if (p < P_BEST_IOE) {
                         u = 0.0d;
                     }
                     break;
                 case ImprovingMore:
-                    if(p < P_BEST_IM1) {
+                    if (p < P_BEST_IM1) {
                         u = -1.0d;
-                    }
-                    else if(p < P_BEST_IM2) {
+                    } else if (p < P_BEST_IM2) {
                         u = 0.0d;
                     }
                     break;
                 case WorseningMore:
-                    if(p < P_BEST_WM) {
+                    if (p < P_BEST_WM) {
                         u = 0.0d;
                     }
                     break;
             }
-            val += THETA1*u;
+            val += THETA1 * u;
         } else if (fsa < fs) {
             switch (getPerformanceType()) {
                 case ImprovingOrEqual:
-                    if(p < P_IMPR_IOE) {
+                    if (p < P_IMPR_IOE) {
                         u = 0.0d;
                     }
                     break;
                 case ImprovingMore:
-                    if(p < P_IMPR_IM1) {
+                    if (p < P_IMPR_IM1) {
                         u = -1.0d;
-                    }
-                    else if(p < P_IMPR_IM2) {
+                    } else if (p < P_IMPR_IM2) {
                         u = 0.0d;
                     }
                     break;
                 case WorseningMore:
-                    if(p < P_IMPR_WM) {
+                    if (p < P_IMPR_WM) {
                         u = -1.0d;
                     }
                     break;
             }
-            val += THETA2*u;
+            val += THETA2 * u;
         } else if (fsa > fs) {
             if (getPerformanceType().equals(HeuristicPerformanceType.ImprovingMore) && p < P_WORS_IM) {
                 u = 0.0d;
             }
-            val -= THETA3*u;
+            val -= THETA3 * u;
         } else {
             switch (getPerformanceType()) {
                 case ImprovingOrEqual:
-                    if(p < P_EQUA_IOE1) {
+                    if (p < P_EQUA_IOE1) {
                         u = -1.0d;
-                    }
-                    else if(p < P_EQUA_IOE2) {
+                    } else if (p < P_EQUA_IOE2) {
                         u = 0.0d;
                     }
                     break;
                 case ImprovingMore:
-                    if(p < P_EQUA_IM) {
+                    if (p < P_EQUA_IM) {
                         u = 0.0d;
                     }
                     break;
                 default:
                     u = -1.0d;
             }
-            val -= THETA4*u;
+            val -= THETA4 * u;
         }
-        this.setValue(val);
+        this.setDOSIOM(val);
     }
 
     /**
@@ -410,5 +405,4 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     public void setPerformanceType(HeuristicPerformanceType performanceType) {
         this.performanceType = performanceType;
     }
-    
 }

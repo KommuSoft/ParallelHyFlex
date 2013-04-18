@@ -96,7 +96,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 this.initializeSolution(i);
             }
             //Communication.Log(this.problem.toString());
-            this.startExecute();
+            //this.startExecute();
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
         }
@@ -194,7 +194,13 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     }
 
     public double getObjectiveFunction(int objective, int solutionIndex) {
-        return this.problem.getObjectiveFunction(objective).evaluateSolution(this.proxyMemory.getSolution(solutionIndex));
+        TSolution tsol = this.proxyMemory.getSolution(solutionIndex);
+        if(tsol != null) {
+            return this.problem.getObjectiveFunction(objective).evaluateSolution(tsol);
+        }
+        else {
+            return Double.POSITIVE_INFINITY;
+        }
     }
     
     public double getObjectiveFunction (int solutionIndex) {
@@ -272,12 +278,12 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
     @Override
     public void setDepthOfSearch(double dos) {
-        this.setDepthOfSearch(dos);
+        this.problem.setDepthOfSearch(dos);
     }
 
     @Override
     public void setIntensityOfMutation(double iom) {
-        this.setIntensityOfMutation(iom);
+        this.problem.setIntensityOfMutation(iom);
     }
 
     @Override
