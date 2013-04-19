@@ -44,12 +44,12 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen
 
     @Override
     public void setIntensityOfMutation(double intensityOfMutation) {
-        this.intensityOfMutation = Math.max(0.0d, Math.min(0.99999d, intensityOfMutation));
+        this.intensityOfMutation = Math.max(0.0d, Math.min(0.9999d, intensityOfMutation));
     }
 
     @Override
     public void setDepthOfSearch(double depthOfSearch) {
-        this.depthOfSearch = Math.max(0.0d, Math.min(0.99999d, depthOfSearch));
+        this.depthOfSearch = Math.max(0.0d, Math.min(0.9999d, depthOfSearch));
     }
 
     @Override

@@ -27,11 +27,13 @@ public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution,
 
     private void enforceClause(ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
         int i = ClauseUtils.getFalseClauseIndex(from, clauses);
-        int k = Utils.StaticRandom.nextInt(3);
-        int index = ClauseUtils.getIndexI(clauses[i], k);
-        from.swapBit(index, problem);
+        if (i != -1) {
+            int k = Utils.StaticRandom.nextInt(3);
+            int index = ClauseUtils.getIndexI(clauses[i], k);
+            from.swapBit(index, problem);
+        }
     }
-    
+
     @Override
     public boolean usesIntensityOfMutation() {
         return true;

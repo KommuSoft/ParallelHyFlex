@@ -28,8 +28,11 @@ public class ThreeSatHeuristicM3 extends MutationHeuristicBase<ThreeSatSolution,
     }
 
     private void enforceClause(ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
-        for (Integer i : ClauseUtils.getUniqueIndices(clauses[ClauseUtils.getFalseClauseIndex(from, clauses)])) {
-            from.swapBit(i, problem);
+        int k = ClauseUtils.getFalseClauseIndex(from, clauses);
+        if(k != -1) {
+            for (Integer i : ClauseUtils.getUniqueIndices(clauses[k])) {
+                from.swapBit(i, problem);
+            }
         }
     }
     

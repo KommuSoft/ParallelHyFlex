@@ -33,22 +33,24 @@ public class ThreeSatHeuristicM4 extends MutationHeuristicBase<ThreeSatSolution,
         int delta;
         int c0 = Utils.StaticRandom.nextInt(c);
         int i = ClauseUtils.getFalseClauseIndex(from, clauses);
-        int mindelta = Integer.MAX_VALUE;
-        int minindex = -1;
-        for (int k = 0; k < 3; k++) {
-            int index = ClauseUtils.getIndexI(clauses[i], k);
-            delta = ClauseUtils.calculateLoss(index, cba, clauses, influences[index]);
-            if (delta < mindelta) {
-                mindelta = delta;
-                minindex = index;
+        if (i != -1) {
+            int mindelta = Integer.MAX_VALUE;
+            int minindex = -1;
+            for (int k = 0; k < 3; k++) {
+                int index = ClauseUtils.getIndexI(clauses[i], k);
+                delta = ClauseUtils.calculateLoss(index, cba, clauses, influences[index]);
+                if (delta < mindelta) {
+                    mindelta = delta;
+                    minindex = index;
+                }
+            }
+            if (minindex != -1) {
+                from.swap(minindex);
+                from.addConfictingClauses(mindelta);
             }
         }
-        if (minindex != -1) {
-            from.swap(minindex);
-            from.addConfictingClauses(mindelta);
-        }
     }
-    
+
     @Override
     public boolean usesIntensityOfMutation() {
         return true;
