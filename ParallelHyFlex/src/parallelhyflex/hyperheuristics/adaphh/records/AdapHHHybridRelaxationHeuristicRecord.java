@@ -11,7 +11,7 @@ import parallelhyflex.utils.Utils;
  */
 public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord {
 
-    private final CircularList<AdapHHHeuristicRecord> nextHeuristic;
+    private final CircularList<AdapHHHeuristicRecord> nextHeuristic;//TODO: fill list with records and maintain them
 
     public AdapHHHybridRelaxationHeuristicRecord(AdapHH adaphh, int heuristicIndex) {
         super(adaphh, heuristicIndex);
@@ -33,13 +33,13 @@ public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord
         this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), AdapHH.S, AdapHH.Sa);
         AdapHHHeuristicRecord adhr;
         if (this.nextHeuristic.size() > 0 && Utils.StaticRandom.nextDouble() < AdapHH.LIST_PROBABILITY) {
-            System.out.println("nextHeuristic");
+            //System.out.println("nextHeuristic");
             adhr = ProbabilityUtils.randomElement(nextHeuristic);
         } else {
-            System.out.println("adhs");
+            //System.out.println("adhs");
             adhr = this.getAdaphh().getAdhs().getRandomIndividual();
         }
-        System.out.println("ADHR===="+adhr);
+        //System.out.println("ADHR===="+adhr);
         if(adhr != null) {
             adhr.execute(AdapHH.Sa, AdapHH.Saa);
         }

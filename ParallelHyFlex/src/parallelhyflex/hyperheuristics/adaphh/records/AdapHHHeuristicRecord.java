@@ -263,7 +263,6 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public void execute(int from, int to) {
-        Communication.LogFileTime("FOO");
         adaphh.setDepthOfSearch(this.getDOSIOM());
         adaphh.setIntensityOfMutation(this.getDOSIOM());
         double oldeval = this.getAdaphh().getObjectiveFunction(0, from);

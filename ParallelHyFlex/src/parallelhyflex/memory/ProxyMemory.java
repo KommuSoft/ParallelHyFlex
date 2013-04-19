@@ -77,17 +77,14 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     public TSolution getSolution(int index) {
         int ii = Utils.getLengthIndex(this.cdfI, index + 1);
-        System.out.println(String.format("cdfI %s", Arrays.toString(this.cdfI)));
         int ij = index;
         if (ii > 0) {
             ij -= this.cdfI[ii - 1];
         }
-        System.out.println(String.format("%s -> %s/%s", index, ii, ij));
         return this.solutionCache[ii].getSolution(ij);
     }
 
     public void setSolution(int index, TSolution value) {
-        //Communication.Log("" + (this.getWritableExperience() == null));
         this.getWritableExperience().join(value);
         this.localSlots.setSolution(index, value);
     }

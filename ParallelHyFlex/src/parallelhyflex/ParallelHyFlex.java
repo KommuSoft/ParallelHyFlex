@@ -28,9 +28,10 @@ public class ParallelHyFlex {
 
 
         Communication.initializeCommunication(args);
-        System.out.println("LMS="+LOCAL_MEMORY_SIZE);
+        int nVariables = 10_000;
+        int nClauses = 42_000;
         try {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(2_380, 10_000);// = new ThreeSatProblemGenerator(128,500);
+            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(nVariables, nClauses);// = new ThreeSatProblemGenerator(128,500);
             HyperHeuristic dummy;
             long timespan = 10_000;//ten seconds
             //long timespan = 360000;//six minutes

@@ -5,6 +5,7 @@
 package parallelhyflex.hyperheuristics.adaphh;
 
 import parallelhyflex.algebra.collections.StridingList;
+import parallelhyflex.communication.Communication;
 
 /**
  *
@@ -40,6 +41,7 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
                 this.getAdapHH().copySolution(sa, sb);
                 this.adapt_iterations = 0;
                 this.bestList.add(fsb);
+                Communication.LogFileTime(String.format("Bestlist is now: %s",this.bestList));
             }
         } else if (fs == fsa) {
             this.getAdapHH().copySolution(sa, s);
@@ -47,7 +49,6 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
             this.w_iterations++;
             this.adapt_iterations++;
             if(w_iterations >= k) {
-                System.out.println(this.bestList);
                 double val = this.bestList.get(this.bestList.size()-best_list_index);
                 if(fsa < val) {
                     this.getAdapHH().copySolution(sa, s);
