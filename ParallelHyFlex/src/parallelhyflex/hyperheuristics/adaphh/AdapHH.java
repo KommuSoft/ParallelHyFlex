@@ -236,6 +236,6 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     public int getRandomHistorySolutionIndex() {
         int a = Utils.StaticRandom.nextInt(Communication.getCommunication().getSize());
         int b = Utils.StaticRandom.nextInt(HISTORY_LENGTH);
-        return (HISTORY_LENGTH + 3) * a + b;
+        return LOCAL_MEMORY_SIZE * a + LOCAL_MEMORY_SIZE - HISTORY_LENGTH + b;
     }
 }

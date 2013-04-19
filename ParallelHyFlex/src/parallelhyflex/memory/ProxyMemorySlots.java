@@ -27,6 +27,8 @@ public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> ex
     public void setSolution(int index, TSolution sol) {
         throw new IllegalArgumentException("Connot write at this index: region is read-only!");
     }
+    
+    //public abstract void initSolution (int index, TSolution sol);
 
     @Override
     public CompactBitArray getBlockingMask() {

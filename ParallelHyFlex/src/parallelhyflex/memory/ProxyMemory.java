@@ -14,6 +14,7 @@ import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.solution.Solution;
+import parallelhyflex.problemdependent.solution.SolutionGenerator;
 import parallelhyflex.problemdependent.solution.SolutionReader;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
@@ -75,13 +76,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     }
 
     public TSolution getSolution(int index) {
-        int ii = Utils.getLengthIndex(this.cdfI, index+1);
-        System.out.println(String.format("cdfI %s",Arrays.toString(this.cdfI)));
+        int ii = Utils.getLengthIndex(this.cdfI, index + 1);
+        System.out.println(String.format("cdfI %s", Arrays.toString(this.cdfI)));
         int ij = index;
         if (ii > 0) {
             ij -= this.cdfI[ii - 1];
         }
-        System.out.println(String.format("%s -> %s/%s",index,ii,ij));
+        System.out.println(String.format("%s -> %s/%s", index, ii, ij));
         return this.solutionCache[ii].getSolution(ij);
     }
 
@@ -156,7 +157,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     @Override
     public int[] getPacketTags() {
-        return new int[] {PushSenderBase.SendTag};
+        return new int[]{PushSenderBase.SendTag};
     }
 
     @Override
@@ -167,18 +168,27 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
             TSolution sol = solutionReader.readAndGenerate(dis);
             searchSpace.correct(sol);
             solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Communication.Log(e);
         }
     }
-    
-    public CompactBitArray getExchangeBlockingMask () {
+
+    public CompactBitArray getExchangeBlockingMask() {
         return this.localSlots.getBlockingMask();
     }
 
     public void copySolution(int from, int to) {
-        this.setSolution(to,this.getSolution(from));
+        this.setSolution(to, this.getSolution(from).clone());
     }
-    
+
+    public void initializeProxyMemory(SolutionGenerator<TSolution> generator) {
+        MemorySlots ms;
+        for(int i = 1; i < solutionCache.length; i++) {
+            ms = this.solutionCache[i];
+            int J = ms.getSize();
+            for(int j = 0; j < J; j++) {
+                ms.receiveSolution(j, generator.generateSolution());
+            }
+        }
+    }
 }

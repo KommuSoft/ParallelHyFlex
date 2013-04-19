@@ -88,15 +88,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
             this.bestObjectiveSolutionIndices = new int[O];
-            for(int i = 0; i < O; i++) {
-                this.bestObjectives[i] = Double.POSITIVE_INFINITY;
-                this.bestObjectiveSolutionIndices[i] = 0;
-            }
-            for (int i = 0; i < nw; i++) {
-                this.initializeSolution(i);
-            }
-            //Communication.Log(this.problem.toString());
-            //this.startExecute();
+            init(O, nw);
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine must be zero!");
         }
@@ -150,13 +142,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
             this.bestObjectiveSolutionIndices = new int[O];
-            for(int i = 0; i < O; i++) {
-                this.bestObjectives[i] = Double.POSITIVE_INFINITY;
-                this.bestObjectiveSolutionIndices[i] = 0;
-            }
-            for (int i = 0; i < nw; i++) {
-                this.initializeSolution(i);
-            }
+            init(O, nw);
         } else {
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
         }
@@ -371,6 +357,17 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     
     public void copySolution (int from, int to) {
         this.proxyMemory.copySolution(from,to);
+    }
+
+    private void init(int O, int nw) {
+        for(int i = 0; i < O; i++) {
+            this.bestObjectives[i] = Double.POSITIVE_INFINITY;
+            this.bestObjectiveSolutionIndices[i] = 0;
+        }
+        for (int i = 0; i < nw; i++) {
+            this.initializeSolution(i);
+        }
+        this.proxyMemory.initializeProxyMemory(this.problem.getSolutionGenerator());
     }
     
     private class FetchThread extends Thread {
