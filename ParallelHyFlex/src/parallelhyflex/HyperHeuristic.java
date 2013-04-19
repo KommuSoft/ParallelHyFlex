@@ -410,13 +410,9 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 } catch (Exception e) {
                     Communication.log(e);
                 }
-                if (LoggingParameters.LOG_NEGOTI_START) {
-                    Communication.logFileTime(LoggingParameters.LOG_NEGOTI_START_TEXT);
-                }
+                Communication.logFileTime(LoggingParameters.LOG_NEGOTI_START, LoggingParameters.LOG_NEGOTI_START_TEXT);
                 ss = negotiator.negotiate(experience.generateEnforceableConstraints());
-                if (LoggingParameters.LOG_NEGOTI_STOP) {
-                    Communication.logFileTime(LoggingParameters.LOG_NEGOTI_STOP_TEXT);
-                }
+                Communication.logFileTime(LoggingParameters.LOG_NEGOTI_STOP, LoggingParameters.LOG_NEGOTI_STOP_TEXT);
                 proxyMemory.setSearchSpace(ss);
             }
         }

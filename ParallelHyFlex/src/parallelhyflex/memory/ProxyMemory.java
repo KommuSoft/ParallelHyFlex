@@ -86,9 +86,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     public void setSolution(int index, TSolution value) {
         this.getWritableExperience().join(value);
-        if(LoggingParameters.LOG_MEMORY_SET) {
-            Communication.logFileTime(LoggingParameters.LOG_MEMORY_SET_TEXT, index,value);
-        }
+        Communication.logFileTime(LoggingParameters.LOG_MEMORY_SET, LoggingParameters.LOG_MEMORY_SET_TEXT, index, value);
         //Communication.logFileTime(""+eval+"\t"+mineval);
         this.localSlots.setSolution(index, value);
     }
@@ -184,10 +182,10 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     public void initializeProxyMemory(SolutionGenerator<TSolution> generator) {
         MemorySlots ms;
-        for(int i = 1; i < solutionCache.length; i++) {
+        for (int i = 1; i < solutionCache.length; i++) {
             ms = this.solutionCache[i];
             int J = ms.getSize();
-            for(int j = 0; j < J; j++) {
+            for (int j = 0; j < J; j++) {
                 ms.receiveSolution(j, generator.generateSolution());
             }
         }

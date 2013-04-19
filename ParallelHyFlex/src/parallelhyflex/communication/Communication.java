@@ -101,6 +101,24 @@ public class Communication {
         }
     }
 
+    public static void logFileTime(boolean condition, String format, Object... args) {
+        if (condition) {
+            logFileTime(format, args);
+        }
+    }
+
+    public static void logFileTime(boolean condition, Locale locale, String format, Object... args) {
+        if (condition) {
+            logFileTime(locale, format, args);
+        }
+    }
+
+    public static void logFileTime(boolean condition, String message) {
+        if (condition) {
+            logFileTime(message);
+        }
+    }
+
     public static void log(Exception e) {
         log("ERROR: " + e.toString());
     }
