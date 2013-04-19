@@ -30,7 +30,7 @@ public abstract class PushSenderBase<TSolution extends Solution<TSolution>> impl
                 data[2] = baos.toByteArray();
             }
         } catch (Exception e) {
-            Communication.Log(e);
+            Communication.log(e);
         }
         return new Object[] {data};
     }

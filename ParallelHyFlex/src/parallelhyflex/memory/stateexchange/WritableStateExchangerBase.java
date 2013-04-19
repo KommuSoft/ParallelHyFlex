@@ -62,9 +62,9 @@ public class WritableStateExchangerBase<TSingleState extends LocalState & ReadWr
     @Override
     public void notifyObserver() {
         try {
-            Communication.NbB(this.generatePacket(), 0, 1, MPI.OBJECT, SendTag);
+            Communication.nbB(this.generatePacket(), 0, 1, MPI.OBJECT, SendTag);
         } catch (IOException ex) {
-            Communication.Log(ex);
+            Communication.log(ex);
         }
     }
 

@@ -41,7 +41,7 @@ public class PacketRouterBase implements PacketRouter {
             pr.receivePacket(sender, tag, data);
             }
             catch(Exception e) {
-                Communication.Log(e);
+                Communication.log(e);
             }
         }
     }

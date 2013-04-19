@@ -284,7 +284,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
             this.newBest();
         }
         this.parameterAdaption(to, AdapHH.Sb, from);
-        Communication.LogFileTime(String.format("%s set parameter to %s", this.getHeuristicIndex(),this.getDOSIOM()));
+        Communication.logFileTime(String.format("%s set parameter to %s", this.getHeuristicIndex(),this.getDOSIOM()));
     }
 
     /**

@@ -12,7 +12,7 @@ public class BroadcastPushSender<TSolution extends Solution<TSolution>> extends 
 
     @Override
     public void sendSolution(int index, TSolution solution) {
-        Communication.NbB(this.generatePacket(index, solution), 0, 1, MPI.OBJECT, PushSenderBase.SendTag);
+        Communication.nbB(this.generatePacket(index, solution), 0, 1, MPI.OBJECT, PushSenderBase.SendTag);
     }
 
 }

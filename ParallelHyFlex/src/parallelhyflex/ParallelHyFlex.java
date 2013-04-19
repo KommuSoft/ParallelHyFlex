@@ -44,7 +44,7 @@ public class ParallelHyFlex {
             }
             dummy.startExecute();
         } catch (ProtocolException | IOException e) {
-            Communication.Log(e.toString());
+            Communication.log(e.toString());
             e.printStackTrace();
         }
         Communication.finalizeCommunication();

@@ -41,7 +41,7 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
                 this.getAdapHH().copySolution(sa, sb);
                 this.adapt_iterations = 0;
                 this.bestList.add(fsb);
-                Communication.LogFileTime(String.format("Bestlist is now: %s",this.bestList));
+                Communication.logFileTime(String.format("Bestlist is now: %s",this.bestList));
             }
         } else if (fs == fsa) {
             this.getAdapHH().copySolution(sa, s);

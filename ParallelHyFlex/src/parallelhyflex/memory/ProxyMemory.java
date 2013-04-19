@@ -4,10 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.Arrays;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.PacketReceiver;
+import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.memory.senders.PushSenderBase;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
@@ -46,7 +46,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         this.localSlots = localPolicy.generateSender(initialMemory);
         this.solutionCache = (MemorySlots<TSolution>[]) Array.newInstance(this.localSlots.getClass().getSuperclass(), s);
         this.solutionCache[0x00] = this.localSlots;
-        Communication.AG(out, 0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);
+        Communication.aG(out, 0, 1, MPI.OBJECT, this.others, 0, 1, MPI.OBJECT);
         int sum = this.others[r][0], ni;
         cdfI = new int[s];
         cdfI[0] = sum;
@@ -86,6 +86,10 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     public void setSolution(int index, TSolution value) {
         this.getWritableExperience().join(value);
+        if(LoggingParameters.LOG_MEMORY_SET) {
+            Communication.logFileTime(LoggingParameters.LOG_MEMORY_SET_TEXT, index,value);
+        }
+        //Communication.logFileTime(""+eval+"\t"+mineval);
         this.localSlots.setSolution(index, value);
     }
 
@@ -166,7 +170,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
             searchSpace.correct(sol);
             solutionCache[rankToIndex((int) buffer[0])].receiveSolution((int) buffer[1], sol);
         } catch (Exception e) {
-            Communication.Log(e);
+            Communication.log(e);
         }
     }
 

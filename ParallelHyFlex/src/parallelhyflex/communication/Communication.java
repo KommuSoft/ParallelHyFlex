@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 import mpi.*;
 
 /**
@@ -38,45 +39,45 @@ public class Communication {
         comm.finalize();
     }
 
-        public static void A2A(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
+    public static void a2A(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
         MPI.COMM_WORLD.Alltoall(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
     }
 
-    public static void AG(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
+    public static void aG(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
         MPI.COMM_WORLD.Allgather(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
     }
 
-    public static void BC(Object buf, int offset, int count, Datatype type, int root) {
+    public static void bC(Object buf, int offset, int count, Datatype type, int root) {
         MPI.COMM_WORLD.Bcast(buf, offset, count, type, root);
     }
 
-    public static Status RV(Object buf, int offset, int count, Datatype type, int source, int tag) {
+    public static Status rV(Object buf, int offset, int count, Datatype type, int source, int tag) {
         return MPI.COMM_WORLD.Recv(buf, offset, count, type, source, tag);
     }
 
-    public static Request NbRV(Object buf, int offset, int count, Datatype type, int source, int tag) {
+    public static Request nbRv(Object buf, int offset, int count, Datatype type, int source, int tag) {
         return MPI.COMM_WORLD.Irecv(buf, offset, count, type, source, tag);
     }
 
-    public static void S(Object buf, int offset, int count, Datatype type, int dest, int tag) {
+    public static void s(Object buf, int offset, int count, Datatype type, int dest, int tag) {
         MPI.COMM_WORLD.Send(buf, offset, count, type, dest, tag);
     }
 
-    public static Request NbS(Object buf, int offset, int count, Datatype type, int dest, int tag) {
+    public static Request nbS(Object buf, int offset, int count, Datatype type, int dest, int tag) {
         return MPI.COMM_WORLD.Isend(buf, offset, count, type, dest, tag);
     }
-    
-    public static void NbB(Object buf, int offset, int count, Datatype type, int tag) {
+
+    public static void nbB(Object buf, int offset, int count, Datatype type, int tag) {
         for (int root : Communication.others()) {
-            Communication.NbS(buf, offset, count, type, root, tag);
+            Communication.nbS(buf, offset, count, type, root, tag);
         }
     }
 
-    public static void Log(String message) {
+    public static void log(String message) {
         System.out.println("<" + Communication.MainCommunication.rank + "> " + message);
     }
 
-    public static void LogFile(String message) {
+    public static void logFile(String message) {
         try {
             logWriter.write(message);
             logWriter.newLine();
@@ -84,19 +85,28 @@ public class Communication {
         }
     }
 
-    public static void LogFileTime(String message) {
+    public static void logFileTime(String format, Object... args) {
+        logFileTime(String.format(format, args));
+    }
+
+    public static void logFileTime(Locale locale, String format, Object... args) {
+        logFileTime(String.format(locale, format, args));
+    }
+
+    public static void logFileTime(String message) {
         try {
-            logWriter.write(new Date().getTime()+"\t"+message);
-            logWriter.newLine();
+            logWriter.write(String.format("%s\t%s\n", new Date().getTime(), message));
         } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
-    public static void Log(Exception e) {
-        Log("ERROR: " + e.toString());
+    public static void log(Exception e) {
+        log("ERROR: " + e.toString());
     }
     private final int rank;
     private final int size;
+
     private Communication(String[] args) {
         MPI.Init(args);
         rank = MPI.COMM_WORLD.Rank();

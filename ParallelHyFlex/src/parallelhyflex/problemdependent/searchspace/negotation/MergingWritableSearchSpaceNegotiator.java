@@ -33,7 +33,7 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
             int r = Communication.getCommunication().getRank();
             byte[][] total = new byte[s][];
             total[r] = this.generatePacket(enforceableConstraints);
-            Communication.AG(total, r, 1, MPI.OBJECT, total, 0, 1, MPI.OBJECT);
+            Communication.aG(total, r, 1, MPI.OBJECT, total, 0, 1, MPI.OBJECT);
             return innerNegotiate(enforceableConstraints, readPacket(total));
         } catch (Exception e) {
             return null;
