@@ -83,7 +83,8 @@ public class LearningAutomaton<TAction> {
     }
 
     public TAction getAction() {
-        return null;
+        int index = this.selector.generate(probabilities);
+        return this.actions.inverse().get(index);
     }
 
     public void update(TAction action, double reward) {

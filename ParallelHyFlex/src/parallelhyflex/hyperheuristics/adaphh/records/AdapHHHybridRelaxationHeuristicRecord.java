@@ -2,8 +2,6 @@ package parallelhyflex.hyperheuristics.adaphh.records;
 
 import parallelhyflex.algebra.collections.CircularList;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
-import static parallelhyflex.hyperheuristics.adaphh.AdapHH.GAMMA_MAX;
-import static parallelhyflex.hyperheuristics.adaphh.AdapHH.GAMMA_MIN;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
@@ -35,10 +33,18 @@ public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord
         this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), AdapHH.S, AdapHH.Sa);
         AdapHHHeuristicRecord adhr;
         if (this.nextHeuristic.size() > 0 && Utils.StaticRandom.nextDouble() < AdapHH.LIST_PROBABILITY) {
+            System.out.println("nextHeuristic");
             adhr = ProbabilityUtils.randomElement(nextHeuristic);
         } else {
+            System.out.println("adhs");
             adhr = this.getAdaphh().getAdhs().getRandomIndividual();
         }
-        adhr.execute(AdapHH.Sa, AdapHH.Saa);
+        System.out.println("ADHR===="+adhr);
+        if(adhr != null) {
+            adhr.execute(AdapHH.Sa, AdapHH.Saa);
+        }
+        else {
+            this.getAdaphh().copySolution(AdapHH.Sa,AdapHH.Saa);
+        }
     }
 }
