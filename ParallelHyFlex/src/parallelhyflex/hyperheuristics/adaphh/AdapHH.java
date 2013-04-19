@@ -131,7 +131,10 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         this.ailla.acceptMove(Sa, S, Sb);
         double gamma = Utils.border(GAMMA_MIN, (this.getCBestS() + 1.0d) / (this.getCBestR() + 1.0d), GAMMA_MAX);
         if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.getCPhase() / this.getPl(), gamma)) {
-            this.learningAutomaton.getAction().execute();
+            System.out.println(this.learningAutomaton);
+            AdapHHHybridRelaxationHeuristicRecord ahrh = this.learningAutomaton.getAction();
+            System.out.println(ahrh);
+            ahrh.execute();
             this.ailla.acceptMove(Saa, S, Sb);
         }
     }
