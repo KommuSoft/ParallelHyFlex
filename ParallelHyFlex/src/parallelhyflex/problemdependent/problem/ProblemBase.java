@@ -61,6 +61,11 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen
     public ObjectiveFunction<TSolution> getObjectiveFunction(int index) {
         return (ObjectiveFunction<TSolution>) this.objectives[index];
     }
+    
+    @Override
+    public ObjectiveFunction<TSolution> getObjectiveFunction() {
+        return this.getObjectiveFunction(0);
+    }
 
     @Override
     public DistanceFunction<TSolution> getDistanceFunction(int index) {

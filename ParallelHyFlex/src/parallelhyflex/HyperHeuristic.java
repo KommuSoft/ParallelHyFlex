@@ -75,6 +75,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.experience = experience.generate(problem);
             this.negotiator = negotiator.generate(this.problem);
             this.proxyMemory = new ProxyMemory<>(localMemorySize, localMemoryExchangePolicy, solutionReader);
+            this.proxyMemory.setObjectiveGenerator(this.problem.getObjectiveFunction());
             this.registerPacketReceiver(this.proxyMemory);
             this.proxyMemory.setWritableExperience(this.experience);
             byte[][] data;
@@ -136,6 +137,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0]); DataInputStream dis = new DataInputStream(bais)) {
                 this.problem = problemReader.readAndGenerate(dis);
             }
+            this.proxyMemory.setObjectiveGenerator(this.problem.getObjectiveFunction());
             this.experience = experience.generate(this.problem);
             this.negotiator = negotiator.generate(this.problem);
             this.proxyMemory.setWritableExperience(this.experience);
@@ -413,6 +415,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 Communication.logFileTime(LoggingParameters.LOG_NEGOTI_START, LoggingParameters.LOG_NEGOTI_START_TEXT);
                 ss = negotiator.negotiate(experience.generateEnforceableConstraints());
                 Communication.logFileTime(LoggingParameters.LOG_NEGOTI_STOP, LoggingParameters.LOG_NEGOTI_STOP_TEXT);
+                Communication.logFileTime(LoggingParameters.LOG_SEASPA_SETV, LoggingParameters.LOG_SEASPA_SETV_TEXT,ss);
                 proxyMemory.setSearchSpace(ss);
             }
         }

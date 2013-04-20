@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import mpi.MPI;
+import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.PacketReceiver;
 import parallelhyflex.logging.LoggingParameters;
@@ -32,7 +33,9 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     private SearchSpace<TSolution> searchSpace = new DummySearchSpace<>();
     private final int[][] others;
     private final int[] cdfI;
+    private Generator<TSolution, Double> objectiveGenerator;
     private int totalMemory = 0;
+    private double smallEval = Double.POSITIVE_INFINITY;
 
     public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy, SolutionReader<TSolution> solutionReader) {
         this.solutionReader = solutionReader;
@@ -86,8 +89,12 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
 
     public void setSolution(int index, TSolution value) {
         this.getWritableExperience().join(value);
-        Communication.logFileTime(LoggingParameters.LOG_MEMORY_SET, LoggingParameters.LOG_MEMORY_SET_TEXT, index, value);
-        //Communication.logFileTime(""+eval+"\t"+mineval);
+        double eval = this.getObjectiveGenerator().generate(value);
+        Communication.logFileTime(LoggingParameters.LOG_MEMORY_SET, LoggingParameters.LOG_MEMORY_SET_TEXT, index, eval);
+        if (eval < smallEval) {
+            Communication.logFileTime(LoggingParameters.LOG_MEMORY_BETTER, LoggingParameters.LOG_MEMORY_BETTER_TEXT, index, eval);
+            this.smallEval = eval;
+        }
         this.localSlots.setSolution(index, value);
     }
 
@@ -189,5 +196,19 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
                 ms.receiveSolution(j, generator.generateSolution());
             }
         }
+    }
+
+    /**
+     * @return the objectiveGenerator
+     */
+    public Generator<TSolution, Double> getObjectiveGenerator() {
+        return objectiveGenerator;
+    }
+
+    /**
+     * @param objectiveGenerator the objectiveGenerator to set
+     */
+    public void setObjectiveGenerator(Generator<TSolution, Double> objectiveGenerator) {
+        this.objectiveGenerator = objectiveGenerator;
     }
 }

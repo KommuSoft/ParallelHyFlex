@@ -91,4 +91,10 @@ public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnfo
     public void setData(long data) {
         this.constraint = data;
     }
+    
+    @Override
+    public String toString () {
+        return String.format("(%s)",ClauseUtils.clauseToString(this.getConstraint()));
+    }
+    
 }

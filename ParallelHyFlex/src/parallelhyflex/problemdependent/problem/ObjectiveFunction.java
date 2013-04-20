@@ -1,12 +1,13 @@
 package parallelhyflex.problemdependent.problem;
 
+import parallelhyflex.algebra.Generator;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *
  * @author kommusoft
  */
-public interface ObjectiveFunction<TSolution extends Solution> {
+public interface ObjectiveFunction<TSolution extends Solution> extends Generator<TSolution,Double> {
 
     public double evaluateSolution(TSolution solution);
 }

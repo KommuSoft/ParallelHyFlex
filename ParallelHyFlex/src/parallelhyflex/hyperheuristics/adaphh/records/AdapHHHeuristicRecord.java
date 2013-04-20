@@ -26,6 +26,7 @@ import parallelhyflex.hyperheuristics.records.HeuristicPerformanceType;
 import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingMore;
 import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingOrEqual;
 import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.WorseningMore;
+import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
 import parallelhyflex.utils.Utils;
 
@@ -263,6 +264,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public void execute(int from, int to) {
+        Communication.logFileTime(LoggingParameters.LOG_ADAPHH_EXRC, LoggingParameters.LOG_ADAPHH_EXRC_TEXT, this.getHeuristicIndex(), from, to);
         adaphh.setDepthOfSearch(this.getDOSIOM());
         adaphh.setIntensityOfMutation(this.getDOSIOM());
         double oldeval = this.getAdaphh().getObjectiveFunction(0, from);
@@ -284,7 +286,6 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
             this.newBest();
         }
         this.parameterAdaption(to, AdapHH.Sb, from);
-        Communication.logFileTime(String.format("%s set parameter to %s", this.getHeuristicIndex(),this.getDOSIOM()));
     }
 
     /**
@@ -389,6 +390,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
             val -= THETA4 * u;
         }
         this.setDOSIOM(val);
+        Communication.logFileTime(LoggingParameters.LOG_ADAPHH_PARC, LoggingParameters.LOG_ADAPHH_PARC_TEXT, this.getHeuristicIndex(), val);
     }
 
     /**
