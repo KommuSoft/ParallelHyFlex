@@ -1,0 +1,74 @@
+\chapter{Inleiding}
+\label{inleiding}
+
+\input{texabbrev}
+
+Optimalisatie is een belangrijk onderwerp in de artifici\"ele intelligentie. Allereerst komen bij heel wat algemene problemen in de artifici\"ele intelligentie vormen van optimalisatie kijken: we denken dan bijvoorbeeld aan het zoeken van een optimale set parameters bij een specifiek algoritme. Anderzijds kunnen we ook spreken van een specifieke tak in de artifici\"ele intelligentie die zich bezighoudt met optimalisatie problemen: ``Operationeel Onderzoek'' ofwel ``Operational Research''
+
+\section{Operationeel Onderzoek}
+
+Operationeel onderzoek probeert doorgaans optimalisatieproblemen op te lossen in een zeer concrete en praktische setting. Belangrijke voorbeelden zijn bijvoorbeeld het genereren van productieplanningen, het optimaliseren van winstmarges,...
+
+\subsection{Complexiteit}
+
+De meeste van de eerder opgenoemde problemen zijn \comp{NP-hard}: er bestaat geen polynomiaal algoritme die het probleem kan oplossen. Andere problemen zoals bijvoorbeeld ``lineair programmeren (LP)'' kennen we een algoritme die het probleem in polynomiale tijd berekend, maar met een vrij hoge macht waardoor we alsnog geen oplossing binnen acceptabele tijd kunnen verwachten.
+
+\subsection{Heuristieken}
+
+Wanneer het probleem niet exact op te lossen valt in acceptabele tijd, is een veelgebruikte oplossing in de artifici\"ele intelligentie het toepassen van een heuristiek. Een algoritme die doorgaans in polynomiale tijd een benaderende oplossing berekend: we stellen ons tevreden met een minder kwalitatieve oplossing in ruil voor een algoritme die in acceptabele tijd deze oplossing kan berekenen. Typische vormen van zo'n heuristieken zijn ``\emph{gulzige algoritmen}'' ofwel ``\emph{greedy algorithms}''. Bij een dergelijke aanpak delen we het probleem in onafhankelijke deelproblemen op die we doorgaans wel exact oplossen. In dat geval kunnen we hopen dat er weinige interactie is tussen de deelproblemen waardoor de samenstelling van de oplossingen van de deelproblemen ook leidt tot een globaal interessante oplossing.
+
+\subsection{Problemen met heuristieken}
+
+Op praktische en re\"ele problemen lopen heuristieken meestal vast. Het probleem is in de meeste gevallen vrij complex en niet eenvoudig op te delen in verschillende deelproblemen. Door het grote aantal afhankelijkheden tussen verschillende aspecten in het probleem zullen gulzige algoritmen bovendien ook meestal vastlopen op het probleem en suboptimale oplossingen teruggegeven. In heel wat gevallen zullen de aangereikte oplossingen niet tot acceptabele resultaten leiden. Een tweede probleem is dat een heuristiek weinig aanpasbaar is: in een praktische omgeving stelt men meestal dat het algoritme binnen een specifieke tijd moet aflopen. Het is niet triviaal om een heuristiek te ontwikkelen die deze tijd optimaal gebruikt: we willen dat het algoritme binnen de gegeven tijd blijft, maar tegelijk ook dat deze tijd ten volle benut wordt. Deze twee argumenten zorgen ervoor dat heuristieken meestal niet worden ingezet bij het oplossen van praktische en complexe problemen.
+
+\subsection{Metaheuristieken}
+
+In de meeste gevallen neemt men dan ook zijn toevlucht tot metaheuristieken. Metaheuristieken zijn een familie van algoritmen die optimalisatieproblemen vanuit een andere invalshoek oplossen. Bij een metaheuristiek defini\"eren we oplossingruimte $S$: een set van oplossingen die aan alle ``\emph{harde beperkingen}'' ofwel ``\emph{hard constraints}'' die het probleem stelt voldoen. Concreet betekent dit bijvoorbeeld dat bij een probleem waarbij we een lessenrooster plannen, dat enkel roosters waar twee lessen die door dezelfde docent worden gegeven, niet op eenzelfde moment staan ingevuld. Anderzijds houdt de oplossingsruimte geen rekening met de zogenaamde ``\emph{zachte beperkingen}'' ofwel ``\emph{soft constraints}'': bijvoorbeeld het maximaliseren van het aantal studenten die alle lessen kunnen volgen.
+
+\paragraph{}
+Een metaheuristiek werkt vervolgens op basis van een set functies $h_i:S^{k_i}\rightarrow S$ die \'e\'en of meer oplossingen uit de oplossingsruimte omzetten naar een nieuwe oplossing. Doorgaans bevatten deze functies ook een toevalsfactor. De volledige signatuur van de functies is dan ook eerder $h_i:S^{k_i}\times\left[0,1\right[\rightarrow S$. Een metaheuristiek initialiseert \'e\'en of meer oplossingen met behulp van ``\emph{toeval}'' en past vervolgens herhaaldelijk \'e\'en van de functies toe op \'e\'en of meer oplossingen uit de oplossingsruimte. Tijdens dit proces zal men telkens de optimale oplossing behouden. Op het moment dat de tijd afloopt, is deze oplossing dan de uitvoer van het algoritme.
+
+\subsection{Hyperheuristieken}
+
+In de vorige paragraaf staat dat een metaheuristiek een sequentie van functies toepast op een set van oplossingen. De manier hoe dit gebeurt bepaalt doorgaans mee of een metaheuristiek al dan niet succesvol een specifiek probleem kan oplossen. De meeste metaheuristieken beperken zich dan ook tot een klein aantal functies (meestal \'e\'en). Een fundamenteel probleem met deze benadering is echter dat we verwachten dat bij het oplossen van specifieke problemen, de functie ineffici\"ent kan werken. Hyperheuristieken proberen dit probleem op te lossen. In dit geval is er sprake van een grote set van deze functies (deze worden ``\emph{low level heuristics (LLH)}'' genoemd). Het is de bedoeling dat men vervolgens een online leersysteem ontwikkelt die probeert te leren welke functies best op een geven moment op welke oplossingen worden toegepast. Doorgaans verwacht men dat dit leersysteem zonder kennis van het specifieke probleem tracht te leren wanneer welke functies moeten worden toegepast. Dit doet men in de hoop tot algemene hyperheuristieken te komen die alle of een grote subset van optimalisatieproblemen kunnen oplossen.
+
+\section{Parallelle algoritmen}
+
+\subsubsection{Motivatie}
+
+Met behulp van metaheuristieken worden telkens complexere problemen opgelost. Een logisch gevolg is echter dat de hoeveelheid rekenwerk ook toeneemt om tot acceptabele oplossingen te komen. Tot dusver werd dit probleem voornamelijk geadresseerd met behulp van de ``Wet van Moore''\cite{mooresLaw}: het aantal transistors verdubbelt elke achttien maanden. Dit betekent echter niet dat de klokfrequentie van een processor dezelfde evolutie doormaakt. Sinds de eeuwwisseling zien we dan ook dat de processorsnelheid begint te stabiliseren. Een reactie is de introductie van het ``\emph{parallel berekenen}'' ofwel ``\emph{parallel computing}''. Een probleem wordt opgelost door programma's op verschillende processoren tegelijk te draaien die elk een deel van het programma oplossen. Door berichten uit te wisselen tussen de verschillende processoren of door een gemeenschappelijk geheugen aan te bieden communiceren de programma's die op de verschillende processoren draaien met elkaar.
+
+\paragraph{}
+Door programma's op verschillende processoren uit te voeren hoopt men in de eerste plaats om de kloksnelheid virtueel op te drijven. Men hoopt dat wanneer men $n$ processoren het probleem laat oplossen, de resultaten doen uitschijnen alsof we het programma op een processor met een $n$-voudige kloksnelheid hebben laten draaien. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde multi-core processoren - processoren die andere hardware zoals geheugens delen - ook minder energie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken. In eerder uitzonderlijke omstandigheden stelt men ook superlineaire versnellingen vast. Dit is doorgaans het gevolg van het feit dat de hardware effectief effici\"enter gebruikt kan worden dan louter het opdrijven van de kloksnelheid. We kunnen hierbij bijvoorbeeld denken aan cache: bij multi-core processoren hebben de verschillende ``\emph{kernen}'' ofwel ``\emph{cores}'' meestal een eigen segment aan cache. Vermits er echter sprake is van data die bij alle processoren gelijk is, zit deze data meestal in de gemeenschappelijke cache waardoor er meer ruimte is in de aparte caches voor specifieke data. Men noemt het effect van superlineaire versnellingen dan ook meestal het ``\emph{cache-effect}''\cite{cacheEffect}.
+
+\subsubsection{Beperkingen en oplossingen}
+
+Het verhogen van de snelheid met behulp van parallelle algoritmen is meestal een feit. In de meeste gevallen zien we echter geen lineaire toename. Dit komt onder meer door de ``\emph{Wet van Amadahl}''\cite{amadalhsLaw}. De meeste algoritmes behouden immers een zekere nood aan het sequentieel uitvoeren van sommige instructies. De Wet van Amadahl stelt dat gegeven het aantal instructies die sequentieel moeten worden uitgevoerd, er een plafond bestaat en dat men met een willekeurig aantal processoren altijd onder dit plafond zal blijven. De ``\emph{Wet van Gustafson}''\cite{gustafsonsLaw} stelt echter dat we programma's wel lineair kunnen versnellen wanneer de probleemgrootte arbitrair is. Vermits we vooral ge\"interesseerd in het paralleliseren van grote optimalisatieproblemen, kunnen we dus alsnog streven naar een lineaire versnelling.
+
+\section{Probleemstelling}
+
+In deze masterthesis proberen we de twee voorgaande concepten, hyperheuristieken en parallelle algoritmen, met elkaar te combineren. Hierbij trachten we op een effici\"ente maar tegelijk probleem onafhankelijke manier het werk van een hyperheuristiek op verschillende machines uit te voeren.
+
+\paragraph{}
+
+Hyperheuristieken zijn doorgaans een atypisch algoritmen als het op parallellisatie aankomt: de meeste parallelle algoritmen zijn deterministisch van aard en vereisen dat elke stap in het algoritme wel degelijk wordt uitgevoerd. Hyperheuristieken zijn echter non-deterministisch van aard en de prestaties van een hyperheuristiek hangen doorgaans niet af van het slagen van alle deelcomponenten: indien we er bijvoorbeeld op een gegeven moment niet in zouden slagen om een \emph{low-level heuristiek} uit te voeren, kunnen we de functie nogmaals proberen toe te passen of een andere heuristiek kiezen.
+
+\section{Gevolgde methodiek}
+
+
+In dit hoofdstuk wordt het werk ingeleid. Het doel wordt gedefinieerd en er
+wordt uitgelegd wat de te volgen weg is (beter bekend als de rode draad).
+
+Als je niet goed weet wat een masterproef is, kan je altijd
+Wikipedia\cite{wiki} eens nakijken.
+
+\section{Lorem ipsum 4--5}
+\lipsum[4-5]
+
+\section{Lorem ipsum 6--7}
+\lipsum[6-7]
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "masterproef"
+%%% End: 

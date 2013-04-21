@@ -91,5 +91,8 @@ ParallelHyFlex/build/*
 *.dll
 *.exe.mdb
 *.txt
+
+#specials
 /ParallelHyFlex/dist/
 /GIHH/nbproject/private/
+/publications/masterthesis/doc/*
