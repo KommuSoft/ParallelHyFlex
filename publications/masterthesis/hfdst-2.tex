@@ -12,16 +12,16 @@ In 2010 publiceren \auth[5586064]{Burke et al.} een paper waarin ze \abhf{} voor
 \paragraph{}
 Het programma heeft dan wel geen idee wat de onderliggende \abllhn{} precies doen, ze worden wel gecategoriseerd in 4 verschillende types:
 \begin{enumerate}
- \item \abmt{}: hierbij wordt de oplossing op een toevallig manier aangepast. Dit soort heuristieken heeft geen componenten die inschatten of de verandering onmiddellijk of op termijn tot betere resultaten zal leiden.
- \item \abco{}: dit zijn de enige heuristieken die twee oplossingen recombineren in een nieuwe oplossing. Het is uiteraard de bedoeling dat de nieuwe oplossing karakteristieken gemeen heeft met beide ``ouders''.
- \item \abrr{}: deze heuristieken breken een deel van de oplossing af, om ze dan vervolgens met behulp van bijvoorbeeld een gretig algoritme terug op te bouwen.
- \item \abls{}: dit is een familie van algoritmen die herhaaldelijk mutaties uitvoeren indien deze mutaties ook per stap winst opleveren. Indien geen enkele mutatie meer tot een beter resultaat leidt stopt het algoritme.
+ \item \emph{\abmt{}}: hierbij wordt de oplossing op een toevallig manier aangepast. Dit soort heuristieken heeft geen componenten die inschatten of de verandering onmiddellijk of op termijn tot betere resultaten zal leiden.
+ \item \emph{\abco{}}: dit zijn de enige heuristieken die twee oplossingen recombineren in een nieuwe oplossing. Het is uiteraard de bedoeling dat de nieuwe oplossing karakteristieken gemeen heeft met beide ``ouders''.
+ \item \emph{\abrr{}}: deze heuristieken breken een deel van de oplossing af, om ze dan vervolgens met behulp van bijvoorbeeld een gretig algoritme terug op te bouwen.
+ \item \emph{\abls{}}: dit is een familie van algoritmen die herhaaldelijk mutaties uitvoeren indien deze mutaties ook per stap winst opleveren. Indien geen enkele mutatie meer tot een beter resultaat leidt stopt het algoritme.
 \end{enumerate}
 Het softwaresysteem houdt ook de mogelijkheid open om een \abllh{} te classificeren onder ``other'', maar voor zover ons bekend zijn er nog geen heuristieken in \abhf{} geschreven die onder deze categorie vallen. Verder kan er verwarring optreden over het feitelijke verschil tussen \abrr{} en \abls{}. We kunnen immers bij beide families verwachten dat ze minstens een oplossing opleveren die beter is dan het origineel (\abrr{} zal immers tot in dat geval het afgebroken gedeelte reconstrueren zoals het origineel). Een verschil die men doorgaans maakt is dat \abls{} een operator is die idempotent is.
 
 \subsection{\abchescy{}}
 
-Om meer aandacht te vestigen op \abhf{} werd in 2011 een wedstrijd georganiseerd door de universiteit van Nottingham: de ``\emph{Cross-domain Heuristic Search Challenge (\abchescy)}''. De verschillende programma's krijgen een set van verschillende problemen en worden gequoteerd op basis van de kwaliteit van de oplossingen die ze na 10 minuten uitvoer afleveren.%TODO(check)
+Om meer aandacht te vestigen op \abhf{} werd in 2011 een wedstrijd georganiseerd door de universiteit van Nottingham: de ``\emph{Cross-domain Heuristic Search Challenge (\abchescy)}''\cite{Burke:2011:CHS:2177360.2177415}. De verschillende programma's krijgen een set van verschillende problemen en worden gequoteerd op basis van de kwaliteit van de oplossingen die ze na 10 minuten uitvoer afleveren.%TODO(check)
 De wedstrijd omvatte problemen uit zes verschillende domeinen: \prob{Maximal Satisfiability}, \prob{Bin Packing}, \prob{Personnel Scheduling}, \prob{Flow Shop}, \prob{Travelling Salesman Problem} en het \prob{Vehicle Routing Problem}.
 
 \paragraph{}
@@ -31,31 +31,198 @@ In totaal telde de competitie 20 teams. We hebben met onze studie de zestien imp
   \centering
   \begin{tabular}{rllrc} \toprule
     \#&Naam&Auteur/Team&Score&Bestudeerd\\\midrule
-    1&	AdapHH\cite{chesc-adaphh,chesc-adaphh2}&		Mustafa M\i{}s\i{}r&	181.00&	$\checkmark$\\
-    2&	VNS-TW\cite{chesc-vns-tw}&				Mathieu Larose&		134.00&	$\checkmark$\\
-    3&	ML\cite{chesc-ml,chesc-ml2}&				Mustafa M\i{}s\i{}r&	131.50&	$\checkmark$\\
-    4&	PHUNTER\cite{chesc-phunter}&				Fan Xue&		93.25&	$\checkmark$\\
-    5&	EPH\cite{chesc-eph}&					David Meignan&		89.75&	$\checkmark$\\
-    6&	HAHA&							Andreas Lehrbaum&	75.75&	\\
-    7&	NAHH&							MFranco Mascia&		75.00&	\\
-    8&	ISEA\cite{chesc-isea}&					Jiri Kubalik&		71.00&	$\checkmark$\\
-    9&	KSATS-HH\cite{chesc-ksats-hh}&				Kevin Sim&		66.50&	$\checkmark$\\
-    10&	HAEA\cite{chesc-haea}&					Jonatan Gomez&		53.50&	$\checkmark$\\
-    11&	ACO-HH\cite{chesc-aco-hh}&				Jos\'e Luis N\'u\~nez&	39.00&	$\checkmark$\\
-    12&	GenHive\cite{chesc-genhive}&				CS-PUT&			36.50&	$\checkmark$\\
-    13&	DynILS\cite{chesc-dynils}&				Mark Johnston&		27.00&	$\checkmark$\\
-    14&	SA-ILS&							He Jiang&		24.25&	\\
-    15&	XCJ&							Kamran Shafi&		22.50&	\\
-    16&	AVEG-Nep\cite{chesc-aveg-nep}&				Thommaso Urli&		21.00&	$\checkmark$\\
-    17&	GISS\cite{chesc-giss}&					Alberto Acu\~na&	16.75&	$\checkmark$\\
-    18&	SelfSearch\cite{chesc-selfsearch}&			Jawad Elomari&		7.00&	$\checkmark$\\
-    19&	MCHH-S\cite{chesc-mchh-s}&				Kent McClymont&		4.75&	$\checkmark$\\
-    20&	Ant-Q\cite{chesc-ant-q}&				Imen Khamassi&		0.00&	$\checkmark$\\
+    1&	\emph{AdapHH}\cite{chesc-adaphh,chesc-adaphh2,348072}	&	Mustafa M\i{}s\i{}r&	181.00&	$\checkmark$\\
+    2&	\emph{VNS-TW}\cite{chesc-vns-tw}&				Mathieu Larose&		134.00&	$\checkmark$\\
+    3&	\emph{ML}\cite{chesc-ml,chesc-ml2}&				Mustafa M\i{}s\i{}r&	131.50&	$\checkmark$\\
+    4&	\emph{PHUNTER}\cite{chesc-phunter}&				Fan Xue&		93.25&	$\checkmark$\\
+    5&	\emph{EPH}\cite{chesc-eph}&					David Meignan&		89.75&	$\checkmark$\\
+    6&	\emph{HAHA}&							Andreas Lehrbaum&	75.75&	\\
+    7&	\emph{NAHH}&							MFranco Mascia&		75.00&	\\
+    8&	\emph{ISEA}\cite{chesc-isea}&					Jiri Kubalik&		71.00&	$\checkmark$\\
+    9&	\emph{KSATS-HH}\cite{chesc-ksats-hh}&				Kevin Sim&		66.50&	$\checkmark$\\
+    10&	\emph{HAEA}\cite{chesc-haea}&					Jonatan Gomez&		53.50&	$\checkmark$\\
+    11&	\emph{ACO-HH}\cite{chesc-aco-hh}&				Jos\'e Luis N\'u\~nez&	39.00&	$\checkmark$\\
+    12&	\emph{GenHive}\cite{chesc-genhive}&				CS-PUT&			36.50&	$\checkmark$\\
+    13&	\emph{DynILS}\cite{chesc-dynils}&				Mark Johnston&		27.00&	$\checkmark$\\
+    14&	\emph{SA-ILS}&							He Jiang&		24.25&	\\
+    15&	\emph{XCJ}&							Kamran Shafi&		22.50&	\\
+    16&	\emph{AVEG-Nep}\cite{chesc-aveg-nep}&				Thommaso Urli&		21.00&	$\checkmark$\\
+    17&	\emph{GISS}\cite{chesc-giss}&					Alberto Acu\~na&	16.75&	$\checkmark$\\
+    18&	\emph{SelfSearch}\cite{chesc-selfsearch}&			Jawad Elomari&		7.00&	$\checkmark$\\
+    19&	\emph{MCHH-S}\cite{chesc-mchh-s,conf/gecco/McClymontK11}&	Kent McClymont&		4.75&	$\checkmark$\\
+    20&	\emph{Ant-Q}\cite{chesc-ant-q,sis/ant-q}&			Imen Khamassi&		0.00&	$\checkmark$\\
     \bottomrule
   \end{tabular}
   \caption{Deelnemers van de \abchescy{} competitie\cite{chesc-results}.}
   \label{tbl:chescParticipants}
 \end{table}
+
+we zullen de bestudeerde implementaties kort bespreken en vervolgens enkele hypotheses aanbrengen waaraan goed presterende hyperheuristieken waarschijnlijk dienen te voldoen.
+
+\section{Implementaties}
+
+\subsection{\emph{Ant-Q} (\#20)}
+\label{sss:ant-q}
+\subsubsection{Implementatie}
+\emph{Ant-Q}\cite{chesc-ant-q,sis/ant-q} combineert ``\emph{ant-computing}''\cite{Michael:2009:AC:1596832.1596835} met ``\emph{Q-learning}''\cite{citeulike:5925674}. Dit doet men door een graaf te beschouwen waar de metaheuristieken de knopen voorstellen. De bogen bevatten een niet genormaliseerde kans om deze boog te nemen. Vervolgens voert men op een populatie oplossingen metaheuristieken uit door van knoop naar knoop te bewegen. De volgende knoop wordt gekozen op basis van een kansverdeling volgens de bogen die verbonden zijn met de oorspronkelijke knoop. Nadat de heuristiek is toegepast, wordt de kansverdeling van alle bogen die de oplossing tot dusver heeft gevolgd aangepast. De oplossing die op dat moment de beste is beloont alle bogen die hij gepasseerd heeft. Door de waarde van de bogen aan te passen zullen andere oplossingen meer geneigd zijn om een gelijkaardig pad te kiezen.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Het volledige pad van de winnende oplossing krijgt een bonus (ook bogen die hier helemaal niet te hebben bijgedragen)
+ \item Wanneer de beste oplossing lange tijd hetzelfde is, krijgen de relevante bogen een grote bonus, hierdoor zit er na verloop van tijd nog weinig creativiteit in het systeem.
+ \item Het type metaheuristiek speelt geen rol in het algoritme. Hierdoor is er een grote kans dat \abls{} heuristieken na verloop van tijd vaak worden toegepast. Dit leidt bovendien tot een stabiel systeem: \abls{} heuristieken zijn immers idempotent waardoor de beste oplossing dezelfde zal blijven.
+\end{itemize}
+\subsection{\emph{MCHH-S: Markov Chain Hyper-Heuristic} (\#19)}
+\label{sss:mchh-s}
+\subsubsection{Implementatie}
+\emph{MCHH-S}\cite{chesc-mchh-s,conf/gecco/McClymontK11} werkt op een gelijkaardig manier aan Ant-Q (zie \ref{sss:ant-q}): men ontwerpt een graaf waar de knopen de metaheuristieken voorstellen en de bogen overgangen die men met een kans labelt. Het algoritme verschilt echter omdat er slechts \'e\'en oplossing in het netwerk rondwandelt. Daarnaast worden de kansen ook op een andere manier berekend: enkel de laatste boog verandert op basis van de onmiddellijke verandering van de fitness-waarde van de oplossing. Het algoritme verschilt ook omdat het niet telkens de nieuwe oplossing accepteert: alleen indien de oplossing beter is, of probabilistisch volgens het aantal opeenvolgende iteraties dat er nog geen betere oplossing werd gevonden.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Dit algoritme kan in een lokaal optimum terecht komen vermits \abls{} doorgaans voor de grootste winst zorgen en dus vaker beloond zullen worden. De idempotentie van \abls{} heuristieken zorgt er echter voor dat we veel rekenkracht verliezen met het herhaaldelijk toepassen van \abls{} heuristieken.
+ \item Men maakt geen onderscheid tussen de verschillende types heuristieken: mutatie zal meestal tot een tijdelijk slechtere oplossing leiden. De bogen naar mutaties bestraffen is echter waarschijnlijk niet wenselijk. (net als bij \emph{Ant-Q}, zie \ref{sss:ant-q}).
+\end{itemize}
+\subsection{\emph{SelfSearch} (\#18)}
+\label{sss:selfsearch}
+\subsubsection{Implementatie}
+\emph{SelfSearch}\cite{chesc-selfsearch} werkt met een populatie van oplossingen. Tijdens elke iteratie kiest men een \abllh{} die men vervolgens op alle oplossingen toepast. Hierdoor verdubbelt de populatiegrootte. Om terug op de originele populatiegrootte uit te komen selecteert men de beste unieke oplossingen. De keuze van de heuristiek gebeurt probabilistisch en op basis van twee strategie\"en: exploratie en exploitatie. Bij de exploratie krijgen heuristieken die een resultaat opleveren die verschilt van het origineel meer gewicht. Bij de exploitatie vooral heuristieken die in het verleden tot verbetering leidden.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Heeft de neiging in een lokaal optimum vast te raken: indien de populatie in een lokaal optimum zit, kan geen enkele mutatie die een tijdelijk slechtere oplossing levert de populatie terug uit dit lokaal optimum halen. De kans dat een volledige populatie in een lokaal optimum zit is uiteraard klein, maar desalniettemin kan dit algoritme resulteren in het toepassen van veel zinloze \abllh{}.
+ \item Metaheuristieken die in het begin slecht presteren hebben meestal weinig kans op herintroductie: vermits ze na de initi\"ele fase minder gekozen worden, kunnen frequenter gekozen heuristieken een buffer van probabilistisch gewicht opbouwen.
+ \item Er is slecht \'e\'en migratie van de exploitatie-fase naar de exploratie-fase. Indien deze fase op een fout moment gekozen wordt, is er geen weg terug.
+\end{itemize}
+\subsection{\emph{GISS: Generic Iterative Simulated Annealing Search} (\#17)}
+\label{sss:giss}
+\subsubsection{Implementatie}
+\emph{GISS}\cite{chesc-giss} gebruikt \emph{Simulated Annealing}\cite{citeulike:1612433} als hyperheuristiek: bij elke iteratie kiest men uniform een beschikbare metaheuristiek die men toepast op het probleem. Vervolgens accepteert men deze oplossing volgens de procedure van simuated annealing. Crossover metaheuristieken worden toegepast op de laatste en voorlaatste oplossing. Indien er lange tijd geen verbetering zichtbaar is, wordt het systeem herstart vanaf een toevalsoplossing.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Uniforme selectie van \abllhn{} is waarschijnlijk niet interessant. Sommige \abllhn{} zijn immers nagenoeg overal beter dan anderen.
+ \item \abco{} heuristieken toepassen tussen de laatste en de voorlaatste oplossing levert meestal weinig op, vermits de laatste gegenereerd is door een \abllh{} toe te passen op de voorlaatste.
+ \item Er is geen overdracht van zoekervaring bij een (mogelijke) herstart. We kunnen echter verwachten dat we ook uit vorige rondes nuttige informatie kunnen leren.
+ \item Er wordt opnieuw geen onderscheid gemaakt tussen het type van de \abllhn{}. Hierdoor verliest men mogelijk veel rekenkracht aan nutteloze operaties.
+\end{itemize}
+\subsection{\emph{AVEG-Nep: Reinforcement Learning Approach} (\#16)}
+\label{sss:aveg-nep}
+\subsubsection{Implementatie}
+\emph{AVEG-Nep}\cite{chesc-aveg-nep} is gebaseerd op ``\emph{Reinforcement learning}''\cite{rlaiacaml}. Bij een reinforcement learning algoritme hebben we vijf componenten nodig:
+\begin{enumerate}
+ \item Een \emph{toestandsvoorstelling}:
+\end{enumerate}
+een toestandsvoorstelling, een set acties, een \emph{reward}-functie, een \emph{policy} en een \emph{learning} functie. Een simpele \emph{reward} functie is het verschil in fitness. In deze paper deelt men dit verschil ook door de tijd die het bekomen van dit verschil in beslag neemt. Een actie wordt voorgesteld door een tuple: enerzijds de familie waartoe de metaheuristiek behoort, anderzijds de waarde van de relevante parameters gekwantiseerd per 0.2. Indien een actie gekozen wordt kiezen we uniform een metaheuristiek die tot deze familie behoort en zetten we de parameters op de overeenkomstige waardes. Een toestand stelt het gewogen gemiddelde van het verschil in fitness-waarde over de tijd voor (dit gewogen gemiddelde wordt bereknt via \emph{exponential smoothing}). Als \emph{learning policy} wordt $\epsilon$-greedy 
+gebruikt. Als \emph{learning} functie ten slotte gebruikt men ook een \emph{exponential smoothing} functie. Een laatste aspect is dat men 4 verschillende agenten tegelijk laat werken op de het probleem. De rede is dat men bij het toepassen van een crossover heuristiek een andere oplossing nodig heeft. In dat geval kiest men de oplossing van een andere agent om een crossover mee te realiseren.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Weinig semantiek in de keuze van metaheuristieken: tweemaal dezelfde \emph{local search} heuristiek met dezelfde parameters toepassen op eenzelfde oplossing levert niets op en leidt enkel tot tijdverlies.
+ \item Geen onderscheid tussen metaheuristieken van dezelfde familie: terwijl de parameters een andere semantische betekenis kunnen hebben, en de \'en\'e heuristiek soms significant beter kan werken dan de andere.
+ \item Semantiek van de toestand niet duidelijk: naarmate het algoritme vordert verwachten we een minder sterke groei van de fitness-functie. Hierdoor komen we in onverkende toestanden waardoor de exploitatie waarschijnlijk eerder laag is.
+\end{itemize}
+\subsection{\emph{DynILS: Dynamic Iterated Local Search} (\#13)}
+\label{sss:dyn-ils}
+\subsubsection{Implementatie}
+Dynamic Iterated Local Search\cite{chesc-dynils,journals/orsnz/ksosils} is een implementatie met twee kleine wijzigingen: vermits de metaheuristieken parameters hebben, probeert het algoritme deze parameters te optimaliseren. Hiertoe houdt het een vector voor een aantal waardes van deze parameters. Deze vector wordt gebruikt om de kans uit te rekenen dat de overeenkomstige parameter-waarde geselecteerd wordt. Indien een metaheuristiek de oplossing verder verbeterd wordt de geprobeerde parameter-waarde beloond. Anders wordt deze bestraft. Een tweede aanpassing is de non-improvement bias: we verhogen de parameter evenredig met het aantal opeenvolgende iteraties waarin we de oplossing niet konden verbeteren. Door de parameter te verhogen zoeken we een groter gebied af met local search en muteren we de oplossing ook sterker. Hierdoor hoopt men uit een lokaal optimum te ontsnappen.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Selectie van de pertubatie nogal eenvoudig
+ \item Vaste volgorde van het toepassen van local-search: hierdoor kan \'e\'en \emph{local-search} de andere blokkeren.
+\end{itemize}
+\subsection{\emph{GenHive: Genetic Hive Hyperheuristic} (\#12)}
+\label{sss:genhive}
+\subsubsection{Implementatie}
+GenHive\cite{chesc-genhive} is een hyperheuristiek die werkt op basis van een genetisch algoritme. Een individu in dit genetische algoritme is een sequentie van metaheuristieken die op het probleem worden toegepast. Enkele van deze individuen zijn actief: ze worden toegekend aan een oplossing in de zoekruimte en worden er bij een iteratie op toegepast. Nadien worden de resultaten ge\"evalueerd. De beste strategie\"en blijven behouden. De overige worden passieve individuen. Men dient echter aan elke oplossing die beschouwd wordt een strategie toe te kennen. Hiertoe worden individuen die in de vorige iteratie passief waren gerecombineerd met de beste individuen.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Algoritme bevat veel parameters: populatiegrootte, aantal individuen actief, aantal individuen die na de iteratie behouden blijft,...
+ \item Ineffici\"ent om altijd alle oplossingen verder te ontwikkelen in een iteratie,
+ \item De beste individuen blijven aan dezelfde oplossingen gelinkt, terwijl men deze zou kunnen gebruiken om andere oplossingen ook significant te verbeteren.
+ \item Redundante aspecten in een oplossing (een sequentie oproepen die nooit een beter resultaat kunnen genereren) wordt niet ge\"elimineerd: niet effici\"ent met tijdsgebruik
+\end{itemize}
+\subsection{\emph{ACO-HH: Ant Colony Optimization} (\#11)}
+\label{sss:aco-hh}
+\subsubsection{Implementatie}
+ACO-HH\cite{chesc-aco-hh} maakt gebruik van de Ant-Colony Optimization\cite{hom/aco} techniek. Net als bij Ant-Q (zie \ref{sss:ant-q}) beschouwd men een grafe waarbij knopen metaheuristieken voorstellen. Een fundamenteel verschil is echter dat de grafe voorgesteld wordt als een tabel met $n$ kolommen en $H$ rijen (met $H$ het aantal metaheuristieken en $n$ een parameter genaamd de \emph{padlengte}). Elke metaheuristiek komt in deze grafe $n$ keer voor. Verder beschouwen we enkel bogen tussen twee verschillende kolommen. Het is de bedoeling dat de mieren een pad afleggen waarbij men $n$ keer een heuristiek kiest. Elke mier start met dezelfde initi\"ele oplossing. Wanneer deze in een knoop aankomt past hij de overeenkomstige metaheuristiek toe en kiest een nieuwe knoop op basis van de feromonen van de paden die naar de volgende kolom leiden. Wanneer alle mieren de laatste kolom bereikt hebben worden de resultaten ge\"evalueerd. De feromonen worden aangepast naargelang mieren die over 
+dit pad hebben gewandeld tot betere/slechtere oplossingen komen. Ook dient men een nieuwe init\"ele oplossing te kiezen voor de mieren van de volgende fases. Doorgaans neemt men de beste oplossing over alle fases heen, tenzij de huidige fase deze oplossing heeft gegenereerd.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Neiging om in een lokaal optimum vast te zitten: indien een sequentie initieel veel vooruitgang boekt, zullen meer mieren dit pad kiezen. Het wordt echter moeilijk indien deze sequentie stagneert om een nieuw pad te bewandelen.
+ \item Redudante aspecten in een sequentie worden niet noodzakelijk ge\"elimineerd: niet effici\"ent met tijdsgebruik. Men zou in de grafe \emph{nul-operaties} kunnen voorstellen. Een mier die in zo'n operatie terecht komt voert nadien geen operaties meer uit tot het einde van de iteratie.
+\end{itemize}
+\subsection{\emph{HAEA: Hybrid Adaptive Evolutionary Algorithm} (\#10)}
+\label{sss:haea}
+\subsubsection{Implementatie}
+Dit algoritme\cite{chesc-haea,Gomez04selfadaptation} houdt telkens drie oplossingen bij: de ouder, het kind (een oplossing gegenereerd uit de ouder) en de beste oplossing tot nu toe. Daarnaast houdt men twee verzamelingen bij van heuristieken: \texttt{heu} houdt vier heuristieken bij uit de lijst van alle heuristieken. \texttt{loc} houdt vier heuristieken bij uit de lijst van hillclimbers. De heuristieken die in deze verzamelingen zitten zijn ``in use''. Dat betekent dat bij iedere iteratie we een algemene heuristiek kiezen uit \texttt{heu} en een hillclimber uit \texttt{loc}. Vervolgens passen we deze heuristieken na elkaar toe op  de ouder. Bij een crossover heuristiek combineren we de ouder met de beste oplossing. Indien dit kind beter is dan de ouder accepteren we het kind als nieuwe ouder en belonen we beide heuristieken. Dit doen we door de kans te verhogen dat ze de volgende maal opnieuw gekozen worden. Indien het kind niet beter presteert verlagen we de kans dat de 
+heuristieken nogmaals gekozen worden. Indien na enkele iteraties er nog steeds geen verbetering is, kiezen we nieuwe elementen voor \texttt{heu} en \texttt{loc}.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Crossover wordt niet optimaal gebruikt: de kans is groot dat de huidige oplossing al dicht bij de beste oplossing zit.
+ \item Beide metaheuristieken worden beloond terwijl de oorzaak van de verbetering eerder te wijten kan zijn door het combineren van de twee configuraties.
+ \item Bij het kiezen van nieuwe sets wordt de opgedane kennis over metaheuristieken weggegooid.
+\end{itemize}
+\subsection{\emph{KSATS-HH: Simulated Annealing with Tabu Search} (\#9)}
+\label{sss:ksats-hh}
+\subsubsection{Implementatie}
+KSATS-HH\cite{chesc-ksats-hh} is een implementatie die gebaseerd is op Si\-mu\-la\-ted-An\-nea\-ling: men houdt telkens een actieve oplossing bij. Na het toe\-passen van een metaheuristiek accepteert men het resultaat van de oplossing indien de oplossing beter is, of met een bepaalde kans (die exponentieel daalt naarmate het resultaat veel slechter is) een slechtere oplossing accepteert. Een intelligent aspect hierbij is dat men op basis van ervaring uit het verleden gebruikt om het verschil in fitness-waarde eerst te normaliseren (het verschil kan immers afhankelijk zijn van het probleem domein of de instantie). Het koelingsschema werkt ook exponentieel maar de factor waarmee men vermenigvuldigt verschilt in iedere tijdstap en hangt af van de het aantal iteraties die men in \'e\'en tijdseenheid weet te realiseren. De keuze van de heuristiek die wordt toegepast werkt op basis van Tabu-Search: het algoritme houdt een lijst bij van heuristieken. Heuristieken die erin slagen om de 
+oplossing te verbeteren stijgen in de lijst. Heuristieken die daar niet in slagen dalen een plaats en worden tabu voor de volgende 7 iteraties. De uiteindelijke selectie van de heuristiek gebeurt door twee heuristieken uit de lijst te selecteren die niet tabu zijn. De heuristiek met die het hoogst in de lijst staat wordt dan gekozen.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Het systeem bestraft heuristieken voordat het algoritme begint: er zit een inherente orde in de lijst. Het element die als laatste geclassificeerd staat kan per toeval net de best presterende heuristiek zijn. Het duurt vrij lang voor deze een acceptabele selectie-kans krijgt.
+\end{itemize}
+\subsection{\emph{ISEA: Iterated Search by Evolutionary Algorithm} (\#8)}
+\label{sss:isea}
+\subsubsection{Implementatie}
+Iterated Search by Evolutionary Algorithm\cite{chesc-isea} is een algoritme die gebaseerd is op het eerder gepubliceerde \emph{POEMS}\cite{eurogp06:KubalikFaigl}, een single candidate algoritme. Men probeert het op te lossen door het proces onder te verdelen en een sequentie van \emph{epochs}. In zo'n \emph{epoch} voert men een evolutief algoritme uit op prototypes. Een prototype is een sequentie van een variabel aantal metaheuristieken. Bij elk van deze metaheuristieken zijn ook de parameters reeds vastgezet. Tijdens een epoch wordt in een vast aantal iteraties een populatie van prototypes door een genetisch algoritme geoptimaliseerd. Nadien wordt het beste resultaat die met deze prototypes bereikt werd als nieuwe single candidate gebruikt in de volgende epoch. 
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Redudante aspecten in een sequentie worden niet noodzakelijk ge\"elimineerd: niet effici\"ent met tijdsgebruik.
+ \item Na een tijdstap wordt de opgedane ervaring weggegooid.
+\end{itemize}
+\subsection{\emph{EPH: Evolutionary Programming Hyper-heuristic} (\#5)}
+\label{sss:eph}
+\subsubsection{Implementatie}
+EPH\cite{chesc-eph} werkt op basis van twee populaties: een populatie oplossingen en een populatie van sequenties van metaheuristieken. Beide populaties evolueren tegelijk. De populatie oplossing bestaat uit $N$ oplossingen die ``random'' ge\"initialiseerd worden. Telkens bij de evaluatie van de populatie van de sequenties worden er nieuwe oplossingen gegenereerd. Telkens nadat zo'n sequentie is toegepast op een oplossing. Zal men proberen dit resultaat in de populatie proberen in te brengen. Een oplossing wordt in een populatie ingebracht indien het een betere fitness waarde heeft dan minstens \'e\'en oplossing in de populatie en de fitness-waarde nog niet voorkomt. Ter compensatie wordt de slechtste oplossing uit de populatie gehaald. Een sequentie metaheuristieken bestaat uit twee delen: een pertubatie-gedeelte met een maximale lengte van twee, en een local-search gedeelte van variabele lengte. Tot de pertubatie behoren de mutatie, crossover en ruin-recreate. Naast de 
+metaheuristiek die we toepassen bevat een sequentie ook informatie over de parameters. Het algoritme zet nog enkele extra beperkingen op sequenties: indien we twee pertubatie-heuristieken beschouwen dienen ze verschillend te zijn; een crossover heuristiek kan enkel op de eerste plaats staan. Bij het local search gedeelte wordt een heuristiek ofwel \'e\'enmaal ofwel volgens een Variable Neighborhood Descent schema\cite{hom/vns} uitgevoerd. De populatie van sequenties wordt initieel random bevolkt en evolueert doormiddel van mutatie en selectie. Hiervoor worden vier types mutaties gebruikt die met uniforme kans worden gekozen: modificeren van de pertubatie-parameters, modificeren van de local-search-parameters, verwijderen/toevoegen van een pertubatie, permutatie van de local-search heuristieken. Op elke sequentie wordt een mutatie toegepast. Daarna wordt via 2-tournament de populatie opnieuw gehalveerd: twee toevallig gekozen sequenties nemen het in enkele rondes tegen elkaar op. In een ronde worden ze op 
+eenzelfde individu in de oplossingsverzameling toegepast. De sequentie die na de rondes het vaakst met de beste nieuwe oplossing komt, wordt geselecteerd in de nieuwe generatie van sequenties.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Redudante aspecten in een sequentie worden niet noodzakelijk ge\"elimineerd: niet effici\"ent met tijdsgebruik.
+\end{itemize}
+\subsection{\emph{PHUNTER: Pearl Hunter} (\#4)}
+\label{sss:phunter}
+\subsubsection{Implementatie}
+Pearl Hunter\cite{chesc-phunter} is zoals de naam uitlegt gebaseerd op de jacht op parels en zeedieren. Dit proces kan het best uitgelegd worden als herhaalde diversificatie. Dit doen men door in de eerste plaats de metaheuristieken op te delen in twee categorie\"en: \emph{dives} die overeenkomen met de local-search heuristieken en \emph{surface moves} die de andere heuristieken omvat. Daarnaast deelt men \emph{dives} verder op in \emph{snorkling} en \emph{deep dives}. \emph{Snorkling} houdt in dat men een local-search algoritme met lage \emph{depth of search} uitvoert en stopt op het moment dat men een betere oplossing ontdekt. \emph{Deep dives} daarentegen zoeken met een hoge \emph{depth of search} en stoppen enkel wanneer er geen verbetering meer waargenomen wordt. PHunter combineert \emph{surface moves} en \emph{dives} in zogenaamde \emph{move-dive} iteraties. Bij zo'n \emph{move-dive} vertrekt men van enkele initi\"ele oplossingen. Vervolgens past men \emph{surface moves} toe en 
+laat men de populatie groeien. Nadien ordent men de oplossingen. Enkel op interessante oplossingen wordt \emph{snorkling} toegepast. De beloftevolle oplossigen die uit deze \emph{snorkling}-fase komen, worden dan gebruikt als basis voor een \emph{deep dive}. Een \emph{deep dive} bestaat uit een sequentie van verschillende local-search metaheuristieken. Omdat de volgorde waarin deze heuristieken worden toegepast een belangrijke rol kan spelen worden verschillende volgordes parallel ge\"evalueerd. Na het \'e\'enmalig toepassen van zo'n sequentie worden de sequenties vergeleken. Enkel de beste sequentie wordt dan nog herhaaldelijk toegepast. Een laatste aspect die uniek is aan PHunter is \emph{surface learning}: men evalueert omgevingen op basis van het aantal local-search iteraties het kost in de \emph{snorkling}-fase om de oplossing te verbeteren. Afhankelijk van het aantal iteraties wordt een omgeving gecategoriseerd als \emph{shallow water}, \emph{sea trench} of \emph{buoy in the water}. Op basis van de 
+omgeving wordt een strategie bepaald voor de \emph{surface moves} in de volgende iteratie. De vier mogelijke strategie\"en zijn: \emph{average calls}, \emph{crossover emphasized}, \emph{crossover only} en \emph{online pruning}. De strategie wordt gekozen op basis van een \emph{decision tree} die werd opgesteld door \emph{WEKA} voor een bepaalde testcase. Een laatste aspect is het \emph{mission restart} principe: indien voor een lange tijd geen betere oplossing wordt gevonden of de oplossingen in de populatie zijn door \emph{surface moves} te gelijklopend, begint men weer men een nieuwe initi\"ele oplossing.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item \emph{Decision tree} lost het probleem met de parameters niet op: parameters zitten in de \emph{decision tree} (opgesteld op basis van een aantal testen op historische data).
+ \item \emph{Mission restart} gooit alle opgedane ervaring weg.
+\end{itemize}
+\subsection{\emph{ML: Mathieu Larose} (\#3)}
+\label{sss:ml}
+\subsubsection{Implementatie}
+ML\cite{chesc-ml} is gebaseerd op de meta-heuristiek \emph{Coalition Based Metaheuristic (CBM)}\cite{chesc-ml2}. In het \emph{CBM} algoritme, worden verschillende \emph{agents} gegroepeerd in een ``\emph{coalition}''. Agenten die tot dezelfde \emph{coalition} behoren, zullen vervolgens parallel de zoekruimte onderzoeken en onderweg ervaring uitwisselen over welke metaheuristieken moeten worden geselecteerd. Dit leerproces gebeurt aan de hand van re\"inforcement learning. Elke agent werkt verder met een \emph{Diversification-Intensification cycle}. In de diversification stap passen we een mutatie of ruin-recreate heuristiek toe. In de intensificatie cyclus passen we meerdere local-search heuristieken toe todat geen enkele local-search metaheuristiek de oplossing nog verder verbeterd. Daarna wordt beslist of de gevonden oplossing de nieuwe actieve oplossing van de agent wordt. De reinforcement learning probeert om een zo goed mogelijke zoekstrategie te ontwikkelen voor iedere agent. Hiertoe dienen we toestanden op te stellen (we proberen immers een metaheuristiek te kiezen in een bepaalde toestand). Als toestand worden voorwaardes gebruikt over welke metaheuristieken al zijn toegepast. Vervolgens probeert het leeralgoritme een matrix op te stellen die gewichten toekent die aangeven in welke situatie welke metaheuristiek waarschijnlijk het voordeligste is. De keuze van de metaheuristiek wordt dan uiteindelijk gemaakt via een roulettewheel-procedure op basis van de toestand waarin we ons op een gegeven moment bevinden. Naast het leren op basis van eigen ervaring wordt ook ervaring opgedaan door de matrices van andere agenten. Hervoor wordt aan mimetism learning gedaan: een agent probeert de matrix van een andere agent te imiteren door een lineare interpolatie tussen de eigen matrix en de vreemde matrix te nemen. Een agent zal enkel een nieuwe gewichtentabel leren wanneer hij tot een beter resultaat is gekomen in de laaste diversificatie-intensificatie cyclus. Verder zal een agent zal enkel zijn eigen matrix met anderen delen (die dus van deze matrix leren), als hij zelf tot een globaal beter resultaat komt.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Reinforcement learning introduceert nieuwe parameters, die natuurlijk intelligent moeten gekozen worden,
+ \item Een goede metaheuristiek kan afhangen van de huidige oplossing. Deze wordt niet in rekening gebracht.
+\end{itemize}
+\subsection{\emph{VNS-TW: Variable Neighborhood Search-based} (\#2)}
+\label{sss:vns-tw}
+\subsubsection{Implementatie}
+VNS-TW\cite{chesc-vns-tw} is zoals de naam doet vermoeden gebaseerd op Variable Neighborhood Search. Het is een populatie-gebaseerd algoritme en werkt op basis van vier stappen: shaking, local search, tabu en vervangen-selectie. Elke iteratie passen we toe op slechts \'e\'en oplossing. Aan het einde van de iteratie kunnen we eventueel van actieve oplossing veranderen. Bij stap 1 -- shaking -- gebruikt men een toevallig gekozen heuristiek uit de \emph{mutation} of \emph{ruin-recreate} heuristieken en past men deze toe op de actieve oplossing. Vervolgens zullen we in de local search een local search heuristiek kiezen en deze toepassen op het resultaat van de shaking. De heuristiek wordt gekozen op basis van rang: eerst kiezen uit een set heuristieken die nog niet gekozen zijn of een beter resultaat opleverden (rang 1), daarna uit een reeks heuristieken die de vorige keer een gelijkwaardige (maar niet gelijke) oplossing opleverden (rang 0). Indien geen enkele heuristiek meer aan deze 
+voorwaarden voldoet, of we stellen na $c$ opeenvolgende pogingen geen verbetering vast, stoppen we de local search. In de volgende stap (tabu) zullen we op basis van de afgeleverde oplossing door de local search, de \emph{shaking} heuristieken aanpassen. Dit doen we via de Tabu-methode\cite{journals/heuristics/BurkeKS03}: indien het eindresultaat slechter is dan het orgineel komt de heuristiek in de tabu-lijst terecht. Indien we tot een gelijkaardig resultaat komen doen we dit in 20\% van de gevallen. Tot slot passen we de populatie aan: indien het resultaat beter is dan het orgineel passen vervangen we het orgineel. Indien het resultaat slechter is, vervangen we de slechtste oplossing in de populatie door het resultaat. We kiezen de nieuwe actieve oplossing op basis van een 2-tournament selectie uit de populatie.
+\subsubsection{Kritiek}
+\begin{itemize}
+ \item Kleine kans dat het algoritme vastloopt op een lokaal optimum: vermits enkel de beste oplossingen worden geaccepteerd in de populatie, kan ontsnappen uit een lokaal optimum enkel gebeuren in de \emph{deversify-intesify-cycle}. Indien het systeem in een breed lokaal optimum terecht komt, is de kans klein dat het algoritme hier in 1 stap uit geraakt. De populatie laat echter niet toe dat we dit in 2 stappen doen.
+\end{itemize}
+\subsection{\emph{AdapHH: Adaptive Hyper-heuristic} (\#1)}
+\label{sss:adaphh}
+\subsubsection{Implementatie}
+AdapHH\cite{chesc-adaphh,conf/lion/MisirVCB12} werkt met een populatie van metaheuristieken die de \emph{Adaptive Dynamic Heuristic Set (ADHS)} wordt genoemd. Het is de bedoeling dat deze set heuristieken zich aanpast zodat telkens de op dat moment interessantste metaheuristieken in de set zitten. Hiervoor deelt men de tijd op in fases. Heurstieken worden op het einde van een fase ge\"evalueerd met vier metrieken: het aantal maal dat men een tot dan toe beste oplossing aanreikte, de totale fitness verbetering, de totale fitness verslechtering en de gespendeerde tijd. Men combineert deze metrieken in een gewogen som. Op het einde van een fase berekent men voor iedere metriek de score. De slechtste helft van de metrieken wordt tijdelijk uit de set verwijdert volgens het principe van Tabu Search. Indien een metaheuristiek bij herintroductie onmiddellijk weer verwijdert wordt, wordt het aantal tabu-fases met \'e\'en verhoogt voor deze heuristiek. Indien deze teller een maximum bereikt 
+wordt de heuristiek definitief geschrapt. Ook metaheuristieken die tijdens de fase geen betere oplossing vonden, maar wel in verhouding een lange tijd lopen worden tijdelijk op tabu geplaatst. Op het einde van een fase wordt ook een probabiliteitsvector berekent die de kansen op selectie in de volgende fase voorstelt. Hierbij is vooral het aantal maal een tot dan toe beste oplossing per tijdseenheid de belangrijkste factor. Elke metaheuristiek houdt ook een lijstje van 10 andere metaheuristieken bij die na de huidige metaheuristiek kunnen worden uitgevoerd. Afhankelijk van het resultaat van een heuristiek na een andere toe te passen, worden kans-waardes aangepast. Telkens wanneer een eerste metaheuristiek is geselecteerd, kiest het algoritme op basis van de kansen in de overeenkomstige lijst een tweede metaheuristiek. Indien de tweede metaheuristiek niet in de tabu-lijst voorkomt, passen we de tweede metaheuristiek toe na de eerste. Anders voeren enkel de eerste metaheuristiek uit. Telkens nadat we deze 
+combinatie van metaheuristieken hebben toegepast dienen we het move acceptance systeem uit te voeren. Dit systeem wordt het \emph{Adaptive Iteration Limited List-based Threshold Accepting (AILLA) system} genoemd. Dit systeem maakt gebruik van de fitness-functie van de vorige beste oplossingen. Normaal worden enkel oplossingen geaccepteerd die de oplossing verbeteren. Indien dit niet het geval is kijken we naar het aantal iteraties dat we nog geen verbetering zien. Afhankelijk van de waarde van de teller accepteren we oplossingen met een fitness-waarde van de beste-oplossing van $t$ fases geleden. Parameters van metaheuristieken worden opgeslagen in het element van de populatie. Op basis van een reward-penalty systeem wordt naar de meest optimale combinatie gezocht.
+
+
+\subsection{Conclusies}
 
 
 %De ``\emph{Cross-domain Heuristic Search Challenge (CHeSC)}'' was een wedstrijd georganiseerd in 2011. De wedstrijd spitste zich toe op het ontwikkelen van hyperheuristieken in ``\abhyfl{}''\cite{hyflex2012,5586064}. \abhyfl{} is een klassenbibliotheek geschreven in Java 
