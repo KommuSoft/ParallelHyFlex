@@ -212,9 +212,7 @@ De \emph{Evolutionary Programming Hyper-Heuristic}\cite{chesc-eph} werkt op basi
 \subsubsection{Implementatie}
 AdapHH\cite{chesc-adaphh,chesc-adaphh2,348072} werkt met een populatie van \abhn{} die de \emph{Adaptive Dynamic Heuristic Set (ADHS)} wordt genoemd. Het is de bedoeling dat deze set heuristieken zich aanpast zodat telkens de op dat moment interessantste \abhn{} in de set zitten. Hiervoor deelt men de tijd op in fases. \abh[H]{} worden op het einde van een fase ge\"evalueerd als een gewogen som van vier metrieken: het aantal maal dat men een tot dan toe beste oplossing aanreikte, de totale fitness verbetering, de totale fitness verslechtering en de gespendeerde tijd. Bovendien maakt men een onderscheid tussen de bereikte resultaten in de fase en over de volledige termijn dat de hyperheuristiek draait: de gewichten van de effecten in de fase zijn wegen significant zwaarder door. Op het einde van een fase komt een deel van de \abhn{} in de ``\emph{Tabu List}''\cite{DBLP:journals/informs/Glover89}. Indien een \abh{} bij herintroductie onmiddellijk weer verwijdert wordt, wordt het aantal tabu-fases met \'e\'en verhoogt voor deze \abh{}. Indien deze teller een maximum bereikt wordt de heuristiek definitief geschrapt. Ook \abhn{} die tijdens de fase geen betere oplossing vonden, rust een tijdelijk tabu. Een tweede manier waarop men \abhn{} selecteert is de zogenaamde ``\emph{Relay Hybridisation}'': Elke \abhn{} houdt ook een lijstje van 10 andere metaheuristieken bij die na de deze \abh{} kunnen worden uitgevoerd. Dit systeem wordt vooral op het einde van een fase actief. Bij de \emph{relay hybridisation} worden dus twee \abhn{} na elkaar uitgevoerd. Een ander belangrijk component in het systeem is \emph{move acceptance}: het al dan niet beschouwen van het resultaat van de \abh{} als de nieuwe oplossing. Dit systeem wordt het \emph{Adaptive Iteration Limited List-based Threshold Accepting (AILLA) system} genoemd. Betere oplossingen worden altijd geaccepteerd. In het geval we een slechtere oplossing optekenen zullen we doorgaans weigeren, tenzij de oplossing beter is dan deze beste oplossing van enkele fases terug. Het aantal fases dat we terug mogen kijken wordt systematisch opgehoogd wanneer we een bepaalde beweging niet accepteren. Parameters ten slotte worden aangepast door de \abhn{} te categoriseren en op basis hiervan de \emph{Intensity of Mutation} of de \emph{Depth of Search} in kleine stappen te verhogen of te verlagen.
 
-
 \section{Conclusies}
-
 Het trekken van algemene conclusies bij de hierboven beschreven systemen is complex: de meeste systemen omvatten verschillende componenten en daarom kunnen we nooit eenduidig besluiten of de superioriteit van \'e\'en \abhh{} tegenover de andere wel degelijk te wijten is aan een bepaald aspect van deze \abhh{}.
 
 \subsection{Tabu lijsten versus probabiliteitsvectoren}
@@ -232,8 +230,10 @@ Een ander aspect is het behouden van status-quo. In de kritieken kwam vaak aan b
 \paragraph{}
 Betere \abhhn{} bestraffen dan ook \abhn{} die een oplossing voorstellen die equivalent is aan het origineel. \emph{VNS-TW} bijvoorbeeld bestraft bijvoorbeeld in 20\% van de gevallen de \abh{} die tot een equivalent resultaat komt. \emph{AdapHH} gaat zelfs een stapje verder en bestraft onder bepaalde voorwaarden de \abhn{} die in een fase niet tot een nieuw globaal optimum kwamen en een significante hoeveelheid tijd in beslag namen.
 
-
-\subsection{Parameters tijdens het zoekproces}
+\subsection{Robuuste parameters tijdens het zoekproces}
+Heel wat algoritmes bevatten veel parameters. Sommige systemen ontwikkelen leersystemen die deze parameters moeten zetten. Een probleem met deze aanpak is dat deze leersystemen op hun beurt weer parameters introduceren. Meestal is er geen enkele garantie is dat deze parameters robuuster zullen zijn. Bij de meeste systemen ontbreekt een duidelijke motivatie die leersystemen voor parameters rechtvaardigt.
+\paragraph{}
+De meest succesvolle oplossing voor het oplossen van dit probleem bestaat er dan ook uit verschillende leersystemen tegelijk te beschouwen. Indien \'e\'en van de systemen dan faalt om op een effici\"ente manier tot een goede oplossing te komen is er nog altijd de hoop dat de andere systemen daar wel in slagen. Dit concept is bijvoorbeeld duidelijk ge\"implementeerd in \emph{AdapHH} waar naast een systeem met ``\emph{Tabu Search}'' ook het ``\emph{Hybrid Relay}'' systeem gebruikt wordt.
 
 %%% Local Variables: 
 %%% mode: latex
