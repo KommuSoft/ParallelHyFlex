@@ -1,2 +1,52 @@
-\usepackage{amssymb}
+\usepackage{amssymb,slantsc}
 \newtheorem{definition}{Definitie}
+
+\newcommand{\true}{\ensuremath{\mbox{\textbf{true}}}}
+\newcommand{\fals}{\ensuremath{\mbox{\textbf{false}}}}
+
+\newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\tupl}[1]{\ensuremath{\left\langle #1\right\rangle}}
+\newcommand{\accl}[1]{\ensuremath{\left\{ #1\right\}}}
+\newcommand{\abs}[1]{\ensuremath{\left| #1\right|}}
+\newcommand{\dabs}[1]{\ensuremath{\left\| #1\right\|}}
+
+\newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
+
+\newcommand{\bigoh}[1]{\fun{\mathcal{O}}{#1}}
+
+\newcommand{\xstar}{\ensuremath{x^{\star}}}
+\newcommand{\xdot}{\ensuremath{x^{\circ}}}
+
+\newcommand{\argmin}{\ensuremath{\mbox{argmin}}}
+
+\newcommand{\comp}[1]{\textsc{\mbox{#1}}}
+\newcommand{\prbm}[1]{\textsc{#1}}
+\newcommand{\algo}[1]{\textsc{#1}}
+
+\newcommand{\AAA}{\mathbb{A}}
+\newcommand{\BBB}{\mathbb{B}}
+\newcommand{\CCC}{\mathbb{C}}
+\newcommand{\DDD}{\mathbb{D}}
+\newcommand{\EEE}{\mathbb{E}}
+\newcommand{\FFF}{\mathbb{F}}
+\newcommand{\GGG}{\mathbb{G}}
+\newcommand{\HHH}{\mathbb{H}}
+\newcommand{\III}{\mathbb{I}}
+\newcommand{\JJJ}{\mathbb{J}}
+\newcommand{\KKK}{\mathbb{K}}
+\newcommand{\LLL}{\mathbb{L}}
+\newcommand{\MMM}{\mathbb{M}}
+\newcommand{\NNN}{\mathbb{N}}
+\newcommand{\OOO}{\mathbb{O}}
+\newcommand{\PPP}{\mathbb{P}}
+\newcommand{\QQQ}{\mathbb{Q}}
+\newcommand{\RRR}{\mathbb{R}}
+\newcommand{\SSS}{\mathbb{S}}
+\newcommand{\TTT}{\mathbb{T}}
+\newcommand{\UUU}{\mathbb{U}}
+\newcommand{\VVV}{\mathbb{V}}
+\newcommand{\WWW}{\mathbb{W}}
+\newcommand{\XXX}{\mathbb{X}}
+\newcommand{\YYY}{\mathbb{Y}}
+\newcommand{\ZZZ}{\mathbb{Z}}
