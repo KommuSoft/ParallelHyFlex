@@ -1,24 +1,39 @@
-\usepackage{amssymb,slantsc}
+\usepackage{amssymb,slantsc,algorithm2e}
+
+\newcommand{\deflab}[1]{\label{def:#1}}
+\newcommand{\defref}[1]{Definitie \ref{def:#1}}
+\newcommand{\imglab}[1]{\label{fig:#1}}
+\newcommand{\imgref}[1]{Afbeelding \ref{fig:#1}}
+\newcommand{\tbllab}[1]{\label{tbl:#1}}
+\newcommand{\tblref}[1]{Tabel \ref{tbl:#1}}
+\newcommand{\alglab}[1]{\label{alg:#1}}
+\newcommand{\algref}[1]{Algoritme \ref{alg:#1}}
+
 \newtheorem{definition}{Definitie}
+\newtheorem{theorem}{Theorema}
 
 \newcommand{\true}{\ensuremath{\mbox{\textbf{true}}}}
 \newcommand{\fals}{\ensuremath{\mbox{\textbf{false}}}}
 
 \newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\fbrk}[1]{\ensuremath{\left[#1\right]}}
 \newcommand{\tupl}[1]{\ensuremath{\left\langle #1\right\rangle}}
 \newcommand{\accl}[1]{\ensuremath{\left\{ #1\right\}}}
 \newcommand{\abs}[1]{\ensuremath{\left| #1\right|}}
 \newcommand{\dabs}[1]{\ensuremath{\left\| #1\right\|}}
 
 \newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funf}[2]{\ensuremath{#1\fbrk{#2}}}
 \newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
 
 \newcommand{\bigoh}[1]{\fun{\mathcal{O}}{#1}}
 
 \newcommand{\xstar}{\ensuremath{x^{\star}}}
 \newcommand{\xdot}{\ensuremath{x^{\circ}}}
+\newcommand{\Xop}{X^{\star}}
 
 \newcommand{\argmin}{\ensuremath{\mbox{argmin}}}
+\newcommand{\mean}[2][]{\funf{\EEE_{#1}}{#2}}
 
 \newcommand{\comp}[1]{\textsc{\mbox{#1}}}
 \newcommand{\prbm}[1]{\textsc{#1}}
@@ -50,3 +65,30 @@
 \newcommand{\XXX}{\mathbb{X}}
 \newcommand{\YYY}{\mathbb{Y}}
 \newcommand{\ZZZ}{\mathbb{Z}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calQ}{\mathcal{Q}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calZ}{\mathcal{Z}}

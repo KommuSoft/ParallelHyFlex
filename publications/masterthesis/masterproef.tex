@@ -40,9 +40,7 @@
 \begin{document}
 
 \begin{preface}
-  Dit is mijn dankwoord om iedereen te danken die mij bezig gehouden heeft.
-  Hierbij dank ik mijn promotor, mijn begeleider en de voltallige jury.
-  Ook mijn familie heeft mij erg gesteund natuurlijk.
+  Bij deze wil ik iedereen bedanken die het afgelopen academiejaar aan mij gedacht heeft. In de eerste plaats omdat dit waarde hiervan niet opwoog tegen het denken aan iets anders. \cite{gastonVanCamp} stelt dat een mens in 1971 biologisch een waarde heeft van 180 frank ofwel 30.00 euro in 2013.
 \end{preface}
 
 \tableofcontents*
@@ -78,20 +76,33 @@
     EPH		&Evolutionary Programming Hyper-heuristic\\
     VNS		&Variable Neighborhood Search\\
     CBM		&Coalition Based Metaheuristic\\
-    ACO		&Ant Colony Optimization
+    ACO		&Ant Colony Optimization\\
+    SA		&Simulated Annealing\\
+    GA		&Genetic Algorithm\\
+    LS		&Local Search\\
+    ILS		&Iterated Local Search\\
+    VNS		&Variable Neighborhood Search\\
   \end{tabularx}
 \end{flushleft}
 \section*{Symbolen}
 \begin{flushleft}
   \renewcommand{\arraystretch}{1.1}
   \begin{tabularx}{\textwidth}{@{}p{22mm}X@{}}
-    $\mathbb{B}$	& De verzameling van Booleaanse waarden: $\mathbb{B}=\left\{\mbox{\textbf{true}},\mbox{\textbf{false}}\right\}$. \\
-    $\mathbb{N}$	& De verzameling van natuurlijke getallen: $\mathbb{N}=\left\{0,1,2,\ldots\right\}$ \\
-    $\mathbb{R}$	& De verzameling van re\"ele getallen\\
-    $\Pi$		& Optimalisatieprobleem\\
-    $X$			& De verzameling van mogelijke configuraties voor een optimalisatieprobleem\\
-    $c$			& Harde beperkingen: $c:X\rightarrow\BBB$\\
-    $f$			& Evaluatiefunctie: $f:X\rightarrow\RRR$
+    $\BBB$					& De verzameling van Booleaanse waarden: $\mathbb{B}=\left\{\mbox{\textbf{true}},\mbox{\textbf{false}}\right\}$. \\
+    $\NNN$					& De verzameling van natuurlijke getallen: $\mathbb{N}=\left\{0,1,2,\ldots\right\}$ \\
+    $\RRR$					& De verzameling van re\"ele getallen\\
+    $\mean[\fun{\calD}{x}]{\fun{f}{x}}$	& Het gemiddelde van een functie $f$ volgens een verdeling $\calD$\\%: $\mean[\fun{\calD}{x}]{\fun{f}{x}}=\displaystyle\int\fun{f}{x}\fun{\calD}{x}\ dx$\\
+    $\Pi$					& Optimalisatieprobleem\\
+    $X$						& De verzameling van mogelijke configuraties\\
+    $\Xop$					& De set van de globaal optimale oplossingen\\
+    $\xstar$					& Een globaal optimale oplossing: $\xstar\in\Xop$\\
+    $S$						& Een oplossingsruimte in de context van een metaheuristiek. $S\subseteq X$\\
+    $P$						& Een verzameling oplossingen\\
+    $\calP$					& Een Markov-keten waarbij alle knopen bestaan uit een verzameling oplossingen\\
+    $c$						& Harde beperkingen: $c:X\rightarrow\BBB$\\
+    $f$						& Evaluatiefunctie: $f:X\rightarrow\RRR$\\
+    $\theta$					& raaktijd\\
+    $\mathcal{N}$				& Omgeving van een oplossing
   \end{tabularx}
 \end{flushleft}
 
