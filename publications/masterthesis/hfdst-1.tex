@@ -162,14 +162,14 @@ Elke metaheuristiek die we hierboven beschreven hebben dient telkens drie belang
 
 Wanneer we geen details kennen in verband met de vorm van de evaluatiefunctie $\evalfun$ spreekt het voor zich dat we enkel zeker kunnen zijn dat we een globaal optimum hebben gevonden door middel van \emph{exhaustive search}. Ook wat betreft de derde vraag verwachten we een \emph{exhaustive search} proces alvorens we zeker zijn dat we het optimum hebben gevonden. De verwachtte tijd alvorens dit gebeurt kan echter sterk verschillen van de tijd die we dienen te besteden aan het doorzoeken van een significant deel van de zoekruimte. Berekenen wanneer we gemiddeld dit optimum zullen bereiken staat bekend als het \prbm{Hitting Time Problem}. Om dit probleem te formaliseren dienen we eerst de notie van de raaktijd van een Markov-keten te defini\"eren:
 
-\begin{definition}[Raaktijd $\theta$]
-We defini\"eren de raaktijd $\theta$ van een Markov-keten $\PopChain$ als:
+\begin{definition}[Raaktijd $\hittime$]
+We defini\"eren de raaktijd $\hittime$ van een Markov-keten $\PopChain$ die bestaat uit populaties $\PopSet_t$ als:
 \begin{equation}
 \fun{\hittime}{\PopChain}=\min\accl{t|\PopSet_t\in\PopChain\wedge\ConfigOpSet\cap \PopSet_t\neq\emptyset}
 \end{equation}
 We kunnen deze definitie ook uitbreiden naar de raaktijd voor een zekere fitness-waarde $v$:
 \begin{equation}
-\fun{\theta}{\PopChain,v}=\min\accl{t|\PopSet_t\in\PopChain:\exists \sol\in \PopSet_t:\fun{\evalfun}{\sol}\leq v}
+\fun{\hittime}{\PopChain,v}=\min\accl{t|\PopSet_t\in\PopChain:\exists \sol\in \PopSet_t:\fun{\evalfun}{\sol}\leq v}
 \end{equation}
 \end{definition}
 
@@ -205,10 +205,83 @@ Een ander logische gevolg uit \eqnref{oneStepTransition} zijn de transities van 
 Op basis van \eqnref{remainder} en \eqnref{nothit} kunnen we nu de verwachte stap berekenen waarop we een gewenste oplossing zullen berekenen:
 \begin{equation}
 \mean{\theta}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\theta>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\vec{\hat{\alpha}}_{0}\cdot\hat{P}^i\cdot\onematrix[1\times N-g]}
+\eqnlab{meanHit}
 \end{equation}
 In deze vergelijking tellen we elke kans $\Prob{\theta=k}$ juist $k$ keer.
 \paragraph{}
-Vermits $\hat{P}$ een matrix met kansen voorstelt is elke element $\hat{p}_{i,j}\geq 0$. We maken verder de assumptie dat we na een arbitrair aantal stappen $m$, vanuit elke ordinaire populatie $\calP_i$ een kans bestaat dat we naar een andere ordinaire populatie $\calP_j$ kunnen migreren. In dat geval is de matrix dus primitief.
+Vermits $\hat{P}$ een matrix met kansen voorstelt is elke element $\hat{p}_{i,j}\geq 0$. We maken verder de assumptie dat we na een arbitrair aantal stappen $m$, vanuit elke ordinaire populatie $\calP_i$ een kans bestaat dat we naar een andere ordinaire populatie $\calP_j$ kunnen migreren. Vermits hierdoor de matrix primitief is, en er minstens \'e\'en rij van $\hat{P}$ niet sommeert naar 1 (anders zouden we nooit in een doel-populatie kunnen terechtkomen), weten we dat de grootste eigenwaarde $\lambda_1<1$. Een theorema stelt:
+\begin{theorem}
+stel de twee grootste eigenwaardes $\lambda_1>\abs{\lambda_2}$ van een $n\times n$ matrix $A$. Dan bestaat er een vaste veelterm $h$ met een graad $0\leq\funm{deg}{h}< n-1$ zodat:
+\begin{equation}
+\forall k=1,2,\ldots:\abs{\displaystyle\frac{\vec{x}\cdot A\cdot\onematrix[1\times n]}{\lambda_1^k}-\vec{x}\cdot\vec{v}}<\fun{h}{k}\cdot\abs{\displaystyle\frac{\lambda_2}{\lambda_1}}^k
+\end{equation}
+Met $\vec{x}$ een willekeurige vector en $\vec{v}$ de rechtse eigenvector van $\lambda_1$.
+\thelab{eigenValuesMatrix}
+\end{theorem}
+We kunnen een eigenvector benaderen door een $\onematrix$-vector een groot aantal maal toe te passen op de matrix in kwestie en vervolgens te normaliseren. Daarom kunnen we stellen dat voor een grote $t$:
+\begin{equation}
+\begin{array}{cc}
+\vec{x}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\approx\vec{x}\cdot\lambda_{1,\hat{P}}^t\cdot\vec{v}_{\hat{P}}=\lambda_{1,\hat{P}}^t\cdot s&\mbox{($t\gg 1$)}
+\end{array}
+\eqnlab{longTermAlpha}
+\end{equation}
+Wanneer we als $\vec{x}$ de begindistributie $\vec{\hat{\alpha}}_0$ nemen, kunnen we het dot-product tussen $\vec{\hat{\alpha}}_0$ en $\vec{v}_{\hat{P}}$ defini\"eren als $s$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die ons met behulp van \theref{eigenValuesMatrix} een benaderende waarde voor de gemiddelde raaktijd oplevert:
+\begin{equation}
+\mean{\theta}\approx 1+\vec{\hat{\alpha}}_0\cdot\onematrix+s\cdot\brak{\displaystyle\sum_{i=0}^{\infty}\lambda_{1,\hat{P}}^i}=1+\vec{\hat{\alpha}}_0\cdot\onematrix+\displaystyle\frac{s}{1-\lambda_{1,\hat{P}}}
+\end{equation}
+Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnref{longTermAlpha}, kunnen we de eerste termen benaderen door deze vergelijking omgekeerd toe te passen. We stellen dus dat $1+\vec{\hat{\alpha}}_0\cdot\onematrix=s\cdot\brak{\lambda^{-1}+\lambda^{-2}}$. Dit levert ons een ruwe schatting voor de raaktijd op:
+\begin{equation}
+\mean{\theta}=\displaystyle\frac{s}{\brak{1-\lambda_{1,\hat{P}}}\cdot\lambda_{1,\hat{P}}^2}
+\end{equation}
+
+\subsubsection{Onafhankelijke parallelle Monte-Carlo simulaties}
+
+\cite{DBLP:journals/jc/ShonkwilerV94} toont ook een logische stap tot parallellisatie: $p$ processoren draaien elk onafhankelijk van elkaar een Monte-Carlo simulatie. We kunnen dit fenomeen modelleren met behulp van een Markov-keten waarbij elke knoop van de keten een $p$-tuple voorstelt met de populaties van de verschillende processoren in de tijdstap. Vervolgens defini\"eren we \emph{parallelle raaktijd} $\phittime$ als volgt:
+
+\begin{definition}[Parallelle raaktijd $\phittime$]
+We defini\"eren de parallelle raaktijd $\phittime$ van een Markov-keten $\PopChain$ die bestaat uit $p$-tuples van populaties populaties $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ als:
+\begin{equation}
+\fun{\phittime}{\PopChain}=\min\accl{t|\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}\in\PopChain\wedge\exists i:\ConfigOpSet\cap \PopSet_{t,i}\neq\emptyset}
+\end{equation}
+We kunnen deze definitie ook uitbreiden naar de raaktijd voor een zekere fitness-waarde $v$:
+\begin{equation}
+\fun{\phittime}{\PopChain,v}=\min\accl{t|\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}\in\PopChain\wedge\exists i\exists \sol\in\PopSet_{t,i}:\fun{\evalfun}{\sol}\leq v}
+\end{equation}
+\end{definition}
+Vermits de verschillende processoren een onafhankelijk en equivalent proces uitvoeren, kunnen we gebruik maken van het theorema van de onafhankelijke kansen met de onafhankelijke EN-regel:
+\begin{equation}
+\begin{aligned}
+\Prob{\phittime\geq t}&=\Prob{\hittime_1\geq t\wedge\hittime_2\geq t\wedge\ldots\wedge\hittime_p\geq t}\\
+&=\Prob{\hittime_1\geq t}\cdot\Prob{\hittime_2\geq t}\cdot\ldots\cdot\Prob{\hittime_p\geq t}\\
+&=\Prob{\hittime\geq t}\cdot\Prob{\hittime\geq t}\cdot\ldots\cdot\Prob{\hittime\geq t}=\Prob{\hittime\geq t}^p
+\end{aligned}
+\eqnlab{probabilityPower}
+\end{equation}
+Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op basis van \eqnref{meanHit}:
+\begin{equation}
+\begin{aligned}
+\mean{\phittime}&=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\phittime>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\hittime>i}^p}\\
+%&=1+\displaystyle\sum_{i=0}^{\infty}{\vec{\hat{\alpha}}_{0}\cdot\hat{P}^i\cdot\onematrix[1\times N-g]}\\
+&\approx 1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+s^p\cdot\brak{\displaystyle\sum_{i=0}^{\infty}\lambda_{1,\hat{P}}^{p\cdot i}}=1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+\displaystyle\frac{s^p}{1-\lambda_{1,\hat{P}}^p}\\
+&\approx\displaystyle\frac{s^p}{\brak{1-\lambda_{1,\hat{P}}^p}\cdot\lambda_{1,\hat{P}}^{2p}}
+%\Prob{\phittime\geq t}&=\Prob{\hittime_1\geq t\wedge\hittime_2\geq t\wedge\ldots\wedge\hittime_p\geq t}\\
+%&=\Prob{\hittime_1\geq t}\cdot\Prob{\hittime_2\geq t}\cdot\ldots\cdot\Prob{\hittime_p\geq t}\\
+%&=\Prob{\hittime\geq t}\cdot\Prob{\hittime\geq t}\cdot\ldots\cdot\Prob{\hittime\geq t}=\Prob{\hittime\geq t}^p
+\end{aligned}
+\eqnlab{probabilityPower}
+\end{equation}
+De \emph{speed-up} is bijgevolg gelijk aan:
+\begin{equation}
+\mbox{speed-up}=\displaystyle\frac{\mean{\phittime}}{\mean{\hittime}}=\displaystyle\frac{s^{p-1}}{\lambda_{1,\hat{P}}^{2p-2}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}}{1-\lambda_{1,\hat{P}}^{p}}
+\eqnlab{speedupMetaheuristic}
+\end{equation}
+\subsubsection{Semantiek van parameters $\lambda$ en $s$}
+\eqnref{speedupMetaheuristic} formaliseert de verwachte \emph{speed-up} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal parameters $p$ is het niet triviaal om de overige parameters te interpreteren. $s$ hebben we gedefinieerd als het dot-product tussen $\vec{\hat{a}}_0$ en $\vec{v}_{\hat{P}}$. Dit kunnen we dus interpreteren als een getal proportioneel met de cosinus tussen de hoek tussen beide vectoren ofwel in welke mate de \emph{initi\"ele} distributie gelijkloopt met de distributie van populaties na een lange tijd. Vermits we over (gedeeltelijke) probabiliteitsvectoren spreken, kunnen we bovendien grenzen zetten op $s$:
+\begin{equation}
+0\leq s<1
+\eqnlab{boundsS}
+\end{equation}
+$s$ kan echter nooit gelijk zijn aan $1$ omdat voor elke redelijke kansverdeling er ook een (kleine) kans bestaat dat we meteen in een doel-populatie terechtkomen. Verder spreekt \eqnref{boundsS} over de theoretische grenzen van $s$. In de praktijk verwachten we andere grenzen. Een redelijker scenario is dat alle populaties (zowel doel-populaties als ordinaire populaties) met eenzelfde kans voorkomen. De argumentatie is dat een initi\"ele oplossingsgenerator meestal volgens een uniforme kansverdeling een oplossing $\sol$ uit de oplossingsruimte $\SolSet$ genereert. Vermits populaties een vaste grote hebben is elke populatie ook even waarschijnlijk.
 \section{Besluit van dit hoofdstuk}
 Als je in dit hoofdstuk tot belangrijke resultaten of besluiten gekomen
 bent, dan is het ook logisch om het hoofdstuk af te ronden met een
