@@ -8,42 +8,42 @@ In de inleiding hebben we de kort de verschillende concepten besproken die in de
 We beginnen deze sectie met een formele definitie van een optimalisatieprobleem:
 
 \begin{definition}[Optimalisatieprobleem]%, harde beperkingen, evaluatiefunctie, fitness-waarde
-Een optimalisatieprobleem $\Pi$ is een tuple $\Pi=\tupl{X=A_1\times A_2\times\ldots\times A_n,c,f}$ waarbij $X$ een verzameling is van een set configuraties voor $n$ variabelen, $c:X\rightarrow\BBB$ een afbeelding van zo'n configuratie naar een Booleaanse waarde, die bepaald of de configuratie voldoet aan de ``harde beperkingen''. $f:X\rightarrow\RRR$ stelt een evaluatiefunctie voor die bepaald in welke mate een configuratie wenselijk is. De waarde van de evaluatie van een configuratie \fun{f}{x} wordt ook wel de fitness-waarde genoemd.
+Een optimalisatieprobleem $\OpProblem$ is een tuple $\OpProblem=\tupl{\ConfigSet=\VarDom_1\times \VarDom_2\times\ldots\times \VarDom_{\nvar},\hcfun,\evalfun}$ waarbij $\ConfigSet$ een verzameling is van een set configuraties voor $\nvar$ variabelen, $\funsig{\hcfun}{\ConfigSet}{\BBB}$ een afbeelding van zo'n configuratie naar een Booleaanse waarde, die bepaald of de configuratie voldoet aan de ``harde beperkingen''. $\funsig{\evalfun}{\ConfigSet}{\RRR}$ stelt een evaluatiefunctie voor die bepaald in welke mate een configuratie wenselijk is. De waarde van de evaluatie van een configuratie \fun{f}{x} wordt ook wel de fitness-waarde genoemd.
 \end{definition}
-Bij een optimalisatieprobleem gaan we op zoek naar een configuratie $x\in X$ die aan de harde beperkingen voldoet en de evaluatiefunctie optimaliseert. Meestal maakt men het onderscheid tussen een minimalisatie en een maximalisatie. In deze thesis zullen we altijd we een bij een optimalisatieprobleem altijd streven naar een configuratie $x\in X$ met een zo laag mogelijk evaluatie \fun{f}{x}. We kunnen echter eenvoudig elk maximalisatieprobleem $\tupl{X,c,f}$ omzetten in een minimalisatieprobleem $\tupl{X,c,f'}$ met $f':X\rightarrow\RRR:x\mapsto-\fun{f}{x}$. Formeel zoeken we dus naar een configuratie \xstar{} die we het \emph{globaal optimum noemen}.
+Bij een optimalisatieprobleem gaan we op zoek naar een configuratie $x\in\ConfigSet$ die aan de harde beperkingen voldoet en de evaluatiefunctie optimaliseert. Meestal maakt men het onderscheid tussen een minimalisatie en een maximalisatie. In deze thesis zullen we altijd we een bij een optimalisatieprobleem altijd streven naar een configuratie $x\in\ConfigSet$ met een zo laag mogelijk evaluatie \fun{f}{x}. We kunnen echter eenvoudig elk maximalisatieprobleem $\tupl{\ConfigSet,\hcfun,\evalfun}$ omzetten in een minimalisatieprobleem $\tupl{\ConfigSet,\hcfun,\evalfuna}$ met $\funsigimp{\evalfuna}{\ConfigSet}{\RealSet}{x}{-\fun{\evalfun}{x}}$. Formeel zoeken we dus naar een configuratie \xstar{} die we het \emph{globaal optimum noemen}.
 
-\begin{definition}[Globaal optimum $\xstar$]
-Een globaal optimum voor een zoekprobleem $\Pi=\tupl{X,c,f}$ is een configuratie $\xstar$ waarbij:
+\begin{definition}[Globaal optimum $\bestSol$]
+Een globaal optimum voor een zoekprobleem $\OpProblem=\tupl{\ConfigSet,\hcfun,\evalfun}$ is een configuratie $\bestSol$ waarbij:
 \begin{equation}
-\xstar=\displaystyle\argmin_{x\in X'}\fun{f}{x}\mbox{ met }X'=\accl{x|\forall x\in X:\fun{c}{x}=\true}
+\bestSol=\displaystyle\argmin_{\sol\in\ConfigValSet}\fun{\evalfun}{\sol}\mbox{ met }\ConfigValSet=\accl{\sol|\forall\sol\in\ConfigSet:\fun{\hcfun}{\sol}=\true}
 \end{equation}
 \end{definition}
 
-Het is niet ongewoon dat er verschillende configuraties zijn met een gelijkaardige fitness-waarde. Dit geldt tevens voor het globaal optimum. Daarom defini\"eren we ook een optimum-set $\Xop$: een set met alle configuraties met een minimale fitness-waarde voor het probleem.
+Het is niet ongewoon dat er verschillende configuraties zijn met een gelijkaardige fitness-waarde. Dit geldt tevens voor het globaal optimum. Daarom defini\"eren we ook een optimum-set $\calXop$: een set met alle configuraties met een minimale fitness-waarde voor het probleem.
 
-\begin{definition}[Optimum-set $\Xop$]
-Een optimum-set $\Xop$ voor een zoekprobleem $\Pi=\tupl{X,c,f}$ is een set van geldige configuraties $x\in X'$ waarvoor geldt:
+\begin{definition}[Optimum-set $\ConfigOpSet$]
+Een optimum-set $\ConfigOpSet$ voor een zoekprobleem $\OpProblem=\tupl{\ConfigSet,\hcfun,\evalfun}$ is een set van geldige configuraties $\sol\in\ConfigValSet$ waarvoor geldt:
 \begin{equation}
-\Xop=\accl{x|x\in X'\wedge\fun{f}{x}=\fun{f}{\xstar}}
+\calXop=\accl{\sol|\sol\in\ConfigValSet\wedge\fun{\evalfun}{\sol}=\fun{\evalfun}{\bestSol}}
 \end{equation}
 \end{definition}
 
 \paragraph{}
 In een algemeen geval kunnen de domeinen $A_i$ van de variabelen $x_i$ oneindig groot zijn en bijvoorbeeld $\RRR$ omvatten. Geen enkele machine met een eindig geheugen kan echter alle elementen uit een domein met oneindig veel elementen voorstellen. We zullen daarom altijd de domeinen $A_i$ als eindig beschouwen. In het geval het domein van een variabele in werkelijkheid oneindig is, discretiseren we dus dit domein en beperken we het aantal elementen met een onder- en bovengrens. Indien er door discretisatie fouten worden ge\"introduceerd, kunnen we deze oplossen door het domein fijner te discretiseren.
 \paragraph{}
-Vermits zowel de harde beperkingen $c$ als de evaluatiefunctie $f$ hier een ``\emph{blackbox}'' zijn, zullen we om $\xstar$ te berekenen, over een significant deel van de verzameling $X$ moeten itereren. We verwachten dus dat de tijdscomplexiteit om een dergelijke oplossing te vinden gelijk is aan:
+Vermits zowel de harde beperkingen $\hcfun$ als de evaluatiefunctie $\evalfun$ hier een ``\emph{blackbox}'' zijn, zullen we om $\bestSol$ te berekenen, over een significant deel van de verzameling $\ConfigSet$ moeten itereren. We verwachten dus dat de tijdscomplexiteit om een dergelijke oplossing te vinden gelijk is aan:
 \begin{equation}
-\bigoh{\abs{X}}=\bigoh{\displaystyle\prod_{i=1}^n\abs{A_i}}
+\bigoh{\abs{\ConfigSet}}=\bigoh{\displaystyle\prod_{i=1}^\nvar\abs{\VarDom_i}}
 \end{equation}
 Indien we de assumptie maken dat alle domeinen dezelfde zijn dan bekomen we:
 \begin{equation}
-\bigoh{\abs{X}}=\bigoh{\abs{A_1}^n}\mbox{ indien }\forall A_i,A_j: A_i=A_j
+\bigoh{\abs{\ConfigSet}}=\bigoh{\abs{\VarDom_1}^\nvar}\mbox{ indien }\forall \VarDom_i,\VarDom_j: \VarDom_i=\VarDom_j
 \end{equation}
-We zien dus dat deze tijdscomplexiteit exponentieel stijgt met het aantal variabelen~$n$. Optimalisatieproblemen in het algemeen liggen dan ook in \comp{NP-hard}.
+We zien dus dat deze tijdscomplexiteit exponentieel stijgt met het aantal variabelen~$\nvar$. Optimalisatieproblemen in het algemeen liggen dan ook in \comp{NP-hard}.
 
 \subsection{Complexiteit van optimalisatieproblemen}
 
-Sommige optimalisatieproblemen liggen in \comp{P}. \algo{Karmarkar's algoritme}\cite{linearProgrammingInP} bijvoorbeeld lost het \prbm{lineaire optimalisatie} probleem op in \bigoh{n^{3.5}L} met $n$ het aantal variabelen en $L$ de diepte van de discretisatie in bits. Dit komt omdat we beperkingen plaatsen op de vorm van de evaluatiefunctie $f$ en de harde beperkingen $c$. Bij lineair programmeren betekent dit dat de evaluatiefunctie kan geschreven worden als het inwendig product tussen de vector van de variabelen en een vector met constanten. Het harde beperkingen moeten voor te stellen zijn zodat wanneer we de vector met de variabelen vermenigvuldigen met een matrix met constante elementen, alle elementen in de resulterende vector kleiner zijn dan een andere vector met constante elementen. Ook andere optimalisatieproblemen zoals bijvoorbeeld \prbm{Maximum Flow} en \prbm{Minimum Spanning Tree} zijn problemen die met polynomiale algoritmen kunnen worden opgelost.
+Sommige optimalisatieproblemen liggen in \comp{P}. \algo{Karmarkar's algoritme}\cite{linearProgrammingInP} bijvoorbeeld lost het \prbm{lineaire optimalisatie} probleem op in \bigoh{\nvar^{3.5}L} met $\nvar$ het aantal variabelen en $L$ de diepte van de discretisatie in bits. Dit komt omdat we beperkingen plaatsen op de vorm van de evaluatiefunctie $\evalfun$ en de harde beperkingen $\hcfun$. Bij lineair programmeren betekent dit dat de evaluatiefunctie kan geschreven worden als het inwendig product tussen de vector van de variabelen en een vector met constanten. Het harde beperkingen moeten voor te stellen zijn zodat wanneer we de vector met de variabelen vermenigvuldigen met een matrix met constante elementen, alle elementen in de resulterende vector kleiner zijn dan een andere vector met constante elementen. Ook andere optimalisatieproblemen zoals bijvoorbeeld \prbm{Maximum Flow} en \prbm{Minimum Spanning Tree} zijn problemen die met polynomiale algoritmen kunnen worden opgelost.
 
 \paragraph{}
 Toch is er weinig ruimte voor optimisme. Een logische veralgemening van \prbm{Lineaire optimalisatie} is immers \prbm{Kwadratische optimalisatie}. Onder sommige omstandigheden kunnen we dit probleem reduceren naar een geval van \prbm{Lineaire Optimalisatie}\cite{Kozlov1980223}, maar een algemeen \prbm{Kwadratisch optimalisatie} probleem ligt in \comp{NP-hard}\cite{qpInNP}. Ook andere bekende optimalisatieproblemen zoals \prbm{Travelling Salesman Problem (TSP)} en \prbm{Integer Programming (IP)} liggen in \comp{NP-hard}.
@@ -56,10 +56,10 @@ Tot slot dient men in de context van optimalisatieproblemen een kanttekening mak
 Hoewel de meeste optimalisatieproblemen \comp{NP-hard} zijn, is in een praktische context de configuratie met een optimale evaluatiefunctie net van cruciaal belang. Voor de meeste toepassingen is een configuratie die aan de harde beperkingen voldoet en de fitness-waarde van de echte oplossing benadert voldoende. In dat geval wordt meestal een heuristiek ge\"implementeerd:
 
 \begin{definition}[Heuristiek]
-Een heuristiek is een programma die gegeven een optimalisatieprobleem $\Pi=\tupl{X,c,f}$ een oplossing berekent $\xdot$ in een redelijke tijd. Doorgaans voldoet deze oplossing aan de harde beperkingen ($\fun{c}{\xdot}=\true$) en ligt de voorgestelde oplossing $\xdot$ niet ver van de werkelijke oplossing $\xstar$.
+Een heuristiek is een programma die gegeven een optimalisatieprobleem $\OpProblem=\tupl{\ConfigSet,\hcfun,\evalfun}$ een oplossing berekent $\goodSol$ in een redelijke tijd. Doorgaans voldoet deze oplossing aan de harde beperkingen ($\fun{\hcfun}{\goodSol}=\true$) en ligt de voorgestelde oplossing $\goodSol$ in fitness-waarde niet ver van de werkelijke oplossing $\bestSol$.
 \end{definition}
 
-Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op hoe ver de fitness-waarde \fun{f}{\xdot} mag afwijken van de optimale fitness-waarde \fun{f}{\xstar}, al zijn beide voorwaarden niet strikt noodzakelijk. Minsky\cite{minskyHeuristic} schrijf hierover:
+Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op hoe ver de fitness-waarde $\fun{\evalfun}{\goodSol}$ mag afwijken van de optimale fitness-waarde $\fun{\evalfun}{\bestSol}$, al zijn beide voorwaarden niet strikt noodzakelijk. Minsky\cite{minskyHeuristic} schrijf hierover:
 \begin{quote}
 ``Hints'', ``suggestions'', or ``rules of thumb'', which only usually work are called heuristics. A program which works on such a basis is called a heuristic program. It is difficult to give a more precise definition of heuristic program - this is to be expected in the light of Turing's demonstration that there is no systematic procedure which can distinguish between algorithms (programs that always work) and programs that do not always work.
 \end{quote}
@@ -85,7 +85,7 @@ Metaheuristieken proberen deze problemen op te lossen. We geven eerst een formel
 
 \begin{definition}[Metaheuristiek]
 \deflab{metaheuristic}
-Een metaheuristiek is een algoritme die een oplossingsruimte $S\subseteq\accl{x|\forall x\in X:\fun{f}{x}}\subseteq X$ beschouwd met $\xstar\in S$. Verder beschouwd het \'e\'en of meer overgangsfunctiies $h_i:S^{k_i}\times\RRR^{l_i}\rightarrow S$. De metaheuristiek werkt door \'e\'en of meerdere instanties $s_1,s_2,\ldots,s_j$ uit $S$ te genereren. En vervolgens herhaaldelijk deze overgangsfuncties toe te passen op deze instanties. De resultaten van deze functietoepassingen kun gebruikt worden in andere toepassingen van de overgangsfuncties. Het algoritme stopt wanneer aan een bepaalde stopconditie voldaan is (bijvoorbeeld: het algoritme draait een bepaalde tijd op de machine). Hierna wordt de oplossing met de beste fitness-waarde als uitvoer teruggegeven.
+Een metaheuristiek is een algoritme die een oplossingsruimte $\SolSet\subseteq\accl{\sol|\forall \sol\in \ConfigSet:\fun{\hcfun}{\sol}}\subseteq\ConfigSet$ beschouwd met $\bestSol\in\SolSet$. Verder beschouwd het \'e\'en of meer overgangsfuncties $h_i:\SolSet^{k_i}\times\RealSet^{l_i}\rightarrow\SolSet$. De metaheuristiek werkt door \'e\'en of meerdere instanties $s_1,s_2,\ldots,s_j$ uit $\SolSet$ te genereren. En vervolgens herhaaldelijk deze overgangsfuncties toe te passen op deze instanties. De resultaten van deze functietoepassingen kun gebruikt worden in andere toepassingen van de overgangsfuncties. Het algoritme stopt wanneer aan een bepaalde stopconditie voldaan is (bijvoorbeeld: het algoritme draait een bepaalde tijd op de machine). Hierna wordt de oplossing met de beste fitness-waarde als uitvoer teruggegeven.
 \end{definition}
 
 Op basis van deze definitie kunnen we ook een algoritme op hoog niveau opstellen zoals beschreven in \algref{metaheuristicGeneral}.
@@ -94,14 +94,14 @@ Op basis van deze definitie kunnen we ook een algoritme op hoog niveau opstellen
  \SetAlgoLined
  %\KwData{}
  %\KwResult{how to write algorithm with \LaTeX2e }
- Bereken een initi\"ele set van oplossingen $P_1$ en hun fitness-waarde\;
- $B_1\leftarrow\displaystyle\argmin_{x\in P_1}{\fun{f}{x}}$\;
+ Bereken een initi\"ele set van oplossingen $\PopSet_1$ en hun fitness-waarde\;
+ $b_1\leftarrow\displaystyle\argmin_{\sol\in\PopSet_1}{\fun{\evalfun}{\sol}}$\;
  \Repeat{het stopcriterium is bereikt}{
-  Genereer op basis van $P_t$ en $t$ stochastisch een nieuwe set oplossingen $P_{t+1}$ samen met hun fitness-waarde\;
-  $B_{t+1}\leftarrow\displaystyle\argmin_{x\in P_1\cup\accl{B_t}}{\fun{f}{x}}$\;
+  Genereer op basis van $\PopSet_t$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1}$ samen met hun fitness-waarde\;
+  $b_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_t\cup\accl{b_t}}{\fun{\evalfun}{\sol}}$\;
   $t\leftarrow t+1$\;
  }
- \KwRet{$B_t$}
+ \KwRet{$b_t$}
  \caption{Hoog niveau beschrijving van een metaheuristiek\cite{DBLP:journals/jc/ShonkwilerV94}.}
  \alglab{metaheuristicGeneral}
 \end{algorithm}
@@ -109,9 +109,9 @@ Op basis van deze definitie kunnen we ook een algoritme op hoog niveau opstellen
 Typisch aan metaheuristieken is een (sterke) aanwezigheid van toevalsgetallen. Zo hebben we bij de signatuur van de overgangsfuncties ook een set re\"ele getallen opgenomen. Deze getallen worden door het toeval gegenereerd en bepalen mee het resultaat van de functie. Een belangrijk concept die we hiermee kunnen introduceren is de omgeving ofwel ``\emph{neighborhood}'' van een overgangsfunctie:
 
 \begin{definition}[Omgeving van een overgangsfunctie]
-De omgeving van een overgangsfunctie is de verzameling van alle oplossingen die we kunnen genereren vanuit een gegeven set van oplossingen ongeacht de waarde van de functie. De omgeving van een functie $h_i$ is dus:
+De omgeving van een overgangsfunctie is de verzameling van alle oplossingen die we kunnen genereren vanuit een gegeven set van oplossingen ongeacht de waarde van de toevalsfactoren. De omgeving van een functie $h_i$ is dus:
 \begin{equation}
-\fun{\mathcal{N}_{h_i}}{s_1,s_2,\ldots,s_{k_i}}=\accl{s|s=\fun{h_i}{s_1,s_2,\ldots,s_{k_i},\xi_1,\xi_2,\ldots,\xi_{l_i}}}
+\fun{\neighbr_{h_i}}{s_1,s_2,\ldots,s_{k_i}}=\accl{s|s=\fun{h_i}{s_1,s_2,\ldots,s_{k_i},\xi_1,\xi_2,\ldots,\xi_{l_i}}}
 \end{equation}
 \end{definition}
 
@@ -132,7 +132,7 @@ Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabel
 
 \emph{Simulated Annealing (SA)} is de eerste gepubliceerde metaheuristiek. Het is een schema gebaseerd op het \algo{Algoritme van Metropolis}. Het werkt aan de hand van \'e\'en overgangsfunctie en \'e\'en oplossing die soms de actieve oplossing wordt genoemd. Het algoritme voert telkens de overgangsfunctie uit op de actieve oplossing. De resulterende oplossing beschouwen we als de nieuwe oplossing met een kans:
 \begin{equation}
-\fun{p}{\mbox{accept $s_1\rightarrow s_2$}}=\fun{\min}{1,e^{\brak{\fun{f}{s_2}-\fun{f}{s_1}}/T}}
+\fun{p}{\mbox{accept $s_1\rightarrow s_2$}}=\fun{\min}{1,e^{\brak{\fun{\evalfun}{s_2}-\fun{\evalfun}{s_1}}/T}}
 \end{equation}
 
 Deze formule stelt dat indien de nieuwe oplossing beter is dan de oude oplossing, we altijd accepteren. Indien de nieuwe oplossing minder gunstig is accepteren we met een bepaalde kans die kleiner wordt naarmate het verschil in fitness-waarde groeit. In de formule staat ook een onbekende parameter $T$ ofwel \emph{temperatuur}. De temperatuur bepaalt hoe sterk de kans daalt naarmate de kloof groeit. Het is een variabele die initieel op een positief getal wordt gezet en gedurende het zoekproces langzaam naar 0 zakt. Dit betekent dat we in het begin sterk geneigd zijn om een slechtere oplossing te accepteren. Op het einde accepteren we bijna uitsluitend oplossing die beter zijn dan hun ouder. Hoe de temperatuur concreet evolueert kan vrij ingesteld worden en introduceert dan ook een groot aantal varianten.
@@ -143,7 +143,7 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 
 \subsubsection{Variable Neighbourhood Search}
 
-\emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\calN_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\calN_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we tot een betere oplossing komen, wordt de eerste omgeving $\calN_1$ opnieuw de actieve omgeving. In het andere geval kiezen we de volgende omgeving $\calN_{i+1}$. Op het moment dat alle omgevingen zijn uitgeput beginnen we ook opnieuw bij $\calN_1$.%in het geval we een lokaal optimum volgens omgeving $\calN_i$ bereiken, zullen we \emph{local search} toepassen op basis van de volgende omgeving $\calN_i$ in de hoop dat deze omgeving ons naar een betere oplossing zal leiden. In het geval alle 
+\emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we tot een betere oplossing komen, wordt de eerste omgeving $\neighbr_1$ opnieuw de actieve omgeving. In het andere geval kiezen we de volgende omgeving $\neighbr_{i+1}$. Op het moment dat alle omgevingen zijn uitgeput beginnen we ook opnieuw bij $\neighbr_1$.%in het geval we een lokaal optimum volgens omgeving $\calN_i$ bereiken, zullen we \emph{local search} toepassen op basis van de volgende omgeving $\calN_i$ in de hoop dat deze omgeving ons naar een betere oplossing zal leiden. In het geval alle 
 
 \subsubsection{Tabu Search}
 
@@ -153,10 +153,6 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 
 \subsection{Modelleren van Metaheuristieken}
 
-\paragraph{}
-Traditioneel modelleert men een metaheuristiek aan de hand van een Markov-model. Een toestand stelt een oplossing voor en er vertrekken bogen uit de oplossing naar andere oplossingen indien een overgangsfunctie de ene oplossing in de andere kan omzetten. Elke boog kunnen we ook een label toekennen met de kans dat deze transitie zal plaatsvinden. In het geval de kansen niet veranderen naarmate de tijd vordert, speken we van een stationaire Markov-keten. In het ander geval is de keten niet-stationair.
-
-\paragraph{}
 Elke metaheuristiek die we hierboven beschreven hebben dient telkens drie belangrijke vragen in het achterhoofd te houden\cite{DBLP:journals/jc/ShonkwilerV94}:
 \begin{enumerate}
  \item kan het globale optimum altijd gevonden worden door de metaheuristiek,
@@ -164,20 +160,55 @@ Elke metaheuristiek die we hierboven beschreven hebben dient telkens drie belang
  \item hoe lang zal het duren alvorens we dit optimum gevonden hebben
 \end{enumerate}
 
-Wanneer we geen details kennen in verband met de vorm van de evaluatiefunctie $f$ spreekt het voor zich dat we enkel zeker kunnen zijn dat we een globaal optimum hebben gevonden door middel van \emph{exhaustive search}. Ook wat betreft de derde vraag verwachten we een \emph{exhaustive search} proces alvorens we zeker zijn dat we het optimum hebben gevonden. De verwachtte tijd alvorens dit gebeurt kan echter sterk verschillen van de tijd die we dienen te besteden aan het doorzoeken van een significant deel van de zoekruimte. Berekenen wanneer we gemiddeld dit optimum zullen bereiken staat bekend als het \prbm{Hitting Time Problem}. Om dit probleem te formaliseren dienen we eerst de notie van de raaktijd van een Markov-keten te defini\"eren:
+Wanneer we geen details kennen in verband met de vorm van de evaluatiefunctie $\evalfun$ spreekt het voor zich dat we enkel zeker kunnen zijn dat we een globaal optimum hebben gevonden door middel van \emph{exhaustive search}. Ook wat betreft de derde vraag verwachten we een \emph{exhaustive search} proces alvorens we zeker zijn dat we het optimum hebben gevonden. De verwachtte tijd alvorens dit gebeurt kan echter sterk verschillen van de tijd die we dienen te besteden aan het doorzoeken van een significant deel van de zoekruimte. Berekenen wanneer we gemiddeld dit optimum zullen bereiken staat bekend als het \prbm{Hitting Time Problem}. Om dit probleem te formaliseren dienen we eerst de notie van de raaktijd van een Markov-keten te defini\"eren:
 
 \begin{definition}[Raaktijd $\theta$]
-We defini\"eren de raaktijd $\theta$ van een Markov-keten $\calP$ als:
+We defini\"eren de raaktijd $\theta$ van een Markov-keten $\PopChain$ als:
 \begin{equation}
-\fun{\theta}{\calP}=\min\accl{t|P_t\in\calP\wedge\Xop\cap P_t\neq\emptyset}
+\fun{\hittime}{\PopChain}=\min\accl{t|\PopSet_t\in\PopChain\wedge\ConfigOpSet\cap \PopSet_t\neq\emptyset}
+\end{equation}
+We kunnen deze definitie ook uitbreiden naar de raaktijd voor een zekere fitness-waarde $v$:
+\begin{equation}
+\fun{\theta}{\PopChain,v}=\min\accl{t|\PopSet_t\in\PopChain:\exists \sol\in \PopSet_t:\fun{\evalfun}{\sol}\leq v}
 \end{equation}
 \end{definition}
 
-Het \prbm{Hitting Time Problem} gaat vervolgens op zoek naar de raaktijd van 
+Het \prbm{Hitting Time Problem} gaat vervolgens op zoek naar de raaktijd van een gemiddelde Markov-keten.
 
 \paragraph{}
-Op basis van \algref{metaheuristicGeneral} 
-
+Op basis van \algref{metaheuristicGeneral} kunnen we uitspraken doen, zowel over de verwachtte raaktijd wanneer we het zoeken uitbesteden aan \'e\'en processor of uitbesteden aan verschillende processoren die elk onafhankelijk een eigen zoekproces laten lopen. Hiervoor zal men een Markov-model beschouwen. De knopen van dit Markov-model stellen populaties voor: een verzameling van oplossingen. We kunnen hier dus denken aan een verzameling $\PopSet_i$ in \algref{metaheuristicGeneral}. Als beperking stellen we dat de populatie een vaste grootte heeft. Deze beperking is redelijk vermits elke praktische machine een eindig geheugen heeft en dus ook maar een eindig aantal oplossingen tegelijk kan beschouwen. Verder bevat ons Markov-model ook overgangskansen $\fun{p}{t,i,j}$: de kans om van een populatie $\PopSet_i$ naar een populatie $\PopSet_j$ te gaan op tijdstip $t$. Indien de waarde van $\fun{p}{i,j,t}$ constant blijft over de tijd $t$ dan spreken we over een \emph{stationair} proces (dit is typisch voor bijvoorbeeld een genetisch algoritme), indien de kansen in de tijd veranderen beschouwen we een \emph{niet-stationair} proces.
+\paragraph{}
+Indien een populatie een oplossing bevat met een fitness-waarde die kleiner of gelijk is aan de waarde die we zoeken $v$, spreken we over een \emph{doel-populatie}. We kunnen zonder verlies van algemeenheid de populaties zo ordenen dat de populaties $\PopSet_1,\PopSet_2,\ldots,\PopSet_g$ doel-populaties zijn, en de populaties $\PopSet_{g+1},\PopSet_{g+2},\ldots,\PopSet_N$ populaties waar er geen gewenste oplossing in zit. In dat geval kunnen we de transitiematrix $P$ opdelen in submatrices:
+\begin{equation}
+P=\brak{\begin{array}{cc}
+J&H\\
+B&\hat{P}
+\end{array}}
+\end{equation}
+Hierbij stelt $J$ een $g\times g$ voor, $H$ een $g\times N-g$, $B$ een $N-g\times g$ matrix en $\hat{P}$ logischerwijs een $N-g\times N-g$ matrix. Het spreekt voor zich dat de waarde van $J$ en $H$ niet zo interessant zijn: eenmaal we ons in een doel-populatie bevinden kunnen we immers stoppen met het algoritme uit te voeren. Daarom zullen we stellen dat $J=\identitymatrix[g\times g]$ en $H=\zeromatrix[g\times N-g]$. We streven er verder naar om met ons algoritme de waardes in $B$ -- ook wel de \emph{bridge} genoemd -- zo hoog mogelijk te maken: deze matrix bevat immers de kansen om van naar een doel-populatie te migreren. $\hat{P}$ wordt ook wel de \emph{verwijderde transitiematrix} genoemd. De waardes in de matrix worden be\"invloed door het probleem (via de definities van de omgevingen) en het zoekalgoritme (de metaheuristiek in kwestie).
+\paragraph{}
+De kwaliteit van een zoekmethode na $t$ stappen kunnen we uitdrukken met een probabiliteitsvector $\vec{\alpha}_t$. $\alpha_{t,i}$ geeft aan met hoeveel kans het algoritme in tijdstap $t$ de populatie $\PopSet_i$ beschouwt. Net als bij de matrix delen we de probabiliteitsvector op in twee delen: een gedeelte $\vec{\alpha}^G_t$ met dimensie $g$ en een gedeelte $\vec{\hat{\alpha}}_t$. Op basis van de transitiematrix kunnen we de probabiliteitsvector na $t$ stappen berekenen in functie van $\alpha_0$:
+\begin{equation}
+\vec{\alpha}_t=\brak{\vec{\alpha}_t^G\ |\ \vec{\hat{\alpha}}_t}=\vec{\alpha}_{t-1}\cdot P=\brak{\vec{\alpha}_{t-1}^G+B\cdot\vec{\hat{\alpha}}_{t-1}\ |\ \vec{\hat{\alpha}}_{t-1}\cdot\hat{P}}
+\eqnlab{oneStepTransition}
+\end{equation}
+We zijn vooral ge\"interesseerd in de fractie van Markov-ketens die in stap $t$ naar een doel-populatie migreren ofwel de kans dat we stap $t$ een gewenste oplossing bereiken:
+\begin{equation}
+\Prob{\theta=t}=\displaystyle\sum_{i=g+1}^{N}\brak{\alpha_{t-1,i}\cdot\displaystyle\sum_{j=1}^{g}\fun{p}{t,i,j}}=\vec{\hat{\alpha}}_{t-1}\cdot B\cdot\onematrix[1\times N-g]
+\eqnlab{exhaust}
+\end{equation}
+Een ander logische gevolg uit \eqnref{oneStepTransition} zijn de transities van ordinaire populaties naar andere ordinaire populaties. De som van de kansen die in deze deelvector aanwezig zijn, is de kans dat we na deze $t$ stappen nog steeds geen acceptabele oplossing gevonden hebben:
+\begin{eqnarray}
+\vec{\hat{\alpha}}_t=\vec{\hat{\alpha}}_{t-1}\cdot\hat{P}=\vec{\hat{\alpha}}_{t-2}\cdot\hat{P}^2=\ldots=\vec{\hat{\alpha}}_{0}\cdot\hat{P}^t\eqnlab{remainder}\\
+\Prob{\theta>t}=\displaystyle\sum_{i=g+1}^{N}\alpha_{t,i}=\vec{\hat{\alpha}}_t\cdot\onematrix[1\times N-g]=\vec{\hat{\alpha}}_{0}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\eqnlab{nothit}
+\end{eqnarray}
+Op basis van \eqnref{remainder} en \eqnref{nothit} kunnen we nu de verwachte stap berekenen waarop we een gewenste oplossing zullen berekenen:
+\begin{equation}
+\mean{\theta}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\theta>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\vec{\hat{\alpha}}_{0}\cdot\hat{P}^i\cdot\onematrix[1\times N-g]}
+\end{equation}
+In deze vergelijking tellen we elke kans $\Prob{\theta=k}$ juist $k$ keer.
+\paragraph{}
+Vermits $\hat{P}$ een matrix met kansen voorstelt is elke element $\hat{p}_{i,j}\geq 0$. We maken verder de assumptie dat we na een arbitrair aantal stappen $m$, vanuit elke ordinaire populatie $\calP_i$ een kans bestaat dat we naar een andere ordinaire populatie $\calP_j$ kunnen migreren. In dat geval is de matrix dus primitief.
 \section{Besluit van dit hoofdstuk}
 Als je in dit hoofdstuk tot belangrijke resultaten of besluiten gekomen
 bent, dan is het ook logisch om het hoofdstuk af te ronden met een

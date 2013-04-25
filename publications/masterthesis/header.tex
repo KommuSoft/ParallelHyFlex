@@ -1,4 +1,4 @@
-\usepackage{amssymb,slantsc,algorithm2e}
+\usepackage{amssymb,amsmath,slantsc,algorithm2e,bbm}
 
 \newcommand{\deflab}[1]{\label{def:#1}}
 \newcommand{\defref}[1]{Definitie \ref{def:#1}}
@@ -8,6 +8,8 @@
 \newcommand{\tblref}[1]{Tabel \ref{tbl:#1}}
 \newcommand{\alglab}[1]{\label{alg:#1}}
 \newcommand{\algref}[1]{Algoritme \ref{alg:#1}}
+\newcommand{\eqnlab}[1]{\label{eqn:#1}}
+\newcommand{\eqnref}[1]{Vergelijking (\ref{eqn:#1})}
 
 \newtheorem{definition}{Definitie}
 \newtheorem{theorem}{Theorema}
@@ -25,15 +27,18 @@
 \newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
 \newcommand{\funf}[2]{\ensuremath{#1\fbrk{#2}}}
 \newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
+\newcommand{\funsig}[3]{#1:#2\rightarrow #3}
+\newcommand{\funsigimp}[5]{#1:#2\rightarrow #3:#4\mapsto #5}
 
 \newcommand{\bigoh}[1]{\fun{\mathcal{O}}{#1}}
 
 \newcommand{\xstar}{\ensuremath{x^{\star}}}
 \newcommand{\xdot}{\ensuremath{x^{\circ}}}
-\newcommand{\Xop}{X^{\star}}
+\newcommand{\calXop}{\calX^{\star}}
 
 \newcommand{\argmin}{\ensuremath{\mbox{argmin}}}
 \newcommand{\mean}[2][]{\funf{\EEE_{#1}}{#2}}
+\newcommand{\Prob}[1]{\funf{\Pr}{#1}}
 
 \newcommand{\comp}[1]{\textsc{\mbox{#1}}}
 \newcommand{\prbm}[1]{\textsc{#1}}
@@ -66,6 +71,10 @@
 \newcommand{\YYY}{\mathbb{Y}}
 \newcommand{\ZZZ}{\mathbb{Z}}
 
+\newcommand{\zeromatrix}[1][]{\boldsymbol{0}_{#1}}
+\newcommand{\identitymatrix}[1][]{\boldsymbol{I}_{#1}}
+\newcommand{\onematrix}[1][]{\boldsymbol{1}_{#1}}
+
 \newcommand{\calA}{\mathcal{A}}
 \newcommand{\calB}{\mathcal{B}}
 \newcommand{\calC}{\mathcal{C}}
@@ -92,3 +101,24 @@
 \newcommand{\calX}{\mathcal{X}}
 \newcommand{\calY}{\mathcal{Y}}
 \newcommand{\calZ}{\mathcal{Z}}
+
+\newcommand{\BoolSet}{\BBB}
+\newcommand{\NatSet}{\NNN}
+\newcommand{\RealSet}{\RRR}
+\newcommand{\OpProblem}{\Pi}
+\newcommand{\ConfigSet}{\calX}
+\newcommand{\ConfigValSet}{\ConfigSet'}
+\newcommand{\ConfigOpSet}{\ConfigSet^{\star}}
+\newcommand{\sol}{x}
+\newcommand{\bestSol}{\sol^{\star}}
+\newcommand{\goodSol}{\sol^{\circ}}
+\newcommand{\SolSet}{\calS}
+\newcommand{\PopSet}{\calP}
+\newcommand{\hcfun}{c}
+\newcommand{\evalfun}{f}
+\newcommand{\evalfuna}{f'}
+\newcommand{\hittime}{\theta}
+\newcommand{\neighbr}{\calN}
+\newcommand{\nvar}{n}
+\newcommand{\VarDom}{A}
+\newcommand{\PopChain}{\mathfrak{P}}
