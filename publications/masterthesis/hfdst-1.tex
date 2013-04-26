@@ -221,17 +221,17 @@ Met $\vec{x}$ een willekeurige vector en $\vec{v}$ de rechtse eigenvector van $\
 We kunnen een eigenvector benaderen door een $\onematrix$-vector een groot aantal maal toe te passen op de matrix in kwestie en vervolgens te normaliseren. Daarom kunnen we stellen dat voor een grote $t$:
 \begin{equation}
 \begin{array}{cc}
-\vec{x}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\approx\vec{x}\cdot\lambda_{1,\hat{P}}^t\cdot\vec{v}_{\hat{P}}=\lambda_{1,\hat{P}}^t\cdot s&\mbox{($t\gg 1$)}
+\vec{x}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\approx\vec{x}\cdot\lambda_{1,\hat{P}}^t\cdot\vec{v}_{\hat{P}}=\lambda_{1,\hat{P}}^t\cdot\sigma&\mbox{($t\gg 1$)}
 \end{array}
 \eqnlab{longTermAlpha}
 \end{equation}
-Wanneer we als $\vec{x}$ de begindistributie $\vec{\hat{\alpha}}_0$ nemen, kunnen we het dot-product tussen $\vec{\hat{\alpha}}_0$ en $\vec{v}_{\hat{P}}$ defini\"eren als $s$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die ons met behulp van \theref{eigenValuesMatrix} een benaderende waarde voor de gemiddelde raaktijd oplevert:
+Wanneer we als $\vec{x}$ de begindistributie $\vec{\hat{\alpha}}_0$ nemen, kunnen we het dot-product tussen $\vec{\hat{\alpha}}_0$ en $\vec{v}_{\hat{P}}$ defini\"eren als $\sigma$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die ons met behulp van \theref{eigenValuesMatrix} een benaderende waarde voor de gemiddelde raaktijd oplevert:
 \begin{equation}
-\mean{\theta}\approx 1+\vec{\hat{\alpha}}_0\cdot\onematrix+s\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\lambda_{1,\hat{P}}^i}=1+\vec{\hat{\alpha}}_0\cdot\onematrix+\displaystyle\frac{s\cdot \lambda_{1,\hat{P}}}{1-\lambda_{1,\hat{P}}}
+\mean{\theta}\approx 1+\vec{\hat{\alpha}}_0\cdot\onematrix+\sigma\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\lambda_{1,\hat{P}}^i}=1+\vec{\hat{\alpha}}_0\cdot\onematrix+\displaystyle\frac{\sigma\cdot \lambda_{1,\hat{P}}}{1-\lambda_{1,\hat{P}}}
 \end{equation}
-Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnref{longTermAlpha}, kunnen we de eerste termen benaderen door deze vergelijking omgekeerd toe te passen. We stellen dus dat $1+\vec{\hat{\alpha}}_0\cdot\onematrix=s\cdot\brak{1+\lambda^{-1}}$. Dit levert ons een ruwe schatting voor de raaktijd op:
+Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnref{longTermAlpha}, kunnen we de eerste termen benaderen door deze vergelijking omgekeerd toe te passen. We stellen dus dat $1+\vec{\hat{\alpha}}_0\cdot\onematrix=\sigma\cdot\brak{1+\lambda^{-1}}$. Dit levert ons een ruwe schatting voor de raaktijd op:
 \begin{equation}
-\mean{\hittime}=\displaystyle\frac{s}{\brak{1-\lambda_{1,\hat{P}}}\cdot\lambda_{1,\hat{P}}}
+\mean{\hittime}=\displaystyle\frac{\sigma}{\brak{1-\lambda_{1,\hat{P}}}\cdot\lambda_{1,\hat{P}}}
 \eqnlab{hitTimeSingle}
 \end{equation}
 
@@ -263,8 +263,8 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 \begin{aligned}
 \mean{\phittime}&=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\phittime>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\hittime>i}^p}\\
 %&=1+\displaystyle\sum_{i=0}^{\infty}{\vec{\hat{\alpha}}_{0}\cdot\hat{P}^i\cdot\onematrix[1\times N-g]}\\
-&\approx 1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+s^p\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\lambda_{1,\hat{P}}^{p\cdot i}}=1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+\displaystyle\frac{s^p\cdot\lambda_{1,\hat{P}}^p}{1-\lambda_{1,\hat{P}}^p}\\
-&\approx\displaystyle\frac{s^p}{\brak{1-\lambda_{1,\hat{P}}^p}\cdot\lambda_{1,\hat{P}}^{p}}
+&\approx 1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+\sigma^p\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\lambda_{1,\hat{P}}^{p\cdot i}}=1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+\displaystyle\frac{\sigma^p\cdot\lambda_{1,\hat{P}}^p}{1-\lambda_{1,\hat{P}}^p}\\
+&\approx\displaystyle\frac{\sigma^p}{\brak{1-\lambda_{1,\hat{P}}^p}\cdot\lambda_{1,\hat{P}}^{p}}
 %\Prob{\phittime\geq t}&=\Prob{\hittime_1\geq t\wedge\hittime_2\geq t\wedge\ldots\wedge\hittime_p\geq t}\\
 %&=\Prob{\hittime_1\geq t}\cdot\Prob{\hittime_2\geq t}\cdot\ldots\cdot\Prob{\hittime_p\geq t}\\
 %&=\Prob{\hittime\geq t}\cdot\Prob{\hittime\geq t}\cdot\ldots\cdot\Prob{\hittime\geq t}=\Prob{\hittime\geq t}^p
@@ -273,35 +273,61 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 \end{equation}
 De \emph{speed-up} is bijgevolg gelijk aan:
 \begin{equation}
-\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{s^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}
+\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{\sigma^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}
 \eqnlab{speedupMetaheuristic}
 \end{equation}
-\subsubsection{Semantiek van parameters $s$ en $\lambda$}
-\paragraph{De factor $s$}
-\eqnref{speedupMetaheuristic} formaliseert de verwachte \emph{speed-up} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal parameters $p$ is het niet triviaal om de overige parameters te interpreteren. $s$ hebben we gedefinieerd als het dot-product tussen $\vec{\hat{a}}_0$ en $\vec{v}_{\hat{P}}$. Dit kunnen we dus interpreteren als een getal proportioneel met de cosinus tussen de hoek tussen beide vectoren ofwel in welke mate de \emph{initi\"ele} distributie gelijkloopt met de distributie van populaties na een lange tijd. Vermits we over (gedeeltelijke) probabiliteitsvectoren spreken, kunnen we bovendien grenzen zetten op $s$:
+\subsubsection{Semantiek van parameters $\sigma$ en $\lambda$}
+\paragraph{De factor $\sigma$}
+\eqnref{speedupMetaheuristic} formaliseert de verwachte \emph{speed-up} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal parameters $p$ is het niet triviaal om de overige parameters te interpreteren. $\sigma$ hebben we gedefinieerd als het dot-product tussen $\vec{\hat{a}}_0$ en $\vec{v}_{\hat{P}}$. Dit kunnen we dus interpreteren als een getal proportioneel met de cosinus tussen de hoek tussen beide vectoren ofwel in welke mate de \emph{initi\"ele} distributie gelijkloopt met de distributie van populaties na een lange tijd. Vermits we over (gedeeltelijke) probabiliteitsvectoren spreken, kunnen we bovendien grenzen zetten op $\sigma$:
 \begin{equation}
-0\leq s<1
+0\leq \sigma<1
 \eqnlab{boundsS}
 \end{equation}
-$s$ kan echter nooit gelijk zijn aan $1$ omdat voor elke redelijke kansverdeling er ook een (kleine) kans bestaat dat we meteen in een doel-populatie terechtkomen. Verder spreekt \eqnref{boundsS} over de theoretische grenzen van $s$. In de praktijk verwachten we andere grenzen. Een redelijker scenario is dat alle populaties (zowel doel-populaties als ordinaire populaties) met eenzelfde kans voorkomen. De argumentatie is dat een initi\"ele oplossingsgenerator meestal volgens een uniforme kansverdeling een oplossing $\sol$ uit de oplossingsruimte $\SolSet$ genereert. Vermits populaties een vaste grote hebben is elke populatie ook even waarschijnlijk. In dat geval geldt dus:
+$\sigma$ kan echter nooit gelijk zijn aan $1$ omdat voor elke redelijke kansverdeling er ook een (kleine) kans bestaat dat we meteen in een doel-populatie terechtkomen. Verder spreekt \eqnref{boundsS} over de theoretische grenzen van $\sigma$. In de praktijk verwachten we andere grenzen. Een redelijker scenario is dat alle populaties (zowel doel-populaties als ordinaire populaties) met eenzelfde kans voorkomen. De argumentatie is dat een initi\"ele oplossingsgenerator meestal volgens een uniforme kansverdeling een oplossing $\sol$ uit de oplossingsruimte $\SolSet$ genereert. Vermits populaties een vaste grote hebben is elke populatie ook even waarschijnlijk. In dat geval geldt dus:
 \begin{equation}
 \begin{array}{cc}
-0\leq s\leq\displaystyle\frac{\brak{N-g}}{N\cdot\brak{N-g}}=\displaystyle\frac{1}{N}&\mbox{(uniforme initi\"ele verdeling)}
+0\leq \sigma\leq\displaystyle\frac{\brak{N-g}}{N\cdot\brak{N-g}}=\displaystyle\frac{1}{N}&\mbox{(uniforme initi\"ele verdeling)}
 \end{array}
 \end{equation}
 \paragraph{De factor $\lambda$}
 $\lambda$ is de grootste eigenwaarde van de matrix $\hat{P}$ en geeft een aanwijzing hoe snel een willekeurige vector naar zijn overeenkomstige eigenvector $\vec{v}$ zal convergeren: bij een $\lambda\rightarrow 1$ verwachten we dat we sneller zullen convergeren. Wat dus uit \eqnref{hitTimeSingle} naar voren komt is dat we op zoek gaan naar een optimale convergentiesnelheid om vanuit de initi\"ele probabiliteitsvector $\vec{\hat{\alpha}}_0$ naar de uiteindelijke waarde $\vec{v}$.
+
 \begin{figure}
-\begin{tikzpicture}[scale=4,domain=0.1:0.9]
-\draw[very thin,color=gray] (-0.1,-0.1) grid (1.1,1.1);
-\draw[->] (-0.2,0) -- (1.2,0) node[right] {$\lambda$};
-\draw[->] (0,-0.2) -- (0,1.2) node[above] {$\mean{\theta}$};
-\foreach \s/\t in {0.1/,0.05/dashed,0.025/dotted} {
-  \draw[\t] plot[id=x] function{\s/(x*(1-x))} node[right] {$s=\s$};
+\centering
+\begin{tikzpicture}
+\foreach \a/\x/\y/\t in {0/0/2/Doel,1/5/0/Niet-doel,2/7/0/Initieel,3/9/0/Limiet} {
+  \node (L\a) at (\x,-\y+0.5) {\t};
 }
+\foreach \x/\t in {2/1,3/2,5/g} {
+  \node[draw=black,minimum width=1.5 cm,rectangle] (G\x) at (0,-\x) {$\PopSet_{\t}$};
+}
+\node[draw=black,dashed,fit=(L0) (G2) (G5),minimum width=1.5 cm,inner sep=10pt,rectangle] (GA) {};
+\foreach \x/\t/\u in {0/g+1/1,1/g+2/2,2/g+3/3,4/i/i-g,6/j/j-g,8/N+g/N} {
+  \node[draw=black,minimum width=1.5 cm,rectangle] (P\x) at (5,-\x) {$\PopSet_{\t}$};
+  \node (IP\x) at (P\x -| L2) {$\hat{\alpha}_{\u}$};
+  \node (EP\x) at (P\x -| L3) {$w_{\u}$};
+  \draw[->] (P\x.west) to node[above,midway,sloped]{$1-\hat{v}_{\u}$} (GA);
+}
+\node[draw=black,dashed,fit= (L1) (L3) (P0) (P8),minimum width=1.5 cm,inner sep=10pt,rectangle] (PA) {};
+\coordinate (LC) at ($(PA.south)+(0,-0.25)$);
+\coordinate (TR) at ($(PA.north east)+(0.25,0.25)$);
+\draw[->] (PA.south) -- ++(0,-0.25) to node[above,midway,sloped]{$1-\lambda$} (GA.south |- LC) -- (GA.south);
+\draw[->] (PA.north) -- ++(0,0.25) to node[above,midway,sloped]{$\lambda$} (TR) |- (PA.east);
 \end{tikzpicture}
-\caption{Invloed van de parameter $\lambda$ op de raaktijd}
+\caption{Schematische voorstelling van het effect van de parameters}
 \end{figure}
+
+% \begin{figure}
+% \begin{tikzpicture}[scale=4,domain=0.1:0.9]
+% \draw[very thin,color=gray] (-0.1,-0.1) grid (1.1,1.1);
+% \draw[->] (-0.2,0) -- (1.2,0) node[right] {$\lambda$};
+% \draw[->] (0,-0.2) -- (0,1.2) node[above] {$\mean{\theta}$};
+% \foreach \s/\t in {0.1/,0.05/dashed,0.025/dotted} {
+%   \draw[\t] plot[id=x] function{\s/(x*(1-x))} node[right] {$\sigma=\s$};
+% }
+% \end{tikzpicture}
+% \caption{Invloed van de parameter $\lambda$ op de raaktijd}
+% \end{figure}
 \section{Besluit van dit hoofdstuk}
 Als je in dit hoofdstuk tot belangrijke resultaten of besluiten gekomen
 bent, dan is het ook logisch om het hoofdstuk af te ronden met een
