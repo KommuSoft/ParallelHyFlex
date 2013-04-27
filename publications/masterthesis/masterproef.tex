@@ -8,7 +8,7 @@
 % De volgende \setup mag verwijderd worden als geen fiche gewenst is.
 \setup{filingcard,
   translatedtitle={The best master thesis ever},
-  udc=621.3,
+  udc=681.3,
   shortabstract={Hier komt een heel bondig abstract van hooguit 500
     woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen
     (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten!
@@ -107,7 +107,11 @@
     $\hcfun$					& Harde beperkingen: $\funsig{\hcfun}{\ConfigSet}{\BoolSet}$\\
     $\evalfun$					& Evaluatiefunctie: $\funsig{\evalfun}{\ConfigSet}{\RealSet}$\\
     $\hittime$					& raaktijd\\
-    $\neighbr$					& Omgeving van een oplossing
+    $\neighbr$					& Omgeving van een oplossing\\
+    $\ev[i,A]$					& De $i$-de eigenwaarde van een matrix $A$. De eigenwaardes zijn gerangschikt van groot naar klein: $\abs{\ev[i,A]}\geq\abs{\ev[i+1,A]}$\\
+    $\ev[A]$					& De dominante eigenwaarde van een matrix $A$\\
+    $\evl[i,A]$					& De linkse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
+    $\evr[i,A]$					& De rechtse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
   \end{tabularx}
 \end{flushleft}
 
@@ -136,7 +140,7 @@
 
 \end{document}
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
-%%% End: 
+%%% End:
