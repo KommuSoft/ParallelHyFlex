@@ -149,7 +149,7 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 
 \emph{Tabu Search}
 
-\subsection{Classificatie in de ``Zoo van de Metaheuristieken''}
+\subsection{Classificatie: een kaart voor de ``Zoo van de Metaheuristieken''}
 
 \subsection{Modelleren van Metaheuristieken}
 
@@ -334,11 +334,11 @@ Vermits $0\leq\lambda<1$ en $0<\sigma$, kunnen we met behulp van \eqnref{speedup
 
 \paragraph{}
 
-Superlineaire speed-up zorgt echter in de literatuur voor veel ophef\cite{superlinearSpeedup}. Theoretisch kan men immers een parallel proces op een sequenti\"ele processor emuleren. Deze processor voert dan afwisselend het werk uit van \'e\'en van de kernen. In de praktijk neemt men soms superlineaire speed-up waar en dit zelfs op een consistente manier. Doorgaans wijt men dit echter aan het \emph{cache-effect}: als we een algoritme op verschillende processoren uitvoeren beschikken we ook over meer snelle geheugens (\emph{cache}). Bovendien kan een deel van het verwerken van data soms uitbesteed worden aan de netwerkkaart. Vermits we echter in bovenstaande redenering abstractie van deze extra bronnen van speed-up kan dit de oorzaak niet zijn.
+Superlineaire speed-up zorgt echter in de literatuur voor veel ophef\cite{superlinearSpeedup}. Theoretisch kan men immers een parallel proces op een sequenti\"ele processor emuleren. Deze processor voert dan afwisselend het werk uit van \'e\'en van de kernen. In de praktijk neemt men soms superlineaire speed-up waar en dit zelfs op een consistente manier. Doorgaans wijt men dit echter aan het \emph{cache-effect}: als we een algoritme op verschillende processoren uitvoeren beschikken we ook over meer snelle geheugens (\emph{cache}). Bovendien kan een deel van het verwerken van data soms uitbesteed worden aan de netwerkapparatuur (bijvoorbeeld bepalen welke processoren op de hoogte moeten worden gebracht van een bepaalde gebeurtenis). Vermits we echter in bovenstaande redenering abstractie van deze extra bronnen van speed-up kan dit de oorzaak niet zijn.
 
 \paragraph{}
 
-De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\sigma$ klein indien de beginverdeling $\vec{\hat{\alpha}}$ klein is of sterk afwijkt van $\evr[\hat{P}]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\sigma<\lambda$, de metaheuristiek eenvoudigweg slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P} of de metaheuristieken zijn niet correct afgesteld (bijvoorbeeld te lokaal) op het probleem.
+De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties op. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\sigma$ klein indien de beginverdeling $\vec{\hat{\alpha}}$ klein is of sterk afwijkt van $\evr[\hat{P}]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\sigma<\lambda$, de metaheuristiek eenvoudigweg slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P} of de metaheuristieken zijn niet correct afgesteld (bijvoorbeeld te lokaal) op het probleem.
 
 \subsubsection{Minimale Speed-up}
 
@@ -372,13 +372,21 @@ De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt to
 
 \subsection{Parallelliseren van metaheuristieken in de praktijk}
 
-Een referentiewerk hoe men metaheuristieken in de praktijk op verschillende processoren laat werken in ``\emph{Parallel Metaheuristics: A New Class of Algorithms}'' van Alba\cite{Alba2005book}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}. Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellisme:
+Een referentiewerk hoe men metaheuristieken in de praktijk op verschillende processoren laat werken is ``\emph{Parallel Metaheuristics: A New Class of Algorithms}'' van Alba\cite{Alba2005book}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}.
+\paragraph{}
+Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellisme:
 \begin{enumerate}
  \item \emph{Parallel multistart}: de processoren starten met een verschillende initi\"ele populatie en werken min of meer onafhankelijk. Dit is het parallellisatie-paradigma die we in de modellering hebben beschouwd.
- \item \emph{Parallel moves}: we beschouwen \'e\'en globale actieve oplossing. Wanneer we een migratie uitvoeren op een sequenti\"ele implementatie genereren we echter \'e\'en oplossing. We kunnen elke processor een migratie laten uitvoeren en vervolgens uit de verzaml %in het geval we de \emph{Local Search} stap uitvoeren dienen we een significant gedeelte van de oplossingsruimte $S$ af te zoeken (meestal polynomiaal in het aantal variabelen). De omgeving is meestal op zo'n manier gestructureerd dat we deze kunnen opsplitsen in min of meer even grote delen.
- \item \emph{Move acceleration}:
+ \item \emph{Parallel moves}: we beschouwen \'e\'en globale actieve oplossing. Wanneer we een migratie uitvoeren op een sequenti\"ele implementatie genereren we echter \'e\'en oplossing. We kunnen elke processor een migratie laten uitvoeren en vervolgens uit de verzameling van oplossingen uit de omgeving een nieuwe actieve oplossing kiezen. In het geval we een \emph{Local Search} stap uitvoeren kunnen we bijvoorbeeld ook elke processor een deel van de volledige omgeving laten afzoeken.
+ \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. Bij \emph{move acceleration} zijn we in staat om de oplossing op te delen in min of meer onafhankelijke delen. Elke processor past een deel van de configuratie aan en rekent de verandering van fitness-waarde met betrekking tot dit deel uit. Soms is er nog postprocessing vereist om de uiteindelijke fitness-waarde te berekenen.
 \end{enumerate}
 
+\paragraph{}
+In het geval van \emph{Evolutionary Algorithms} ziet men drie bronnen tot parallellisme:
+\begin{enumerate}
+ \item \emph{Parallel computation}: meestal dient men operaties toe te passen op een significant deel van de populatie (bijvoorbeeld het berekenen van fitness-waardes). Vermits oplossingen nog steeds onafhankelijke entiteiten zijn, is dit een inherente vorm van parallellisatie.
+ \item \emph{Parallel population}: men kan ook op elke processor en onafhankelijke populatie beschouwen waarop de processor dan werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men tussenschotten tussen populaties plaatst een \emph{Island Model}.
+\end{enumerate}
 
 \begin{algorithm}[H]
  \SetAlgoLined
