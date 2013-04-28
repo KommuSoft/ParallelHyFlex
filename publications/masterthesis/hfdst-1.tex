@@ -366,15 +366,17 @@ De laatste benadering bekomen we omdat de som een veelterm van graad $p+1$ is me
 \end{equation}
 De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt tot dezelfde speed-up.
 
-\subsubsection{Anomalie\"en in het model}
+\subsubsection{A flaw in the plan: anomalie\"en in het model}
 
 
 
 \subsection{Parallelliseren van metaheuristieken in de praktijk}
 
-Een referentiewerk hoe men metaheuristieken in de praktijk op verschillende processoren laat werken in ``\emph{Parallel Metaheuristics: A New Class of Algorithms}'' van Alba\cite{Alba2005book}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}. Bij de \emph{Local Search Metaheuristics}
+Een referentiewerk hoe men metaheuristieken in de praktijk op verschillende processoren laat werken in ``\emph{Parallel Metaheuristics: A New Class of Algorithms}'' van Alba\cite{Alba2005book}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}. Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellisme:
 \begin{enumerate}
- \item
+ \item \emph{Parallel multistart}: de processoren starten met een verschillende initi\"ele populatie en werken min of meer onafhankelijk. Dit is het parallellisatie-paradigma die we in de modellering hebben beschouwd.
+ \item \emph{Parallel moves}: we beschouwen \'e\'en globale actieve oplossing. Wanneer we een migratie uitvoeren op een sequenti\"ele implementatie genereren we echter \'e\'en oplossing. We kunnen elke processor een migratie laten uitvoeren en vervolgens uit de verzaml %in het geval we de \emph{Local Search} stap uitvoeren dienen we een significant gedeelte van de oplossingsruimte $S$ af te zoeken (meestal polynomiaal in het aantal variabelen). De omgeving is meestal op zo'n manier gestructureerd dat we deze kunnen opsplitsen in min of meer even grote delen.
+ \item \emph{Move acceleration}:
 \end{enumerate}
 
 
