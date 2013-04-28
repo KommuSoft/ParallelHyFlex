@@ -96,3 +96,5 @@ ParallelHyFlex/build/*
 /ParallelHyFlex/dist/
 /GIHH/nbproject/private/
 /publications/masterthesis/doc/*
+/HyFlexTests/nbproject/private/
+/HyFlexTests/build/

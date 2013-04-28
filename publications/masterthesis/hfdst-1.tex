@@ -98,7 +98,7 @@ Op basis van deze definitie kunnen we ook een algoritme op hoog niveau opstellen
  $b_1\leftarrow\displaystyle\argmin_{\sol\in\PopSet_1}{\fun{\evalfun}{\sol}}$\;
  \Repeat{het stopcriterium is bereikt}{
   Genereer op basis van $\PopSet_t$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1}$ samen met hun fitness-waarde\;
-  $b_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_t\cup\accl{b_t}}{\fun{\evalfun}{\sol}}$\;
+  $b_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1}\cup\accl{b_t}}{\fun{\evalfun}{\sol}}$\;
   $t\leftarrow t+1$\;
  }
  \KwRet{$b_t$}
@@ -281,9 +281,10 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 \end{equation}
 De \emph{speed-up} is bijgevolg gelijk aan:
 \begin{equation}
-\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{\sigma^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}
+\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{\sigma^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}\approx\displaystyle\frac{p\cdot\lambda^{p-1}}{\sigma^{p-1}}
 \eqnlab{speedupMetaheuristic}
 \end{equation}
+In het laatste deel van de vergelijking vervangen we ook $\ev[\hat{P}]$ door $\lambda$. Dit is louter om de formules die hiervan afgeleid zijn leesbaar te houden.
 
 \subsubsection{Semantiek van parameters $\sigma$ en $\lambda$}
 
@@ -294,8 +295,10 @@ We hebben in \eqnref{longTermAlpha} een benadering geformuleerd voor de distribu
 \begin{equation}
 \conditional{\vec{\hat{\alpha}}_{t+1}=\vec{\hat{\alpha}}_t\cdot\hat{P}=\lambda\cdot\vec{\hat{\alpha}}_{t}}{$t\gg 1$}
 \end{equation}
-Bijgevolg kunnen we $\lambda$ interpreteren als de kans op lange termijn dat we vanuit een normale populatie de volgende stap niet naar een doel-populatie migreren. Voor elk zinvol probleem kunnen we stellen dat $\lambda$ dicht bij $N-g/N\approx 1$ zal blijven.
+Bijgevolg kunnen we $\lambda$ interpreteren als de kans op lange termijn dat we vanuit een normale populatie de volgende stap niet naar een doel-populatie migreren. Voor elk zinvol probleem kunnen we stellen dat $\lambda$ dicht bij $N-g/N\approx 1$ zal blijven (dit is ook de oorzaak van de laatste vereenvoudiging in \eqnref{speedupMetaheuristic}). Verder geldt altijd: $0\leq\lambda<1$.
+
 \paragraph{}
+
 We kunnen ook de rechtse dominante eigenvector $\evr[\hat{P}]$ beschouwen. Vermits eigenvectoren geen karakteristieke lengte hebben, beschouwen we $\dabs{\evr[\hat{P}]}_1=1$. Vermits het volgende geldt:
 \begin{equation}
 \conditional{A^t\approx\ev[A]^t\cdot\evr[A]\cdot\evl[A]^T}{$t\gg1$}
@@ -315,6 +318,7 @@ Uit de definitie van de cosinus kunnen we bovendien stellen dat:
 Bijgevolg kunnen we stellen dat:
 \begin{equation}
 \sigma=\displaystyle\frac{\dabs{\hat{\alpha}_0}\cdot\fun{\cos}{\vec{\hat{\alpha}}_0,\evr[\hat{P}]}}{\dabs{\evl[\hat{P}]}\cdot\fun{\cos}{\evl[\hat{P}],\evr[\hat{P}]}}
+\eqnlab{sigmaMeaning}
 \end{equation}
 We kunnen dus stellen dat $\sigma$ de ratio is tussen de projecties van enerzijds de initi\"ele kansverdeling $\vec{\hat{\alpha}}$ en anderzijds de linkse eigenvector $\evl[\hat{P}]$ op de rechtse eigenvectoren $\evr[\hat{P}]$. Wanneer $\sigma$ klein is verwachten we sneller een oplossing te vinden. De factoren die hiertoe bijdragen zijn dus:
 \begin{itemize}
@@ -322,11 +326,81 @@ We kunnen dus stellen dat $\sigma$ de ratio is tussen de projecties van enerzijd
  \item Wanneer $\vec{\hat{\alpha}}_0$ en $\evr[\hat{P}]$ niet gelijkaardig zijn, dan zijn de populaties waar we met een grote kans in starten niet de populaties die met een grote kans naar een normale populatie migreren in de volgende stap. Wanneer de cosinus tussen de vectoren dus klein is, verwachten we in de eerste stappen naar een doel-populatie te migreren.
  \item Wanneer de linkse en de rechtse eigenvector gelijk zijn, is de matrix $\hat{P}$ symmetrisch. Indien de matrix symmetrisch is, verwachtten we doorgaans minder populaties waarnaar we kunnen migreren, maar vervolgens niet uit kunnen geraken. Indien de matrix immers symmetrisch is, is de kans om vanuit een populatie in een andere populatie te migreren immers dezelfde om er vervolgens terug uit te geraken. Daarom streven we naar een zo minimaal mogelijk hoek tussen de twee.
 \end{itemize}
+Uit de formule kunnen we afleiden dan $\sigma$ aan slechts \'e\'en kant begrensd is: $0<\sigma$.
+
+\subsubsection{Superlineaire Speed-up}
+
+Vermits $0\leq\lambda<1$ en $0<\sigma$, kunnen we met behulp van \eqnref{speedupMetaheuristic} bepalen welke versnelling mogelijk is. Dit is mogelijk wanneer $\sigma<\lambda$. Een opmerkelijk feit is dat deze grenzen superlineaire speed-up niet uitsluiten. Sterker nog, \cite{DBLP:journals/jc/ShonkwilerV94} ontwikkelen in hun paper enkele metaheuristieken voor problemen waar men ook effectief superlineaire speed-up kan vaststellen.
+
+\paragraph{}
+
+Superlineaire speed-up zorgt echter in de literatuur voor veel ophef\cite{superlinearSpeedup}. Theoretisch kan men immers een parallel proces op een sequenti\"ele processor emuleren. Deze processor voert dan afwisselend het werk uit van \'e\'en van de kernen. In de praktijk neemt men soms superlineaire speed-up waar en dit zelfs op een consistente manier. Doorgaans wijt men dit echter aan het \emph{cache-effect}: als we een algoritme op verschillende processoren uitvoeren beschikken we ook over meer snelle geheugens (\emph{cache}). Bovendien kan een deel van het verwerken van data soms uitbesteed worden aan de netwerkkaart. Vermits we echter in bovenstaande redenering abstractie van deze extra bronnen van speed-up kan dit de oorzaak niet zijn.
+
+\paragraph{}
+
+De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\sigma$ klein indien de beginverdeling $\vec{\hat{\alpha}}$ klein is of sterk afwijkt van $\evr[\hat{P}]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\sigma<\lambda$, de metaheuristiek eenvoudigweg slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P} of de metaheuristieken zijn niet correct afgesteld (bijvoorbeeld te lokaal) op het probleem.
+
+\subsubsection{Minimale Speed-up}
+
+Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal van elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{kirkPatrick}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren. Bovendien kunnen we een programma zo ontwerpen dat het uitsluitend oplossingen genereert die nog niet eerder gegenereerd werden in dit in een tijdscomplexiteit onafhankelijk van het aantal eerder gegenereerde oplossingen.
+\paragraph{}
+Stel dat het domein exact \'e\'en optimale oplossing bevat, dan is de kans dat we in iteratie $t$ deze waarde vinden gelijk aan:
+\begin{equation}
+\Prob{\theta=t|\theta\geq t}=\guards{
+0&\mbox{if }t>N\\
+1/N-t+1&\mbox{otherwise}
+}
+\end{equation}
+Met $N$ het aantal mogelijke configuraties ($N=\bigoh{\prod_i\abs{A_i}}$). In dat geval is gemiddelde raaktijd:
+\begin{equation}
+\mean{\hittime}=\displaystyle\sum_{i=1}^N\Prob{\hittime\geq i}=\displaystyle\sum_{i=1}^N\displaystyle\frac{i}{N}=\displaystyle\frac{N+1}{2}
+\end{equation}
+In het geval dat we dit algoritme op $p$ machines laten draaien bekomen we:
+\begin{equation}
+\mean{\phittime}=\displaystyle\sum_{i=1}^N\Prob{\phittime\geq i}=\displaystyle\sum_{i=1}^N\Prob{\hittime\geq i}^p=\displaystyle\frac{1}{N^p}\displaystyle\sum_{i=1}^Ni^p\approx\displaystyle\frac{N}{p+1}
+\end{equation}
+De laatste benadering bekomen we omdat de som een veelterm van graad $p+1$ is met $1/p+1$ als leidende co\"effici\"ent. Bijgevolg is de \emph{speed-up} bij benadering gelijk aan:
+\begin{equation}
+\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}\approx\displaystyle\frac{\brak{N+1}\cdot\brak{p+1}}{2\cdot N}\approx\displaystyle\frac{p+1}{2}
+\eqnlab{minimalSpeedupMetaheuristic}
+\end{equation}
+De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt tot dezelfde speed-up.
+
+\subsubsection{Anomalie\"en in het model}
 
 
-\subsubsection{Minimale Speedup}
 
-Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men meestal verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal val elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{kirkPatrick}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren in \bigoh{n\cdot\fun{\log}{\abs{A}}} (met $n$ het aantal variabelen en $A$ het domein van de variabelen). We kunnen ook een mechanisme voorzien die in dezelfde tijdscomplexiteit voorkomt dat we oplossingen die al gegenereerd werden, nogmaals genereren.
+\subsection{Parallelliseren van metaheuristieken in de praktijk}
+
+Een referentiewerk hoe men metaheuristieken in de praktijk op verschillende processoren laat werken in ``\emph{Parallel Metaheuristics: A New Class of Algorithms}'' van Alba\cite{Alba2005book}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}. Bij de \emph{Local Search Metaheuristics}
+\begin{enumerate}
+ \item
+\end{enumerate}
+
+
+\begin{algorithm}[H]
+ \SetAlgoLined
+ %\KwData{}
+ %\KwResult{how to write algorithm with \LaTeX2e }
+ \ParFor($i=1\ldots p$){
+  Bereken een initi\"ele set van oplossingen $\PopSet_{1,i}$ en hun fitness-waarde\;
+  $b_{1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{1,i}}{\fun{\evalfun}{\sol}}$\;
+ }
+ $B_1\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{1,1},b_{1,2},\ldots,b_{1,p}}}{\fun{\evalfun}{\sol}}$\;
+ $t\leftarrow1$\;
+ \Repeat{het stopcriterium is bereikt}{
+   \ParFor($i=1\ldots p$){
+	Genereer op basis van $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1,i}$ samen met hun fitness-waarde\;
+	$b_{t+1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1,i}\cup\accl{b_{t,i}}}{\fun{\evalfun}{\sol}}$\;
+   }
+   $B_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{t+1,1},b_{t+1,2},\ldots,b_{t+1,p}}}{\fun{\evalfun}{\sol}}$\;
+   $t\leftarrow t+1$\;
+ }
+ \KwRet{$B_t$}
+ \caption{Hoog niveau beschrijving van een parallelle metaheuristiek.}
+ \alglab{parallelMetaheuristicGeneral}
+\end{algorithm}
+
 % \begin{figure}
 % \centering
 % \begin{tikzpicture}
