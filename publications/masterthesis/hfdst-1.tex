@@ -143,7 +143,7 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 
 \subsubsection{Variable Neighbourhood Search}
 
-\emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we tot een betere oplossing komen, wordt de eerste omgeving $\neighbr_1$ opnieuw de actieve omgeving. In het andere geval kiezen we de volgende omgeving $\neighbr_{i+1}$. Op het moment dat alle omgevingen zijn uitgeput beginnen we ook opnieuw bij $\neighbr_1$.%in het geval we een lokaal optimum volgens omgeving $\calN_i$ bereiken, zullen we \emph{local search} toepassen op basis van de volgende omgeving $\calN_i$ in de hoop dat deze omgeving ons naar een betere oplossing zal leiden. In het geval alle 
+\emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we tot een betere oplossing komen, wordt de eerste omgeving $\neighbr_1$ opnieuw de actieve omgeving. In het andere geval kiezen we de volgende omgeving $\neighbr_{i+1}$. Op het moment dat alle omgevingen zijn uitgeput beginnen we ook opnieuw bij $\neighbr_1$.%in het geval we een lokaal optimum volgens omgeving $\calN_i$ bereiken, zullen we \emph{local search} toepassen op basis van de volgende omgeving $\calN_i$ in de hoop dat deze omgeving ons naar een betere oplossing zal leiden. In het geval alle
 
 \subsubsection{Tabu Search}
 
@@ -175,10 +175,13 @@ We kunnen deze definitie ook uitbreiden naar de raaktijd voor een zekere fitness
 
 Het \prbm{Hitting Time Problem} gaat vervolgens op zoek naar de raaktijd van een gemiddelde Markov-keten.
 
+\subsubsection{Verwachtte tijd van een sequentieel proces}
+
+Op basis van \algref{metaheuristicGeneral} kunnen we uitspraken doen, zowel over de verwachtte raaktijd wanneer we het zoeken uitbesteden aan \'e\'en processor of uitbesteden aan verschillende processoren die elk onafhankelijk een eigen zoekproces laten lopen. Onderzoek naar de raaktijd is gepubliceerd in \cite{DBLP:journals/jc/ShonkwilerV94}. Hiervoor zal men een Markov-model beschouwen. De knopen van dit Markov-model stellen populaties voor: een verzameling van oplossingen. We kunnen hier dus denken aan een verzameling $\PopSet_i$ in \algref{metaheuristicGeneral}. Als beperking stellen we dat de populatie een vaste grootte heeft. Deze beperking is redelijk vermits elke praktische machine een eindig geheugen heeft en dus ook maar een eindig aantal oplossingen tegelijk kan beschouwen. Verder bevat ons Markov-model ook overgangskansen $\fun{p}{t,i,j}$: de kans om van een populatie $\PopSet_i$ naar een populatie $\PopSet_j$ te gaan op tijdstip $t$. Indien de waarde van $\fun{p}{i,j,t}$ constant blijft over de tijd $t$ dan spreken we over een \emph{stationair} proces (dit is typisch voor bijvoorbeeld een genetisch algoritme), indien de kansen in de tijd veranderen beschouwen we een \emph{niet-stationair} proces.
+
 \paragraph{}
-Op basis van \algref{metaheuristicGeneral} kunnen we uitspraken doen, zowel over de verwachtte raaktijd wanneer we het zoeken uitbesteden aan \'e\'en processor of uitbesteden aan verschillende processoren die elk onafhankelijk een eigen zoekproces laten lopen. Hiervoor zal men een Markov-model beschouwen. De knopen van dit Markov-model stellen populaties voor: een verzameling van oplossingen. We kunnen hier dus denken aan een verzameling $\PopSet_i$ in \algref{metaheuristicGeneral}. Als beperking stellen we dat de populatie een vaste grootte heeft. Deze beperking is redelijk vermits elke praktische machine een eindig geheugen heeft en dus ook maar een eindig aantal oplossingen tegelijk kan beschouwen. Verder bevat ons Markov-model ook overgangskansen $\fun{p}{t,i,j}$: de kans om van een populatie $\PopSet_i$ naar een populatie $\PopSet_j$ te gaan op tijdstip $t$. Indien de waarde van $\fun{p}{i,j,t}$ constant blijft over de tijd $t$ dan spreken we over een \emph{stationair} proces (dit is typisch voor bijvoorbeeld een genetisch algoritme), indien de kansen in de tijd veranderen beschouwen we een \emph{niet-stationair} proces.
-\paragraph{}
-Indien een populatie een oplossing bevat met een fitness-waarde die kleiner of gelijk is aan de waarde die we zoeken $v$, spreken we over een \emph{doel-populatie}. We kunnen zonder verlies van algemeenheid de populaties zo ordenen dat de populaties $\PopSet_1,\PopSet_2,\ldots,\PopSet_g$ doel-populaties zijn, en de populaties $\PopSet_{g+1},\PopSet_{g+2},\ldots,\PopSet_N$ populaties waar er geen gewenste oplossing in zit. In dat geval kunnen we de transitiematrix $P$ opdelen in submatrices:
+
+Indien een populatie een oplossing bevat met een fitness-waarde die kleiner of gelijk is aan de waarde die we zoeken $v$, spreken we over een \emph{doel-populatie}, in het andere geval zullen we spreken over een \emph{normale populatie}. We kunnen zonder verlies van algemeenheid de populaties zo ordenen dat de populaties $\PopSet_1,\PopSet_2,\ldots,\PopSet_g$ doel-populaties zijn, en de populaties $\PopSet_{g+1},\PopSet_{g+2},\ldots,\PopSet_N$ populaties waar er geen gewenste oplossing in zit. In dat geval kunnen we de transitiematrix $P$ opdelen in submatrices:
 \begin{equation}
 P=\brak{\begin{array}{cc}
 J&H\\
@@ -197,7 +200,7 @@ We zijn vooral ge\"interesseerd in de fractie van Markov-ketens die in stap $t$ 
 \Prob{\theta=t}=\displaystyle\sum_{i=g+1}^{N}\brak{\alpha_{t-1,i}\cdot\displaystyle\sum_{j=1}^{g}\fun{p}{t,i,j}}=\vec{\hat{\alpha}}_{t-1}\cdot B\cdot\onematrix[1\times N-g]
 \eqnlab{exhaust}
 \end{equation}
-Een ander logische gevolg uit \eqnref{oneStepTransition} zijn de transities van ordinaire populaties naar andere ordinaire populaties. De som van de kansen die in deze deelvector aanwezig zijn, is de kans dat we na deze $t$ stappen nog steeds geen acceptabele oplossing gevonden hebben:
+Een ander logische gevolg uit \eqnref{oneStepTransition} zijn de transities van normale populaties naar andere normale populaties. De som van de kansen die in deze deelvector aanwezig zijn, is de kans dat we na deze $t$ stappen nog steeds geen acceptabele oplossing gevonden hebben:
 \begin{eqnarray}
 \vec{\hat{\alpha}}_t=\vec{\hat{\alpha}}_{t-1}\cdot\hat{P}=\vec{\hat{\alpha}}_{t-2}\cdot\hat{P}^2=\ldots=\vec{\hat{\alpha}}_{0}\cdot\hat{P}^t\eqnlab{remainder}\\
 \Prob{\theta>t}=\displaystyle\sum_{i=g+1}^{N}\alpha_{t,i}=\vec{\hat{\alpha}}_t\cdot\onematrix[1\times N-g]=\vec{\hat{\alpha}}_{0}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\eqnlab{nothit}
@@ -209,29 +212,34 @@ Op basis van \eqnref{remainder} en \eqnref{nothit} kunnen we nu de verwachte sta
 \end{equation}
 In deze vergelijking tellen we elke kans $\Prob{\theta=k}$ juist $k$ keer.
 \paragraph{}
-Vermits $\hat{P}$ een matrix met kansen voorstelt is elke element $\hat{p}_{i,j}\geq 0$. We maken verder de assumptie dat we na een arbitrair aantal stappen $m$, vanuit elke ordinaire populatie $\calP_i$ een kans bestaat dat we naar een andere ordinaire populatie $\calP_j$ kunnen migreren. Vermits hierdoor de matrix primitief is, en er minstens \'e\'en rij van $\hat{P}$ niet sommeert naar 1 (anders zouden we nooit in een doel-populatie kunnen terechtkomen), weten we dat de grootste eigenwaarde $\lambda_1<1$. Een theorema stelt:
-\begin{theorem}
-stel de twee grootste eigenwaardes $\lambda_1>\abs{\lambda_2}$ van een $n\times n$ matrix $A$. Dan bestaat er een vaste veelterm $h$ met een graad $0\leq\funm{deg}{h}< n-1$ zodat:
-\begin{equation}
-\forall k=1,2,\ldots:\abs{\displaystyle\frac{\vec{x}\cdot A\cdot\onematrix[1\times n]}{\lambda_1^k}-\vec{x}\cdot\vec{v}}<\fun{h}{k}\cdot\abs{\displaystyle\frac{\lambda_2}{\lambda_1}}^k
-\end{equation}
-Met $\vec{x}$ een willekeurige vector en $\vec{v}$ de rechtse eigenvector van $\lambda_1$.
-\thelab{eigenValuesMatrix}
-\end{theorem}
+Vermits $\hat{P}$ een matrix met kansen voorstelt is elke element $\hat{p}_{i,j}\geq 0$. We maken verder de assumptie dat we na een arbitrair aantal stappen $m$, vanuit elke normale populatie $\calP_i$ een kans bestaat dat we naar een andere normale populatie $\calP_j$ kunnen migreren. Vermits hierdoor de matrix primitief is, en er minstens \'e\'en rij van $\hat{P}$ niet sommeert naar 1 (anders zouden we nooit in een doel-populatie kunnen terechtkomen), weten we dat de grootste eigenwaarde $\ev[\hat{P}]<1$.
+
+% Een theorema stelt:
+% \begin{theorem}
+% stel de twee grootste eigenwaardes $\lambda_1>\abs{\lambda_2}$ van een $n\times n$ matrix $A$. Dan bestaat er een vaste veelterm $h$ met een graad $0\leq\funm{deg}{h}< n-1$ zodat:
+% \begin{equation}
+% \forall k=1,2,\ldots:\abs{\displaystyle\frac{\vec{x}\cdot A\cdot\onematrix[1\times n]}{\lambda_1^k}-\vec{x}\cdot\vec{v}}<\fun{h}{k}\cdot\abs{\displaystyle\frac{\lambda_2}{\lambda_1}}^k
+% \end{equation}
+% Met $\vec{x}$ een willekeurige vector en $\vec{v}$ de rechtse eigenvector van $\lambda_1$.
+% \thelab{eigenValuesMatrix}
+% \end{theorem}
+\paragraph{}
 We kunnen een eigenvector benaderen door een $\onematrix$-vector een groot aantal maal toe te passen op de matrix in kwestie en vervolgens te normaliseren. Daarom kunnen we stellen dat voor een grote $t$:
 \begin{equation}
 \begin{array}{cc}
-\vec{x}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\approx\vec{x}\cdot\lambda_{1,\hat{P}}^t\cdot\vec{v}_{\hat{P}}=\lambda_{1,\hat{P}}^t\cdot\sigma&\mbox{($t\gg 1$)}
+\vec{x}\cdot\hat{P}^t\cdot\onematrix[1\times N-g]\approx\vec{x}\cdot\ev[1,\hat{P}]^t\cdot\evr[\hat{P}]=\ev[1,\hat{P}]^t\cdot\sigma&\mbox{($t\gg 1$)}
 \end{array}
 \eqnlab{longTermAlpha}
 \end{equation}
-Wanneer we als $\vec{x}$ de begindistributie $\vec{\hat{\alpha}}_0$ nemen, kunnen we het dot-product tussen $\vec{\hat{\alpha}}_0$ en $\vec{v}_{\hat{P}}$ defini\"eren als $\sigma$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die ons met behulp van \theref{eigenValuesMatrix} een benaderende waarde voor de gemiddelde raaktijd oplevert:
+Wanneer we als $\vec{x}$ de begindistributie $\vec{\hat{\alpha}}_0$ nemen, kunnen we het dot-product tussen $\vec{\hat{\alpha}}_0$ en $\evr[\hat{P}]$ defini\"eren als $\sigma$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die
+%ons met behulp van \theref{eigenValuesMatrix}
+een benaderende waarde voor de gemiddelde raaktijd oplevert:
 \begin{equation}
 \mean{\theta}\approx 1+\vec{\hat{\alpha}}_0\cdot\onematrix+\sigma\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\lambda_{1,\hat{P}}^i}=1+\vec{\hat{\alpha}}_0\cdot\onematrix+\displaystyle\frac{\sigma\cdot \lambda_{1,\hat{P}}}{1-\lambda_{1,\hat{P}}}
 \end{equation}
 Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnref{longTermAlpha}, kunnen we de eerste termen benaderen door deze vergelijking omgekeerd toe te passen. We stellen dus dat $1+\vec{\hat{\alpha}}_0\cdot\onematrix=\sigma\cdot\brak{1+\lambda^{-1}}$. Dit levert ons een ruwe schatting voor de raaktijd op:
 \begin{equation}
-\mean{\hittime}=\displaystyle\frac{\sigma}{\brak{1-\lambda_{1,\hat{P}}}\cdot\lambda_{1,\hat{P}}}
+\mean{\hittime}\approx\displaystyle\frac{\sigma}{\brak{1-\lambda_{1,\hat{P}}}\cdot\lambda_{1,\hat{P}}}
 \eqnlab{hitTimeSingle}
 \end{equation}
 
@@ -276,46 +284,73 @@ De \emph{speed-up} is bijgevolg gelijk aan:
 \mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{\sigma^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}
 \eqnlab{speedupMetaheuristic}
 \end{equation}
-\subsubsection{Semantiek van parameters $\sigma$ en $\lambda$}
-\paragraph{De factor $\sigma$}
-\eqnref{speedupMetaheuristic} formaliseert de verwachte \emph{speed-up} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal parameters $p$ is het niet triviaal om de overige parameters te interpreteren. $\sigma$ hebben we gedefinieerd als het dot-product tussen $\vec{\hat{a}}_0$ en $\vec{v}_{\hat{P}}$. Dit kunnen we dus interpreteren als een getal proportioneel met de cosinus tussen de hoek tussen beide vectoren ofwel in welke mate de \emph{initi\"ele} distributie gelijkloopt met de distributie van populaties na een lange tijd. Vermits we over (gedeeltelijke) probabiliteitsvectoren spreken, kunnen we bovendien grenzen zetten op $\sigma$:
-\begin{equation}
-0\leq \sigma<1
-\eqnlab{boundsS}
-\end{equation}
-$\sigma$ kan echter nooit gelijk zijn aan $1$ omdat voor elke redelijke kansverdeling er ook een (kleine) kans bestaat dat we meteen in een doel-populatie terechtkomen. Verder spreekt \eqnref{boundsS} over de theoretische grenzen van $\sigma$. In de praktijk verwachten we andere grenzen. Een redelijker scenario is dat alle populaties (zowel doel-populaties als ordinaire populaties) met eenzelfde kans voorkomen. De argumentatie is dat een initi\"ele oplossingsgenerator meestal volgens een uniforme kansverdeling een oplossing $\sol$ uit de oplossingsruimte $\SolSet$ genereert. Vermits populaties een vaste grote hebben is elke populatie ook even waarschijnlijk. In dat geval geldt dus:
-\begin{equation}
-\begin{array}{cc}
-0\leq \sigma\leq\displaystyle\frac{\brak{N-g}}{N\cdot\brak{N-g}}=\displaystyle\frac{1}{N}&\mbox{(uniforme initi\"ele verdeling)}
-\end{array}
-\end{equation}
-\paragraph{De factor $\lambda$}
-$\lambda$ is de grootste eigenwaarde van de matrix $\hat{P}$ en geeft een aanwijzing hoe snel een willekeurige vector naar zijn overeenkomstige eigenvector $\vec{v}$ zal convergeren: bij een $\lambda\rightarrow 1$ verwachten we dat we sneller zullen convergeren. Wat dus uit \eqnref{hitTimeSingle} naar voren komt is dat we op zoek gaan naar een optimale convergentiesnelheid om vanuit de initi\"ele probabiliteitsvector $\vec{\hat{\alpha}}_0$ naar de uiteindelijke waarde $\vec{v}$.
 
-\begin{figure}
-\centering
-\begin{tikzpicture}
-\foreach \a/\x/\y/\t in {0/0/2/Doel,1/5/0/Niet-doel,2/7/0/Initieel,3/9/0/Limiet} {
-  \node (L\a) at (\x,-\y+0.5) {\t};
-}
-\foreach \x/\t in {2/1,3/2,5/g} {
-  \node[draw=black,minimum width=1.5 cm,rectangle] (G\x) at (0,-\x) {$\PopSet_{\t}$};
-}
-\node[draw=black,dashed,fit=(L0) (G2) (G5),minimum width=1.5 cm,inner sep=10pt,rectangle] (GA) {};
-\foreach \x/\t/\u in {0/g+1/1,1/g+2/2,2/g+3/3,4/i/i-g,6/j/j-g,8/N+g/N} {
-  \node[draw=black,minimum width=1.5 cm,rectangle] (P\x) at (5,-\x) {$\PopSet_{\t}$};
-  \node (IP\x) at (P\x -| L2) {$\hat{\alpha}_{\u}$};
-  \node (EP\x) at (P\x -| L3) {$w_{\u}$};
-  \draw[->] (P\x.west) to node[above,midway,sloped]{$1-\hat{v}_{\u}$} (GA);
-}
-\node[draw=black,dashed,fit= (L1) (L3) (P0) (P8),minimum width=1.5 cm,inner sep=10pt,rectangle] (PA) {};
-\coordinate (LC) at ($(PA.south)+(0,-0.25)$);
-\coordinate (TR) at ($(PA.north east)+(0.25,0.25)$);
-\draw[->] (PA.south) -- ++(0,-0.25) to node[above,midway,sloped]{$1-\lambda$} (GA.south |- LC) -- (GA.south);
-\draw[->] (PA.north) -- ++(0,0.25) to node[above,midway,sloped]{$\lambda$} (TR) |- (PA.east);
-\end{tikzpicture}
-\caption{Schematische voorstelling van het effect van de parameters}
-\end{figure}
+\subsubsection{Semantiek van parameters $\sigma$ en $\lambda$}
+
+\eqnref{speedupMetaheuristic} formaliseert de verwachte \emph{speed-up} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal parameters $p$ is het niet triviaal om de overige parameters te interpreteren.
+
+\paragraph{}
+We hebben in \eqnref{longTermAlpha} een benadering geformuleerd voor de distributie over normale populaties. Elke initi\"ele distributie zal bijgevolg altijd convergeren naar een distributie proportioneel aan de sterkste linkse eigenvector $\evl[\hat{P}]$. Eenmaal $\vec{\hat{\alpha}}_t\approx\evl[\hat{P}]$ kunnen we stellen dat:
+\begin{equation}
+\conditional{\vec{\hat{\alpha}}_{t+1}=\vec{\hat{\alpha}}_t\cdot\hat{P}=\lambda\cdot\vec{\hat{\alpha}}_{t}}{$t\gg 1$}
+\end{equation}
+Bijgevolg kunnen we $\lambda$ interpreteren als de kans op lange termijn dat we vanuit een normale populatie de volgende stap niet naar een doel-populatie migreren. Voor elk zinvol probleem kunnen we stellen dat $\lambda$ dicht bij $N-g/N\approx 1$ zal blijven.
+\paragraph{}
+We kunnen ook de rechtse dominante eigenvector $\evr[\hat{P}]$ beschouwen. Vermits eigenvectoren geen karakteristieke lengte hebben, beschouwen we $\dabs{\evr[\hat{P}]}_1=1$. Vermits het volgende geldt:
+\begin{equation}
+\conditional{A^t\approx\ev[A]^t\cdot\evr[A]\cdot\evl[A]^T}{$t\gg1$}
+\end{equation}
+Kunnen we stellen dat de genormaliseerde rechtse eigenvector een probabiliteitsvector is die aangeeft in welke mate populaties $i$ bijdragen tot het behoudt in een normale populatie. Wanneer we dus de $i$-de gewone populatie beschouwen en het $i$-de element van $\evr[\hat{P}]$ is klein, is er een grote kans dat we in een doel-toestand terecht zullen komen.
+
+\paragraph{}
+
+De interpretatie van de rechtse eigenvector vormt de basis voor de interpretatie van $\sigma$. Vermits $\sigma$ het dot-product is tussen de probabiliteitsvector $\vec{\hat{\alpha}}_0$ en $\evr[\hat{P}]$. Dit dot-product is proportioneel met de cosinus van de hoek tussen beide vectoren:
+\begin{equation}
+\fun{\cos}{\vec{\hat{\alpha}}_0,\evr[\hat{P}]}=\displaystyle\frac{\vec{\hat{\alpha}}_0^T\cdot\evr[\hat{P}]}{\dabs{\vec{\hat{\alpha}}_0}\cdot\dabs{\evr[\hat{P}]}}=\displaystyle\frac{\sigma}{\dabs{\vec{\hat{\alpha}}_0}\cdot\dabs{\evr[\hat{P}]}}
+\end{equation}
+Uit de definitie van de cosinus kunnen we bovendien stellen dat:
+\begin{equation}
+\dabs{\evr[\hat{P}]}=\displaystyle\frac{\dabs{\evl[\hat{P}]}}{\fun{\cos}{\evl[\hat{P}],\evr[\hat{P}]}}
+\end{equation}
+Bijgevolg kunnen we stellen dat:
+\begin{equation}
+\sigma=\displaystyle\frac{\dabs{\hat{\alpha}_0}\cdot\fun{\cos}{\vec{\hat{\alpha}}_0,\evr[\hat{P}]}}{\dabs{\evl[\hat{P}]}\cdot\fun{\cos}{\evl[\hat{P}],\evr[\hat{P}]}}
+\end{equation}
+We kunnen dus stellen dat $\sigma$ de ratio is tussen de projecties van enerzijds de initi\"ele kansverdeling $\vec{\hat{\alpha}}$ en anderzijds de linkse eigenvector $\evl[\hat{P}]$ op de rechtse eigenvectoren $\evr[\hat{P}]$. Wanneer $\sigma$ klein is verwachten we sneller een oplossing te vinden. De factoren die hiertoe bijdragen zijn dus:
+\begin{itemize}
+ \item Een kleine $\dabs{\vec{\hat{\alpha}}_0}$. Vermits de som van $\vec{\hat{\alpha}}_0$ neerkomt om de kans dat onze beginpopulatie geen doelpopulatie is, streven we er naar om deze zo laag mogelijk te houden.
+ \item Wanneer $\vec{\hat{\alpha}}_0$ en $\evr[\hat{P}]$ niet gelijkaardig zijn, dan zijn de populaties waar we met een grote kans in starten niet de populaties die met een grote kans naar een normale populatie migreren in de volgende stap. Wanneer de cosinus tussen de vectoren dus klein is, verwachten we in de eerste stappen naar een doel-populatie te migreren.
+ \item Wanneer de linkse en de rechtse eigenvector gelijk zijn, is de matrix $\hat{P}$ symmetrisch. Indien de matrix symmetrisch is, verwachtten we doorgaans minder populaties waarnaar we kunnen migreren, maar vervolgens niet uit kunnen geraken. Indien de matrix immers symmetrisch is, is de kans om vanuit een populatie in een andere populatie te migreren immers dezelfde om er vervolgens terug uit te geraken. Daarom streven we naar een zo minimaal mogelijk hoek tussen de twee.
+\end{itemize}
+
+
+\subsubsection{Minimale Speedup}
+
+Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men meestal verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal val elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{kirkPatrick}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren in \bigoh{n\cdot\fun{\log}{\abs{A}}} (met $n$ het aantal variabelen en $A$ het domein van de variabelen). We kunnen ook een mechanisme voorzien die in dezelfde tijdscomplexiteit voorkomt dat we oplossingen die al gegenereerd werden, nogmaals genereren.
+% \begin{figure}
+% \centering
+% \begin{tikzpicture}
+% \foreach \a/\x/\y/\t in {0/0/2/Doel,1/5/0/Niet-doel,2/7/0/Initieel,3/9/0/Limiet} {
+%   \node (L\a) at (\x,-\y+0.5) {\t};
+% }
+% \foreach \x/\t in {2/1,3/2,5/g} {
+%   \node[draw=black,minimum width=1.5 cm,rectangle] (G\x) at (0,-\x) {$\PopSet_{\t}$};
+% }
+% \node[draw=black,dashed,fit=(L0) (G2) (G5),minimum width=1.5 cm,inner sep=10pt,rectangle] (GA) {};
+% \foreach \x/\t/\u in {0/g+1/1,1/g+2/2,2/g+3/3,4/i/i-g,6/j/j-g,8/N+g/N} {
+%   \node[draw=black,minimum width=1.5 cm,rectangle] (P\x) at (5,-\x) {$\PopSet_{\t}$};
+%   \node (IP\x) at (P\x -| L2) {$\hat{\alpha}_{\u}$};
+%   \node (EP\x) at (P\x -| L3) {$w_{\u}$};
+%   \draw[->] (P\x.west) to node[above,midway,sloped]{$1-\hat{v}_{\u}$} (GA);
+% }
+% \node[draw=black,dashed,fit= (L1) (L3) (P0) (P8),minimum width=1.5 cm,inner sep=10pt,rectangle] (PA) {};
+% \coordinate (LC) at ($(PA.south)+(0,-0.25)$);
+% \coordinate (TR) at ($(PA.north east)+(0.25,0.25)$);
+% \draw[->] (PA.south) -- ++(0,-0.25) to node[above,midway,sloped]{$1-\lambda$} (GA.south |- LC) -- (GA.south);
+% \draw[->] (PA.north) -- ++(0,0.25) to node[above,midway,sloped]{$\lambda$} (TR) |- (PA.east);
+% \end{tikzpicture}
+% \caption{Schematische voorstelling van het effect van de parameters}
+% \end{figure}
 
 % \begin{figure}
 % \begin{tikzpicture}[scale=4,domain=0.1:0.9]
@@ -334,7 +369,7 @@ bent, dan is het ook logisch om het hoofdstuk af te ronden met een
 overzicht ervan. Voor hoofdstukken zoals de inleiding en het
 literatuuroverzicht is dit niet strikt nodig.
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "masterproef"
-%%% End: 
+%%% End:
