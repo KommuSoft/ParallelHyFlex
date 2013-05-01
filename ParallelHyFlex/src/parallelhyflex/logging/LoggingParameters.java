@@ -6,6 +6,7 @@ package parallelhyflex.logging;
  */
 public class LoggingParameters {
 
+    public static final boolean LOG_START = true;
     public static final boolean LOG_MEMORY_SET = true;
     public static final boolean LOG_MEMORY_BETTER = true;
     public static final boolean LOG_NEGOTI_START = true;
@@ -14,6 +15,7 @@ public class LoggingParameters {
     public static final boolean LOG_ADAPHH_EXRC = true;
     public static final boolean LOG_ADAPHH_PARC = true;
     public static final boolean LOG_SEASPA_SETV = true;
+    public static final String LOG_START_TEXT = "ST";
     public static final String LOG_MEMORY_SET_TEXT = "MS %s %s";
     public static final String LOG_MEMORY_BETTER_TEXT = "MB %s %s";
     public static final String LOG_NEGOTI_START_TEXT = "NS";
