@@ -1,0 +1,279 @@
+\documentclass[a1paper,landscape,showframe]{baposter}
+
+
+\usepackage{amssymb,amsmath,slantsc,algorithm2e,bbm,tikz,parcolumns,multicol,booktabs}
+\usepackage[scaled]{helvet}
+
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
+% \makeatletter
+% \newcommand*{\compress}{\@minipagetrue}
+% \makeatother
+% \newenvironment{ilist}{\setdefaultleftmargin{1em}{1em}{}{}{}{}\compress\begin{itemize}\setlength{\itemsep}{0pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\parsep}{0pt}\setlength{\parskip}{0pt}}{\end{itemize}}
+
+\usetikzlibrary{shapes,fit,calc}
+
+% \setlength{\abovedisplayskip}{0cm}
+% \setlength{\belowdisplayskip}{0.0cm}
+% \setlength{\abovedisplayshortskip}{0pt}
+% \setlength{\belowdisplayshortskip}{0pt}
+
+\newcommand{\deflab}[1]{\label{def:#1}}
+\newcommand{\defref}[1]{Definitie \ref{def:#1}}
+\newcommand{\imglab}[1]{\label{fig:#1}}
+\newcommand{\imgref}[1]{Afbeelding \ref{fig:#1}}
+\newcommand{\tbllab}[1]{\label{tbl:#1}}
+\newcommand{\tblref}[1]{Tabel \ref{tbl:#1}}
+\newcommand{\alglab}[1]{\label{alg:#1}}
+\newcommand{\algref}[1]{Algoritme \ref{alg:#1}}
+\newcommand{\eqnlab}[1]{\label{eqn:#1}}
+\newcommand{\eqnref}[1]{Vergelijking (\ref{eqn:#1})}
+\newcommand{\thelab}[1]{\label{the:#1}}
+\newcommand{\theref}[1]{Theorema \ref{the:#1}}
+
+\newtheorem{definition}{Definitie}
+\newtheorem{theorem}{Theorema}
+
+\newcommand{\true}{\ensuremath{\mbox{\textbf{true}}}}
+\newcommand{\fals}{\ensuremath{\mbox{\textbf{false}}}}
+
+\newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\fbrk}[1]{\ensuremath{\left[#1\right]}}
+\newcommand{\tupl}[1]{\ensuremath{\left\langle #1\right\rangle}}
+\newcommand{\accl}[1]{\ensuremath{\left\{ #1\right\}}}
+\newcommand{\abs}[1]{\ensuremath{\left| #1\right|}}
+\newcommand{\dabs}[1]{\ensuremath{\left\| #1\right\|}}
+
+\newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funf}[2]{\ensuremath{#1\fbrk{#2}}}
+\newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
+\newcommand{\funsig}[3]{#1:#2\rightarrow #3}
+\newcommand{\funsigimp}[5]{#1:#2\rightarrow #3:#4\mapsto #5}
+
+\newcommand{\bigoh}[1]{\fun{\mathcal{O}}{#1}}
+
+\newcommand{\xstar}{\ensuremath{x^{\star}}}
+\newcommand{\xdot}{\ensuremath{x^{\circ}}}
+\newcommand{\calXop}{\calX^{\star}}
+
+\newcommand{\argmin}{\ensuremath{\mbox{argmin}}}
+\newcommand{\mean}[2][]{\funf{\EEE_{#1}}{#2}}
+\newcommand{\Prob}[1]{\funf{\Pr}{#1}}
+
+\newcommand{\comp}[1]{\textsc{\mbox{#1}}}
+\newcommand{\prbm}[1]{\textsc{#1}}
+\newcommand{\algo}[1]{\textsc{#1}}
+
+\newcommand{\AAA}{\mathbb{A}}
+\newcommand{\BBB}{\mathbb{B}}
+\newcommand{\CCC}{\mathbb{C}}
+\newcommand{\DDD}{\mathbb{D}}
+\newcommand{\EEE}{\mathbb{E}}
+\newcommand{\FFF}{\mathbb{F}}
+\newcommand{\GGG}{\mathbb{G}}
+\newcommand{\HHH}{\mathbb{H}}
+\newcommand{\III}{\mathbb{I}}
+\newcommand{\JJJ}{\mathbb{J}}
+\newcommand{\KKK}{\mathbb{K}}
+\newcommand{\LLL}{\mathbb{L}}
+\newcommand{\MMM}{\mathbb{M}}
+\newcommand{\NNN}{\mathbb{N}}
+\newcommand{\OOO}{\mathbb{O}}
+\newcommand{\PPP}{\mathbb{P}}
+\newcommand{\QQQ}{\mathbb{Q}}
+\newcommand{\RRR}{\mathbb{R}}
+\newcommand{\SSS}{\mathbb{S}}
+\newcommand{\TTT}{\mathbb{T}}
+\newcommand{\UUU}{\mathbb{U}}
+\newcommand{\VVV}{\mathbb{V}}
+\newcommand{\WWW}{\mathbb{W}}
+\newcommand{\XXX}{\mathbb{X}}
+\newcommand{\YYY}{\mathbb{Y}}
+\newcommand{\ZZZ}{\mathbb{Z}}
+
+\newcommand{\zeromatrix}[1][]{\boldsymbol{0}_{#1}}
+\newcommand{\identitymatrix}[1][]{\boldsymbol{I}_{#1}}
+\newcommand{\onematrix}[1][]{\boldsymbol{1}_{#1}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calO}{\mathcal{O}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calQ}{\mathcal{Q}}
+\newcommand{\calR}{\mathcal{R}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calZ}{\mathcal{Z}}
+
+\newcommand{\BoolSet}{\BBB}
+\newcommand{\NatSet}{\NNN}
+\newcommand{\RealSet}{\RRR}
+\newcommand{\OpProblem}{\Pi}
+\newcommand{\ConfigSet}{\calX}
+\newcommand{\ConfigValSet}{\ConfigSet'}
+\newcommand{\ConfigOpSet}{\ConfigSet^{\star}}
+\newcommand{\sol}{x}
+\newcommand{\bestSol}{\sol^{\star}}
+\newcommand{\goodSol}{\sol^{\circ}}
+\newcommand{\SolSet}{\calS}
+\newcommand{\PopSet}{\calP}
+\newcommand{\hcfun}{c}
+\newcommand{\evalfun}{f}
+\newcommand{\evalfuna}{f'}
+\newcommand{\hittime}{\theta}
+\newcommand{\phittime}{\Theta}
+\newcommand{\neighbr}{\calN}
+\newcommand{\nvar}{n}
+\newcommand{\VarDom}{A}
+\newcommand{\PopChain}{\mathfrak{P}}
+
+
+\usepackage{epstopdf,amsmath,amssymb,algorithm2e}
+\usepackage[dutch]{babel}
+\definecolor{kulblue}{cmyk}{0.65,0.00,0.00,0.35}
+\definecolor{corprgb}{rgb}{0.11,0.56,0.69}
+%\definecolor{lightblue}{rgb}{0.145,0.6666,1}
+
+%\newcommand{\fun}[2]{#1\left(#2\right)}
+%\newcommand{\true}{\mbox{\bf true}}
+
+\begin{document}
+\background{
+	\begin{tikzpicture}[remember picture,overlay]%
+	\draw (current page.north west)+(-1.0em,+1.0em) node[anchor=north west]
+	{\includegraphics[height=7.0em]{sedescrop.pdf}};
+	\end{tikzpicture}
+}
+\pagecolor{kulblue!70}
+\begin{poster}{grid,columns=3,background=user,bgColorOne=kulblue!50,eyecatcher,
+borderColor=kulblue,
+headerColorOne=kulblue,
+headerColorTwo=kulblue,
+headerFontColor=white,
+boxColorOne=kulblue!30,
+boxColorTwo=kulblue!30,
+% Format of textbox
+textborder=rectangle,
+% Format of text header
+headerborder=closed,
+headerheight=0.1\textheight,
+textfont=\small\fontfamily{phv}\selectfont,
+headershape=roundedright,
+headershade=plain,
+headerfont=\Large\bf\fontfamily{phv}\selectfont,%\Large\bf, %Sans Serif
+textfont={\setlength{\parindent}{0cm}},
+boxshade=plain,
+linewidth=2pt
+}{}{\textbf{\fontfamily{phv}\selectfont Parallelle Hyperheuristieken}}{Willem Van Onsem; \emph{promotor:} prof. B. Demoen}{\includegraphics[height=3.0em]{KULEUVEN_CMYK_LOGO.eps}}%\includegraphics[height=4.0em]{DTAI-logo.png}
+
+\headerbox{Optimalisatieprobleem}{name=problem,column=0,row=0}{
+Gegeven een tuple $\left\langle X,c:X\rightarrow\mathbb{B},f:X\rightarrow\mathbb{R}\right\rangle$, zoek een element $x\in X$ zodat $\fun{c}{x}=\true$ en $\fun{f}{x}$ minimaal is.\\
+Algemeen: \comp{NP-hard}, enkele gevallen in \comp{P}
+}
+
+
+
+\headerbox{Metaheuristieken}{name=metaheuristiek,column=1,row=0}{
+Heuristiek met behulp van incrementele Monte-Carlo simulatie.\\
+\begin{algorithm}[H]
+\SetAlgoLined
+$\PopSet_1\leftarrow\funm{init}{\xi}$\;
+$b_1\leftarrow\displaystyle\argmin_{\sol\in\PopSet_1}{\fun{\evalfun}{\sol}}$\;
+\Repeat{het stopcriterium is bereikt}{
+ $\PopSet_{t+1}\leftarrow\funm{nextPopulation}{\PopSet_t,t,\xi}$\;
+ $b_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1}\cup\accl{b_t}}{\fun{\evalfun}{\sol}}$\;
+ $t\leftarrow t+1$\;
+}
+\KwRet{$b_t$}
+\end{algorithm}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt} 
+Verwachte uitvoertijd met $p$ processoren:
+\begin{equation*}
+\mean{\hittime_p}\approx\sigma^p/\lambda^p\cdot\brak{1-\lambda^p}
+\end{equation*}
+met $0\leq\lambda< 1,0<\sigma\sim\mbox{probleem en methode}$\\
+Minimale te realiseren speed-up:
+\begin{equation*}
+\mbox{Speed-up}\geq\brak{p+1}/2
+\end{equation*}
+}
+
+\headerbox{Hyperheuristieken (\emph{HyFlex})}{name=hyperheuristiek,column=0,below=problem}{
+Probleemonafhankelijk optimaliseren: gegeven een set transitiefuncties $h_i:X^{k_i}\rightarrow X$, voer een sequentie van $h_i$'s uit zodat de resulterende populatie optimaal is.\\
+Software-bibliotheek uit 2010: \emph{HyFlex}.\\
+Competitie uit 2011: \emph{CHeSC2011}\\
+winnaar: M. M\i{}s\i{}r (\emph{AdapHH})\\%, \emph{CODeS research group}
+\emph{AdapHH} basis voor parallelle hyperheuristiek
+}
+
+\headerbox{Afdwingbare beperkingen}{name=afdwingbareConstraints,column=2,row=0}{
+Een \emph{afdwingbare beperking} is een 3-tuple: $EC=\left\langle c:X\rightarrow\BBB,c^+:X\rightarrow X, c^-:X\rightarrow X \right\rangle$. Waarbij $c$ kan bepalen of een configuratie $x$ aan de beperking voldoet. $c^+$ een oplossing desbetreffend minimaal kan aanpassen, en $c^-$ een oplossing $x$ kan \emph{tweaken} zodat niet meer aan de beperking voldaan is.\\\\
+Een hypothese-generator (hypogen) is een functie $g_i:X^{l_i}\rightarrow EC$ die gegeven een configuratie een afdwingbare beperking kan genereren.\\\\
+Een beperkingsruimte is een verzameling van alle mogelijke afdwingbare beperkingen die gegenereerd kunnen worden
+}
+
+\headerbox{\emph{ParHyFlex}: een Parallel systeem voor Hyperheuristieken}{name=parhyflex,column=0,span=2,below=metaheuristiek}{
+\begin{multicols}{2}
+\input{parhyflexstructure}
+\setlength{\columnsep}{0.7em}
+\setlength{\columnseprule}{0mm}
+\setlength{\itemsep}{0pt}%
+\setlength{\topsep}{0pt} 
+\setlength{\partopsep}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\parskip}{0pt}
+\vfill\columnbreak
+\emph{Intensification-Diversification} cycle:
+\begin{itemize}
+ \item \emph{uitwisselen} van configuraties
+ \item maar \emph{beperken} van zoekruimtes (per core)
+\end{itemize}
+\emph{Configuraties} over netwerk sturen en \emph{aanpassen} volgens de lokale \emph{zoekruimte}.\\
+Importeren van goede eigenschappen via \emph{kruising heuristieken}.\\
+Eigenschappen van de \textcolor{red!50!black}{\emph{Zoekruimtes}}:
+\begin{itemize}
+ \item \emph{Ervaring} opdoen via \emph{hypogen}
+ \item sets van \emph{positieve} en \emph{negatieve afdwingbare beperkingen}
+ \item \emph{amnesie}: elke hypothese kunnen vergeten
+ \item \emph{onderhandelen}: ervaring uitwisselen en concentratie vermijden
+\end{itemize}
+\end{multicols}}
+
+\headerbox{Resultaten}{name=resultaat,column=2,below=metaheuristiek}{
+Optimaliseren van \prbm{MAX-3SAT} met $10'000$ variabelen en $42'000$ clauses. \emph{ParHyFlex} zoekt 25 seconden naar een oplossing. Voor elke processorconfiguratie werden de experimenten 100 keer herhaald.\\
+\begin{center}
+\small{\begin{tabular}{crrr}
+\toprule
+$p$&Correct&Tijd (s)&top17\% (s)\\\midrule
+1&17\%&9.800&9.800\\
+2&38\%&13.017&6.089\\
+3&43\%&16.192&8.551\\
+4&43\%&20.761&11.153\\
+\bottomrule
+\end{tabular}}
+\end{center}
+}
+
+\end{poster}
+\end{document}

@@ -14,8 +14,10 @@ public class DistributedPushSender<TSolution extends Solution<TSolution>> extend
 
     @Override
     public void sendSolution(int index, TSolution solution) {
+        if(Communication.getCommunication().getSize() > 1) {
         Object[] data = generatePacket(index, solution);
         Communication.nbS(data, 0, 1, MPI.OBJECT, Communication.others()[this.sendIndex], PushSenderBase.SendTag);
         this.sendIndex = (this.sendIndex + 1) % (Communication.getCommunication().getSize() - 1);
+        }
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 import mpi.*;
+import parallelhyflex.logging.LoggingParameters;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Communication {
         MainCommunication = new Communication(args);
         logFile = new File("log" + MainCommunication.rank + ".txt");
         logWriter = new BufferedWriter(new FileWriter(logFile));
+        logFileTime(LoggingParameters.LOG_START,LoggingParameters.LOG_START_TEXT);
     }
 
     public static int[] others() {
