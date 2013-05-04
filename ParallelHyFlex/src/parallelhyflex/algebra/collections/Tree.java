@@ -101,7 +101,7 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new TreeIterator<T>();
+        return new TreeIterator();
     }
 
     @Override
@@ -241,18 +241,41 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
         }
     }
 
-    private class TreeIterator<Q extends Comparable<Q>> implements Iterator<Q> {
+    private class TreeIterator implements Iterator<T> {
 
-        private final Stack<TreeNode<Q>> trace = new Stack<>();
+        private final Stack<TreeNode<T>> trace = new Stack<>();
+        private boolean starting = true;
 
         @Override
         public boolean hasNext() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            return (!trace.isEmpty() || (starting && root != null));
         }
 
         @Override
-        public Q next() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public T next() {
+            if(starting) {
+                starting = false;
+                deep(root);
+            }
+            return splitStack();
+        }
+        
+        private T splitStack () {
+            TreeNode<T> tmp = trace.pop();
+            T data = tmp.getData();
+            deep(tmp.getRight());
+            return data;
+            
+        }
+        
+        private void deep (TreeNode<T> node) {
+            if(node != null) {
+            TreeNode<T> n = node;
+                while(n != null) {
+                    trace.push(n);
+                    n = n.getLeft();
+                }
+            }
         }
 
         @Override
