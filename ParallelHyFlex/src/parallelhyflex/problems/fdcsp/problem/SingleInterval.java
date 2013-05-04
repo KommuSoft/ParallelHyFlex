@@ -17,6 +17,14 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
         this.high = high;
     }
 
+    public int size() {
+        if (this.low <= this.high) {
+            return this.high + 1 - this.low;
+        } else {
+            return 0x00;
+        }
+    }
+
     public boolean contains(int value) {
         return (low <= value && value <= high);
     }
@@ -171,7 +179,7 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
 
     @Override
     public void minusWith(SingleInterval other) throws InductiveBiasException {
-        System.out.print(String.format("SI %s - %s = ",this,other));
+        System.out.print(String.format("SI %s - %s = ", this, other));
         if (other.low > this.low && other.high < this.high) {
             throw new InductiveBiasException();
         } else if (other.low >= this.low && other.low <= this.high) {
@@ -183,6 +191,6 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
     }
 
     boolean canMinus(SingleInterval tr) {
-        return(tr.low <= this.low || tr.high >= this.high);
+        return (tr.low <= this.low || tr.high >= this.high);
     }
 }

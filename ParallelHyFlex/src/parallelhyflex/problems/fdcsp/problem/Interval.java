@@ -43,6 +43,14 @@ public class Interval implements WithSetOperators<Interval, Interval>, Iterable<
         }
     }
 
+    public int size() {
+        int siz = 0;
+        for (SingleInterval si : this.singleIntervals) {
+            siz += si.size();
+        }
+        return siz;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

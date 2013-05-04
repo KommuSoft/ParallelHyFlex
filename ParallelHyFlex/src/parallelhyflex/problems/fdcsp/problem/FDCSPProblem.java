@@ -6,6 +6,4 @@ package parallelhyflex.problems.fdcsp.problem;
  */
 public class FDCSPProblem {
     
-    
-    
 }
