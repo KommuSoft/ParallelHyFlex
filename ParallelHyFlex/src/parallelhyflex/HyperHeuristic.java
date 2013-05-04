@@ -1,5 +1,6 @@
 package parallelhyflex;
 
+import parallelhyflex.problemdependent.problem.ProblemInterface;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;

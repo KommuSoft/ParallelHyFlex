@@ -11,6 +11,10 @@ import java.util.Stack;
 public class Tree<T extends Comparable<T>> implements Collection<T> {
 
     private TreeNode<T> root;
+
+    public TreeNode<T> getRoot() {
+        return root;
+    }
     private int size = 0;
 
     @Override
@@ -103,6 +107,10 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
     public Iterator<T> iterator() {
         return new TreeIterator();
     }
+    
+    /*public Iterator<T> guidedIterator (Guider<T> t) {
+        
+    }*/
 
     @Override
     public Object[] toArray() {

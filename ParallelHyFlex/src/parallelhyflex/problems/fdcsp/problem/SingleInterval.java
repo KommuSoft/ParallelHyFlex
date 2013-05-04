@@ -1,10 +1,13 @@
 package parallelhyflex.problems.fdcsp.problem;
 
+import parallelhyflex.algebra.InductiveBiasException;
+import parallelhyflex.algebra.WithSetOperators;
+
 /**
  *
  * @author kommusoft
  */
-public class SingleInterval implements Comparable<SingleInterval>, Cloneable {
+public class SingleInterval implements Comparable<SingleInterval>, Cloneable, WithSetOperators<SingleInterval,SingleInterval> {
 
     private int low;
     private int high;
@@ -26,7 +29,14 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable {
         return contains(si.low, si.high);
     }
     
-    public boolean notEmpty () {
+    public boolean overlap (SingleInterval si) {
+        return Math.max(this.low,si.low) <= Math.min(this.high,si.high);
+    }
+    public boolean canUnite (SingleInterval si) {
+        return Math.max(this.low,si.low)-1 <= Math.min(this.high,si.high);
+    }
+
+    public boolean notEmpty() {
         return this.high >= this.low;
     }
 
@@ -90,12 +100,80 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable {
     }
 
     @Override
-    protected Object clone() {
+    protected SingleInterval clone() {
         return new SingleInterval(this.low, this.high);
     }
 
     @Override
     public String toString() {
-        return String.format("[%s,%s]", this.low, this.high);
+        if(this.low < this.high) {
+            return String.format("[%s,%s]", this.low, this.high);
+        }
+        else if(this.low == this.high) {
+            return String.format("{%s}",this.low);
+        }
+        else {
+            return "/";
+        }
+    }
+
+    @Override
+    public SingleInterval union(SingleInterval other) throws InductiveBiasException {
+        if (this.canUnite(other)) {
+            return new SingleInterval(Math.min(this.low, other.low), Math.max(this.high, other.high));
+        } else {
+            throw new InductiveBiasException();
+        }
+    }
+
+    @Override
+    public void unionWith(SingleInterval other) throws InductiveBiasException {
+        if (this.canUnite(other)) {
+            this.low = Math.min(this.low, other.low);
+            this.high = Math.max(this.high, other.high);
+        } else {
+            throw new InductiveBiasException();
+        }
+    }
+
+    @Override
+    public SingleInterval intersection(SingleInterval other) {
+        int low = Math.max(this.low, other.low);
+        int high = Math.min(this.high, other.high);
+        if (low <= high) {
+            return new SingleInterval(low, high);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void intersectWith(SingleInterval other) {
+        this.low = Math.max(this.low, other.low);
+        this.high = Math.min(this.high, other.high);
+    }
+
+    @Override
+    public SingleInterval minus(SingleInterval other) throws InductiveBiasException {
+        if (other.low > this.low && other.high < this.high) {
+            throw new InductiveBiasException();
+        } else if (other.low >= this.low && other.low <= this.high) {
+            return new SingleInterval(this.low, other.low - 1);
+        } else if (other.high >= this.low && other.high < this.high) {
+            return new SingleInterval(other.high + 1, this.high);
+        } else {
+            return new SingleInterval(this.low, this.high);
+        }
+    }
+
+    @Override
+    public void minusWith(SingleInterval other) throws InductiveBiasException {
+        if (other.low > this.low && other.high < this.high) {
+            throw new InductiveBiasException();
+        } else if (other.low >= this.low && other.low <= this.high) {
+            this.high = other.low - 1;
+        } else if (other.high >= this.low && other.high < this.high) {
+            this.low = other.high + 1;
+        }
     }
 }

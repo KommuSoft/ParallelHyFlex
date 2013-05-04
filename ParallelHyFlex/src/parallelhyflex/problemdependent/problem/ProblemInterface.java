@@ -1,4 +1,4 @@
-package parallelhyflex;
+package parallelhyflex.problemdependent.problem;
 
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
 import parallelhyflex.problemdependent.solution.Solution;
