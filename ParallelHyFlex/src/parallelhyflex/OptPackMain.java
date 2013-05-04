@@ -1,6 +1,6 @@
 package parallelhyflex;
 
-import parallelhyflex.problems.fdcsp.problem.Interval;
+import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 
 /**
  *
@@ -9,7 +9,7 @@ import parallelhyflex.problems.fdcsp.problem.Interval;
 public class OptPackMain {
     
     public static void main (String[] args) {
-        Interval interval = new Interval(1,2);
+        FiniteIntegerDomain interval = new FiniteIntegerDomain(1,2);
         System.out.println(interval);
         interval.add(5,5);
         System.out.println(interval);
@@ -19,7 +19,7 @@ public class OptPackMain {
         System.out.println(interval);
         interval.add(3,6);
         System.out.println(interval);
-        Interval interval2 = new Interval();
+        FiniteIntegerDomain interval2 = new FiniteIntegerDomain();
         interval.minusWith(interval2);
         System.out.println(interval);
         interval2.add(4,5);

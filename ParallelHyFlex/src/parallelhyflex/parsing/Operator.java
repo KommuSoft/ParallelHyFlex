@@ -1,4 +1,4 @@
-package parallelhyflex.problems.fdcsp.problem.constraints;
+package parallelhyflex.parsing;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ProgrammedConstraints {
+public @interface Operator {
     
-    String operator();
+    String token();
     
 }

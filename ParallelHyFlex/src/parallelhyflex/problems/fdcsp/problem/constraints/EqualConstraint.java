@@ -1,16 +1,17 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
-import parallelhyflex.problems.fdcsp.problem.Interval;
+import parallelhyflex.parsing.Operator;
+import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 
 /**
  *
  * @author kommusoft
  */
-@ProgrammedConstraints(operator="#=")
-public class EqualConstraint implements IntervalDomainConstraint {
+@Operator(token="#=")
+public class EqualConstraint implements IntegerDomainConstraint {
 
     @Override
-    public void reduceDomains(Interval i1, Interval i2) {
+    public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
         i1.intersectWith(i2);
         i2.intersectWith(i1);
     }

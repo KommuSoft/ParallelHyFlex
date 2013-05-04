@@ -1,18 +1,19 @@
 package parallelhyflex.problems.fdcsp.problem;
 
 import parallelhyflex.algebra.InductiveBiasException;
+import parallelhyflex.algebra.WithAddSubNegOperators;
 import parallelhyflex.algebra.WithSetOperators;
 
 /**
  *
  * @author kommusoft
  */
-public class SingleInterval implements Comparable<SingleInterval>, Cloneable, WithSetOperators<SingleInterval, SingleInterval> {
+public final class IntegerInterval implements Comparable<IntegerInterval>, Cloneable, WithSetOperators<IntegerInterval, IntegerInterval>, WithAddSubNegOperators<IntegerInterval, IntegerInterval> {
 
     private int low;
     private int high;
 
-    public SingleInterval(int low, int high) {
+    public IntegerInterval(int low, int high) {
         this.low = low;
         this.high = high;
     }
@@ -33,15 +34,16 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
         return this.low <= low && high <= this.high;
     }
 
-    public boolean contains(SingleInterval si) {
+    public boolean contains(IntegerInterval si) {
         return contains(si.low, si.high);
     }
 
-    public boolean overlap(SingleInterval si) {
+    public boolean overlap(IntegerInterval si) {
         return Math.max(this.low, si.low) <= Math.min(this.high, si.high);
     }
 
-    public boolean canUnite(SingleInterval si) {
+    @Override
+    public boolean canUnion(IntegerInterval si) {
         return Math.max(this.low, si.low) - 1 <= Math.min(this.high, si.high);
     }
 
@@ -82,7 +84,7 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
     }
 
     @Override
-    public int compareTo(SingleInterval t) {
+    public int compareTo(IntegerInterval t) {
         return ((Integer) this.getLow()).compareTo(t.getLow());
     }
 
@@ -102,7 +104,7 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SingleInterval other = (SingleInterval) obj;
+        final IntegerInterval other = (IntegerInterval) obj;
         if (this.low != other.low) {
             return false;
         }
@@ -113,8 +115,8 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
     }
 
     @Override
-    protected SingleInterval clone() {
-        return new SingleInterval(this.low, this.high);
+    protected IntegerInterval clone() {
+        return new IntegerInterval(this.low, this.high);
     }
 
     @Override
@@ -129,17 +131,17 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
     }
 
     @Override
-    public SingleInterval union(SingleInterval other) throws InductiveBiasException {
-        if (this.canUnite(other)) {
-            return new SingleInterval(Math.min(this.low, other.low), Math.max(this.high, other.high));
+    public IntegerInterval union(IntegerInterval other) throws InductiveBiasException {
+        if (this.canUnion(other)) {
+            return new IntegerInterval(Math.min(this.low, other.low), Math.max(this.high, other.high));
         } else {
             throw new InductiveBiasException();
         }
     }
 
     @Override
-    public void unionWith(SingleInterval other) throws InductiveBiasException {
-        if (this.canUnite(other)) {
+    public void unionWith(IntegerInterval other) throws InductiveBiasException {
+        if (this.canUnion(other)) {
             this.low = Math.min(this.low, other.low);
             this.high = Math.max(this.high, other.high);
         } else {
@@ -148,49 +150,102 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
     }
 
     @Override
-    public SingleInterval intersection(SingleInterval other) {
+    public IntegerInterval intersection(IntegerInterval other) {
         int low = Math.max(this.low, other.low);
         int high = Math.min(this.high, other.high);
         if (low <= high) {
-            return new SingleInterval(low, high);
+            return new IntegerInterval(low, high);
         } else {
             return null;
         }
     }
 
     @Override
-    public void intersectWith(SingleInterval other) {
+    public void intersectWith(IntegerInterval other) {
         this.low = Math.max(this.low, other.low);
         this.high = Math.min(this.high, other.high);
     }
 
     @Override
-    public SingleInterval minus(SingleInterval other) throws InductiveBiasException {
-        if (other.low > this.low && other.high < this.high) {
+    public IntegerInterval minus(IntegerInterval other) throws InductiveBiasException {
+        if (!canMinus(other)) {
             throw new InductiveBiasException();
         } else if (other.low >= this.low && other.low <= this.high) {
-            return new SingleInterval(this.low, other.low - 1);
+            return new IntegerInterval(this.low, other.low - 1);
         } else if (other.high >= this.low && other.high < this.high) {
-            return new SingleInterval(other.high + 1, this.high);
+            return new IntegerInterval(other.high + 1, this.high);
         } else {
-            return new SingleInterval(this.low, this.high);
+            return new IntegerInterval(this.low, this.high);
         }
     }
 
     @Override
-    public void minusWith(SingleInterval other) throws InductiveBiasException {
-        System.out.print(String.format("SI %s - %s = ", this, other));
-        if (other.low > this.low && other.high < this.high) {
+    public void minusWith(IntegerInterval other) throws InductiveBiasException {
+        if (!canMinus(other)) {
             throw new InductiveBiasException();
         } else if (other.low >= this.low && other.low <= this.high) {
             this.high = other.low - 1;
         } else if (other.high >= this.low && other.high < this.high) {
             this.low = other.high + 1;
         }
-        System.out.println(this);
     }
 
-    boolean canMinus(SingleInterval tr) {
+    @Override
+    public boolean canIntersect(IntegerInterval tr) {
+        return true;
+    }
+
+    @Override
+    public boolean canMinus(IntegerInterval tr) {
         return (tr.low <= this.low || tr.high >= this.high);
+    }
+
+    @Override
+    public IntegerInterval add(IntegerInterval other) {
+        return new IntegerInterval(this.low + other.low, this.high + other.high);
+    }
+
+    @Override
+    public void addWith(IntegerInterval other) {
+        this.low += other.low;
+        this.high += other.high;
+    }
+
+    @Override
+    public IntegerInterval sub(IntegerInterval other) {
+        return new IntegerInterval(this.low - other.high, this.high - other.low);
+    }
+
+    @Override
+    public void subWith(IntegerInterval other) {
+        this.low -= other.high;
+        this.high -= other.low;
+    }
+
+    @Override
+    public boolean canAdd(IntegerInterval other) {
+        return true;
+    }
+
+    @Override
+    public boolean canSub(IntegerInterval other) {
+        return true;
+    }
+
+    @Override
+    public IntegerInterval neg() {
+        return new IntegerInterval(-this.high, -this.low);
+    }
+
+    @Override
+    public void negWith() {
+        int tmp = -this.low;
+        this.low = -this.high;
+        this.high = tmp;
+    }
+
+    @Override
+    public boolean canNeg() {
+        return true;
     }
 }
