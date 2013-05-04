@@ -1,13 +1,13 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
-import parallelhyflex.parsing.Operator;
+import parallelhyflex.parsing.OperatorAnnotation;
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 
 /**
  *
  * @author kommusoft
  */
-@Operator(token="#>")
+@OperatorAnnotation(token="#>")
 public class GreaterThanConstraint implements IntegerDomainConstraint {
     
     private static final GreaterThanConstraint instance = new GreaterThanConstraint();

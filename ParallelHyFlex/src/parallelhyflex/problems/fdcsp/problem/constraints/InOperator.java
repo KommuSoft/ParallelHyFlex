@@ -1,12 +1,12 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
-import parallelhyflex.parsing.Operator;
+import parallelhyflex.parsing.OperatorAnnotation;
 
 /**
  *
  * @author kommusoft
  */
-@Operator(token = "in")
+@OperatorAnnotation(token = "in")
 public class InOperator {
     
 }
