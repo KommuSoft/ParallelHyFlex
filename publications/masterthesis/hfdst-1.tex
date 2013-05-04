@@ -3,6 +3,24 @@
 
 In de inleiding hebben we de kort de verschillende concepten besproken die in deze thesis een belangrijke rol zullen spelen. In dit hoofdstuk gaan we hier dieper op in: we formaliseren de concepten in definities en geven een kort overzicht van de belangrijkste wetmatigheden rond deze concepten.
 
+\section{Parallelle algoritmes}
+
+\subsection{De belangrijkste parallellisatie paradigma}
+
+Meestal beschouwd men twee verschillende modellen met betrekking tot parallellisatie: \emph{Message Passing Interface (MPI)} en \emph{Tuple Space}. We geven hieronder een korte samenvatting.
+
+\subsubsection{Message Passing Interface}
+
+In het geval van MPI beschouwen we een set \emph{agents}: processoren die onafhankelijk werken op een eigen stuk geheugen. Deze agenten interagerend door het uitwisselen van berichten over een netwerk. Dit hoeft niet te betekenen dat de agenten ook effectief draaien op verschillende machines: men kan op elke \emph{core} van een machine een onafhankelijke agent laten werken en vervolgens de boodschappen laten bezorgen met behulp van de faciliteiten die de meeste besturingssystemen aanbieden.
+
+\paragraph{}
+
+In het geval de \emph{agents} wel degelijk op verschillende machines draaien werken ze meestal volgens een bepaalde \emph{topologie}: een structuur die bepaalt welke machines met elkaar verbonden zijn. Een belangrijk aspect in \emph{MPI} is ``\emph{Group Communication}'': agenten die met een significant gedeelte van de andere agenten tegelijk communiceren. Voor elke topologie zijn er dan ook algoritmes uitgewerkt om het aantal berichten tot een minimum te beperken.
+
+\subsubsection{Tuple Space}
+
+Een \emph{Tuple Space} is een model waarbij agenten kennis hebben van een globale wereld: de \emph{Tuple Space}. Elke agent kan tuples toevoegen in de tuple space en een query op de ruimte uitvoeren. Door tuples toe te voegen die dan door andere agenten worden verwerkt ontstaat er een communicatieprincipe. Een \emph{tuple space} verschilt echter van een \emph{message passing interface} omdat men meer abstractie maakt van de bestemming van een boodschap.
+
 \section{Optimalisatieproblemen}
 
 We beginnen deze sectie met een formele definitie van een optimalisatieprobleem:
@@ -59,10 +77,12 @@ Hoewel de meeste optimalisatieproblemen \comp{NP-hard} zijn, is in een praktisch
 Een heuristiek is een programma die gegeven een optimalisatieprobleem $\OpProblem=\tupl{\ConfigSet,\hcfun,\evalfun}$ een oplossing berekent $\goodSol$ in een redelijke tijd. Doorgaans voldoet deze oplossing aan de harde beperkingen ($\fun{\hcfun}{\goodSol}=\true$) en ligt de voorgestelde oplossing $\goodSol$ in fitness-waarde niet ver van de werkelijke oplossing $\bestSol$.
 \end{definition}
 
-Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op hoe ver de fitness-waarde $\fun{\evalfun}{\goodSol}$ mag afwijken van de optimale fitness-waarde $\fun{\evalfun}{\bestSol}$, al zijn beide voorwaarden niet strikt noodzakelijk. Minsky\cite{minskyHeuristic} schrijf hierover:
-\begin{quote}
-``Hints'', ``suggestions'', or ``rules of thumb'', which only usually work are called heuristics. A program which works on such a basis is called a heuristic program. It is difficult to give a more precise definition of heuristic program - this is to be expected in the light of Turing's demonstration that there is no systematic procedure which can distinguish between algorithms (programs that always work) and programs that do not always work.
-\end{quote}
+Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op hoe ver de fitness-waarde $\fun{\evalfun}{\goodSol}$ mag afwijken van de optimale fitness-waarde $\fun{\evalfun}{\bestSol}$, al zijn beide voorwaarden niet strikt noodzakelijk.
+
+%Minsky\cite{minskyHeuristic} schrijf hierover:
+% \begin{quote}
+% ``Hints'', ``suggestions'', or ``rules of thumb'', which only usually work are called heuristics. A program which works on such a basis is called a heuristic program. It is difficult to give a more precise definition of heuristic program - this is to be expected in the light of Turing's demonstration that there is no systematic procedure which can distinguish between algorithms (programs that always work) and programs that do not always work.
+% \end{quote}
 
 % Een belangrijke theorema stelt dat fout onmogelijk constant kan zijn:
 % \begin{theorem}
@@ -145,11 +165,11 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 
 \emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we tot een betere oplossing komen, wordt de eerste omgeving $\neighbr_1$ opnieuw de actieve omgeving. In het andere geval kiezen we de volgende omgeving $\neighbr_{i+1}$. Op het moment dat alle omgevingen zijn uitgeput beginnen we ook opnieuw bij $\neighbr_1$.%in het geval we een lokaal optimum volgens omgeving $\calN_i$ bereiken, zullen we \emph{local search} toepassen op basis van de volgende omgeving $\calN_i$ in de hoop dat deze omgeving ons naar een betere oplossing zal leiden. In het geval alle
 
-\subsubsection{Tabu Search}
+% \subsubsection{Tabu Search}
+% 
+% \emph{Tabu Search}
 
-\emph{Tabu Search}
-
-\subsection{Classificatie: een kaart voor de ``Zoo van de Metaheuristieken''}
+\subsection{Classificatie in de ``Zoo van de Metaheuristieken''}
 
 \subsection{Modelleren van Metaheuristieken}
 
@@ -364,7 +384,7 @@ De laatste benadering bekomen we omdat de som een veelterm van graad $p+1$ is me
 \mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}\approx\displaystyle\frac{\brak{N+1}\cdot\brak{p+1}}{2\cdot N}\approx\displaystyle\frac{p+1}{2}
 \eqnlab{minimalSpeedupMetaheuristic}
 \end{equation}
-De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt tot dezelfde speed-up.
+De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt tot dezelfde speed-up. Men dient wel op te merken dat er doorgaans betere algoritmen bestaan om naar de oplossing te zoeken dan louter per toeval configuraties te genereren en in dat geval is het meestal minder evident om dezelfde speed-up te realiseren.
 
 \subsubsection{A flaw in the plan: anomalie\"en in het model}
 
@@ -378,38 +398,41 @@ Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellism
 \begin{enumerate}
  \item \emph{Parallel multistart}: de processoren starten met een verschillende initi\"ele populatie en werken min of meer onafhankelijk. Dit is het parallellisatie-paradigma die we in de modellering hebben beschouwd.
  \item \emph{Parallel moves}: we beschouwen \'e\'en globale actieve oplossing. Wanneer we een migratie uitvoeren op een sequenti\"ele implementatie genereren we echter \'e\'en oplossing. We kunnen elke processor een migratie laten uitvoeren en vervolgens uit de verzameling van oplossingen uit de omgeving een nieuwe actieve oplossing kiezen. In het geval we een \emph{Local Search} stap uitvoeren kunnen we bijvoorbeeld ook elke processor een deel van de volledige omgeving laten afzoeken.
- \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. Bij \emph{move acceleration} zijn we in staat om de oplossing op te delen in min of meer onafhankelijke delen. Elke processor past een deel van de configuratie aan en rekent de verandering van fitness-waarde met betrekking tot dit deel uit. Soms is er nog postprocessing vereist om de uiteindelijke fitness-waarde te berekenen.
+ \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. Bij \emph{move acceleration} zijn we in staat om de oplossing op te delen in min of meer onafhankelijke delen. Elke processor past een deel van de configuratie aan en rekent de verandering van fitness-waarde met betrekking tot dit deel uit. Soms is er nog postprocessing vereist om de uiteindelijke fitness-waarde te berekenen. In andere modellen laat men fouten toe in de evaluatiefunctie en berekend men de fitness-waarde maar sporadisch correct.
 \end{enumerate}
 
 \paragraph{}
 In het geval van \emph{Evolutionary Algorithms} ziet men drie bronnen tot parallellisme:
 \begin{enumerate}
  \item \emph{Parallel computation}: meestal dient men operaties toe te passen op een significant deel van de populatie (bijvoorbeeld het berekenen van fitness-waardes). Vermits oplossingen nog steeds onafhankelijke entiteiten zijn, is dit een inherente vorm van parallellisatie.
- \item \emph{Parallel population}: men kan ook op elke processor en onafhankelijke populatie beschouwen waarop de processor dan werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men tussenschotten tussen populaties plaatst een \emph{Island Model}.
+ \item \emph{Parallel population}: men kan ook op elke processor en onafhankelijke populatie beschouwen waarop de processor dan werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{islandModel}.
 \end{enumerate}
 
-\begin{algorithm}[H]
- \SetAlgoLined
- %\KwData{}
- %\KwResult{how to write algorithm with \LaTeX2e }
- \ParFor($i=1\ldots p$){
-  Bereken een initi\"ele set van oplossingen $\PopSet_{1,i}$ en hun fitness-waarde\;
-  $b_{1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{1,i}}{\fun{\evalfun}{\sol}}$\;
- }
- $B_1\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{1,1},b_{1,2},\ldots,b_{1,p}}}{\fun{\evalfun}{\sol}}$\;
- $t\leftarrow1$\;
- \Repeat{het stopcriterium is bereikt}{
-   \ParFor($i=1\ldots p$){
-	Genereer op basis van $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1,i}$ samen met hun fitness-waarde\;
-	$b_{t+1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1,i}\cup\accl{b_{t,i}}}{\fun{\evalfun}{\sol}}$\;
-   }
-   $B_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{t+1,1},b_{t+1,2},\ldots,b_{t+1,p}}}{\fun{\evalfun}{\sol}}$\;
-   $t\leftarrow t+1$\;
- }
- \KwRet{$B_t$}
- \caption{Hoog niveau beschrijving van een parallelle metaheuristiek.}
- \alglab{parallelMetaheuristicGeneral}
-\end{algorithm}
+\paragraph{}
+In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke speed-ups: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{alba4-43} rapporteert bijvoorbeeld een negatieve speed-up door het grote aantal synchronisatiestappen.
+
+% \begin{algorithm}[H]
+%  \SetAlgoLined
+%  \KwData{}
+%  \KwResult{how to write algorithm with \LaTeX2e }
+%  \ParFor($i=1\ldots p$){
+%   Bereken een initi\"ele set van oplossingen $\PopSet_{1,i}$ en hun fitness-waarde\;
+%   $b_{1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{1,i}}{\fun{\evalfun}{\sol}}$\;
+%  }
+%  $B_1\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{1,1},b_{1,2},\ldots,b_{1,p}}}{\fun{\evalfun}{\sol}}$\;
+%  $t\leftarrow1$\;
+%  \Repeat{het stopcriterium is bereikt}{
+%    \ParFor($i=1\ldots p$){
+% 	Genereer op basis van $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1,i}$ samen met hun fitness-waarde\;
+% 	$b_{t+1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1,i}\cup\accl{b_{t,i}}}{\fun{\evalfun}{\sol}}$\;
+%    }
+%    $B_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{t+1,1},b_{t+1,2},\ldots,b_{t+1,p}}}{\fun{\evalfun}{\sol}}$\;
+%    $t\leftarrow t+1$\;
+%  }
+%  \KwRet{$B_t$}
+%  \caption{Hoog niveau beschrijving van een parallelle metaheuristiek.}
+%  \alglab{parallelMetaheuristicGeneral}
+% \end{algorithm}
 
 % \begin{figure}
 % \centering
