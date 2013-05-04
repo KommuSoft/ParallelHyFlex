@@ -119,4 +119,10 @@ public class TreeNode<T extends Comparable<T>> implements Comparable<T> {
             return -1;
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ %s | %s |  %s ]", this.left,this.data,this.right);
+    }
+    
 }

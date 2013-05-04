@@ -13,7 +13,9 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
     private TreeNode<T> root;
     private int size = 0;
 
+    @Override
     public boolean add(T element) {
+        this.size++;
         TreeNode<T> node = new TreeNode<>(element);
         node.recalcHeight();
         this.root = this.add(this.root, node);
@@ -21,37 +23,18 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
     }
 
     private TreeNode<T> add(TreeNode<T> parent, TreeNode<T> element) {
+        if(parent == null) {
+            return element;
+        }
         int cp = element.compareTo(parent);
         if (cp > 0x00) {
-            parent.setLeft(add(parent.getRight(), element));
-        } else if (cp < 0x00) {
             parent.setRight(add(parent.getRight(), element));
+        } else if (cp < 0x00) {
+            parent.setLeft(add(parent.getLeft(), element));
         } else {
             return element;
         }
-        int lh = parent.getLeft().getHeight();
-        int rh = parent.getRight().getHeight();
-        int clh, crh;
-        if (lh - rh <= -2) {
-            clh = parent.getRight().getLeftHeight();
-            crh = parent.getRight().getRightHeight();
-            if (crh > clh) {
-                return rrBalance(parent);
-            } else {
-                return rlBalance(parent);
-            }
-        } else if (lh - rh >= 2) {
-            clh = parent.getLeft().getLeftHeight();
-            crh = parent.getLeft().getRightHeight();
-            if (crh > clh) {
-                return lrBalance(parent);
-            } else {
-                return llBalance(parent);
-            }
-        } else {
-            parent.recalcHeight();
-            return parent;
-        }
+        return rebalance(parent);
     }
 
     private TreeNode<T> singleLeftRotation(TreeNode<T> node) {
@@ -118,7 +101,7 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TreeIterator<T>();
     }
 
     @Override
@@ -133,7 +116,64 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+           T t = (T) o;
+           this.root = remove(this.root,t);
+           return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+    
+    private T popMostRight (TreeNode<T> grandfather, TreeNode<T> parent) {
+        if(parent == null) {
+            return null;
+        }
+        TreeNode<T> rig = parent.getRight();
+        if(rig != null) {
+            T data = popMostRight(parent,rig);
+            parent.recalcHeight();
+            return data;
+        }
+        rig = parent.getLeft();
+        if(rig != null) {
+            grandfather.setRight(rig);
+            grandfather.recalcHeight();
+            return parent.getData();
+        }
+        else {
+            grandfather.setRight(null);
+            grandfather.recalcHeight();
+            return parent.getData();
+        }
+    }
+    
+    public TreeNode<T> remove (TreeNode<T> parent, T val) {
+        if(parent == null) {
+            return null;
+        }
+        int co = parent.compareTo(val);
+        if(co > 0x00) {
+            parent.setLeft(remove(parent.getLeft(),val));
+            return parent;
+        }
+        else if(co < 0x00) {
+            parent.setRight(remove(parent.getRight(),val));
+            return parent;
+        }
+        else {
+            if(parent.getLeft() == null) {
+                return parent.getRight();
+            }
+            else if(parent.getRight() == null) {
+                return parent.getLeft();
+            }
+            else {
+                parent.setData(popMostRight(parent,parent.getLeft()));
+                return parent;
+            }
+        }
     }
 
     @Override
@@ -175,6 +215,32 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
         this.size = 0x00;
     }
 
+    private TreeNode<T> rebalance(TreeNode<T> parent) {
+        int lh = parent.getLeftHeight();
+        int rh = parent.getRightHeight();
+        int clh, crh;
+        if (lh - rh <= -2) {
+            clh = parent.getRight().getLeftHeight();
+            crh = parent.getRight().getRightHeight();
+            if (crh > clh) {
+                return singleRightRotation(parent);
+            } else {
+                return doubleRightRotation(parent);
+            }
+        } else if (lh - rh >= 2) {
+            clh = parent.getLeft().getLeftHeight();
+            crh = parent.getLeft().getRightHeight();
+            if (crh > clh) {
+                return doubleLeftRotation(parent);
+            } else {
+                return singleLeftRotation(parent);
+            }
+        } else {
+            parent.recalcHeight();
+            return parent;
+        }
+    }
+
     private class TreeIterator<Q extends Comparable<Q>> implements Iterator<Q> {
 
         private final Stack<TreeNode<Q>> trace = new Stack<>();
@@ -194,4 +260,10 @@ public class Tree<T extends Comparable<T>> implements Collection<T> {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s",this.root);
+    }
+    
 }
