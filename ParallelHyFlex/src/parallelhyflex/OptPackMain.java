@@ -19,6 +19,16 @@ public class OptPackMain {
         System.out.println(interval);
         interval.add(3,6);
         System.out.println(interval);
+        Interval interval2 = new Interval();
+        interval.minusWith(interval2);
+        System.out.println(interval);
+        interval2.add(4,5);
+        interval.minusWith(interval2);
+        System.out.println(interval);
+        interval2.add(3,5);
+        interval.minusWith(interval2);
+        System.out.println(String.format("minus %s",interval2));
+        System.out.println(interval);
     }
     
 }

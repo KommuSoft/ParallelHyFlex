@@ -7,7 +7,7 @@ import parallelhyflex.algebra.WithSetOperators;
  *
  * @author kommusoft
  */
-public class SingleInterval implements Comparable<SingleInterval>, Cloneable, WithSetOperators<SingleInterval,SingleInterval> {
+public class SingleInterval implements Comparable<SingleInterval>, Cloneable, WithSetOperators<SingleInterval, SingleInterval> {
 
     private int low;
     private int high;
@@ -28,12 +28,17 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
     public boolean contains(SingleInterval si) {
         return contains(si.low, si.high);
     }
-    
-    public boolean overlap (SingleInterval si) {
-        return Math.max(this.low,si.low) <= Math.min(this.high,si.high);
+
+    public boolean overlap(SingleInterval si) {
+        return Math.max(this.low, si.low) <= Math.min(this.high, si.high);
     }
-    public boolean canUnite (SingleInterval si) {
-        return Math.max(this.low,si.low)-1 <= Math.min(this.high,si.high);
+
+    public boolean canUnite(SingleInterval si) {
+        return Math.max(this.low, si.low) - 1 <= Math.min(this.high, si.high);
+    }
+
+    public boolean empty() {
+        return this.high < this.low;
     }
 
     public boolean notEmpty() {
@@ -106,13 +111,11 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
 
     @Override
     public String toString() {
-        if(this.low < this.high) {
+        if (this.low < this.high) {
             return String.format("[%s,%s]", this.low, this.high);
-        }
-        else if(this.low == this.high) {
-            return String.format("{%s}",this.low);
-        }
-        else {
+        } else if (this.low == this.high) {
+            return String.format("{%s}", this.low);
+        } else {
             return "/";
         }
     }
@@ -168,6 +171,7 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
 
     @Override
     public void minusWith(SingleInterval other) throws InductiveBiasException {
+        System.out.print(String.format("SI %s - %s = ",this,other));
         if (other.low > this.low && other.high < this.high) {
             throw new InductiveBiasException();
         } else if (other.low >= this.low && other.low <= this.high) {
@@ -175,5 +179,10 @@ public class SingleInterval implements Comparable<SingleInterval>, Cloneable, Wi
         } else if (other.high >= this.low && other.high < this.high) {
             this.low = other.high + 1;
         }
+        System.out.println(this);
+    }
+
+    boolean canMinus(SingleInterval tr) {
+        return(tr.low <= this.low || tr.high >= this.high);
     }
 }
