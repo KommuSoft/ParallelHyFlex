@@ -1,4 +1,4 @@
-package parallelhyflex.problems.fdcsp.problem.constraints;
+package parallelhyflex.problems.fdcsp.problem;
 
 import parallelhyflex.parsing.OperatorAnnotation;
 

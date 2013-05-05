@@ -1,7 +1,7 @@
 package parallelhyflex;
 
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
-import parallelhyflex.problems.fdcsp.problem.constraints.DomainToken;
+import parallelhyflex.problems.fdcsp.problem.DomainToken;
 
 /**
  *

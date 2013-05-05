@@ -1,4 +1,4 @@
-package parallelhyflex.problems.fdcsp.problem.constraints;
+package parallelhyflex.problems.fdcsp.problem;
 
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;

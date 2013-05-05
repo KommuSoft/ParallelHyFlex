@@ -14,5 +14,6 @@ import java.lang.annotation.Target;
 public @interface TokenAnnotation {
     
     String token();
+    double priority() default 1.0d;
     
 }
