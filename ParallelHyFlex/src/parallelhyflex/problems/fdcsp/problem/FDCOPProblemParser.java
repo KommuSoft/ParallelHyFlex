@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
+import parallelhyflex.parsing.ParsingException;
+import parallelhyflex.parsing.grammar.OperatorBinder;
 import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.parsing.tokenizing.TokenParser;
 
@@ -25,15 +27,13 @@ public class FDCOPProblemParser {
         return tokenParser;
     }
     
-    public FDCOPProblemParser parse (InputStream stream) {
+    public FDCOPProblemParser parse (InputStream stream) throws ParsingException {
         LinkedList<Object> tokenStream = new LinkedList<>();
-        for(Object t : getTokenParser().getIterable(stream)) {
-            tokenStream.add(t);
-            System.out.println(t);
-        }
+        OperatorBinder ob = new OperatorBinder();
+        ob.bind(getTokenParser().getIterable(stream));
         return null;
     }
-    public FDCOPProblemParser parse (String text) throws IOException {
+    public FDCOPProblemParser parse (String text) throws IOException, ParsingException {
         InputStream is = new ByteArrayInputStream(text.getBytes());
         FDCOPProblemParser result = parse(is);
         is.close();

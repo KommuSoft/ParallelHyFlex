@@ -1,6 +1,7 @@
 package parallelhyflex;
 
 import java.io.IOException;
+import parallelhyflex.parsing.ParsingException;
 import parallelhyflex.problems.fdcsp.problem.FDCOPProblemParser;
 
 /**
@@ -9,7 +10,7 @@ import parallelhyflex.problems.fdcsp.problem.FDCOPProblemParser;
  */
 public class OptPackMain {
     
-    public static void main (String[] args) throws IOException {
+    public static void main (String[] args) throws IOException, ParsingException {
         FDCOPProblemParser pp = new FDCOPProblemParser();
         pp.parse("X in [1,4]");
         /*FiniteIntegerDomain interval = new FiniteIntegerDomain(1,2);

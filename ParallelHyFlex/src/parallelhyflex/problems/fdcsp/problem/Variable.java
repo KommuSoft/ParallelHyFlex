@@ -49,7 +49,12 @@ public class Variable extends TokenBase<Variable> {
 
     @Override
     public String toString() {
-        return "_G" + id;
+        if(this.name == null) {
+            return "_G" + id;
+        }
+        else {
+            return this.name;
+        }
     }
 
     /**

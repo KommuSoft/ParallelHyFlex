@@ -22,4 +22,8 @@ public interface Operator<T, TL extends Token, TR extends Token> extends Token<T
     boolean canSetRight(TR token);
 
     void process();
+
+    double getOperatorPriority();
+
+    OperatorType getOperatorType();
 }

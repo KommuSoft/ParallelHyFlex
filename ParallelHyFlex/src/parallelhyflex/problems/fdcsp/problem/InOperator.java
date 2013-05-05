@@ -36,6 +36,7 @@ public class InOperator extends OperatorBase<InOperator,Token,Token> {
 
     @Override
     public void process() {
+        System.out.println("Processed in");
         ((Variable) this.getLeft()).setDomain((FiniteIntegerDomain) this.getRight());
     }
 }

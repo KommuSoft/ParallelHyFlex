@@ -1,4 +1,4 @@
-package parallelhyflex.communication;
+package parallelhyflex.algebra.collections;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -55,6 +55,7 @@ public class MultiThreadedList<TElement> implements List<TElement> {
     public boolean add(TElement e) {
         MultiThreadedListNode<TElement> element = new MultiThreadedListNode<TElement>(e);
         if (this.size() > 0) {
+            element.setPrevious(this.last);
             this.last.setNext(element);
             this.last = element;
         } else {
@@ -72,7 +73,12 @@ public class MultiThreadedList<TElement> implements List<TElement> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (Object obj : c) {
+            if (!this.contains(obj)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -86,17 +92,64 @@ public class MultiThreadedList<TElement> implements List<TElement> {
 
     @Override
     public boolean addAll(int index, Collection<? extends TElement> c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Removes an element by its node in constant time
+     *
+     * @param node The node containing the element that should be removed
+     * @pre The node must be part of the MultiThreadedList or null, if not the
+     * list will become corrupt
+     */
+    public void removeNode(MultiThreadedListNode<TElement> node) {
+        if (node != null) {
+            MultiThreadedListNode<TElement> prev = node.getPrevious();
+            MultiThreadedListNode<TElement> next = node.getNext();
+            if (prev != null) {
+                prev.setNext(next);
+            } else {
+                this.first = next;
+            }
+            if (next != null) {
+                next.setPrevious(prev);
+            } else {
+                this.last = prev;
+            }
+            this.size--;
+        }
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean ch = false;
+        if (!c.isEmpty()) {
+            for (MultiThreadedListNode<TElement> elem = this.first, prev = null, nxt; elem != null; elem = nxt) {
+                nxt = elem.getNext();
+                if (c.contains(elem.getElement())) {
+                    ch = true;
+                    if (prev != null) {
+                        prev.setNext(nxt);
+                    } else {
+                        this.first = nxt;
+                    }
+                    if (nxt != null) {
+                        nxt.setPrevious(prev);
+                    } else {
+                        this.last = prev;
+                    }
+                    size--;
+                } else {
+                    prev = elem;
+                }
+            }
+        }
+        return ch;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.removeAll(new OppositeCollection(c));
     }
 
     @Override
@@ -108,10 +161,7 @@ public class MultiThreadedList<TElement> implements List<TElement> {
 
     @Override
     public TElement get(int index) {
-        MultiThreadedListNode<TElement> elem = this.first;
-        for (int i = 0; elem != null && i < index; i++) {
-            elem = elem.getNext();
-        }
+        MultiThreadedListNode<TElement> elem = this.getNode(index);
         if (elem != null) {
             return elem.getElement();
         } else {
@@ -119,12 +169,25 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         }
     }
 
-    @Override
-    public TElement set(int index, TElement element) {
+    public MultiThreadedListNode<TElement> getNode(int index) {
         MultiThreadedListNode<TElement> elem = this.first;
         for (int i = 0; elem != null && i < index; i++) {
             elem = elem.getNext();
         }
+        return elem;
+    }
+
+    public MultiThreadedListNode<TElement> getFirstNode() {
+        return this.first;
+    }
+
+    public MultiThreadedListNode<TElement> getLastNode() {
+        return this.last;
+    }
+
+    @Override
+    public TElement set(int index, TElement element) {
+        MultiThreadedListNode<TElement> elem = this.getNode(index);
         if (elem != null) {
             TElement val = elem.getElement();
             elem.setElement(element);
@@ -136,12 +199,45 @@ public class MultiThreadedList<TElement> implements List<TElement> {
 
     @Override
     public void add(int index, TElement element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        MultiThreadedListNode<TElement> elem = new MultiThreadedListNode<>(element);
+        if (index == 0) {
+            if (this.size == 0) {
+                this.last = elem;
+            }
+            this.first = elem;
+            elem.setNext(this.first);
+        } else {
+            MultiThreadedListNode<TElement> prev = this.getNode(index - 1);
+            elem.setNext(prev.getNext());
+            if (index == size) {
+                this.last = elem;
+            }
+            prev.setNext(elem);
+        }
+        this.size++;
     }
 
     @Override
     public TElement remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TElement data = null;
+        if (index == 0) {
+            if (this.size > 0) {
+                if (this.size == 1) {
+                    this.last = null;
+                }
+                data = this.first.getElement();
+                this.first = this.first.getNext();
+            }
+            this.size--;
+        } else if (index < size) {
+            MultiThreadedListNode<TElement> prev = this.getNode(index - 1);
+            if (index == size - 1) {
+                this.last = prev;
+            }
+            prev.setNext(prev.getNext().getNext());
+            this.size--;
+        }
+        return data;
     }
 
     @Override
@@ -187,16 +283,15 @@ public class MultiThreadedList<TElement> implements List<TElement> {
     public List<TElement> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public String toString () {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[ ");
-        for(TElement t : this) {
-            if(t == null) {
+        for (TElement t : this) {
+            if (t == null) {
                 sb.append("null");
-            }
-            else {
+            } else {
                 sb.append(t.toString());
             }
             sb.append(" ");
@@ -208,6 +303,7 @@ public class MultiThreadedList<TElement> implements List<TElement> {
     private class MultiThreadedListIterator<T> implements Iterator<T> {
 
         private MultiThreadedListNode<T> current;
+        private MultiThreadedListNode<T> prev;
 
         public MultiThreadedListIterator(MultiThreadedListNode<T> current) {
             this.current = new MultiThreadedListNode(null);

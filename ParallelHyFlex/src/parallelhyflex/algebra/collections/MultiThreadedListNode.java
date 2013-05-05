@@ -1,4 +1,4 @@
-package parallelhyflex.communication;
+package parallelhyflex.algebra.collections;
 
 /**
  *
@@ -7,7 +7,7 @@ package parallelhyflex.communication;
 public class MultiThreadedListNode<TElement> {
     
     private TElement element;
-    private MultiThreadedListNode<TElement> next = null;
+    private MultiThreadedListNode<TElement> next = null, previous = null;
     
     public MultiThreadedListNode (TElement element) {
         this.element = element;
@@ -37,8 +37,22 @@ public class MultiThreadedListNode<TElement> {
     /**
      * @param next the next to set
      */
-    public void setNext(MultiThreadedListNode<TElement> next) {
+    void setNext(MultiThreadedListNode<TElement> next) {
         this.next = next;
+    }
+
+    /**
+     * @return the previous
+     */
+    public MultiThreadedListNode<TElement> getPrevious() {
+        return previous;
+    }
+
+    /**
+     * @param previous the previous to set
+     */
+    void setPrevious(MultiThreadedListNode<TElement> previous) {
+        this.previous = previous;
     }
     
 }

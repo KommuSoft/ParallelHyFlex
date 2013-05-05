@@ -10,6 +10,16 @@ public abstract class OperatorBase<T, TL extends Token, TR extends Token> extend
     private TR right = null;
 
     @Override
+    public double getOperatorPriority() {
+        return this.getClass().getAnnotation((Class<OperatorAnnotation>) OperatorAnnotation.class).operatorPriority();
+    }
+
+    @Override
+    public OperatorType getOperatorType() {
+        return this.getClass().getAnnotation((Class<OperatorAnnotation>) OperatorAnnotation.class).operatorType();
+    }
+
+    @Override
     public void setLeft(TL left) throws ParsingException {
         if (this.canSetLeft(left)) {
             this.left = left;
