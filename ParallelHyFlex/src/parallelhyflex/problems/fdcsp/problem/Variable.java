@@ -1,25 +1,25 @@
 package parallelhyflex.problems.fdcsp.problem;
 
 import parallelhyflex.parsing.TokenAnnotation;
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.parsing.TokenBase;
 
 /**
  *
  * @author kommusoft
  */
-@TokenAnnotation(token="[A-Z][A-Za-z]*")
-public class VariableToken {
+@TokenAnnotation(token="[A-Z][A-Za-z]*",priority=0.5d)
+public class Variable extends TokenBase<Variable> {
     
     private String name;
     private int id;
     private static int idDispatcher = 0;
     private FiniteIntegerDomain domain;
     
-    public VariableToken () {
+    public Variable () {
         this.id = idDispatcher++;
         this.name = null;
     }
-    public VariableToken (String name) {
+    public Variable (String name) {
         this();
         this.name = name;
     }
@@ -39,7 +39,7 @@ public class VariableToken {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VariableToken other = (VariableToken) obj;
+        final Variable other = (Variable) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -77,6 +77,11 @@ public class VariableToken {
      */
     protected void setDomain(FiniteIntegerDomain domain) {
         this.domain = domain;
+    }
+
+    @Override
+    public Variable generate(String variable) {
+        return new Variable(variable);
     }
     
 }

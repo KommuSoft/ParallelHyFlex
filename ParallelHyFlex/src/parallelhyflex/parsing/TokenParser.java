@@ -10,17 +10,43 @@ import java.util.regex.Pattern;
  *
  * @author kommusoft
  */
-public class TokenParser<StreamType,TokenType extends Token<? extends StreamType>> {
+public class TokenParser<StreamType> {
     
     private final TreeSet<Token<? extends StreamType>> tokens = new TreeSet<>(TokenPriorityComparator.getInstance());
-    private static final Pattern word = Pattern.compile("[^ ]+");
+    private static final Pattern word = Pattern.compile("[^ \n\t]+");
     
     public void addToken (Token<? extends StreamType> token) {
         this.tokens.add(token);
     }
     
-    public Iterator<StreamType> getIterator (InputStream stream) {
-        return new TokenParserIterator(stream);
+    public void addToken (Token<? extends StreamType>... token) {
+        for(Token<? extends StreamType> tok : token) {
+            this.addToken(tok);
+        }
+    }
+    public void addToken (Iterable<Token<? extends StreamType>> token) {
+        for(Token<? extends StreamType> tok : token) {
+            this.addToken(tok);
+        }
+    }
+    
+    public Iterable<StreamType> getIterable (InputStream stream) {
+        return new TokenParserIterable(stream);
+    }
+    
+    private class TokenParserIterable implements Iterable<StreamType> {
+        
+        private final InputStream stream;
+        
+        public TokenParserIterable (InputStream stream) {
+            this.stream = stream;
+        }
+
+        @Override
+        public Iterator<StreamType> iterator() {
+            return new TokenParserIterator(this.stream);
+        }
+        
     }
     
     private class TokenParserIterator implements Iterator<StreamType> {

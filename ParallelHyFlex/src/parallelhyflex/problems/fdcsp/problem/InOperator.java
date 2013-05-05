@@ -1,12 +1,24 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import parallelhyflex.parsing.OperatorAnnotation;
+import parallelhyflex.parsing.TokenAnnotation;
+import parallelhyflex.parsing.TokenBase;
 
 /**
  *
  * @author kommusoft
  */
-@OperatorAnnotation(token = "in")
-public class InOperator {
+@TokenAnnotation(token = "in", priority=0.0d)
+public class InOperator extends TokenBase<InOperator> {
+    
+    private static final InOperator instance = new InOperator();
+    
+    public static InOperator getInstance () {
+        return instance;
+    }
+
+    @Override
+    public InOperator generate(String variable) {
+        return this;
+    }
     
 }

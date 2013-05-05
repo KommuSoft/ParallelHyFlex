@@ -1,7 +1,7 @@
 package parallelhyflex;
 
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
-import parallelhyflex.problems.fdcsp.problem.DomainToken;
+import java.io.IOException;
+import parallelhyflex.problems.fdcsp.problem.FDCOPProblemParser;
 
 /**
  *
@@ -9,8 +9,10 @@ import parallelhyflex.problems.fdcsp.problem.DomainToken;
  */
 public class OptPackMain {
     
-    public static void main (String[] args) {
-        FiniteIntegerDomain interval = new FiniteIntegerDomain(1,2);
+    public static void main (String[] args) throws IOException {
+        FDCOPProblemParser pp = new FDCOPProblemParser();
+        pp.parse("X in [1,4]");
+        /*FiniteIntegerDomain interval = new FiniteIntegerDomain(1,2);
         System.out.println(interval);
         interval.add(5,5);
         System.out.println(interval);
@@ -31,7 +33,7 @@ public class OptPackMain {
         System.out.println(String.format("minus %s",interval2));
         System.out.println(interval);
         DomainToken dt = new DomainToken();
-        System.out.println(dt.generate("[1,2]u[7,9]u{4}u[5,17]"));
+        System.out.println(dt.generate("[1,2]u[7,9]u{4}u[5,17]"));*/
     }
     
 }
