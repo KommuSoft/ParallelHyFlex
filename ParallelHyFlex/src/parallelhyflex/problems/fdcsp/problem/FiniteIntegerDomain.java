@@ -70,18 +70,20 @@ public class FiniteIntegerDomain implements WithSetOperators<FiniteIntegerDomain
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("( ");
         boolean union = false;
         for (IntegerInterval si : singleIntervals) {
             if (union) {
-                sb.append(String.format(" u %s", si));
+                sb.append(String.format("u%s", si));
             } else {
                 sb.append(si);
                 union = true;
             }
         }
-        sb.append(" )");
         return sb.toString();
+    }
+    
+    public void add(int value) {
+        this.add(value,value);
     }
     
     public void add(int low, int high) {

@@ -1,6 +1,7 @@
 package parallelhyflex;
 
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.constraints.DomainToken;
 
 /**
  *
@@ -29,6 +30,8 @@ public class OptPackMain {
         interval.minusWith(interval2);
         System.out.println(String.format("minus %s",interval2));
         System.out.println(interval);
+        DomainToken dt = new DomainToken();
+        System.out.println(dt.generate("[1,2]u[7,9]u{4}u[5,17]"));
     }
     
 }

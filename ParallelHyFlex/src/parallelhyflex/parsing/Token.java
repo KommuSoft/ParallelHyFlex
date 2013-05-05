@@ -6,5 +6,5 @@ import parallelhyflex.algebra.Generator;
  *
  * @author kommusoft
  */
-public interface Token<T> extends Generator<T, String> {
+public interface Token<T> extends Generator<String,T> {
 }
