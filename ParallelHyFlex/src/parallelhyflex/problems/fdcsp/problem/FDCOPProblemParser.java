@@ -4,8 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
-import parallelhyflex.parsing.Token;
-import parallelhyflex.parsing.TokenParser;
+import parallelhyflex.parsing.tokenizing.Token;
+import parallelhyflex.parsing.tokenizing.TokenParser;
 
 /**
  *

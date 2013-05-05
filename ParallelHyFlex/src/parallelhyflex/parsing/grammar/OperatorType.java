@@ -1,4 +1,4 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.grammar;
 
 /**
  *

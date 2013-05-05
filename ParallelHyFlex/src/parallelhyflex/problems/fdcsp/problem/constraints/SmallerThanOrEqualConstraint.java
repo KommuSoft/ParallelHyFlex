@@ -1,6 +1,6 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
-import parallelhyflex.parsing.TokenAnnotation;
+import parallelhyflex.parsing.tokenizing.TokenAnnotation;
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 
 /**

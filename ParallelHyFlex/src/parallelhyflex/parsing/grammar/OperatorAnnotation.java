@@ -1,4 +1,4 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.grammar;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

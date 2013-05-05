@@ -1,4 +1,4 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.tokenizing;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

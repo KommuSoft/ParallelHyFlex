@@ -1,9 +1,9 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import parallelhyflex.parsing.OperatorAnnotation;
-import parallelhyflex.parsing.OperatorBase;
-import parallelhyflex.parsing.Token;
-import parallelhyflex.parsing.TokenAnnotation;
+import parallelhyflex.parsing.grammar.OperatorAnnotation;
+import parallelhyflex.parsing.grammar.OperatorBase;
+import parallelhyflex.parsing.tokenizing.Token;
+import parallelhyflex.parsing.tokenizing.TokenAnnotation;
 
 /**
  *
@@ -21,7 +21,7 @@ public class InOperator extends OperatorBase<InOperator,Token,Token> {
 
     @Override
     public InOperator generate(String variable) {
-        return this;
+        return new InOperator();
     }
 
     @Override

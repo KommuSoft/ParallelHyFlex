@@ -1,4 +1,4 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.tokenizing;
 
 import java.util.regex.Pattern;
 

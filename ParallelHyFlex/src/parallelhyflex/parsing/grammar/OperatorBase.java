@@ -1,4 +1,8 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.grammar;
+
+import parallelhyflex.parsing.ParsingException;
+import parallelhyflex.parsing.tokenizing.Token;
+import parallelhyflex.parsing.tokenizing.TokenBase;
 
 public abstract class OperatorBase<T, TL extends Token, TR extends Token> extends TokenBase<T> implements Operator<T, TL, TR> {
 

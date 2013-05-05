@@ -1,7 +1,7 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import parallelhyflex.parsing.TokenAnnotation;
-import parallelhyflex.parsing.TokenBase;
+import parallelhyflex.parsing.tokenizing.TokenAnnotation;
+import parallelhyflex.parsing.tokenizing.TokenBase;
 
 /**
  *

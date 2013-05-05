@@ -1,4 +1,7 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.grammar;
+
+import parallelhyflex.parsing.ParsingException;
+import parallelhyflex.parsing.tokenizing.Token;
 
 /**
  *

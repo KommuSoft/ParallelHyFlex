@@ -1,4 +1,4 @@
-package parallelhyflex.parsing;
+package parallelhyflex.parsing.tokenizing;
 
 import java.io.InputStream;
 import java.util.Iterator;

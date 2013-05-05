@@ -16,8 +16,8 @@ import parallelhyflex.algebra.WithSetOperators;
 import parallelhyflex.algebra.collections.ItemIterable;
 import parallelhyflex.communication.ReadWriteable;
 import parallelhyflex.communication.ReadableGenerator;
-import parallelhyflex.parsing.TokenAnnotation;
-import parallelhyflex.parsing.TokenBase;
+import parallelhyflex.parsing.tokenizing.TokenAnnotation;
+import parallelhyflex.parsing.tokenizing.TokenBase;
 
 /**
  *
