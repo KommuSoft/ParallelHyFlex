@@ -13,12 +13,12 @@ import parallelhyflex.parsing.TokenParser;
  */
 public class FDCOPProblemParser {
     
-    private static TokenParser tokenParser;
+    private static TokenParser<Token> tokenParser;
     
     public static TokenParser getTokenParser () {
         if(tokenParser == null) {
             tokenParser = new TokenParser();
-            tokenParser.addToken(new DomainToken());
+            tokenParser.addToken(new FiniteIntegerDomain());
             tokenParser.addToken(new InOperator());
             tokenParser.addToken(new Variable());
         }

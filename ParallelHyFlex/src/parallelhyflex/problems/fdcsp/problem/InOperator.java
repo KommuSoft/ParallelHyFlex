@@ -1,7 +1,9 @@
 package parallelhyflex.problems.fdcsp.problem;
 
+import parallelhyflex.parsing.OperatorAnnotation;
+import parallelhyflex.parsing.OperatorBase;
+import parallelhyflex.parsing.Token;
 import parallelhyflex.parsing.TokenAnnotation;
-import parallelhyflex.parsing.TokenBase;
 
 /**
  *
@@ -9,7 +11,7 @@ import parallelhyflex.parsing.TokenBase;
  */
 @TokenAnnotation(token = "in")
 @OperatorAnnotation()
-public class InOperator extends TokenBase<InOperator> {
+public class InOperator extends OperatorBase<InOperator,Token,Token> {
 
     private static final InOperator instance = new InOperator();
 
@@ -20,5 +22,20 @@ public class InOperator extends TokenBase<InOperator> {
     @Override
     public InOperator generate(String variable) {
         return this;
+    }
+
+    @Override
+    public boolean canSetLeft(Token token) {
+        return(token instanceof Variable);
+    }
+
+    @Override
+    public boolean canSetRight(Token token) {
+        return(token instanceof FiniteIntegerDomain);
+    }
+
+    @Override
+    public void process() {
+        ((Variable) this.getLeft()).setDomain((FiniteIntegerDomain) this.getRight());
     }
 }
