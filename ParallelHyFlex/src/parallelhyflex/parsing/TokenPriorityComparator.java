@@ -16,7 +16,13 @@ public class TokenPriorityComparator implements Comparator<Token> {
 
     @Override
     public int compare(Token t1, Token t2) {
-        return ((Double) t1.getPriority()).compareTo(t2.getPriority());
+        int cp = ((Double) t1.getPriority()).compareTo(t2.getPriority());
+        if(cp == 0x00) {
+            return t1.getClass().getCanonicalName().compareTo(t2.getClass().getCanonicalName());
+        }
+        else {
+            return cp;
+        }
     }
     
 }

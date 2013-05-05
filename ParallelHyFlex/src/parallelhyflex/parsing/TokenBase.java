@@ -13,7 +13,7 @@ public abstract class TokenBase<T> implements Token<T> {
 
     @Override
     public double getPriority() {
-        return this.getClass().getAnnotation((Class<TokenAnnotation>) TokenAnnotation.class).priority();
+        return this.getClass().getAnnotation((Class<TokenAnnotation>) TokenAnnotation.class).parsePriority();
     }
 
     public Pattern getPattern() {

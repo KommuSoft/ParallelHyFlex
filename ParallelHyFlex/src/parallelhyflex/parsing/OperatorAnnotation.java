@@ -12,7 +12,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OperatorAnnotation {
-    
-    String token();
-    
+
+    double operatorPriority() default 0.0d;
+
+    OperatorType operatorType() default OperatorType.BindBoth;
+
+    OperatorBindingOrder bindingOrder() default OperatorBindingOrder.LeftToRight;
 }

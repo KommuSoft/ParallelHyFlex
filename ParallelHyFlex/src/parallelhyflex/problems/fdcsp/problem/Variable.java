@@ -7,19 +7,20 @@ import parallelhyflex.parsing.TokenBase;
  *
  * @author kommusoft
  */
-@TokenAnnotation(token="[A-Z][A-Za-z]*",priority=0.5d)
+@TokenAnnotation(token = "[A-Z][A-Za-z]*")
 public class Variable extends TokenBase<Variable> {
-    
+
     private String name;
     private int id;
     private static int idDispatcher = 0;
     private FiniteIntegerDomain domain;
-    
-    public Variable () {
+
+    public Variable() {
         this.id = idDispatcher++;
         this.name = null;
     }
-    public Variable (String name) {
+
+    public Variable(String name) {
         this();
         this.name = name;
     }
@@ -48,7 +49,7 @@ public class Variable extends TokenBase<Variable> {
 
     @Override
     public String toString() {
-        return "_G"+id;
+        return "_G" + id;
     }
 
     /**
@@ -83,5 +84,4 @@ public class Variable extends TokenBase<Variable> {
     public Variable generate(String variable) {
         return new Variable(variable);
     }
-    
 }

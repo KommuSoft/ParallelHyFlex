@@ -7,12 +7,13 @@ import parallelhyflex.parsing.TokenBase;
  *
  * @author kommusoft
  */
-@TokenAnnotation(token = "in", priority=0.0d)
+@TokenAnnotation(token = "in")
+@OperatorAnnotation()
 public class InOperator extends TokenBase<InOperator> {
-    
+
     private static final InOperator instance = new InOperator();
-    
-    public static InOperator getInstance () {
+
+    public static InOperator getInstance() {
         return instance;
     }
 
@@ -20,5 +21,4 @@ public class InOperator extends TokenBase<InOperator> {
     public InOperator generate(String variable) {
         return this;
     }
-    
 }

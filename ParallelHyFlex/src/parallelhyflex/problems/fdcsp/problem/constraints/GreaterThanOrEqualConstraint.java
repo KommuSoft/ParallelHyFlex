@@ -1,13 +1,13 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
-import parallelhyflex.parsing.OperatorAnnotation;
+import parallelhyflex.parsing.TokenAnnotation;
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 
 /**
  *
  * @author kommusoft
  */
-@OperatorAnnotation(token = "#>=")
+@TokenAnnotation(token = "#>=")
 public class GreaterThanOrEqualConstraint implements IntegerDomainConstraint {
 
     private static final GreaterThanOrEqualConstraint instance = new GreaterThanOrEqualConstraint();
@@ -31,11 +31,11 @@ public class GreaterThanOrEqualConstraint implements IntegerDomainConstraint {
 
     @Override
     public void reduceDomains(int i1, FiniteIntegerDomain i2) {
-        i2.minusWith(i1+1, i2.last());
+        i2.minusWith(i1 + 1, i2.last());
     }
 
     @Override
     public void reduceDomains(FiniteIntegerDomain i1, int i2) {
-        i1.minusWith(i1.first(), i2-1);
+        i1.minusWith(i1.first(), i2 - 1);
     }
 }
