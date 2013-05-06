@@ -8,7 +8,7 @@ import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.parsing.tokenizing.TokenAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenGenerator;
 import parallelhyflex.parsing.tokenizing.TokenGeneratorImplementation;
-import parallelhyflex.problems.fdcsp.problem.expressions.VariableExpression;
+import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
 
 /**
  *
@@ -31,7 +31,7 @@ public class MinimizingOperator extends OperatorBase<Token,Token> implements Tok
 
     @Override
     public boolean canSetRight(Token token) {
-        return (token instanceof VariableExpression);
+        return (token instanceof Expression);
     }
 
     @Override

@@ -4,6 +4,7 @@ import parallelhyflex.problems.fdcsp.problem.constraints.InOperator;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import parallelhyflex.parsing.ParsingException;
 import parallelhyflex.parsing.grammar.OperatorBinder;
 import parallelhyflex.parsing.tokenizing.Token;
@@ -25,8 +26,8 @@ public class FDCOPProblemParser {
     private static TokenStreamParser<Token> tokenParser;
     private static VariableTokenGenerator variableToken = new VariableTokenGenerator();
     
-    public static TokenStreamParser getTokenParser () {
-        if(tokenParser == null) {
+    public static TokenStreamParser getTokenParser() {
+        if (tokenParser == null) {
             tokenParser = new TokenStreamParser();
             tokenParser.addToken(new FiniteIntegerDomain());
             tokenParser.addToken(new InOperator());
@@ -42,16 +43,28 @@ public class FDCOPProblemParser {
         return tokenParser;
     }
     
-    public FDCOPProblemParser parse (InputStream stream) throws ParsingException {
+    public FDCOPProblem parse(InputStream stream) throws ParsingException {
         OperatorBinder ob = new OperatorBinder();
-        ob.bind(getTokenParser().getIterable(stream));
-        return null;
+        Iterable<Token> tokens = ob.bind(getTokenParser().getIterable(stream));
+        ArrayList<FDCOPConstraint> constraints = new ArrayList<>();
+        for (Token t : tokens) {
+            if (t instanceof FDCOPConstraint) {
+                constraints.add((FDCOPConstraint) t);
+            }
+        }
+        VariableStore vs = variableToken.getVariableStore();
+        Variable[] vars = new Variable[vs.size()];
+        int i = 0;
+        for (Variable v : vs) {
+            vars[i++] = v;
+        }
+        return new FDCOPProblem(vars, constraints.toArray(new FDCOPConstraint[0]), null);
     }
-    public FDCOPProblemParser parse (String text) throws IOException, ParsingException {
+    
+    public FDCOPProblem parse(String text) throws IOException, ParsingException {
         InputStream is = new ByteArrayInputStream(text.getBytes());
-        FDCOPProblemParser result = parse(is);
+        FDCOPProblem result = parse(is);
         is.close();
         return result;
     }
-    
 }

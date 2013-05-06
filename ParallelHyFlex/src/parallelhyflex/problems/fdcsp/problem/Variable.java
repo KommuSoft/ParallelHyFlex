@@ -1,13 +1,13 @@
 package parallelhyflex.problems.fdcsp.problem;
 
 import parallelhyflex.parsing.tokenizing.Token;
-import parallelhyflex.problems.fdcsp.problem.expressions.VariableExpression;
+import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
 
 /**
  *
  * @author kommusoft
  */
-public class Variable implements Token, VariableExpression {
+public class Variable implements Token, Expression {
     private static int idDispatcher = 0;
 
     private String name;
