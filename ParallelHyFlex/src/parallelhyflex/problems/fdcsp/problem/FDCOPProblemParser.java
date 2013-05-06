@@ -3,11 +3,16 @@ package parallelhyflex.problems.fdcsp.problem;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
 import parallelhyflex.parsing.ParsingException;
 import parallelhyflex.parsing.grammar.OperatorBinder;
 import parallelhyflex.parsing.tokenizing.Token;
-import parallelhyflex.parsing.tokenizing.TokenParser;
+import parallelhyflex.parsing.tokenizing.TokenStreamParser;
+import parallelhyflex.problems.fdcsp.problem.constraints.EqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanOrEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.NotEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanOrEqualConstraint;
 
 /**
  *
@@ -15,20 +20,26 @@ import parallelhyflex.parsing.tokenizing.TokenParser;
  */
 public class FDCOPProblemParser {
     
-    private static TokenParser<Token> tokenParser;
+    private static TokenStreamParser<Token> tokenParser;
+    private static VariableTokenGenerator variableToken = new VariableTokenGenerator();
     
-    public static TokenParser getTokenParser () {
+    public static TokenStreamParser getTokenParser () {
         if(tokenParser == null) {
-            tokenParser = new TokenParser();
+            tokenParser = new TokenStreamParser();
             tokenParser.addToken(new FiniteIntegerDomain());
             tokenParser.addToken(new InOperator());
-            tokenParser.addToken(new Variable());
+            tokenParser.addToken(variableToken);
+            tokenParser.addToken(EqualConstraint.getInstance());
+            tokenParser.addToken(NotEqualConstraint.getInstance());
+            tokenParser.addToken(GreaterThanOrEqualConstraint.getInstance());
+            tokenParser.addToken(GreaterThanConstraint.getInstance());
+            tokenParser.addToken(SmallerThanOrEqualConstraint.getInstance());
+            tokenParser.addToken(SmallerThanConstraint.getInstance());
         }
         return tokenParser;
     }
     
     public FDCOPProblemParser parse (InputStream stream) throws ParsingException {
-        LinkedList<Object> tokenStream = new LinkedList<>();
         OperatorBinder ob = new OperatorBinder();
         ob.bind(getTokenParser().getIterable(stream));
         return null;

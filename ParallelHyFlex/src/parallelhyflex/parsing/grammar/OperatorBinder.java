@@ -20,6 +20,7 @@ public class OperatorBinder {
             memory.add(t);
             if (t instanceof Operator) {
                 Operator to = (Operator) t;
+                System.out.println(to.getClass());
                 double priority = to.getOperatorPriority();
                 LinkedList<MultiThreadedListNode<Token>> operatorList;
                 if (!bindingMap.containsKey(priority)) {

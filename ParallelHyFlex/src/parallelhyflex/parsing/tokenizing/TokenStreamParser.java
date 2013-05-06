@@ -10,22 +10,22 @@ import java.util.regex.Pattern;
  *
  * @author kommusoft
  */
-public class TokenParser<StreamType> {
+public class TokenStreamParser<StreamType extends Token> {
     
-    private final TreeSet<Token<? extends StreamType>> tokens = new TreeSet<>(TokenPriorityComparator.getInstance());
+    private final TreeSet<TokenGenerator<? extends StreamType>> tokens = new TreeSet<>(TokenPriorityComparator.getInstance());
     private static final Pattern word = Pattern.compile("[^ \n\t]+");
     
-    public void addToken (Token<? extends StreamType> token) {
+    public void addToken (TokenGenerator<? extends StreamType> token) {
         this.tokens.add(token);
     }
     
-    public void addToken (Token<? extends StreamType>... token) {
-        for(Token<? extends StreamType> tok : token) {
+    public void addToken (TokenGenerator<? extends StreamType>... token) {
+        for(TokenGenerator<? extends StreamType> tok : token) {
             this.addToken(tok);
         }
     }
-    public void addToken (Iterable<Token<? extends StreamType>> token) {
-        for(Token<? extends StreamType> tok : token) {
+    public void addToken (Iterable<TokenGenerator<? extends StreamType>> token) {
+        for(TokenGenerator<? extends StreamType> tok : token) {
             this.addToken(tok);
         }
     }
@@ -65,7 +65,7 @@ public class TokenParser<StreamType> {
         @Override
         public StreamType next() {
             String tok = this.scanner.next(word);
-            for(Token<? extends StreamType> token : tokens) {
+            for(TokenGenerator<? extends StreamType> token : tokens) {
                 if(token.validate(tok)) {
                     return token.generate(tok);
                 }

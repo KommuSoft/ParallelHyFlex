@@ -1,6 +1,8 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
+import parallelhyflex.parsing.grammar.OperatorAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenAnnotation;
+import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 
 /**
@@ -8,12 +10,10 @@ import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
  * @author kommusoft
  */
 @TokenAnnotation(token = "#<")
-public class SmallerThanConstraint implements IntegerDomainConstraint {
+@OperatorAnnotation()
+public class SmallerThanConstraint extends TokenGeneratorBase<IntegerDomainConstraintOperator> implements IntegerDomainConstraint {
 
     private static final SmallerThanConstraint instance = new SmallerThanConstraint();
-
-    private SmallerThanConstraint() {
-    }
 
     public static SmallerThanConstraint getInstance() {
         return instance;
@@ -32,5 +32,10 @@ public class SmallerThanConstraint implements IntegerDomainConstraint {
     @Override
     public void reduceDomains(FiniteIntegerDomain i1, int i2) {
         GreaterThanConstraint.getInstance().reduceDomains(i2, i1);
+    }
+    
+    @Override
+    public IntegerDomainConstraintOperator generate(String variable) {
+        return new IntegerDomainConstraintOperator(getInstance());
     }
 }

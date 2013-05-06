@@ -16,15 +16,16 @@ import parallelhyflex.algebra.WithSetOperators;
 import parallelhyflex.algebra.collections.ItemIterable;
 import parallelhyflex.communication.ReadWriteable;
 import parallelhyflex.communication.ReadableGenerator;
+import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.parsing.tokenizing.TokenAnnotation;
-import parallelhyflex.parsing.tokenizing.TokenBase;
+import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
 
 /**
  *
  * @author kommusoft
  */
 @TokenAnnotation(token = "(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\})(u(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}))*")
-public class FiniteIntegerDomain extends TokenBase<FiniteIntegerDomain> implements WithSetOperators<FiniteIntegerDomain, FiniteIntegerDomain>, Iterable<IntegerInterval>, ReadWriteable, ReadableGenerator<FiniteIntegerDomain> {
+public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain> implements WithSetOperators<FiniteIntegerDomain, FiniteIntegerDomain>, Iterable<IntegerInterval>, ReadWriteable, ReadableGenerator<FiniteIntegerDomain>, Token {
 
     private final TreeSet<IntegerInterval> singleIntervals;
 

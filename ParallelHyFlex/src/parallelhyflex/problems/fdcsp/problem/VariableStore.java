@@ -1,17 +1,15 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import java.util.HashMap;
+import parallelhyflex.algebra.PinnedFleightWeight;
 
 /**
  *
  * @author kommusoft
  */
-public class VariableStore {
+public class VariableStore extends PinnedFleightWeight<String,Variable> {
     
-    private final HashMap<String,Variable> store = new HashMap<String,Variable>();
-    
-    public void add () {
-        
+    public VariableStore () {
+        super(VariableGenerator.getInstance());
     }
     
 }

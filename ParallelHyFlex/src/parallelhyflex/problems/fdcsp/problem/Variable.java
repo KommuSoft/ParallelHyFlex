@@ -1,14 +1,12 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import parallelhyflex.parsing.tokenizing.TokenAnnotation;
-import parallelhyflex.parsing.tokenizing.TokenBase;
+import parallelhyflex.parsing.tokenizing.Token;
 
 /**
  *
  * @author kommusoft
  */
-@TokenAnnotation(token = "[A-Z][A-Za-z]*")
-public class Variable extends TokenBase<Variable> {
+public class Variable implements Token {
 
     private String name;
     private int id;
@@ -74,19 +72,15 @@ public class Variable extends TokenBase<Variable> {
     /**
      * @return the domain
      */
-    protected FiniteIntegerDomain getDomain() {
+    public FiniteIntegerDomain getDomain() {
         return domain;
     }
 
     /**
      * @param domain the domain to set
      */
-    protected void setDomain(FiniteIntegerDomain domain) {
+    public void setDomain(FiniteIntegerDomain domain) {
         this.domain = domain;
     }
 
-    @Override
-    public Variable generate(String variable) {
-        return new Variable(variable);
-    }
 }
