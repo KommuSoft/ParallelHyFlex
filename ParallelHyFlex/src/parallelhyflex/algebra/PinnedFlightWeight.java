@@ -1,16 +1,17 @@
 package parallelhyflex.algebra;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
  * @author kommusoft
  */
-public class PinnedFleightWeight<TOrigin, Type> extends FleightWeightBase<TOrigin, Type> {
+public class PinnedFlightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, Type> {
 
     private final HashMap<TOrigin, Type> map = new HashMap<>();
 
-    public PinnedFleightWeight(Generator<TOrigin, Type> generator) {
+    public PinnedFlightWeight(Generator<TOrigin, Type> generator) {
         super(generator);
     }
 
@@ -28,5 +29,20 @@ public class PinnedFleightWeight<TOrigin, Type> extends FleightWeightBase<TOrigi
             this.map.put(origin, val);
             return val;
         }
+    }
+
+    @Override
+    public int size() {
+        return this.map.size();
+    }
+
+    @Override
+    public void clear() {
+        this.map.clear();
+    }
+
+    @Override
+    public Iterator<Type> iterator() {
+        return this.map.values().iterator();
     }
 }

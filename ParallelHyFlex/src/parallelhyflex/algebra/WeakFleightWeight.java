@@ -9,7 +9,7 @@ import java.util.Map.Entry;
  *
  * @author kommusoft
  */
-public class WeakFleightWeight<TOrigin, Type> extends FleightWeightBase<TOrigin, Type> {
+public class WeakFleightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, Type> {
 
     private final HashMap<TOrigin, WeakReference<Type>> map = new HashMap<>();
 
@@ -60,4 +60,57 @@ public class WeakFleightWeight<TOrigin, Type> extends FleightWeightBase<TOrigin,
             return addAndReturn(origin);
         }
     }
+
+    @Override
+    public int size() {
+        return this.map.size();
+    }
+
+    @Override
+    public void clear() {
+        this.map.clear();
+    }
+
+    @Override
+    public Iterator<Type> iterator() {
+        return new WeakFlightWeightIterator();
+    }
+    
+    private class WeakFlightWeightIterator implements Iterator<Type> {
+        
+        private final Iterator<WeakReference<Type>> valueIterator;
+        private Type last;
+        
+        public WeakFlightWeightIterator () {
+            this.valueIterator = map.values().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            while(last == null && valueIterator.hasNext()) {
+                last = valueIterator.next().get();
+                if(last == null) {
+                    valueIterator.remove();
+                }
+            }
+            return last != null;
+        }
+
+        @Override
+        public Type next() {
+            if(last == null) {
+                this.hasNext();
+            }
+            Type ret = last;
+            last = null;
+            return last;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    
 }
