@@ -1,5 +1,6 @@
 package parallelhyflex.problems.fdcsp.problem;
 
+import parallelhyflex.problems.fdcsp.problem.constraints.InOperator;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import parallelhyflex.parsing.tokenizing.TokenStreamParser;
 import parallelhyflex.problems.fdcsp.problem.constraints.EqualConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanOrEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.MinimizingOperator;
 import parallelhyflex.problems.fdcsp.problem.constraints.NotEqualConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanOrEqualConstraint;
@@ -35,6 +37,7 @@ public class FDCOPProblemParser {
             tokenParser.addToken(GreaterThanConstraint.getInstance());
             tokenParser.addToken(SmallerThanOrEqualConstraint.getInstance());
             tokenParser.addToken(SmallerThanConstraint.getInstance());
+            tokenParser.addToken(MinimizingOperator.getInstance());
         }
         return tokenParser;
     }

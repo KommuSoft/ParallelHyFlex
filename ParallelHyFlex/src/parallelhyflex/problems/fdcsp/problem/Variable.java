@@ -1,12 +1,13 @@
 package parallelhyflex.problems.fdcsp.problem;
 
 import parallelhyflex.parsing.tokenizing.Token;
+import parallelhyflex.problems.fdcsp.problem.expressions.VariableExpression;
 
 /**
  *
  * @author kommusoft
  */
-public class Variable implements Token {
+public class Variable implements Token, VariableExpression {
     private static int idDispatcher = 0;
 
     private String name;
@@ -16,6 +17,7 @@ public class Variable implements Token {
     public Variable() {
         this.id = idDispatcher++;
         this.name = null;
+        this.domain = FiniteIntegerDomain.all();
     }
 
     public Variable(String name) {

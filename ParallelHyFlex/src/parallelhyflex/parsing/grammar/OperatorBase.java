@@ -3,7 +3,7 @@ package parallelhyflex.parsing.grammar;
 import parallelhyflex.parsing.ParsingException;
 import parallelhyflex.parsing.tokenizing.Token;
 
-public abstract class OperatorBase<T, TL extends Token, TR extends Token> implements Token, Operator<T, TL, TR> {
+public abstract class OperatorBase<TL extends Token, TR extends Token> implements Token, Operator<TL, TR> {
 
     private TL left = null;
     private TR right = null;

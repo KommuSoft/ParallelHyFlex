@@ -12,7 +12,7 @@ public class OptPackMain {
     
     public static void main (String[] args) throws IOException, ParsingException {
         FDCOPProblemParser pp = new FDCOPProblemParser();
-        pp.parse("X in [1,3]u[9,12] Y in [3,4] X #>= Y minimizing Y");
+        pp.parse("X in [1,3]u[9,12] Y in [3,4] X #>= Y minimizing X");
         /*FiniteIntegerDomain interval = new FiniteIntegerDomain(1,2);
         System.out.println(interval);
         interval.add(5,5);

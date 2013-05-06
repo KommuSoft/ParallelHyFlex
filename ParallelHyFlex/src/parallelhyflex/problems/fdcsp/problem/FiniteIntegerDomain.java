@@ -69,6 +69,10 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         }
         return siz;
     }
+    
+    public static FiniteIntegerDomain all () {
+        return new FiniteIntegerDomain(Integer.MIN_VALUE,Integer.MAX_VALUE);
+    }
 
     public void clear() {
         this.singleIntervals.clear();

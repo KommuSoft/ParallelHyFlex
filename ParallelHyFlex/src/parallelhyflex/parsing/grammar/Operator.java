@@ -7,7 +7,7 @@ import parallelhyflex.parsing.tokenizing.Token;
  *
  * @author kommusoft
  */
-public interface Operator<T, TL extends Token, TR extends Token> extends Token {
+public interface Operator<TL extends Token, TR extends Token> extends Token {
 
     void setLeft(TL left) throws ParsingException;
 
