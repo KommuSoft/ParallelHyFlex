@@ -15,11 +15,11 @@ public class SmallerThanOrEqualConstraint extends TokenGeneratorBase<IntegerDoma
 
     private static final SmallerThanOrEqualConstraint instance = new SmallerThanOrEqualConstraint();
 
-    private SmallerThanOrEqualConstraint() {
-    }
-
     public static SmallerThanOrEqualConstraint getInstance() {
         return instance;
+    }
+
+    private SmallerThanOrEqualConstraint() {
     }
 
     @Override

@@ -53,7 +53,7 @@ public class MultiThreadedList<TElement> implements List<TElement> {
 
     @Override
     public boolean add(TElement e) {
-        MultiThreadedListNode<TElement> element = new MultiThreadedListNode<TElement>(e);
+        MultiThreadedListNode<TElement> element = new MultiThreadedListNode<>(e);
         if (this.size() > 0) {
             element.setPrevious(this.last);
             this.last.setNext(element);
@@ -305,7 +305,7 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         private MultiThreadedListNode<T> current;
         private MultiThreadedListNode<T> prev;
 
-        public MultiThreadedListIterator(MultiThreadedListNode<T> current) {
+        MultiThreadedListIterator(MultiThreadedListNode<T> current) {
             this.current = new MultiThreadedListNode(null);
             this.current.setNext(current);
         }

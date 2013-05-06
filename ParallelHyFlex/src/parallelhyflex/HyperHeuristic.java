@@ -1,6 +1,5 @@
 package parallelhyflex;
 
-import parallelhyflex.problemdependent.problem.ProblemInterface;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -21,6 +20,7 @@ import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
 import parallelhyflex.problemdependent.problem.Problem;
+import parallelhyflex.problemdependent.problem.ProblemInterface;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;

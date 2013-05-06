@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
  * @author kommusoft
  */
 public class TokenStreamParser<StreamType extends Token> {
+    private static final Pattern word = Pattern.compile("[^ \n\t]+");
     
     private final TreeSet<TokenGenerator<? extends StreamType>> tokens = new TreeSet<>(TokenPriorityComparator.getInstance());
-    private static final Pattern word = Pattern.compile("[^ \n\t]+");
     
     public void addToken (TokenGenerator<? extends StreamType> token) {
         this.tokens.add(token);
@@ -38,7 +38,7 @@ public class TokenStreamParser<StreamType extends Token> {
         
         private final InputStream stream;
         
-        public TokenParserIterable (InputStream stream) {
+        TokenParserIterable (InputStream stream) {
             this.stream = stream;
         }
 
@@ -53,7 +53,7 @@ public class TokenStreamParser<StreamType extends Token> {
         
         private final Scanner scanner;
         
-        public TokenParserIterator (InputStream stream) {
+        TokenParserIterator (InputStream stream) {
             this.scanner = new Scanner(stream);
         }
 

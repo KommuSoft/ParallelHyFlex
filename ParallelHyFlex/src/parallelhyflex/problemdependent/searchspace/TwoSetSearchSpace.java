@@ -2,7 +2,6 @@ package parallelhyflex.problemdependent.searchspace;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import parallelhyflex.algebra.collections.MultiThreadedList;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;

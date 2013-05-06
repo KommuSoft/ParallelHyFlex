@@ -15,11 +15,11 @@ public class GreaterThanConstraint extends TokenGeneratorBase<IntegerDomainConst
     
     private static final GreaterThanConstraint instance = new GreaterThanConstraint();
     
-    private GreaterThanConstraint () {}
-    
     public static GreaterThanConstraint getInstance () {
         return instance;
     }
+    
+    private GreaterThanConstraint () {}
 
     @Override
     public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {

@@ -15,11 +15,11 @@ public class EqualConstraint extends TokenGeneratorBase<IntegerDomainConstraintO
     
     private static final EqualConstraint instance = new EqualConstraint();
     
-    private EqualConstraint () {}
-    
     public static EqualConstraint getInstance () {
         return instance;
     }
+    
+    private EqualConstraint () {}
 
     @Override
     public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {

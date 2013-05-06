@@ -5,7 +5,6 @@ import parallelhyflex.algebra.CloningGenerator;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
-import static parallelhyflex.hyperheuristics.adaphh.AdapHH.LOCAL_MEMORY_SIZE;
 import parallelhyflex.problemdependent.searchspace.negotation.TwoSetWriteableSearchSpaceNegotiator;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator1;

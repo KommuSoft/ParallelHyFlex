@@ -7,10 +7,10 @@ import parallelhyflex.parsing.tokenizing.Token;
  * @author kommusoft
  */
 public class Variable implements Token {
+    private static int idDispatcher = 0;
 
     private String name;
     private int id;
-    private static int idDispatcher = 0;
     private FiniteIntegerDomain domain;
 
     public Variable() {

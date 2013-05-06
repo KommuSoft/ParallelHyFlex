@@ -28,6 +28,7 @@ import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
 public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain> implements WithSetOperators<FiniteIntegerDomain, FiniteIntegerDomain>, Iterable<IntegerInterval>, ReadWriteable, ReadableGenerator<FiniteIntegerDomain>, Token {
 
     private final TreeSet<IntegerInterval> singleIntervals;
+    private Pattern subPattern = null;
 
     public FiniteIntegerDomain() {
         singleIntervals = new TreeSet<>();
@@ -343,7 +344,6 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
     public void setToSingle(int value) {
         this.setToSingle(value, value);
     }
-    private Pattern subPattern = null;
 
     private Pattern getSubPattern() {
         if (subPattern == null) {
