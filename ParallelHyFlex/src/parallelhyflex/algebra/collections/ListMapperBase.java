@@ -20,7 +20,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
             list = this.map.get(key);
         }
         else {
-            list = new ArrayList<TItem>();
+            list = new ArrayList<>();
             this.map.put(key, list);
         }
         list.add(item);
@@ -131,7 +131,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
         private TKey subKey;
         private Iterator<TItem> subIterator;
         
-        public EntryIterator (Iterator<Entry<TKey,ArrayList<TItem>>> realIterator) {
+        EntryIterator (Iterator<Entry<TKey,ArrayList<TItem>>> realIterator) {
             this.realIterator = realIterator;
         }
 

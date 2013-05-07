@@ -27,6 +27,10 @@ import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
 @TokenAnnotation(token = "(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\})(u(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}))*")
 public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain> implements WithSetOperators<FiniteIntegerDomain, FiniteIntegerDomain>, Iterable<IntegerInterval>, ReadWriteable, ReadableGenerator<FiniteIntegerDomain>, Token {
 
+    public static FiniteIntegerDomain all() {
+        return new FiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
     private final TreeSet<IntegerInterval> singleIntervals;
     private Pattern subPattern = null;
 
@@ -70,10 +74,6 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return siz;
     }
 
-    public static FiniteIntegerDomain all() {
-        return new FiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-
     public void clear() {
         this.singleIntervals.clear();
     }
@@ -93,7 +93,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return sb.toString();
     }
 
-    public boolean add(int value) {
+        public boolean add(int value) {
         return this.add(value, value);
     }
 
@@ -137,7 +137,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return res;
     }
 
-    public boolean unionWith(Iterable<IntegerInterval> other) {
+        public boolean unionWith(Iterable<IntegerInterval> other) {
         boolean ch = false;
         for (IntegerInterval si : other) {
             if (si.notEmpty()) {
@@ -152,7 +152,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return unionWith((Iterable<IntegerInterval>) other);
     }
 
-    public boolean unionWith(IntegerInterval interval) {
+        public boolean unionWith(IntegerInterval interval) {
         return unionWith(new ItemIterable<>(interval));
     }
 
@@ -176,7 +176,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return intersectWith((Iterable<IntegerInterval>) other);
     }
 
-    public boolean intersectWith(IntegerInterval interval) {
+        public boolean intersectWith(IntegerInterval interval) {
         return intersectWith(new ItemIterable<>(interval));
     }
 
@@ -200,7 +200,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return this.minusWith((Iterable<IntegerInterval>) fid);
     }
 
-    public boolean minusWith(IntegerInterval interval) {
+        public boolean minusWith(IntegerInterval interval) {
         return minusWith(new ItemIterable<>(interval));
     }
 
@@ -326,7 +326,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return true;
     }
 
-    public boolean intersectWith(Iterable<IntegerInterval> other) {
+        public boolean intersectWith(Iterable<IntegerInterval> other) {
         ArrayList<IntegerInterval> q = new ArrayList<>();
         int oldSize = 0;
         for (IntegerInterval si : this) {

@@ -1,6 +1,5 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import parallelhyflex.problems.fdcsp.problem.constraints.InOperator;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +11,7 @@ import parallelhyflex.parsing.tokenizing.TokenStreamParser;
 import parallelhyflex.problems.fdcsp.problem.constraints.EqualConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanOrEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraints.InOperator;
 import parallelhyflex.problems.fdcsp.problem.constraints.MinimizingOperator;
 import parallelhyflex.problems.fdcsp.problem.constraints.NotEqualConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanConstraint;
@@ -63,13 +63,14 @@ public class FDCOPProblemParser {
         for (Variable v : vs) {
             vars[i++] = v;
         }
-        return new FDCOPProblem(vars, constraints.toArray(new FDCOPConstraint[0]),mini.toArray(new Expression[0]));
+        return new FDCOPProblem(vars, constraints.toArray(new FDCOPConstraint[constraints.size()]),mini.toArray(new Expression[mini.size()]));
     }
     
     public FDCOPProblem parse(String text) throws IOException, ParsingException {
-        InputStream is = new ByteArrayInputStream(text.getBytes());
-        FDCOPProblem result = parse(is);
-        is.close();
+        FDCOPProblem result;
+        try (InputStream is = new ByteArrayInputStream(text.getBytes())) {
+            result = parse(is);
+        }
         return result;
     }
 }

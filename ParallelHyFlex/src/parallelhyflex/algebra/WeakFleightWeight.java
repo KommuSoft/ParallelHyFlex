@@ -81,7 +81,7 @@ public class WeakFleightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, 
         private final Iterator<WeakReference<Type>> valueIterator;
         private Type last;
         
-        public WeakFlightWeightIterator () {
+        WeakFlightWeightIterator () {
             this.valueIterator = map.values().iterator();
         }
 
