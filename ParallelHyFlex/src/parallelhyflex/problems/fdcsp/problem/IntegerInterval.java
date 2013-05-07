@@ -18,6 +18,10 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
         this.high = high;
     }
 
+    IntegerInterval(int value) {
+        this(value, value);
+    }
+
     public int size() {
         if (this.low <= this.high) {
             return this.high + 1 - this.low;
@@ -155,11 +159,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     public IntegerInterval intersection(IntegerInterval other) {
         int low = Math.max(this.low, other.low);
         int high = Math.min(this.high, other.high);
-        if (low <= high) {
-            return new IntegerInterval(low, high);
-        } else {
-            return null;
-        }
+        return new IntegerInterval(low, high);
     }
 
     @Override
@@ -192,8 +192,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
             this.high = other.low - 1;
         } else if (other.high >= this.low && other.high < this.high) {
             this.low = other.high + 1;
-        }
-        else {
+        } else {
             ch = false;
         }
         return ch;

@@ -34,11 +34,7 @@ public class IntegerDomainConstraintOperator extends OperatorBase implements FDC
 
     @Override
     public void process() {
-        Variable vl = getLeftVariable();
-        Variable vr = getRightVariable();
-        System.out.println(String.format("reducing domains of %s=%s and %s=%s", vl, vl.getDomain(), vr, vr.getDomain()));
-        this.constraint.reduceDomains(vl.getDomain(), vr.getDomain());
-        System.out.println(String.format("now they are: %s=%s and %s=%s", vl, vl.getDomain(), vr, vr.getDomain()));
+        relaxDomains();
     }
 
     @Override
@@ -53,7 +49,7 @@ public class IntegerDomainConstraintOperator extends OperatorBase implements FDC
 
     @Override
     public boolean relaxDomains() {
-        return this.constraint.reduceDomains(getLeftDomain(),getRightDomain());
+        return this.constraint.reduceDomains(this.getLeftDomain(),this.getRightDomain());
     }
 
     public Variable getLeftVariable() {

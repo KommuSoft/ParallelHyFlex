@@ -7,18 +7,16 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
 
-public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
-    
-    private final HashMap<TKey,MultiThreadedList<TItem>> map = new HashMap<>();
+    private final HashMap<TKey, MultiThreadedList<TItem>> map = new HashMap<>();
 
     @Override
     public TItem put(TKey key, TItem item) {
         MultiThreadedList<TItem> list;
-        if(this.map.containsKey(key)) {
+        if (this.map.containsKey(key)) {
             list = this.map.get(key);
-        }
-        else {
+        } else {
             list = new MultiThreadedList<>();
             this.map.put(key, list);
         }
@@ -28,10 +26,9 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
     @Override
     public Iterator<TItem> iterator(TKey key) {
-        if(this.map.containsKey(key)) {
+        if (this.map.containsKey(key)) {
             return this.map.get(key).iterator();
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -39,7 +36,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     @Override
     public int size() {
         int siz = 0;
-        for(MultiThreadedList<TItem> l : this.map.values()) {
+        for (MultiThreadedList<TItem> l : this.map.values()) {
             siz += l.size();
         }
         return siz;
@@ -47,8 +44,8 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
     @Override
     public boolean isEmpty() {
-        for(MultiThreadedList<TItem> l : this.map.values()) {
-            if(l.size() > 0) {
+        for (MultiThreadedList<TItem> l : this.map.values()) {
+            if (l.size() > 0) {
                 return false;
             }
         }
@@ -67,16 +64,14 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
     @Override
     public TItem get(Object o) {
-        if(this.map.containsKey(o)) {
+        if (this.map.containsKey(o)) {
             MultiThreadedList<TItem> item = this.map.get(o);
-            if(!item.isEmpty()) {
+            if (!item.isEmpty()) {
                 return item.get(0);
-            }
-            else {
+            } else {
                 return null;
             }
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -84,17 +79,16 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     @Override
     public TItem remove(Object o) {
         MultiThreadedList<TItem> item = this.map.remove(o);
-        if(item != null && !item.isEmpty()) {
+        if (item != null && !item.isEmpty()) {
             return item.get(0);
-        }
-        else {
+        } else {
             return null;
         }
     }
 
     @Override
     public void putAll(Map<? extends TKey, ? extends TItem> map) {
-        for(Entry<? extends TKey,? extends TItem> item : map.entrySet()) {
+        for (Entry<? extends TKey, ? extends TItem> item : map.entrySet()) {
             this.put(item.getKey(), item.getValue());
         }
     }
@@ -123,26 +117,24 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     public Iterator<Entry<TKey, TItem>> iterator() {
         return new EntryIterator(map.entrySet().iterator());
     }
-    
+
     private class EntryIterator implements Iterator<Entry<TKey, TItem>> {
-        
-        private final Iterator<Entry<TKey,MultiThreadedList<TItem>>> realIterator;
+
+        private final Iterator<Entry<TKey, MultiThreadedList<TItem>>> realIterator;
         private TKey subKey;
         private Iterator<TItem> subIterator;
-        
-        EntryIterator (Iterator<Entry<TKey,MultiThreadedList<TItem>>> realIterator) {
+
+        EntryIterator(Iterator<Entry<TKey, MultiThreadedList<TItem>>> realIterator) {
             this.realIterator = realIterator;
         }
 
         @Override
         public boolean hasNext() {
-            if(subIterator == null) {
+            if (subIterator == null) {
                 return loadNext();
-            }
-            else if(!subIterator.hasNext()) {
+            } else if (!subIterator.hasNext()) {
                 return loadNext();
-            }
-            else {
+            } else {
                 return true;
             }
         }
@@ -150,28 +142,27 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
         @Override
         public Entry<TKey, TItem> next() {
             hasNext();
-            return new AbstractMap.SimpleEntry<>(subKey,subIterator.next());
+            return new AbstractMap.SimpleEntry<>(subKey, subIterator.next());
         }
 
         @Override
         public void remove() {
-            if(this.subIterator != null) {
+            if (this.subIterator != null) {
                 this.subIterator.remove();
             }
         }
 
         private boolean loadNext() {
-            while((subIterator == null || !subIterator.hasNext()) && realIterator.hasNext()) {
-                Entry<TKey,MultiThreadedList<TItem>> e = realIterator.next();
+            while ((subIterator == null || !subIterator.hasNext()) && realIterator.hasNext()) {
+                Entry<TKey, MultiThreadedList<TItem>> e = realIterator.next();
                 subKey = e.getKey();
                 subIterator = e.getValue().iterator();
             }
             return (subIterator != null && subIterator.hasNext());
         }
-        
     }
-    
-    private class EntrySet implements Set<Entry<TKey,TItem>> {
+
+    private class EntrySet implements Set<Entry<TKey, TItem>> {
 
         @Override
         public int size() {
@@ -185,17 +176,15 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
         @Override
         public boolean contains(Object o) {
-            if(o instanceof Entry) {
+            if (o instanceof Entry) {
                 Entry e = (Entry) o;
                 Object k = e.getKey();
-                if(map.containsKey(k)) {
+                if (map.containsKey(k)) {
                     return map.get(k).contains(e.getValue());
-                }
-                else {
+                } else {
                     return false;
                 }
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -217,31 +206,29 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
         @Override
         public boolean add(Entry<TKey, TItem> e) {
-            ListMapperBase.this.put(e.getKey(),e.getValue());
+            ListMapperBase.this.put(e.getKey(), e.getValue());
             return true;
         }
 
         @Override
         public boolean remove(Object o) {
-            if(o instanceof Entry) {
+            if (o instanceof Entry) {
                 Entry e = (Entry) o;
                 Object k = e.getKey();
-                if(map.containsKey(k)) {
+                if (map.containsKey(k)) {
                     return map.get(k).remove(e.getValue());
-                }
-                else {
+                } else {
                     return false;
                 }
-            }
-            else {
+            } else {
                 return false;
             }
         }
 
         @Override
         public boolean containsAll(Collection<?> clctn) {
-            for(Object obj : clctn) {
-                if(!this.contains(obj)) {
+            for (Object obj : clctn) {
+                if (!this.contains(obj)) {
                     return false;
                 }
             }
@@ -250,7 +237,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
         @Override
         public boolean addAll(Collection<? extends Entry<TKey, TItem>> clctn) {
-            for(Entry<TKey,TItem> e : clctn) {
+            for (Entry<TKey, TItem> e : clctn) {
                 this.add(e);
             }
             return true;
@@ -264,7 +251,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
         @Override
         public boolean removeAll(Collection<?> clctn) {
             boolean rm = false;
-            for(Object e : clctn) {
+            for (Object e : clctn) {
                 rm |= this.remove(e);
             }
             return rm;
@@ -274,7 +261,5 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
         public void clear() {
             ListMapperBase.this.clear();
         }
-        
     }
-    
 }
