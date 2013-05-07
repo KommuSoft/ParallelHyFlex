@@ -20,26 +20,28 @@ public class NotEqualConstraint extends TokenGeneratorBase<IntegerDomainConstrai
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+    public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+        boolean red = false;
         if (i1.size() == 1) {
-            i2.minusWith(i1.first());
+            red |= i2.minusWith(i1.first());
         }
         if (i2.size() == 1) {
-            i1.minusWith(i1.first());
+            red |= i1.minusWith(i1.first());
             if (i1.size() == 1) {
-                i2.minusWith(i1.first());
+                red |= i2.minusWith(i1.first());
             }
         }
+        return red;
     }
 
     @Override
-    public void reduceDomains(int i1, FiniteIntegerDomain i2) {
-        i2.minusWith(i1);
+    public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
+        return i2.minusWith(i1);
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, int i2) {
-        i1.minusWith(i2);
+    public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
+        return i1.minusWith(i2);
     }
     
     @Override

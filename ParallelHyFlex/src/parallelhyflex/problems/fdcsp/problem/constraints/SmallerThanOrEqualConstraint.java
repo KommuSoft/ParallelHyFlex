@@ -23,18 +23,18 @@ public class SmallerThanOrEqualConstraint extends TokenGeneratorBase<IntegerDoma
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
-        GreaterThanOrEqualConstraint.getInstance().reduceDomains(i2, i1);
+    public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+        return GreaterThanOrEqualConstraint.getInstance().reduceDomains(i2, i1);
     }
 
     @Override
-    public void reduceDomains(int i1, FiniteIntegerDomain i2) {
-        GreaterThanOrEqualConstraint.getInstance().reduceDomains(i2, i1);
+    public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
+        return GreaterThanOrEqualConstraint.getInstance().reduceDomains(i2, i1);
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, int i2) {
-        GreaterThanOrEqualConstraint.getInstance().reduceDomains(i2, i1);
+    public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
+        return GreaterThanOrEqualConstraint.getInstance().reduceDomains(i2, i1);
     }
 
     @Override

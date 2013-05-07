@@ -23,21 +23,22 @@ public class GreaterThanOrEqualConstraint extends TokenGeneratorBase<IntegerDoma
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+    public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
         int la = i1.last();
         int fb = i2.first();
-        i1.intersectWith(fb, la);
-        i2.intersectWith(fb, la);
+        boolean red = i1.intersectWith(fb, la);
+        red |= i2.intersectWith(fb, la);
+        return red;
     }
 
     @Override
-    public void reduceDomains(int i1, FiniteIntegerDomain i2) {
-        i2.minusWith(i1 + 1, i2.last());
+    public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
+        return i2.intersectWith(i2.first(),i1);
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, int i2) {
-        i1.minusWith(i1.first(), i2 - 1);
+    public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
+        return i1.intersectWith(i2,i1.last());
     }
     
     @Override

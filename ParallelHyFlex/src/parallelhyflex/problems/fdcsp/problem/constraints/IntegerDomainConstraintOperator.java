@@ -52,8 +52,8 @@ public class IntegerDomainConstraintOperator extends OperatorBase implements FDC
     }
 
     @Override
-    public void relaxDomains() {
-        this.constraint.reduceDomains(getLeftDomain(),getRightDomain());
+    public boolean relaxDomains() {
+        return this.constraint.reduceDomains(getLeftDomain(),getRightDomain());
     }
 
     public Variable getLeftVariable() {

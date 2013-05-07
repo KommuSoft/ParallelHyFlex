@@ -22,19 +22,20 @@ public class EqualConstraint extends TokenGeneratorBase<IntegerDomainConstraintO
     private EqualConstraint () {}
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
-        i1.intersectWith(i2);
-        i2.intersectWith(i1);
+    public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+        boolean red = i1.intersectWith(i2);
+        red |= i2.intersectWith(i1);
+        return red;
     }
 
     @Override
-    public void reduceDomains(int i1, FiniteIntegerDomain i2) {
-        i2.intersectWith(i1);
+    public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
+        return i2.intersectWith(i1);
     }
 
     @Override
-    public void reduceDomains(FiniteIntegerDomain i1, int i2) {
-        i1.intersectWith(i2);
+    public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
+        return i1.intersectWith(i2);
     }
 
     @Override

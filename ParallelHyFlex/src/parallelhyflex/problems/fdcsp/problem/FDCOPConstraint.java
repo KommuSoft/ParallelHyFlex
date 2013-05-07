@@ -6,6 +6,6 @@ package parallelhyflex.problems.fdcsp.problem;
  */
 public interface FDCOPConstraint extends Iterable<Variable> {
     
-    void relaxDomains ();
+    boolean relaxDomains ();
     
 }

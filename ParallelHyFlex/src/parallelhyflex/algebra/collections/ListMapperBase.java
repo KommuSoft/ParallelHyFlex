@@ -1,7 +1,6 @@
 package parallelhyflex.algebra.collections;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,16 +10,16 @@ import java.util.Set;
 
 public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     
-    private final HashMap<TKey,ArrayList<TItem>> map = new HashMap<>();
+    private final HashMap<TKey,MultiThreadedList<TItem>> map = new HashMap<>();
 
     @Override
     public TItem put(TKey key, TItem item) {
-        ArrayList<TItem> list;
+        MultiThreadedList<TItem> list;
         if(this.map.containsKey(key)) {
             list = this.map.get(key);
         }
         else {
-            list = new ArrayList<>();
+            list = new MultiThreadedList<>();
             this.map.put(key, list);
         }
         list.add(item);
@@ -40,7 +39,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     @Override
     public int size() {
         int siz = 0;
-        for(ArrayList<TItem> l : this.map.values()) {
+        for(MultiThreadedList<TItem> l : this.map.values()) {
             siz += l.size();
         }
         return siz;
@@ -48,7 +47,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
     @Override
     public boolean isEmpty() {
-        for(ArrayList<TItem> l : this.map.values()) {
+        for(MultiThreadedList<TItem> l : this.map.values()) {
             if(l.size() > 0) {
                 return false;
             }
@@ -69,7 +68,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     @Override
     public TItem get(Object o) {
         if(this.map.containsKey(o)) {
-            ArrayList<TItem> item = this.map.get(o);
+            MultiThreadedList<TItem> item = this.map.get(o);
             if(!item.isEmpty()) {
                 return item.get(0);
             }
@@ -84,7 +83,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
     @Override
     public TItem remove(Object o) {
-        ArrayList<TItem> item = this.map.remove(o);
+        MultiThreadedList<TItem> item = this.map.remove(o);
         if(item != null && !item.isEmpty()) {
             return item.get(0);
         }
@@ -127,11 +126,11 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
     
     private class EntryIterator implements Iterator<Entry<TKey, TItem>> {
         
-        private final Iterator<Entry<TKey,ArrayList<TItem>>> realIterator;
+        private final Iterator<Entry<TKey,MultiThreadedList<TItem>>> realIterator;
         private TKey subKey;
         private Iterator<TItem> subIterator;
         
-        EntryIterator (Iterator<Entry<TKey,ArrayList<TItem>>> realIterator) {
+        EntryIterator (Iterator<Entry<TKey,MultiThreadedList<TItem>>> realIterator) {
             this.realIterator = realIterator;
         }
 
@@ -163,7 +162,7 @@ public class ListMapperBase<TKey,TItem> implements ListMapper<TKey, TItem> {
 
         private boolean loadNext() {
             while((subIterator == null || !subIterator.hasNext()) && realIterator.hasNext()) {
-                Entry<TKey,ArrayList<TItem>> e = realIterator.next();
+                Entry<TKey,MultiThreadedList<TItem>> e = realIterator.next();
                 subKey = e.getKey();
                 subIterator = e.getValue().iterator();
             }
