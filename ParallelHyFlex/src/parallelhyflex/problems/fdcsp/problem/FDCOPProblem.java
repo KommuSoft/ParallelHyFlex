@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import parallelhyflex.algebra.PinnedFlightWeight;
 import parallelhyflex.algebra.collections.ArgumentIterable;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.algebra.collections.ListMapperBase;
+import parallelhyflex.problemdependent.problem.ObjectiveFunction;
 import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
@@ -27,8 +29,10 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
     private final ListMapperBase<Variable, FDCOPConstraint> constraintMapping = new ListMapperBase<>();
     private final Expression[] minimalisations;
     private final UniqueRandomGenerator<Integer> variableSelector;
+    private static final PinnedFlightWeight<Integer, FDCOPObjectiveFunctionI> objectivesFw = new PinnedFlightWeight<>(FDCOPObjectiveFunctionIGenerator.getInstance());
 
     public FDCOPProblem(Variable[] variables, FDCOPConstraint[] constraints, Expression[] minimalisations) {
+        this.setSolutionGenerator(new FDCOPSolutionGenerator(this));
         System.out.println(String.format("FDCOPP %s %s %s", Arrays.toString(variables), Arrays.toString(constraints), Arrays.toString(minimalisations)));
         variableSelector = new UniqueRandomGenerator(Utils.sequence(0, variables.length));
         this.variables = variables;
@@ -47,6 +51,16 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
             var.setIndex(index++);
             System.out.println(String.format("%s in %s", var, var.getDomain()));
         }
+    }
+
+    @Override
+    public ObjectiveFunction<FDCOPSolution> getObjectiveFunction(int index) {
+        return objectivesFw.generate(index);
+    }
+
+    @Override
+    public int getNumberOfObjectiveFunctions() {
+        return this.minimalisations.length;
     }
 
     public int getDomainSize(int variableIndex) {
@@ -68,12 +82,12 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
     public int getNumberOfVariables() {
         return this.variables.length;
     }
-    
-    public int getNumberOfMinimalisations () {
+
+    public int getNumberOfMinimalisations() {
         return this.minimalisations.length;
     }
-    
-    public int getNumberOfConstraints () {
+
+    public int getNumberOfConstraints() {
         return this.constraints.length;
     }
 

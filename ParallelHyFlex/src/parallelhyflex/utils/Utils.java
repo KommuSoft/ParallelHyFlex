@@ -31,6 +31,22 @@ public class Utils {
         return i;
     }
 
+    public static <T> int hashCode(T... values) {
+        int hash = 7;
+        for (T val : values) {
+            hash = 17 * hash + val.hashCode();
+        }
+        return hash;
+    }
+
+    public static <T> int hashCode(int... values) {
+        int hash = 7;
+        for (int val : values) {
+            hash = 17 * hash + ((Integer) val).hashCode();
+        }
+        return hash;
+    }
+
     public static int countOnes(long data) {
         int ones = 0;
         while (data != 0) {

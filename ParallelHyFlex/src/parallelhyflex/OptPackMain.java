@@ -2,6 +2,7 @@ package parallelhyflex;
 
 import java.io.IOException;
 import parallelhyflex.parsing.ParsingException;
+import parallelhyflex.problems.fdcsp.problem.FDCOPProblem;
 import parallelhyflex.problems.fdcsp.problem.FDCOPProblemParser;
 
 /**
@@ -12,7 +13,8 @@ public class OptPackMain {
     
     public static void main (String[] args) throws IOException, ParsingException {
         FDCOPProblemParser pp = new FDCOPProblemParser();
-        pp.parse("X in [2,3]u[9,12] Y in [3,4] Z in [3,15] Z #> X X #>= Y minimizing X");
+        FDCOPProblem prob = pp.parse("X in [2,3]u[9,12] Y in [3,4] Z in [3,15] Z #> X X #>= Y minimizing X minimizing Y minimizing Z");
+        System.out.println(prob.getSolutionGenerator().generateSolution());
         /*FiniteIntegerDomain interval = new FiniteIntegerDomain(1,2);
         System.out.println(interval);
         interval.add(5,5);

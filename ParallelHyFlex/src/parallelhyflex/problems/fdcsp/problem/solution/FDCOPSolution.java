@@ -3,6 +3,7 @@ package parallelhyflex.problems.fdcsp.problem.solution;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import parallelhyflex.communication.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problems.fdcsp.problem.Variable;
@@ -53,6 +54,21 @@ public class FDCOPSolution implements Solution<FDCOPSolution> {
     }
 
     @Override
+    public int hashCode() {
+        return Utils.hashCode(values);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof FDCOPSolution) {
+            final FDCOPSolution other = (FDCOPSolution) obj;
+            return Utils.arrayEquality(values, other.values);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public boolean hasFastDifferenceWith(FDCOPSolution other) {
         return false;
     }
@@ -71,5 +87,14 @@ public class FDCOPSolution implements Solution<FDCOPSolution> {
 
     public void setEvaluationValue(int index, double value) {
         this.evals[index] = value;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("FDCOPSolution < f(%s) = %s >", Arrays.toString(this.values), Arrays.toString(this.evals));
+    }
+
+    public double getEvaluationValue(int index) {
+        return this.evals[index];
     }
 }
