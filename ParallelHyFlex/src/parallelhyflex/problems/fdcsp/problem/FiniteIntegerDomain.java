@@ -26,7 +26,7 @@ import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
  * @author kommusoft
  */
 @TokenAnnotation(token = "(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\})(u(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}))*")
-public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain> implements WithSetOperators<FiniteIntegerDomain, FiniteIntegerDomain>, Iterable<IntegerInterval>, ReadWriteable, ReadableGenerator<FiniteIntegerDomain>, Token {
+public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain> implements WithSetOperators<FiniteIntegerDomain, FiniteIntegerDomain>, Iterable<IntegerInterval>, ReadWriteable, ReadableGenerator<FiniteIntegerDomain>, Token, FiniteDomain<Integer> {
 
     public static FiniteIntegerDomain all() {
         return new FiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -54,18 +54,35 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
     public FiniteIntegerDomain(Iterable<? extends IntegerInterval> sis) {
         this();
         for (IntegerInterval si : sis) {
-            this.add(new IntegerInterval(si.getLow(), si.getHigh()));
+            this.add(new IntegerInterval(si.low(), si.high()));
         }
     }
 
-    public int first() {
-        return this.singleIntervals.first().getLow();
+    @Override
+    public Integer low() {
+        return this.singleIntervals.first().low();
     }
 
-    public int last() {
-        return this.singleIntervals.last().getHigh();
+    @Override
+    public Integer high() {
+        return this.singleIntervals.last().high();
+    }
+    
+    @Override
+    public Integer getIth (int index) {
+        for(IntegerInterval ii : this.singleIntervals) {
+            int sii = ii.size();
+            if(ii.size() <= index) {
+                index -= sii;
+            }
+            else {
+                return ii.getIth(index);
+            }
+        }
+        return null;
     }
 
+    @Override
     public int size() {
         int siz = 0;
         for (IntegerInterval si : this.singleIntervals) {
@@ -146,7 +163,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         boolean ch = false;
         for (IntegerInterval si : other) {
             if (si.notEmpty()) {
-                ch |= this.add(new IntegerInterval(si.getLow(), si.getHigh()));
+                ch |= this.add(new IntegerInterval(si.low(), si.high()));
             }
         }
         return ch;
@@ -240,8 +257,8 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
                         }
                     } else {
                         it.remove();
-                        toAdd.add(new IntegerInterval(si.getLow(), tr.getLow() - 1));
-                        toAdd.add(new IntegerInterval(tr.getHigh() + 1, si.getHigh()));
+                        toAdd.add(new IntegerInterval(si.low(), tr.low() - 1));
+                        toAdd.add(new IntegerInterval(tr.high() + 1, si.high()));
                     }
                 }
                 sis.addAll(toAdd);
@@ -275,8 +292,8 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
     public void write(DataOutputStream dos) throws IOException {
         dos.writeInt(this.singleIntervals.size());
         for (IntegerInterval si : this.singleIntervals) {
-            dos.writeInt(si.getLow());
-            dos.writeInt(si.getHigh());
+            dos.writeInt(si.low());
+            dos.writeInt(si.high());
         }
     }
 

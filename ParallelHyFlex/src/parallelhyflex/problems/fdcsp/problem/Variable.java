@@ -2,16 +2,18 @@ package parallelhyflex.problems.fdcsp.problem;
 
 import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
+import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
 
 /**
  *
  * @author kommusoft
  */
 public class Variable implements Token, Expression {
-    private static int idDispatcher = 0;
 
+    private static int idDispatcher = 0;
     private String name;
-    private int id;
+    private final int id;
+    private int index;
     private FiniteIntegerDomain domain;
 
     public Variable() {
@@ -49,10 +51,9 @@ public class Variable implements Token, Expression {
 
     @Override
     public String toString() {
-        if(this.name == null) {
+        if (this.name == null) {
             return "_G" + id;
-        }
-        else {
+        } else {
             return this.name;
         }
     }
@@ -85,4 +86,22 @@ public class Variable implements Token, Expression {
         this.domain = domain;
     }
 
+    /**
+     * @return the index
+     */
+    public int getIndex() {
+        return index;
+    }
+
+    /**
+     * @param index the index to set
+     */
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    @Override
+    public double getExpressionValue(FDCOPSolution solution) {
+        return solution.getVariableValue(this);
+    }
 }

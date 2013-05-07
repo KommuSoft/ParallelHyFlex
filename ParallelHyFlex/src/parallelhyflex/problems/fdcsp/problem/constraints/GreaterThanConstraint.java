@@ -23,8 +23,8 @@ public class GreaterThanConstraint extends TokenGeneratorBase<IntegerDomainConst
 
     @Override
     public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
-        int la = i1.last();
-        int fb = i2.first();
+        int la = i1.high();
+        int fb = i2.low();
         //TODO: carefull with integerbounds
         boolean red = i1.intersectWith(fb+1, la);
         red |= i2.intersectWith(fb, la-1);
@@ -33,12 +33,12 @@ public class GreaterThanConstraint extends TokenGeneratorBase<IntegerDomainConst
 
     @Override
     public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
-        return i2.intersectWith(i2.first(), i1-1);
+        return i2.intersectWith(i2.low(), i1-1);
     }
 
     @Override
     public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
-        return i1.minusWith(i2+1, i1.last());
+        return i1.minusWith(i2+1, i1.high());
     }
     
     @Override

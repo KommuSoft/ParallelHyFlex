@@ -8,7 +8,7 @@ import parallelhyflex.algebra.WithSetOperators;
  *
  * @author kommusoft
  */
-public final class IntegerInterval implements Comparable<IntegerInterval>, Cloneable, WithSetOperators<IntegerInterval, IntegerInterval>, WithAddSubNegOperators<IntegerInterval, IntegerInterval> {
+public final class IntegerInterval implements Comparable<IntegerInterval>, Cloneable, WithSetOperators<IntegerInterval, IntegerInterval>, WithAddSubNegOperators<IntegerInterval, IntegerInterval>, FiniteDomain<Integer> {
 
     private int low;
     private int high;
@@ -22,6 +22,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
         this(value, value);
     }
 
+    @Override
     public int size() {
         if (this.low <= this.high) {
             return this.high + 1 - this.low;
@@ -62,7 +63,8 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     /**
      * @return the low
      */
-    public int getLow() {
+    @Override
+    public Integer low() {
         return low;
     }
 
@@ -76,7 +78,8 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     /**
      * @return the high
      */
-    public int getHigh() {
+    @Override
+    public Integer high() {
         return high;
     }
 
@@ -89,7 +92,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
 
     @Override
     public int compareTo(IntegerInterval t) {
-        return ((Integer) this.getLow()).compareTo(t.getLow());
+        return ((Integer) this.low()).compareTo(t.low());
     }
 
     @Override
@@ -255,5 +258,10 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     @Override
     public boolean canNeg() {
         return true;
+    }
+
+    @Override
+    public Integer getIth(int index) {
+        return this.low+index;
     }
 }

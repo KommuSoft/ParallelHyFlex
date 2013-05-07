@@ -23,12 +23,12 @@ public class NotEqualConstraint extends TokenGeneratorBase<IntegerDomainConstrai
     public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
         boolean red = false;
         if (i1.size() == 1) {
-            red |= i2.minusWith(i1.first());
+            red |= i2.minusWith(i1.low());
         }
         if (i2.size() == 1) {
-            red |= i1.minusWith(i1.first());
+            red |= i1.minusWith(i1.low());
             if (i1.size() == 1) {
-                red |= i2.minusWith(i1.first());
+                red |= i2.minusWith(i1.low());
             }
         }
         return red;
