@@ -52,6 +52,30 @@ public class Utils {
         return true;
     }
 
+    public static boolean arrayEquality(int[] a, int[] b) {
+        if (a.length != b.length) {
+            return false;
+        }
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] != b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean arrayEquality(double[] a, double[] b) {
+        if (a.length != b.length) {
+            return false;
+        }
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] != b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static String stringReverse(String inp) {
         StringBuilder sb = new StringBuilder();
         for (int i = inp.length() - 1; i >= 0; i--) {

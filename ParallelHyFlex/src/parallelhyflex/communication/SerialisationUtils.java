@@ -54,6 +54,18 @@ public class SerialisationUtils {
         return res;
     }
 
+    public static int[] readIntArray(DataInputStream dis, int[] values) throws IOException {
+        int n = dis.readInt();
+        int k = Math.min(n, values.length);
+        for (int i = 0; i < k; i++) {
+            values[i] = dis.readInt();
+        }
+        for (int i = k; i < n; i++) {
+            dis.readInt();
+        }
+        return values;
+    }
+
     public static double[] readDoubleArray(DataInputStream dis) throws IOException {
         double[] res = new double[dis.readInt()];
         for (int i = 0; i < res.length; i++) {
@@ -68,6 +80,18 @@ public class SerialisationUtils {
             res[i] = readIntArray(dis);
         }
         return res;
+    }
+
+    public static double[] readDoubleArray(DataInputStream dis, double[] values) throws IOException {
+        int n = dis.readInt();
+        int k = Math.min(n, values.length);
+        for (int i = 0; i < k; i++) {
+            values[i] = dis.readDouble();
+        }
+        for (int i = k; i < n; i++) {
+            dis.readDouble();
+        }
+        return values;
     }
 
     private SerialisationUtils() {

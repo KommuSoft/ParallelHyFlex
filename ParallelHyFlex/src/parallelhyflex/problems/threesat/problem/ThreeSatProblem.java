@@ -61,11 +61,9 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
             degclause[k] = ClauseUtils.degree(constraint);
             ClauseUtils.setInfluences(constraint, np, nn);
             for (i = 1; i < np[0]; i++) {
-                index = np[i];
                 npn[np[i]]++;
             }
             for (i = 1; i < nn[0]; i++) {
-                index = nn[i];
                 nnn[nn[i]]++;
             }
         }
