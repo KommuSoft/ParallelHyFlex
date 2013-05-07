@@ -140,10 +140,12 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     }
 
     @Override
-    public void unionWith(IntegerInterval other) throws InductiveBiasException {
+    public boolean unionWith(IntegerInterval other) throws InductiveBiasException {
         if (this.canUnion(other)) {
+            boolean ch = (other.low < this.low || other.high > this.low);
             this.low = Math.min(this.low, other.low);
             this.high = Math.max(this.high, other.high);
+            return ch;
         } else {
             throw new InductiveBiasException();
         }
@@ -161,9 +163,11 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     }
 
     @Override
-    public void intersectWith(IntegerInterval other) {
+    public boolean intersectWith(IntegerInterval other) {
+        boolean ch = (other.low > this.low || other.high < this.high);
         this.low = Math.max(this.low, other.low);
         this.high = Math.min(this.high, other.high);
+        return ch;
     }
 
     @Override
@@ -180,7 +184,8 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     }
 
     @Override
-    public void minusWith(IntegerInterval other) throws InductiveBiasException {
+    public boolean minusWith(IntegerInterval other) throws InductiveBiasException {
+        boolean ch = true;
         if (!canMinus(other)) {
             throw new InductiveBiasException();
         } else if (other.low >= this.low && other.low <= this.high) {
@@ -188,6 +193,10 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
         } else if (other.high >= this.low && other.high < this.high) {
             this.low = other.high + 1;
         }
+        else {
+            ch = false;
+        }
+        return ch;
     }
 
     @Override

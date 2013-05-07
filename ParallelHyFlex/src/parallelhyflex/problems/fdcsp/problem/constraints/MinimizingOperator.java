@@ -14,12 +14,12 @@ import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
  *
  * @author kommusoft
  */
-@TokenAnnotation(token="minimizing")
-@OperatorAnnotation(operatorType=OperatorType.BindRight)
-public class MinimizingOperator extends OperatorBase<Token,Token> implements TokenGenerator<MinimizingOperator> {
+@TokenAnnotation(token = "minimizing")
+@OperatorAnnotation(operatorType = OperatorType.BindRight)
+public class MinimizingOperator extends OperatorBase<Token, Token> implements TokenGenerator<MinimizingOperator> {
 
     private static final MinimizingOperator instance = new MinimizingOperator();
-    
+
     public static MinimizingOperator getInstance() {
         return instance;
     }
@@ -34,9 +34,13 @@ public class MinimizingOperator extends OperatorBase<Token,Token> implements Tok
         return (token instanceof Expression);
     }
 
+    public Expression getExpression() {
+        return (Expression) this.getRight();
+    }
+
     @Override
     public void process() {
-        System.out.println(String.format("I will minimize %s",this.getRight()));
+        System.out.println(String.format("I will minimize %s", this.getRight()));
     }
 
     @Override

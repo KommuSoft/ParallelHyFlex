@@ -16,6 +16,7 @@ import parallelhyflex.problems.fdcsp.problem.constraints.MinimizingOperator;
 import parallelhyflex.problems.fdcsp.problem.constraints.NotEqualConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanConstraint;
 import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanOrEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
 
 /**
  *
@@ -47,9 +48,13 @@ public class FDCOPProblemParser {
         OperatorBinder ob = new OperatorBinder();
         Iterable<Token> tokens = ob.bind(getTokenParser().getIterable(stream));
         ArrayList<FDCOPConstraint> constraints = new ArrayList<>();
+        ArrayList<Expression> mini = new ArrayList<>();
         for (Token t : tokens) {
             if (t instanceof FDCOPConstraint) {
                 constraints.add((FDCOPConstraint) t);
+            }
+            if(t instanceof MinimizingOperator) {
+                mini.add(((MinimizingOperator) t).getExpression());
             }
         }
         VariableStore vs = variableToken.getVariableStore();
@@ -58,7 +63,7 @@ public class FDCOPProblemParser {
         for (Variable v : vs) {
             vars[i++] = v;
         }
-        return new FDCOPProblem(vars, constraints.toArray(new FDCOPConstraint[0]), null);
+        return new FDCOPProblem(vars, constraints.toArray(new FDCOPConstraint[0]),mini.toArray(new Expression[0]));
     }
     
     public FDCOPProblem parse(String text) throws IOException, ParsingException {

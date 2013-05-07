@@ -69,9 +69,9 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         }
         return siz;
     }
-    
-    public static FiniteIntegerDomain all () {
-        return new FiniteIntegerDomain(Integer.MIN_VALUE,Integer.MAX_VALUE);
+
+    public static FiniteIntegerDomain all() {
+        return new FiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     public void clear() {
@@ -93,15 +93,16 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return sb.toString();
     }
 
-    public void add(int value) {
-        this.add(value, value);
+    public boolean add(int value) {
+        return this.add(value, value);
     }
 
-    public void add(int low, int high) {
-        this.add(new IntegerInterval(low, high));
+    public boolean add(int low, int high) {
+        return this.add(new IntegerInterval(low, high));
     }
 
-    public void add(IntegerInterval si) {
+    public boolean add(IntegerInterval si) {
+        boolean ch = false;
         if (si.notEmpty()) {
             IntegerInterval sic = si.clone();
             Stack<IntegerInterval> toRemove = new Stack<>();
@@ -115,11 +116,13 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
                     toRemove.add(si2);
                 }
             }
+            ch = (toRemove.size() != 1 || toRemove.get(0).equals(sic));
             for (IntegerInterval si2 : toRemove) {
                 singleIntervals.remove(si2);
             }
             singleIntervals.add(sic);
         }
+        return ch;
     }
 
     @Override
@@ -134,29 +137,31 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return res;
     }
 
-    public void unionWith(Iterable<IntegerInterval> other) {
+    public boolean unionWith(Iterable<IntegerInterval> other) {
+        boolean ch = false;
         for (IntegerInterval si : other) {
             if (si.notEmpty()) {
-                this.add(new IntegerInterval(si.getLow(), si.getHigh()));
+                ch |= this.add(new IntegerInterval(si.getLow(), si.getHigh()));
             }
         }
+        return ch;
     }
 
     @Override
-    public void unionWith(FiniteIntegerDomain other) {
-        unionWith((Iterable<IntegerInterval>) other);
+    public boolean unionWith(FiniteIntegerDomain other) {
+        return unionWith((Iterable<IntegerInterval>) other);
     }
 
-    public void unionWith(IntegerInterval interval) {
-        unionWith(new ItemIterable<>(interval));
+    public boolean unionWith(IntegerInterval interval) {
+        return unionWith(new ItemIterable<>(interval));
     }
 
-    public void unionWith(int low, int high) {
-        unionWith(new IntegerInterval(low, high));
+    public boolean unionWith(int low, int high) {
+        return unionWith(new IntegerInterval(low, high));
     }
 
-    public void unionWith(int value) {
-        unionWith(value, value);
+    public boolean unionWith(int value) {
+        return unionWith(value, value);
     }
 
     @Override
@@ -167,20 +172,20 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
     }
 
     @Override
-    public void intersectWith(FiniteIntegerDomain other) {
-        intersectWith((Iterable<IntegerInterval>) other);
+    public boolean intersectWith(FiniteIntegerDomain other) {
+        return intersectWith((Iterable<IntegerInterval>) other);
     }
 
-    public void intersectWith(IntegerInterval interval) {
-        intersectWith(new ItemIterable<>(interval));
+    public boolean intersectWith(IntegerInterval interval) {
+        return intersectWith(new ItemIterable<>(interval));
     }
 
-    public void intersectWith(int low, int high) {
-        intersectWith(new IntegerInterval(low, high));
+    public boolean intersectWith(int low, int high) {
+        return intersectWith(new IntegerInterval(low, high));
     }
 
-    public void intersectWith(int value) {
-        intersectWith(value, value);
+    public boolean intersectWith(int value) {
+        return intersectWith(value, value);
     }
 
     @Override
@@ -191,26 +196,28 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
     }
 
     @Override
-    public void minusWith(FiniteIntegerDomain fid) {
-        this.minusWith((Iterable<IntegerInterval>) fid);
+    public boolean minusWith(FiniteIntegerDomain fid) {
+        return this.minusWith((Iterable<IntegerInterval>) fid);
     }
 
-    public void minusWith(IntegerInterval interval) {
-        minusWith(new ItemIterable<>(interval));
+    public boolean minusWith(IntegerInterval interval) {
+        return minusWith(new ItemIterable<>(interval));
     }
 
-    public void minusWith(int low, int high) {
-        minusWith(new IntegerInterval(low, high));
+    public boolean minusWith(int low, int high) {
+        return minusWith(new IntegerInterval(low, high));
     }
 
-    public void minusWith(int value) {
-        minusWith(value, value);
+    public boolean minusWith(int value) {
+        return minusWith(value, value);
     }
 
-    public void minusWith(Iterable<IntegerInterval> other) {
+    public boolean minusWith(Iterable<IntegerInterval> other) {
+        int oldSize = 0;
         ArrayList<IntegerInterval> sis = new ArrayList<>(2 * singleIntervals.size());
         for (IntegerInterval si : this) {
             sis.add(si);
+            oldSize += si.size();
         }
         ArrayList<IntegerInterval> toAdd = new ArrayList<>();
         for (IntegerInterval tr : other) {
@@ -238,6 +245,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         }
         this.singleIntervals.clear();
         this.singleIntervals.addAll(sis);
+        return (this.size() != oldSize);
     }
 
     @Override
@@ -318,9 +326,11 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         return true;
     }
 
-    public void intersectWith(Iterable<IntegerInterval> other) {
+    public boolean intersectWith(Iterable<IntegerInterval> other) {
         ArrayList<IntegerInterval> q = new ArrayList<>();
+        int oldSize = 0;
         for (IntegerInterval si : this) {
+            oldSize += si.size();
             for (IntegerInterval si2 : other) {
                 if (si2.notEmpty()) {
                     IntegerInterval siq = si.intersection(si2);
@@ -332,6 +342,7 @@ public class FiniteIntegerDomain extends TokenGeneratorBase<FiniteIntegerDomain>
         }
         this.singleIntervals.clear();
         this.singleIntervals.addAll(q);
+        return (oldSize != this.size());
     }
 
     public void setToSingle(IntegerInterval interval) {
