@@ -23,10 +23,10 @@ import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
  * @author kommusoft
  */
 public class FDCOPProblemParser {
-    
+
     private static TokenStreamParser<Token> tokenParser;
     private static VariableTokenGenerator variableToken = new VariableTokenGenerator();
-    
+
     public static TokenStreamParser getTokenParser() {
         if (tokenParser == null) {
             tokenParser = new TokenStreamParser();
@@ -43,17 +43,13 @@ public class FDCOPProblemParser {
         }
         return tokenParser;
     }
-    
+
     public FDCOPProblem parse(InputStream stream) throws ParsingException {
         OperatorBinder ob = new OperatorBinder();
         Iterable<Token> tokens = ob.bind(getTokenParser().getIterable(stream));
-        ArrayList<FDCOPConstraint> constraints = new ArrayList<>();
         ArrayList<Expression> mini = new ArrayList<>();
         for (Token t : tokens) {
-            if (t instanceof FDCOPConstraint) {
-                constraints.add((FDCOPConstraint) t);
-            }
-            if(t instanceof MinimizingOperator) {
+            if (t instanceof MinimizingOperator) {
                 mini.add(((MinimizingOperator) t).getExpression());
             }
         }
@@ -63,9 +59,9 @@ public class FDCOPProblemParser {
         for (Variable v : vs) {
             vars[i++] = v;
         }
-        return new FDCOPProblem(vars, constraints.toArray(new FDCOPConstraint[constraints.size()]),mini.toArray(new Expression[mini.size()]));
+        return new FDCOPProblem(vars, mini.toArray(new Expression[mini.size()]));
     }
-    
+
     public FDCOPProblem parse(String text) throws IOException, ParsingException {
         FDCOPProblem result;
         try (InputStream is = new ByteArrayInputStream(text.getBytes())) {

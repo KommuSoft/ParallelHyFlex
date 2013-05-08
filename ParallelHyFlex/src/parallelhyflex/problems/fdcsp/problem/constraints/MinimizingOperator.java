@@ -39,11 +39,6 @@ public class MinimizingOperator extends OperatorBase<Token, Token> implements To
     }
 
     @Override
-    public void process() {
-        System.out.println(String.format("I will minimize %s", this.getRight()));
-    }
-
-    @Override
     public boolean validate(String text) {
         return TokenGeneratorImplementation.validate(this, text);
     }

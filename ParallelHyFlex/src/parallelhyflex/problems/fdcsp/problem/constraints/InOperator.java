@@ -35,8 +35,7 @@ public class InOperator extends OperatorBase<Token,Token> implements TokenGenera
 
     @Override
     public void process() {
-        System.out.println("Processed in");
-        ((Variable) this.getLeft()).setDomain((FiniteIntegerDomain) this.getRight());
+        ((Variable) this.getLeft()).setDomain((FiniteIntegerDomain) this.getRight());//TODO: intersect domain? (multiple ins for the same variable?)
     }
 
     @Override

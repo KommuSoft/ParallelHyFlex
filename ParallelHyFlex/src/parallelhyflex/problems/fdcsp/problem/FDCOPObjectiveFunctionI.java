@@ -1,6 +1,5 @@
 package parallelhyflex.problems.fdcsp.problem;
 
-import parallelhyflex.algebra.Generator;
 import parallelhyflex.problemdependent.problem.ObjectiveFunctionBase;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
 

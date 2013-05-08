@@ -8,7 +8,6 @@ import java.util.Iterator;
 import parallelhyflex.algebra.PinnedFlightWeight;
 import parallelhyflex.algebra.collections.ArgumentIterable;
 import parallelhyflex.algebra.collections.ArrayIterator;
-import parallelhyflex.algebra.collections.ListMapperBase;
 import parallelhyflex.problemdependent.problem.ObjectiveFunction;
 import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
@@ -25,32 +24,38 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
 
     private final Variable[] variables;
     private final int[] domainSizes;
-    private final FDCOPConstraint[] constraints;
-    private final ListMapperBase<Variable, FDCOPConstraint> constraintMapping = new ListMapperBase<>();
     private final Expression[] minimalisations;
     private final UniqueRandomGenerator<Integer> variableSelector;
     private static final PinnedFlightWeight<Integer, FDCOPObjectiveFunctionI> objectivesFw = new PinnedFlightWeight<>(FDCOPObjectiveFunctionIGenerator.getInstance());
 
-    public FDCOPProblem(Variable[] variables, FDCOPConstraint[] constraints, Expression[] minimalisations) {
+    public FDCOPProblem(Variable[] variables, Expression[] minimalisations) {
         this.setSolutionGenerator(new FDCOPSolutionGenerator(this));
-        System.out.println(String.format("FDCOPP %s %s %s", Arrays.toString(variables), Arrays.toString(constraints), Arrays.toString(minimalisations)));
+        //System.out.println(String.format("FDCOPP %s %s", Arrays.toString(variables), Arrays.toString(minimalisations)));
         variableSelector = new UniqueRandomGenerator(Utils.sequence(0, variables.length));
         this.variables = variables;
-        this.constraints = constraints;
         this.minimalisations = minimalisations;
-        for (FDCOPConstraint c : constraints) {
-            for (Variable v : c) {
-                constraintMapping.put(v, c);
-            }
-        }
-        reduceDomains(constraints);
+        reduceDomains();
         this.domainSizes = new int[variables.length];
         int index = 0;
         for (Variable var : variables) {
             this.domainSizes[index] = var.getDomain().size();
             var.setIndex(index++);
-            System.out.println(String.format("%s in %s", var, var.getDomain()));
+            /*System.out.print(String.format("%s in %s subject to", var, var.getDomain()));
+            for(FDCOPConstraint c : var) {
+                System.out.print(String.format("\t%s",c));
+            }
+            System.out.println();*/
         }
+    }
+
+    private HashSet<FDCOPConstraint> getConstraints() {
+        HashSet<FDCOPConstraint> constraints = new HashSet<>();
+        for (Variable v : variables) {
+            for (FDCOPConstraint c : v) {
+                constraints.add(c);
+            }
+        }
+        return constraints;
     }
 
     @Override
@@ -86,16 +91,11 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
     public int getNumberOfMinimalisations() {
         return this.minimalisations.length;
     }
+    
+    
 
-    public int getNumberOfConstraints() {
-        return this.constraints.length;
-    }
-
-    private void reduceDomains(FDCOPConstraint[] constraints) {
-        HashSet<FDCOPConstraint> toReduce = new HashSet<>();
-        for (FDCOPConstraint c : constraints) {
-            toReduce.add(c);
-        }
+    private void reduceDomains() {
+        HashSet<FDCOPConstraint> toReduce = this.getConstraints();
         HashSet<FDCOPConstraint> toAdd = new HashSet<>();
         do {
             toAdd.clear();
@@ -104,10 +104,9 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
                 it.remove();
                 if (c.relaxDomains()) {
                     for (Variable v : c) {
-                        for (Iterator<FDCOPConstraint> cai = constraintMapping.iterator(v); cai.hasNext();) {
-                            FDCOPConstraint ca = cai.next();
+                        for (FDCOPConstraint ca : v) {
                             if (!toReduce.contains(ca)) {
-                                toAdd.add(c);
+                                toAdd.add(ca);
                             }
                         }
                     }
@@ -131,16 +130,12 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
         return this.iterator();
     }
 
-    public Iterator<FDCOPConstraint> constraintIterator() {
-        return new ArrayIterator<>(this.constraints);
-    }
-
     public Iterator<Expression> minimalisationIterator() {
         return new ArrayIterator<>(this.minimalisations);
     }
 
     @Override
     public Iterator<FDCOPConstraint> iterator(Variable argument) {
-        return this.constraintMapping.iterator(argument);
+        return argument.iterator();
     }
 }

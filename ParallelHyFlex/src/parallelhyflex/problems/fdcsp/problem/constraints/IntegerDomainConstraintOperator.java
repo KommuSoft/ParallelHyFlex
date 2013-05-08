@@ -14,7 +14,7 @@ import parallelhyflex.problems.fdcsp.problem.Variable;
  * @author kommusoft
  */
 @OperatorAnnotation()
-public class IntegerDomainConstraintOperator extends OperatorBase implements FDCOPConstraint {
+public class IntegerDomainConstraintOperator extends ConstraintOperatorBase {
 
     private final IntegerDomainConstraint constraint;
 
@@ -30,11 +30,6 @@ public class IntegerDomainConstraintOperator extends OperatorBase implements FDC
     @Override
     public boolean canSetRight(Token token) {
         return (token instanceof Variable);
-    }
-
-    @Override
-    public void process() {
-        relaxDomains();
     }
 
     @Override

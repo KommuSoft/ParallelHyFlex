@@ -1,5 +1,7 @@
 package parallelhyflex.problems.fdcsp.problem;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
@@ -8,13 +10,14 @@ import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
  *
  * @author kommusoft
  */
-public class Variable implements Token, Expression {
+public class Variable implements Token, Expression, Iterable<FDCOPConstraint> {
 
     private static int idDispatcher = 0;
     private String name;
     private final int id;
     private int index;
     private FiniteIntegerDomain domain;
+    private final ArrayList<FDCOPConstraint> constraints = new ArrayList<>();
 
     public Variable() {
         this.id = idDispatcher++;
@@ -32,6 +35,10 @@ public class Variable implements Token, Expression {
         int hash = 3;
         hash = 29 * hash + this.id;
         return hash;
+    }
+    
+    public void addConstraint (FDCOPConstraint constraint) {
+        this.constraints.add(constraint);
     }
 
     @Override
@@ -103,5 +110,10 @@ public class Variable implements Token, Expression {
     @Override
     public double getExpressionValue(FDCOPSolution solution) {
         return solution.getVariableValue(this);
+    }
+
+    @Override
+    public Iterator<FDCOPConstraint> iterator() {
+        return this.constraints.iterator();
     }
 }

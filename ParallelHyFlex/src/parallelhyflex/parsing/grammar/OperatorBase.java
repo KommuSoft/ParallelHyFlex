@@ -14,6 +14,10 @@ public abstract class OperatorBase<TL extends Token, TR extends Token> implement
     }
 
     @Override
+    public void process() {
+    }
+
+    @Override
     public OperatorType getOperatorType() {
         return this.getClass().getAnnotation((Class<OperatorAnnotation>) OperatorAnnotation.class).operatorType();
     }
