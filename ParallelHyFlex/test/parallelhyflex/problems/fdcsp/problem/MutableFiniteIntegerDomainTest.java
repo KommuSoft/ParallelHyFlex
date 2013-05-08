@@ -52,8 +52,12 @@ public class MutableFiniteIntegerDomainTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
-            fillRandom(fid,set);
-            Assert.assertEquals(set.first(), fid.low());
+            fillRandom(fid, set);
+            if (set.size() > 0) {
+                Assert.assertEquals(set.first(), fid.low());
+            } else {
+                Assert.assertEquals(null, fid.low());
+            }
         }
     }
 
@@ -65,8 +69,12 @@ public class MutableFiniteIntegerDomainTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
-            fillRandom(fid,set);
-            Assert.assertEquals(set.last(), fid.high());
+            fillRandom(fid, set);
+            if (set.size() > 0) {
+                Assert.assertEquals(set.last(), fid.high());
+            } else {
+                Assert.assertEquals(null, fid.high());
+            }
         }
     }
 
@@ -78,10 +86,10 @@ public class MutableFiniteIntegerDomainTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
-            fillRandom(fid,set);
+            fillRandom(fid, set);
             int j = 0;
-            for(Iterator<Integer> ii = fid.integerIterator(); ii.hasNext(); j++) {
-                Assert.assertEquals(ii.next(),fid.getIth(j));
+            for (Iterator<Integer> ii = fid.integerIterator(); ii.hasNext(); j++) {
+                Assert.assertEquals(ii.next(), fid.getIth(j));
             }
         }
     }
@@ -94,8 +102,8 @@ public class MutableFiniteIntegerDomainTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
-            fillRandom(fid,set);
-            Assert.assertEquals(set.size(),fid.size());
+            fillRandom(fid, set);
+            Assert.assertEquals(set.size(), fid.size());
         }
     }
 
@@ -108,7 +116,7 @@ public class MutableFiniteIntegerDomainTest {
             FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             fillRandom(fid);
             fid.clear();
-            Assert.assertEquals(0,fid.size());
+            Assert.assertEquals(0, fid.size());
         }
     }
 
@@ -215,7 +223,7 @@ public class MutableFiniteIntegerDomainTest {
             FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             ArrayList<IntegerInterval> arii = new ArrayList<>();
             fillRandom(fid1);
-            fillRandom(fid2,arii);
+            fillRandom(fid2, arii);
             fid3 = fid1.clone();
             fid3.unionWith(arii);
             for (int k = TestParameters.DOMAIN_LOW; k <= TestParameters.DOMAIN_HIGH; k++) {
@@ -475,7 +483,7 @@ public class MutableFiniteIntegerDomainTest {
             FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             ArrayList<IntegerInterval> arii = new ArrayList<>();
             fillRandom(fid1);
-            fillRandom(fid2,arii);
+            fillRandom(fid2, arii);
             fid3 = fid1.clone();
             fid3.minusWith(arii);
             for (int k = TestParameters.DOMAIN_LOW; k <= TestParameters.DOMAIN_HIGH; k++) {
@@ -534,8 +542,8 @@ public class MutableFiniteIntegerDomainTest {
             FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
             fillRandom(fid1);
             fillRandom(fid2);
-            if(fid1.equals(fid2)) {
-                Assert.assertEquals(fid1.hashCode(),fid2.hashCode());
+            if (fid1.equals(fid2)) {
+                Assert.assertEquals(fid1.hashCode(), fid2.hashCode());
             }
         }
     }
@@ -549,7 +557,7 @@ public class MutableFiniteIntegerDomainTest {
             MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
             fillRandom(fid1);
             fillRandom(fid2);
-            Assert.assertEquals(Utils.arrayEquality(fid1.integerIterator(),fid2.integerIterator()),fid1.equals(fid2));
+            Assert.assertEquals(Utils.arrayEquality(fid1.integerIterator(), fid2.integerIterator()), fid1.equals(fid2));
         }
     }
 
@@ -558,14 +566,22 @@ public class MutableFiniteIntegerDomainTest {
      */
     @Test
     public void testReadAndGenerate() throws Exception {
-        System.out.println("readAndGenerate");
-        DataInputStream dis = null;
-        MutableFiniteIntegerDomain instance = new MutableFiniteIntegerDomain();
-        MutableFiniteIntegerDomain expResult = null;
-        MutableFiniteIntegerDomain result = instance.readAndGenerate(dis);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MutableFiniteIntegerDomain fid3 = new MutableFiniteIntegerDomain();
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            DataOutputStream dos = new DataOutputStream(baos);
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
+            fillRandom(fid1);
+            fid1.write(dos);
+            dos.close();
+            baos.close();
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            DataInputStream dis = new DataInputStream(bais);
+            fid2 = fid3.readAndGenerate(dis);
+            dis.close();
+            bais.close();
+            Assert.assertEquals(fid1, fid2);
+        }
     }
 
     /**
@@ -577,7 +593,7 @@ public class MutableFiniteIntegerDomainTest {
             FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             ArrayList<IntegerInterval> arii = new ArrayList<>();
             fillRandom(fid1);
-            fillRandom(fid2,arii);
+            fillRandom(fid2, arii);
             fid3 = fid1.clone();
             fid3.intersectWith(arii);
             for (int k = TestParameters.DOMAIN_LOW; k <= TestParameters.DOMAIN_HIGH; k++) {
@@ -596,9 +612,9 @@ public class MutableFiniteIntegerDomainTest {
             fillRandom(fid1);
             int val1 = randomDomainValue();
             int val2 = randomDomainValue();
-            fid1.setToSingle(new IntegerInterval(val1,val2));
-            fid2.add(new IntegerInterval(val1,val2));
-            Assert.assertEquals(fid2,fid1);
+            fid1.setToSingle(new IntegerInterval(val1, val2));
+            fid2.add(new IntegerInterval(val1, val2));
+            Assert.assertEquals(fid2, fid1);
         }
     }
 
@@ -612,9 +628,9 @@ public class MutableFiniteIntegerDomainTest {
             fillRandom(fid1);
             int val1 = randomDomainValue();
             int val2 = randomDomainValue();
-            fid1.setToSingle(val1,val2);
-            fid2.add(val1,val2);
-            Assert.assertEquals(fid2,fid1);
+            fid1.setToSingle(val1, val2);
+            fid2.add(val1, val2);
+            Assert.assertEquals(fid2, fid1);
         }
     }
 
@@ -629,7 +645,7 @@ public class MutableFiniteIntegerDomainTest {
             int val = randomDomainValue();
             fid1.setToSingle(val);
             fid2.add(val);
-            Assert.assertEquals(fid2,fid1);
+            Assert.assertEquals(fid2, fid1);
         }
     }
 
@@ -638,14 +654,15 @@ public class MutableFiniteIntegerDomainTest {
      */
     @Test
     public void testGenerate() {
-        System.out.println("generate");
-        String text = "";
-        MutableFiniteIntegerDomain instance = new MutableFiniteIntegerDomain();
-        MutableFiniteIntegerDomain expResult = null;
-        MutableFiniteIntegerDomain result = instance.generate(text);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        MutableFiniteIntegerDomain fid3 = new MutableFiniteIntegerDomain();
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            fillRandom(fid1);
+            if(fid1.size() > 0) {
+                fid2 = fid3.generate(fid1.toString());
+                Assert.assertEquals(fid1, fid2);
+            }
+        }
     }
 
     private void fillRandom(FiniteIntegerDomain fid) {
@@ -666,13 +683,13 @@ public class MutableFiniteIntegerDomainTest {
             }
         }
     }
-    
+
     private void fillRandom(FiniteIntegerDomain fid, Collection<IntegerInterval> intervals) {
         for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
             fid.add(new IntegerInterval(v1, v2));
-            intervals.add(new IntegerInterval(v1,v2));
+            intervals.add(new IntegerInterval(v1, v2));
         }
     }
 
