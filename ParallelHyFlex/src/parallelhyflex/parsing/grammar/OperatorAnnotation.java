@@ -16,4 +16,6 @@ public @interface OperatorAnnotation {
     double operatorPriority() default 0.0d;
 
     OperatorType operatorType() default OperatorType.BindBoth;
+    
+    boolean associative () default false;
 }
