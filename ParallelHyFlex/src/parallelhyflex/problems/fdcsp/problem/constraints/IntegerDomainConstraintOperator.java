@@ -4,7 +4,7 @@ import java.util.Iterator;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.parsing.grammar.OperatorAnnotation;
 import parallelhyflex.parsing.tokenizing.Token;
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 import parallelhyflex.problems.fdcsp.problem.Variable;
 
 /**
@@ -53,16 +53,16 @@ public class IntegerDomainConstraintOperator extends ConstraintOperatorBase {
         return (Variable) this.getRight();
     }
 
-    public FiniteIntegerDomain getLeftDomain() {
+    public MutableFiniteIntegerDomain getLeftDomain() {
         return this.getLeftVariable().getDomain();
     }
 
-    public FiniteIntegerDomain getRightDomain() {
+    public MutableFiniteIntegerDomain getRightDomain() {
         return this.getRightVariable().getDomain();
     }
 
     @Override
-    public boolean relaxDomains(FiniteIntegerDomain[] domains) {
+    public boolean relaxDomains(MutableFiniteIntegerDomain[] domains) {
         return this.constraint.reduceDomains(domains[this.getLeftVariable().getIndex()],domains[this.getRightVariable().getIndex()]);
     }
     

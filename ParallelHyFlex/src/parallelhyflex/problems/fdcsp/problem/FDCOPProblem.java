@@ -22,7 +22,7 @@ import parallelhyflex.utils.Utils;
 public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenerator> implements Iterable<Variable>, ArgumentIterable<Variable, FDCOPConstraint> {
 
     private final Variable[] variables;
-    private final FiniteIntegerDomain[] variableDomains;
+    private final MutableFiniteIntegerDomain[] variableDomains;
     private final int[] domainSizes;
     private final Expression[] minimalisations;
     private final UniqueRandomGenerator<Integer> variableSelector;
@@ -33,7 +33,7 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
         //System.out.println(String.format("FDCOPP %s %s", Arrays.toString(variables), Arrays.toString(minimalisations)));
         variableSelector = new UniqueRandomGenerator(Utils.sequence(0, variables.length));
         this.variables = variables;
-        this.variableDomains = new FiniteIntegerDomain[this.variables.length];
+        this.variableDomains = new MutableFiniteIntegerDomain[this.variables.length];
         this.minimalisations = minimalisations;
         reduceDomains();
         this.domainSizes = new int[variables.length];
@@ -82,7 +82,7 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
         return this.variables[variableIndex];
     }
 
-    public FiniteIntegerDomain getDomain(int variableIndex) {
+    public MutableFiniteIntegerDomain getDomain(int variableIndex) {
         return this.variables[variableIndex].getDomain();
     }
 

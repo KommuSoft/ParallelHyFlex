@@ -8,6 +8,6 @@ public interface FDCOPConstraint extends Iterable<Variable> {
     
     boolean relaxDomains ();
 
-    public boolean relaxDomains(FiniteIntegerDomain[] domains);//TODO: find ways to improve performance
+    public boolean relaxDomains(MutableFiniteIntegerDomain[] domains);//TODO: find ways to improve performance
     
 }

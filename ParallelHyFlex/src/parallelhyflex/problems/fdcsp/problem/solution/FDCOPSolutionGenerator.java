@@ -8,7 +8,7 @@ import parallelhyflex.communication.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.SolutionGeneratorBase;
 import parallelhyflex.problems.fdcsp.problem.FDCOPConstraint;
 import parallelhyflex.problems.fdcsp.problem.FDCOPProblem;
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 import parallelhyflex.problems.fdcsp.problem.Variable;
 import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
 import parallelhyflex.utils.Utils;
@@ -26,7 +26,7 @@ public class FDCOPSolutionGenerator extends SolutionGeneratorBase<FDCOPSolution,
     @Override
     public FDCOPSolution generateSolution() {
         FDCOPProblem prob = this.getProblem();
-        FiniteIntegerDomain[] domains = new FiniteIntegerDomain[prob.getNumberOfVariables()];
+        MutableFiniteIntegerDomain[] domains = new MutableFiniteIntegerDomain[prob.getNumberOfVariables()];
         for (int i = 0; i < prob.getNumberOfVariables(); i++) {
             domains[i] = prob.getDomain(i).clone();
         }
@@ -55,7 +55,7 @@ public class FDCOPSolutionGenerator extends SolutionGeneratorBase<FDCOPSolution,
         return new FDCOPSolution(values, evals);
     }
 
-    private void reduceDomains(Variable v, FiniteIntegerDomain[] domains) {
+    private void reduceDomains(Variable v, MutableFiniteIntegerDomain[] domains) {
         HashSet<FDCOPConstraint> toCheck = new HashSet<>();
         HashSet<FDCOPConstraint> toAdd = new HashSet<>();
         for (FDCOPConstraint c : v) {

@@ -1,6 +1,6 @@
 package parallelhyflex.problems.fdcsp.problem.constraints;
 
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 
 /**
  *
@@ -8,8 +8,8 @@ import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
  */
 public interface IntegerDomainConstraint {
     
-    boolean reduceDomains (FiniteIntegerDomain i1, FiniteIntegerDomain i2);
-    boolean reduceDomains (int i1, FiniteIntegerDomain i2);
-    boolean reduceDomains (FiniteIntegerDomain i1, int i2);
+    boolean reduceDomains (MutableFiniteIntegerDomain i1, MutableFiniteIntegerDomain i2);
+    boolean reduceDomains (int i1, MutableFiniteIntegerDomain i2);
+    boolean reduceDomains (MutableFiniteIntegerDomain i1, int i2);
     
 }

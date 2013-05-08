@@ -16,13 +16,13 @@ public class Variable implements Token, Expression, Iterable<FDCOPConstraint> {
     private String name;
     private final int id;
     private int index;
-    private FiniteIntegerDomain domain;
+    private MutableFiniteIntegerDomain domain;
     private final ArrayList<FDCOPConstraint> constraints = new ArrayList<>();
 
     public Variable() {
         this.id = idDispatcher++;
         this.name = null;
-        this.domain = FiniteIntegerDomain.all();
+        this.domain = MutableFiniteIntegerDomain.all();
     }
 
     public Variable(String name) {
@@ -82,14 +82,14 @@ public class Variable implements Token, Expression, Iterable<FDCOPConstraint> {
     /**
      * @return the domain
      */
-    public FiniteIntegerDomain getDomain() {
+    public MutableFiniteIntegerDomain getDomain() {
         return domain;
     }
 
     /**
      * @param domain the domain to set
      */
-    public void setDomain(FiniteIntegerDomain domain) {
+    public void setDomain(MutableFiniteIntegerDomain domain) {
         this.domain = domain;
     }
 

@@ -3,7 +3,7 @@ package parallelhyflex.problems.fdcsp.problem.constraints;
 import parallelhyflex.parsing.grammar.OperatorAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 
 /**
  *
@@ -20,7 +20,7 @@ public class NotEqualConstraint extends TokenGeneratorBase<IntegerDomainConstrai
     }
 
     @Override
-    public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+    public boolean reduceDomains(MutableFiniteIntegerDomain i1, MutableFiniteIntegerDomain i2) {
         boolean red = false;
         if (i1.size() == 1) {
             red |= i2.minusWith(i1.low());
@@ -35,12 +35,12 @@ public class NotEqualConstraint extends TokenGeneratorBase<IntegerDomainConstrai
     }
 
     @Override
-    public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
+    public boolean reduceDomains(int i1, MutableFiniteIntegerDomain i2) {
         return i2.minusWith(i1);
     }
 
     @Override
-    public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
+    public boolean reduceDomains(MutableFiniteIntegerDomain i1, int i2) {
         return i1.minusWith(i2);
     }
     

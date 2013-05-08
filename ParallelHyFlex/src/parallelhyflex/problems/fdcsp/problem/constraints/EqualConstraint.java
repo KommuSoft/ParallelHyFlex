@@ -3,7 +3,7 @@ package parallelhyflex.problems.fdcsp.problem.constraints;
 import parallelhyflex.parsing.grammar.OperatorAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 
 /**
  *
@@ -22,19 +22,19 @@ public class EqualConstraint extends TokenGeneratorBase<IntegerDomainConstraintO
     private EqualConstraint () {}
 
     @Override
-    public boolean reduceDomains(FiniteIntegerDomain i1, FiniteIntegerDomain i2) {
+    public boolean reduceDomains(MutableFiniteIntegerDomain i1, MutableFiniteIntegerDomain i2) {
         boolean red = i1.intersectWith(i2);
         red |= i2.intersectWith(i1);
         return red;
     }
 
     @Override
-    public boolean reduceDomains(int i1, FiniteIntegerDomain i2) {
+    public boolean reduceDomains(int i1, MutableFiniteIntegerDomain i2) {
         return i2.intersectWith(i1);
     }
 
     @Override
-    public boolean reduceDomains(FiniteIntegerDomain i1, int i2) {
+    public boolean reduceDomains(MutableFiniteIntegerDomain i1, int i2) {
         return i1.intersectWith(i2);
     }
 

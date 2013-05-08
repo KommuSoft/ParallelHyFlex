@@ -30,7 +30,7 @@ public class FDCOPProblemParser {
     public static TokenStreamParser getTokenParser() {
         if (tokenParser == null) {
             tokenParser = new TokenStreamParser();
-            tokenParser.addToken(new FiniteIntegerDomain());
+            tokenParser.addToken(new MutableFiniteIntegerDomain());
             tokenParser.addToken(new InOperator());
             tokenParser.addToken(variableToken);
             tokenParser.addToken(EqualConstraint.getInstance());

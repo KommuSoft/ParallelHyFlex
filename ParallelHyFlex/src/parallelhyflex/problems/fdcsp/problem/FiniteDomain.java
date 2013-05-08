@@ -13,4 +13,8 @@ public interface FiniteDomain<T> {
     int size();
 
     T getIth(int index);
+
+    boolean clear();
+    
+    boolean contains (T value);
 }

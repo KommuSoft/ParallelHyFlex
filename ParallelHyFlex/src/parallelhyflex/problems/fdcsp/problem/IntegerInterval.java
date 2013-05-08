@@ -31,8 +31,17 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
         }
     }
 
-    public boolean contains(int value) {
+    @Override
+    public boolean contains(Integer value) {
         return (low <= value && value <= high);
+    }
+    
+    @Override
+    public boolean clear () {
+        boolean res = this.notEmpty();
+        this.high = 0;
+        this.low = -1;
+        return res;
     }
 
     public boolean contains(int low, int high) {

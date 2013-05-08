@@ -7,7 +7,7 @@ import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.parsing.tokenizing.TokenAnnotation;
 import parallelhyflex.parsing.tokenizing.TokenGenerator;
 import parallelhyflex.parsing.tokenizing.TokenGeneratorImplementation;
-import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
+import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 import parallelhyflex.problems.fdcsp.problem.Variable;
 
 /**
@@ -30,12 +30,12 @@ public class InOperator extends OperatorBase<Token,Token> implements TokenGenera
 
     @Override
     public boolean canSetRight(Token token) {
-        return(token instanceof FiniteIntegerDomain);
+        return(token instanceof MutableFiniteIntegerDomain);
     }
 
     @Override
     public void process() {
-        ((Variable) this.getLeft()).setDomain((FiniteIntegerDomain) this.getRight());//TODO: intersect domain? (multiple ins for the same variable?)
+        ((Variable) this.getLeft()).setDomain((MutableFiniteIntegerDomain) this.getRight());//TODO: intersect domain? (multiple ins for the same variable?)
     }
 
     @Override
