@@ -12,7 +12,7 @@ public class UniqueRandomGenerator<T> {
     private int ptr = 0;
     
     public UniqueRandomGenerator (Iterable<T> generator) {
-        ArrayList<T> list = new ArrayList<T>();
+        ArrayList<T> list = new ArrayList<>();
         for(T t : generator) {
             list.add(t);
         }

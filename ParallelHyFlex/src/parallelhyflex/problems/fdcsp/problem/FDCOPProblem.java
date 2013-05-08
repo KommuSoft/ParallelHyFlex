@@ -20,13 +20,13 @@ import parallelhyflex.utils.Utils;
  * @author kommusoft
  */
 public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenerator> implements Iterable<Variable>, ArgumentIterable<Variable, FDCOPConstraint> {
+    private static final PinnedFlightWeight<Integer, FDCOPObjectiveFunctionI> objectivesFw = new PinnedFlightWeight<>(FDCOPObjectiveFunctionIGenerator.getInstance());
 
     private final Variable[] variables;
     private final MutableFiniteIntegerDomain[] variableDomains;
     private final int[] domainSizes;
     private final Expression[] minimalisations;
     private final UniqueRandomGenerator<Integer> variableSelector;
-    private static final PinnedFlightWeight<Integer, FDCOPObjectiveFunctionI> objectivesFw = new PinnedFlightWeight<>(FDCOPObjectiveFunctionIGenerator.getInstance());
 
     public FDCOPProblem(Variable[] variables, Expression[] minimalisations) {
         this.setSolutionGenerator(new FDCOPSolutionGenerator(this));
