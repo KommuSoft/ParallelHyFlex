@@ -59,32 +59,29 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
 
     @Override
     public Integer low() {
-        if(this.singleIntervals.size() > 0) {
+        if (this.singleIntervals.size() > 0) {
             return this.singleIntervals.first().low();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
     @Override
     public Integer high() {
-        if(this.singleIntervals.size() > 0) {
+        if (this.singleIntervals.size() > 0) {
             return this.singleIntervals.last().high();
-        }
-        else {
+        } else {
             return null;
         }
     }
-    
+
     @Override
-    public Integer getIth (int index) {
-        for(IntegerInterval ii : this.singleIntervals) {
+    public Integer getIth(int index) {
+        for (IntegerInterval ii : this.singleIntervals) {
             int sii = ii.size();
-            if(ii.size() <= index) {
+            if (ii.size() <= index) {
                 index -= sii;
-            }
-            else {
+            } else {
                 return ii.getIth(index);
             }
         }
@@ -276,11 +273,12 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
                     if (si.canMinus(tr)) {
                         try {
                             si.minusWith(tr);
+                            System.out.println(si);
+                            if (si.empty()) {
+                                it.remove();
+                            }
                         } catch (InductiveBiasException ex) {
                             Logger.getLogger(MutableFiniteIntegerDomain.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (si.empty()) {
-                            it.remove();
                         }
                     } else {
                         it.remove();

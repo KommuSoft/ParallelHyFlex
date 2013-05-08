@@ -206,6 +206,9 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
             this.high = other.low - 1;
         } else if (other.high >= this.low && other.high < this.high) {
             this.low = other.high + 1;
+        }
+        else if(other.low <= this.low && other.high >= this.high) {
+            this.setEmpty();
         } else {
             ch = false;
         }
@@ -279,5 +282,10 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
     @Override
     public Iterator<Integer> iterator() {
         return Utils.sequence(low, high+1).iterator();
+    }
+
+    private void setEmpty() {
+        this.low = 0;
+        this.high = -1;
     }
 }

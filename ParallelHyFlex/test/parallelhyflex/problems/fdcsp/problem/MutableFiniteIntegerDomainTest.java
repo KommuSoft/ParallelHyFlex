@@ -8,13 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 import java.util.Iterator;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import parallelhyflex.TestParameters;
 import parallelhyflex.algebra.InductiveBiasException;
 import parallelhyflex.utils.Utils;
@@ -24,25 +19,6 @@ import parallelhyflex.utils.Utils;
  * @author kommusoft
  */
 public class MutableFiniteIntegerDomainTest {
-
-    public MutableFiniteIntegerDomainTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of low method, of class MutableFiniteIntegerDomain.
@@ -399,7 +375,7 @@ public class MutableFiniteIntegerDomainTest {
             fillRandom(fid2);
             fid3 = fid1.minus(fid2);
             for (int k = TestParameters.DOMAIN_LOW; k <= TestParameters.DOMAIN_HIGH; k++) {
-                Assert.assertEquals(fid1.contains(k) && !fid2.contains(k), fid3.contains(k));
+                Assert.assertEquals(String.format("%s\\%s=%s (%s)",fid1,fid2,fid3,k),fid1.contains(k) && !fid2.contains(k), fid3.contains(k));
             }
         }
     }
@@ -570,7 +546,7 @@ public class MutableFiniteIntegerDomainTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             DataOutputStream dos = new DataOutputStream(baos);
-            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid1.write(dos);
             dos.close();
