@@ -1,14 +1,16 @@
 package parallelhyflex.problems.fdcsp.problem;
 
+import java.util.Iterator;
 import parallelhyflex.algebra.InductiveBiasException;
 import parallelhyflex.algebra.WithAddSubNegOperators;
 import parallelhyflex.algebra.WithSetOperators;
+import parallelhyflex.utils.Utils;
 
 /**
  *
  * @author kommusoft
  */
-public final class IntegerInterval implements Comparable<IntegerInterval>, Cloneable, WithSetOperators<IntegerInterval, IntegerInterval>, WithAddSubNegOperators<IntegerInterval, IntegerInterval>, FiniteDomain<Integer> {
+public final class IntegerInterval implements Comparable<IntegerInterval>, Iterable<Integer>, Cloneable, WithSetOperators<IntegerInterval, IntegerInterval>, WithAddSubNegOperators<IntegerInterval, IntegerInterval>, FiniteDomain<Integer> {
 
     private int low;
     private int high;
@@ -272,5 +274,10 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Clone
     @Override
     public Integer getIth(int index) {
         return this.low + index;
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        return Utils.sequence(low, high+1).iterator();
     }
 }

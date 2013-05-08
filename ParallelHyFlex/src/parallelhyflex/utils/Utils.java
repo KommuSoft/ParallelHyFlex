@@ -79,6 +79,18 @@ public class Utils {
         }
         return true;
     }
+    
+    public static<T> boolean arrayEquality(Iterator<T> ta, Iterator<T> tb) {
+        boolean na = ta.hasNext(), nb = tb.hasNext();
+        while(na && nb) {
+            if(!ta.next().equals(tb.next())) {
+                return false;
+            }
+            na = ta.hasNext();
+            nb = tb.hasNext();
+        }
+        return na == nb;
+    }
 
     public static boolean arrayEquality(double[] a, double[] b) {
         if (a.length != b.length) {

@@ -59,12 +59,22 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
 
     @Override
     public Integer low() {
-        return this.singleIntervals.first().low();
+        if(this.singleIntervals.size() > 0) {
+            return this.singleIntervals.first().low();
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public Integer high() {
-        return this.singleIntervals.last().high();
+        if(this.singleIntervals.size() > 0) {
+            return this.singleIntervals.last().high();
+        }
+        else {
+            return null;
+        }
     }
     
     @Override
