@@ -2,7 +2,6 @@ package parallelhyflex.problems.fdcsp.problem;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import parallelhyflex.algebra.PinnedFlightWeight;
@@ -23,6 +22,7 @@ import parallelhyflex.utils.Utils;
 public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenerator> implements Iterable<Variable>, ArgumentIterable<Variable, FDCOPConstraint> {
 
     private final Variable[] variables;
+    private final FiniteIntegerDomain[] variableDomains;
     private final int[] domainSizes;
     private final Expression[] minimalisations;
     private final UniqueRandomGenerator<Integer> variableSelector;
@@ -33,11 +33,13 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
         //System.out.println(String.format("FDCOPP %s %s", Arrays.toString(variables), Arrays.toString(minimalisations)));
         variableSelector = new UniqueRandomGenerator(Utils.sequence(0, variables.length));
         this.variables = variables;
+        this.variableDomains = new FiniteIntegerDomain[this.variables.length];
         this.minimalisations = minimalisations;
         reduceDomains();
         this.domainSizes = new int[variables.length];
         int index = 0;
         for (Variable var : variables) {
+            this.variableDomains[index] = var.getDomain();
             this.domainSizes[index] = var.getDomain().size();
             var.setIndex(index++);
             /*System.out.print(String.format("%s in %s subject to", var, var.getDomain()));
