@@ -41,8 +41,8 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
     @Override
     public boolean clear() {
         boolean res = this.notEmpty();
-        this.high = 0;
-        this.low = -1;
+        this.high = -1;
+        this.low = 0;
         return res;
     }
 
@@ -103,15 +103,12 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
 
     @Override
     public int compareTo(IntegerInterval t) {
-        return ((Integer) this.low()).compareTo(t.low());
+        return this.low - t.low;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + this.low;
-        hash = 79 * hash + this.high;
-        return hash;
+        return 79*this.low+this.high+43687;
     }
 
     @Override
@@ -206,9 +203,8 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
             this.high = other.low - 1;
         } else if (other.high >= this.low && other.high < this.high) {
             this.low = other.high + 1;
-        }
-        else if(other.low <= this.low && other.high >= this.high) {
-            this.setEmpty();
+        } else if (other.low <= this.low && other.high >= this.high) {
+            this.clear();
         } else {
             ch = false;
         }
@@ -281,11 +277,6 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
 
     @Override
     public Iterator<Integer> iterator() {
-        return Utils.sequence(low, high+1).iterator();
-    }
-
-    private void setEmpty() {
-        this.low = 0;
-        this.high = -1;
+        return Utils.sequence(low, high + 1).iterator();
     }
 }

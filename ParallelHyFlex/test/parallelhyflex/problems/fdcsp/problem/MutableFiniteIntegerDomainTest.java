@@ -6,8 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeSet;
 import java.util.Iterator;
+import java.util.TreeSet;
 import org.junit.Assert;
 import org.junit.Test;
 import parallelhyflex.TestParameters;
@@ -18,7 +18,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class MutableFiniteIntegerDomainTest {
+public class MutableFiniteIntegerDomainTest extends FiniteIntegerDomainTestBase {
 
     /**
      * Test of low method, of class MutableFiniteIntegerDomain.
@@ -26,7 +26,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testLow() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             fillRandom(fid, set);
             if (set.size() > 0) {
@@ -43,7 +43,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testHigh() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             fillRandom(fid, set);
             if (set.size() > 0) {
@@ -60,7 +60,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testGetIth() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             fillRandom(fid, set);
             int j = 0;
@@ -76,7 +76,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testSize() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             fillRandom(fid, set);
             Assert.assertEquals(set.size(), fid.size());
@@ -89,7 +89,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testClear() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             fillRandom(fid);
             fid.clear();
             Assert.assertEquals(0, fid.size());
@@ -102,7 +102,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testAdd_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             for (int j = 0; j < TestParameters.LOOP2_PARAMETER; j++) {
                 int v = randomDomainValue();
@@ -121,7 +121,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testAdd_int_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             for (int j = 0; j < TestParameters.LOOP2_PARAMETER; j++) {
                 int v1 = randomDomainValue();
@@ -143,7 +143,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testAdd_IntegerInterval() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             for (int j = 0; j < TestParameters.LOOP2_PARAMETER; j++) {
                 int v1 = randomDomainValue();
@@ -165,7 +165,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testClone() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid);
             fid2 = fid.clone();
             for (int k = TestParameters.DOMAIN_LOW; k <= TestParameters.DOMAIN_HIGH; k++) {
@@ -180,7 +180,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testUnion() throws InductiveBiasException {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             fillRandom(fid1);
             fillRandom(fid2);
             fid3 = fid1.union(fid2);
@@ -196,7 +196,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testUnionWith_Iterable() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             ArrayList<IntegerInterval> arii = new ArrayList<>();
             fillRandom(fid1);
             fillRandom(fid2, arii);
@@ -214,7 +214,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testUnionWith_FiniteIntegerDomain() throws InductiveBiasException {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             fillRandom(fid1);
             fillRandom(fid2);
             fid3 = fid1.clone();
@@ -231,7 +231,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testUnionWith_IntegerInterval() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val1 = randomDomainValue();
@@ -249,7 +249,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testUnionWith_int_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val1 = randomDomainValue();
@@ -267,7 +267,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testUnionWith_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val = randomDomainValue();
@@ -284,7 +284,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntersection() throws InductiveBiasException {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             fillRandom(fid1);
             fillRandom(fid2);
             fid3 = fid1.intersection(fid2);
@@ -300,7 +300,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntersectWith_FiniteIntegerDomain() throws InductiveBiasException {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             fillRandom(fid1);
             fillRandom(fid2);
             fid3 = fid1.clone();
@@ -317,7 +317,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntersectWith_IntegerInterval() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val1 = randomDomainValue();
@@ -335,7 +335,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntersectWith_int_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val1 = randomDomainValue();
@@ -353,7 +353,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntersectWith_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val = randomDomainValue();
@@ -370,12 +370,12 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testMinus() throws InductiveBiasException {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             fillRandom(fid1);
             fillRandom(fid2);
             fid3 = fid1.minus(fid2);
             for (int k = TestParameters.DOMAIN_LOW; k <= TestParameters.DOMAIN_HIGH; k++) {
-                Assert.assertEquals(String.format("%s\\%s=%s (%s)",fid1,fid2,fid3,k),fid1.contains(k) && !fid2.contains(k), fid3.contains(k));
+                Assert.assertEquals(String.format("%s\\%s=%s",fid1,fid2,fid3),fid1.contains(k) && !fid2.contains(k), fid3.contains(k));
             }
         }
     }
@@ -386,7 +386,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testMinusWith_FiniteIntegerDomain() throws InductiveBiasException {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             fillRandom(fid1);
             fillRandom(fid2);
             fid3 = fid1.clone();
@@ -403,7 +403,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testMinusWith_IntegerInterval() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val1 = randomDomainValue();
@@ -421,7 +421,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testMinusWith_int_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val1 = randomDomainValue();
@@ -439,7 +439,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testMinusWith_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2;
             fillRandom(fid1);
             fid2 = fid1.clone();
             int val = randomDomainValue();
@@ -456,7 +456,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testMinusWith_Iterable() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             ArrayList<IntegerInterval> arii = new ArrayList<>();
             fillRandom(fid1);
             fillRandom(fid2, arii);
@@ -474,7 +474,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntegerIterator() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain();
             TreeSet<Integer> set = new TreeSet<>();
             fillRandom(fid1, set);
             Iterator<Integer> fidi = fid1.integerIterator();
@@ -515,7 +515,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testHashCode() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
             fillRandom(fid1);
             fillRandom(fid2);
             if (fid1.equals(fid2)) {
@@ -566,7 +566,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testIntersectWith_Iterable() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain(), fid3;
             ArrayList<IntegerInterval> arii = new ArrayList<>();
             fillRandom(fid1);
             fillRandom(fid2, arii);
@@ -584,7 +584,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testSetToSingle_IntegerInterval() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
             fillRandom(fid1);
             int val1 = randomDomainValue();
             int val2 = randomDomainValue();
@@ -600,7 +600,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testSetToSingle_int_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
             fillRandom(fid1);
             int val1 = randomDomainValue();
             int val2 = randomDomainValue();
@@ -616,7 +616,7 @@ public class MutableFiniteIntegerDomainTest {
     @Test
     public void testSetToSingle_int() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            FiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
+            MutableFiniteIntegerDomain fid1 = new MutableFiniteIntegerDomain(), fid2 = new MutableFiniteIntegerDomain();
             fillRandom(fid1);
             int val = randomDomainValue();
             fid1.setToSingle(val);
@@ -641,7 +641,7 @@ public class MutableFiniteIntegerDomainTest {
         }
     }
 
-    private void fillRandom(FiniteIntegerDomain fid) {
+    private void fillRandom(MutableFiniteIntegerDomain fid) {
         for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
@@ -649,7 +649,7 @@ public class MutableFiniteIntegerDomainTest {
         }
     }
 
-    private void fillRandom(FiniteIntegerDomain fid, TreeSet<Integer> treeset) {
+    private void fillRandom(MutableFiniteIntegerDomain fid, TreeSet<Integer> treeset) {
         for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
@@ -660,16 +660,12 @@ public class MutableFiniteIntegerDomainTest {
         }
     }
 
-    private void fillRandom(FiniteIntegerDomain fid, Collection<IntegerInterval> intervals) {
+    private void fillRandom(MutableFiniteIntegerDomain fid, Collection<IntegerInterval> intervals) {
         for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
             fid.add(new IntegerInterval(v1, v2));
             intervals.add(new IntegerInterval(v1, v2));
         }
-    }
-
-    private int randomDomainValue() {
-        return Utils.StaticRandom.nextInt(TestParameters.DOMAIN_HIGH + 1 - TestParameters.DOMAIN_LOW) + TestParameters.DOMAIN_LOW;
     }
 }

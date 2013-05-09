@@ -25,13 +25,13 @@ import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
  * @author kommusoft
  */
 @TokenAnnotation(token = "(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\})(u(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}))*")
-public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFiniteIntegerDomain> implements FiniteIntegerDomain, ReadWriteable, ReadableGenerator<MutableFiniteIntegerDomain>, Token {
+public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFiniteIntegerDomain> implements FiniteIntegerDomain, ReadWriteable, ReadableGenerator<MutableFiniteIntegerDomain>, Token {
 
     public static MutableFiniteIntegerDomain all() {
         return new MutableFiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     private final TreeSet<IntegerInterval> singleIntervals;
-    private Pattern subPattern = null;
+    private static final Pattern subPattern = Pattern.compile("\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}");
 
     public MutableFiniteIntegerDomain() {
         singleIntervals = new TreeSet<>();
@@ -140,22 +140,31 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
         boolean ch = false;
         if (si.notEmpty()) {
             IntegerInterval sic = si.clone();
-            Stack<IntegerInterval> toRemove = new Stack<>();
-            for (IntegerInterval si2 : singleIntervals) {
-                if (sic.canUnion(si2)) {
-                    try {
-                        sic.unionWith(si2);
-                    } catch (InductiveBiasException ex) {
-                        Logger.getLogger(MutableFiniteIntegerDomain.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    toRemove.add(si2);
+            if (this.singleIntervals.size() > 0) {
+                Stack<IntegerInterval> toRemove = new Stack<>();
+                IntegerInterval from = singleIntervals.floor(sic);
+                if (from == null) {
+                    from = singleIntervals.first();
                 }
+                for (IntegerInterval si2 : singleIntervals.tailSet(from)) {
+                    if (sic.canUnion(si2)) {
+                        try {
+                            sic.unionWith(si2);
+                        } catch (InductiveBiasException ex) {
+                            Logger.getLogger(MutableFiniteIntegerDomain.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        toRemove.add(si2);
+                    }
+                }
+                ch = (toRemove.size() != 1 || toRemove.get(0).equals(sic));
+                for (IntegerInterval si2 : toRemove) {
+                    singleIntervals.remove(si2);
+                }
+                singleIntervals.add(sic);
+            } else {
+                this.singleIntervals.add(sic);
+                ch = true;
             }
-            ch = (toRemove.size() != 1 || toRemove.get(0).equals(sic));
-            for (IntegerInterval si2 : toRemove) {
-                singleIntervals.remove(si2);
-            }
-            singleIntervals.add(sic);
         }
         return ch;
     }
@@ -265,7 +274,7 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
             sis.add(si);
             oldSize += si.size();
         }
-        ArrayList<IntegerInterval> toAdd = new ArrayList<>();
+        ArrayList<IntegerInterval> toAdd = new ArrayList<>(2 * singleIntervals.size());
         for (IntegerInterval tr : other) {
             if (tr.notEmpty()) {
                 for (Iterator<IntegerInterval> it = sis.iterator(); it.hasNext();) {
@@ -273,7 +282,6 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
                     if (si.canMinus(tr)) {
                         try {
                             si.minusWith(tr);
-                            System.out.println(si);
                             if (si.empty()) {
                                 it.remove();
                             }
@@ -416,19 +424,12 @@ public class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFinite
         this.setToSingle(value, value);
     }
 
-    private Pattern getSubPattern() {
-        if (subPattern == null) {
-            this.subPattern = Pattern.compile("\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}");
-        }
-        return this.subPattern;
-    }
-
     @Override
     public MutableFiniteIntegerDomain generate(String text) {
         Matcher matcher = this.getPattern().matcher(text);
         if (matcher.matches()) {
             MutableFiniteIntegerDomain fid = new MutableFiniteIntegerDomain();
-            matcher = this.getSubPattern().matcher(text);
+            matcher = subPattern.matcher(text);
             while (matcher.find()) {
                 if (matcher.group(1) != null) {
                     fid.add(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
