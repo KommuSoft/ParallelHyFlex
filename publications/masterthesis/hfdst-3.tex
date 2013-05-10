@@ -1,0 +1,65 @@
+\chapter{\emph{ParHyFlex}: Parallel \emph{HyFlex}}
+\label{hoofdstuk:3}
+
+\chapterquote{A skilled transition team leader will set the general goals for a transition and then confer on the other team leaders working with him the power to implement those goals.}{Richard V. Allen}
+
+Op basis van de analyse in hoofdstuk \ref{hoofdstuk:2}, werd een systeem ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. Omdat deze context doorgaans complexer is, werd bespreken we eerst welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken.
+
+%TODO: implementatie is een set van min of meer onafhankelijke processen
+
+\section{Structuur}
+
+Zowel \emph{HyFlex} als \emph{ParHyFlex} maken een duidelijk onderscheid tussen enerzijds het probleemafhankelijke gedeelte (de kennis die een de gebruiker zelf dient te injecteren om het systeem te laten werken) en het probleemonafhankelijke gedeelte (de strategie die bepaalt welke heuristieken we uitvoeren).
+
+\subsection{Probleemafhankelijk gedeelte}
+
+We werken echter in een parallelle context. Daarom is het interessant dat het probleemafhankelijke gedeelte meer functionaliteiten ter beschikking stelt die uitgebuit kunnen worden door het bovenliggende systeem. Concreet denken we hierbij aan drie zaken:
+\begin{enumerate}
+ \item \emph{Afstandsmetrieken}: \abhf{} laat problemen een functie aanbieden die twee oplossingen met elkaar kan vergelijken. Deze functie kunnen we theoretisch omvormen tot een afstandsmetriek (we stellen de afstand tussen twee dezelfde oplossingen gelijk aan 0, en tussen twee verschillende aan een arbitraire constante groter dan 0). Deze metriek levert echter weinig informatie op. In een sequenti\"ele context gebruikt men soms het aantal mutaties die tussen een oplossing en \'e\'en van zijn voorouders om de afstand af te schatten. Dit is natuurlijk slechts een benadering. In het geval van parallelle uitvoer zullen we bovendien meestal niet over deze informatie beschikken. Daarom is het nuttig om de afstand tussen twee oplossingen te kunnen inschatten. In het geval de afstand geen triviaal gegeven is, kan men verschillende afstandsmetrieken defini\"eren en beslist de bovenliggende hyperheuristiek over de waarde van de metrieken. Een afstandmetriek is dus gedefinieerd als:
+ \begin{equation}
+  \delta_i:\SolSet^2\rightarrow\RealSet^+
+ \end{equation}
+\item \emph{Generator van ervaring}: Elk proces draait een eigen hyperheuristiek en komt een sequentie heuristieken tegen. Uitwisselen van de sequentie kan potentieel een voordeel opleveren omdat de hyperheuristieken met meer kennis van zaken kunnen beslissen. Het doorsturen van alle heuristieken is doorgaans niet mogelijk omdat dit een te grote druk op het netwerk zet en bovendien de overige processoren te veel rekenkracht zouden investeren in het analyseren van de ontvangen oplossingen. Door het uitwisselen van ervaring, een compacte voorstelling van beschouwde oplossingen, zouden we dit probleem kunnen oplossen.
+\item \emph{Beperkingen op zoekruimtes}: Wanneer processoren oplossingen met elkaar uitwisselen lopen we de kans dat de verschillende processoren op termijn vergelijkbare populaties onderhouden. Dit laatste is nuttig wanneer sterke oplossingen in de buurt liggen van de oplossingen in de populatie. Indien de populaties echter rond eenzelfde lokaal optimum liggen, is dit nefast. In dat geval proberen alle processoren het lokale optimum te zoeken in een eenzelfde gebied, en wordt migratie naar mogelijk betere oplossingen in een ander gebied minder evident. Het introduceren van een component die diversificatie afdwingt kan helpen te voorkomen dat we op ijle populaties stuiten.
+\end{enumerate}
+
+\subsubsection{Afdwingbare beperkingen als probleemonafhankelijke ervaring}
+
+Een probleem bij het genereren van \emph{ervaring} en het beperken van de \emph{zoekruimte} is dat dit op een probleemonafhankelijke manier dient te gebeuren: de bovenliggende hyperheuristiek heeft geen details over de structuur van de configuraties en kan bijgevolg niet zelf de zoekruimte beperken of conclusies genereren. We kunnen ervaring voorstellen als een object waar de hyperheuristiek de specificaties niet van kent, maar in dat geval moet ervaring wel enkele algemene functionaliteiten kunnen aanbieden die nuttig zijn. Om dit probleem op te lossen voeren we het concept van een \emph{afdwingbare beperking} in.
+
+\begin{definition}[Afdwingbare beperking]
+Een \emph{afdwingbare beperking} is een 3-tuple: $\tupl{c,c^+,c^-}$. $c:\SolSet\rightarrow\BoolSet$ is hierbij een functie die controleert of een gegeven oplossing aan een bepaalde voorwaarde voldoet. $c^+:\SolSet\rightarrow\SolSet$ is een functie die een gegeven oplossing minimaal kan aanpassen zodat deze aan de voorwaarde voldoet. $c^-:\SolSet\rightarrow\SolSet$ past oplossingen minimaal aan zodat ze niet aan de voorwaarde voldoen. De set van alle afdwingbare beperkingen die we op een probleem kunnen toepassen noteren we als $\HypSet$.
+\end{definition}
+
+We kunnen een afdwingbare beperking als een vorm van ervaring zijn. In de loop der tijd kunnen we immers een hypothese ontwikkelen dat sterke oplossingen aan een bepaalde voorwaarde voldoen (bijvoorbeeld een variabele in het probleem krijgt een vaste waarde). We kunnen dan oplossingen aantrekken naar de hypothese door $c^+$ op willekeurige oplossingen toe te passen. Anderzijds kunnen we ook oplossingen afstoten van de hypothese met $c^-$. De bovenliggende hyperheuristiek dient echter niet op de hoogte te zijn welke voorwaarden een concrete afdwingbare beperking stelt, zolang deze maar de oplossingen kan manipuleren.
+
+\paragraph{}
+Afdwingbare beperkingen kunnen we eveneens gebruiken om de zoekruimtes te beperken. Elk proces kan immers een aantal afdwingbare beperkingen gebruiken om een bepaalde zoekruimte te beschouwen, terwijl het de afdwingbare beperkingen van de andere processoren gebruikt om uit de buurt van de andere zoekruimtes te blijven.
+
+\paragraph{}
+De hyperheuristieken zelf kunnen geen ervaring genereren, ze hebben immers geen weet van de structuur van een oplossing. Daarom zal het specifieke probleem dus een set functies defini\"eren die we \emph{hypothese-generatoren (hypogen)} noemen:
+\begin{definition}
+Een \emph{hypothese-generator (hypogen)} $g_i:\SolSet^{n_{g_i}}\rightarrow\HypSet$ is een functie die op basis van een set oplossingen een afdwingbare beperking kan genereren.	
+\end{definition}
+
+\subsection{Probleemonafhankelijk gedeelte}
+
+Het probleemonafhankelijke gedeelte wordt ge\"implementeerd door de hyperheuristiek en kan dus los gezien worden van \emph{ParHyFlex}. Het probleemafhankelijke gedeelte biedt echter functionaliteiten aan waarvoor we ondersteuning kunnen bieden in het probleemonafhankelijke gedeelte.
+
+\paragraph{}
+In \emph{ParHyFlex} werden daarom de volgende componenten ge\"implementeerd:
+\begin{itemize}
+
+ \item \emph{Uitwisseling}: elke processor werkt met een eigen lokaal geheugen, maar reserveert ook plaats voor de geheugens van de andere processoren. Op het moment dat een nieuwe oplossing naar een lokale geheugencel geschreven wordt, zal op basis van een \emph{uitwisselingsstrategie} beslist worden met welke processoren deze oplossing zal worden gedeeld. De taak van het verzenden en ontvangen van een oplossing samen met een reeks uitwisselingsstrategie\"en wordt ondersteund door \emph{ParHyFlex}.
+ 
+ \item \emph{Afbakenen van de zoekruimte}: de zoekruimte bewaken is ook een verantwoordelijkheid van \emph{ParHyFlex}. Hiervoor voorziet men twee sets van afdwingbare beperkingen: positieve en negatieve. Telkens wanneer er een nieuwe oplossing wordt gegenereerd\footnote{Of via uitwisseling in het geheugen wordt ingeladen.} zal \emph{ParHyFlex} alle beperkingen in de positieve set afdwingen en \'e\'en beperking uit de negatieve set. Het afdwingen gebeurt in een willekeurige volgorde. Dit komt omdat de beperkingen met elkaar kunnen interfereren: een eerste beperking kan een variabele op \'e\'en waarde zetten waarna de volgende beperkingen deze wijziging weer ongedaan maakt. Men kan dit probleem proberen op te lossen door alle permutaties uit te proberen in de hoop dat \'e\'en mutatie toch tot het correcte resultaat leidt. Dit is echter niet noodzakelijk zo, en bovendien vereist een dergelijke oplossing exponenti\"ele tijd. We nemen aan dat de beperkingen meestal minimaal met elkaar interfereren en dat een zoekruimte niet strikt moet worden bewaakt. De hierboven vernoemde strategie is niet verplicht. Men kan door een interface te implementeren een andere strategie hanteren.
+ 
+ \item \emph{Genereren van ervaring}: Telkens wanneer \'e\'en van de processoren een nieuwe oplossing voortbrengt, kan hij deze oplossing -- samen met andere oplossingen -- omzetten in een afdwingbare beperking. Een processor kan echter niet alle beperkingen blijven bewaren: het uitwisselen van ervaring dient snel te gebeuren, we dienen een voldoende grote zoekruimte te behouden en bovendien kunnen we net een beperking genereren die het zoeken de foute kant opstuurt. Daarom maken we gebruik van een \emph{ervaring-set}, een set van vaste grootte waar gegenereerde beperkingen in worden bewaard. De elementen in de set worden telkens ge\"evalueerd: telkens wanneer er een nieuwe oplossing wordt gegenereerd, zal de \emph{ervaring-set} kijken aan welke beperkingen de oplossing voldoet. Op basis van de fitness-waarde van de oplossingen kunnen de beperkingen dan ge\"evalueerd worden. Door de lijst van fitness-waardes op te delen in waardes waarbij de beperking wordt gerespecteerd en waardes waarbij dat niet het geval is, ontstaan twee sets aan punten. Met een online algoritme\cite{knuthOnlineMeanAverage} berekenen we voor beide sets het gemiddelde en de variantie. Door de evaluaties van beide sets als onafhankelijke normale verdelingen te beschouwen, kunnen we de kans uitrekenen dat een fitness-waarde van een oplossing die aan de voorwaarde voldoet kleiner is dan de oplossing die niet aan de voorwaarde voldoet. Naarmate de kans groter wordt maken we de assumptie dat de beperking beter is.
+ 
+ \item \emph{Onderhandelen over een nieuwe zoekruimte}: Elke processor houdt een \emph{ervaring-set} bij. Het is de bedoeling dat deze ervaring wordt gebruikt om een nieuwe zoekruimte af te dwingen. Bovendien kan ervaring uitgewisseld worden met andere processoren zodat deze later ook hun zoekruimtes aanpassen. Tegelijk willen we voorkomen dat de zoekruimtes te homogeen worden en dus potentieel sterke oplossingen genegeerd worden. Dit zijn de taken van de \emph{onderhandelaar}. De \emph{onderhandelaar} is een component die af en toe geactiveerd wordt. Een deel van de afdwingbare beperkingen worden uit de \emph{ervaring-set} gehaald om opgenomen te worden in het positieve component van de \emph{zoekruimte}. Deze beperkingen worden via groepscommunicatie doorgestuurd naar de andere processoren. Een deel van de ontvangen beperkingen komen terecht in de \emph{ervaring-set} een andere deel vormt de basis van het negatieve gedeelte van de \emph{zoekruimte}. Omdat een deel van de afdwingbare beperkingen vanaf dan in de \emph{ervaring-set} van de andere processoren wordt ge\"evalueerd (met een andere zoekruimte), is men in staat om zo'n beperking op een objectievere manier te evalueren\footnote{Sommige afdwingbare beperkingen leiden immers enkel tot sterke resultaten in een bepaalde \emph{zoekruimte}.}.
+ 
+\end{itemize}
+
+\subsection{Overzicht}
+
+\section{\emph{ParAdapHH}}

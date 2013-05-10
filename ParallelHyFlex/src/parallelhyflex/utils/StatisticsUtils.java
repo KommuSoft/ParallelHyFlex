@@ -16,6 +16,22 @@ public class StatisticsUtils {
         }
         return sum / vals.length;
     }
+    
+    public static double erf (double z) {
+        double t = 1.0d/(1.0d+0.47047d*Math.abs(z));
+        double poly = t*(0.3480242d+t*(-0.0958798d+t*0.7478556d));
+        double ans = 1.0d-Math.exp(-z*z);
+        if(z >= 0.0d) {
+            return ans;
+        }
+        else {
+            return -ans;
+        }
+    }
+    
+    public static double normalCdf (double mu, double sigma, double x) {
+        return 0.5d+0.5d*erf((x-mu)*Utils.InvSqrt2/sigma);
+    }
 
     public static double mean(Collection<Double> vals) {
         double sum = 0.0d;

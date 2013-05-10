@@ -45,6 +45,7 @@
 
 \newcommand{\argmin}{\ensuremath{\mbox{argmin}}}
 \newcommand{\mean}[2][]{\funf{\EEE_{#1}}{#2}}
+\newcommand{\krdelta}[1]{\funf{\delta}{#1}}
 \newcommand{\Prob}[1]{\funf{\Pr}{#1}}
 
 \newcommand{\comp}[1]{\textsc{\mbox{#1}}}
@@ -121,6 +122,7 @@
 \newcommand{\goodSol}{\sol^{\circ}}
 \newcommand{\SolSet}{\calS}
 \newcommand{\PopSet}{\calP}
+\newcommand{\HypSet}{\calH}
 \newcommand{\hcfun}{c}
 \newcommand{\evalfun}{f}
 \newcommand{\evalfuna}{f'}
@@ -135,3 +137,5 @@
 \newcommand{\ev}[1][]{\ensuremath{\lambda_{#1}}}%right eigenvalue
 
 \SetKwBlock{ParFor}{parfor}{end}
+
+\newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=13.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}

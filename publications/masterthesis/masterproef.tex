@@ -40,6 +40,7 @@
 \begin{document}
 
 \begin{preface}
+\chapterquote{Begegnet uns jemand, der uns Dank schuldig ist, gleich f\"alt uns ein. Wie oft k\"onnen wir jemand begegnen, dem wir Dank schuldig sind, ohne daran zu denken.}{Johann Wolfgang von Goethe}
   Bij deze wil ik iedereen bedanken die het afgelopen academiejaar aan mij gedacht heeft. In de eerste plaats omdat dit waarde hiervan niet opwoog tegen het denken aan iets anders. \cite{gastonVanCamp} stelt dat een mens in 1971 biologisch een waarde heeft van 180 frank ofwel 30.00 euro in 2013.
 \end{preface}
 
@@ -107,12 +108,14 @@
     $\PopSet$					& Een verzameling oplossingen ofwel \emph{populatie}\\
     $\hcfun$					& Harde beperkingen: $\funsig{\hcfun}{\ConfigSet}{\BoolSet}$\\
     $\evalfun$					& Evaluatiefunctie: $\funsig{\evalfun}{\ConfigSet}{\RealSet}$\\
-    $\hittime$					& raaktijd\\
+    $\hittime$					& De raaktijd voor een optimalisatieprobleem in een sequenti\"ele context\\
+    $\phittime$					& De raaktijd voor een optimalisatieprobleem in een parallelle context\\
     $\neighbr$					& Omgeving van een oplossing\\
     $\ev[i,A]$					& De $i$-de eigenwaarde van een matrix $A$. De eigenwaardes zijn gerangschikt van groot naar klein: $\abs{\ev[i,A]}\geq\abs{\ev[i+1,A]}$\\
     $\ev[A]$					& De dominante eigenwaarde van een matrix $A$\\
     $\evl[i,A]$					& De linkse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
     $\evr[i,A]$					& De rechtse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
+    $\krdelta{x}$				& De Kr\"onecker-delta voor een gegeven Booleaanse expressie $x$\\
   \end{tabularx}
 \end{flushleft}
 
@@ -122,7 +125,8 @@
 \include{inleiding}
 \include{hfdst-1}
 \include{hfdst-2}
-% ... en zo verder tot
+\include{hfdst-3}
+\include{hfdst-4}
 \include{hfdst-n}
 \include{besluit}
 

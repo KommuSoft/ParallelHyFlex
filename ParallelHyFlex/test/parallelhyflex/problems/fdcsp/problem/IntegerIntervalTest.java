@@ -68,7 +68,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii = fillRandom(set);
             int val1 = this.randomDomainValue();
             int val2 = this.randomDomainValue();
-            Assert.assertEquals(containsTreeInterval(set, val1, val2), ii.contains(val1, val2));
+            Assert.assertEquals(String.format("(%s,%s) in? %s",val1,val2,ii),containsTreeInterval(set, val1, val2), ii.contains(val1, val2));
         }
     }
 
@@ -82,7 +82,8 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii = fillRandom(set);
             int val1 = this.randomDomainValue();
             int val2 = this.randomDomainValue();
-            Assert.assertEquals(containsTreeInterval(set, val1, val2), ii.contains(new IntegerInterval(val1, val2)));
+            IntegerInterval ii2 = new IntegerInterval(val1,val2);
+            Assert.assertEquals(String.format("%s in? %s",ii2,ii),containsTreeInterval(set, val1, val2), ii.contains(ii2));
         }
     }
 
@@ -109,7 +110,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii1 = fillRandom(set1);
             IntegerInterval ii2 = fillRandom(set2);
             set1.addAll(set2);
-            Assert.assertEquals(this.representable(set1), ii1.canUnion(ii2));
+            Assert.assertEquals(String.format("%s u? %s",ii1,ii2),this.representable(set1), ii1.canUnion(ii2));
         }
     }
 
@@ -233,7 +234,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             TreeSet<Integer> set1 = new TreeSet<>(), set2 = new TreeSet<>();
             IntegerInterval ii1 = fillRandom(set1);
             IntegerInterval ii2 = fillRandom(set2);
-            Assert.assertEquals(ii1.equals(ii2), Utils.arrayEquality(set1.iterator(), set2.iterator()));
+            Assert.assertEquals(String.format("%s ==? %s",ii1,ii2),ii1.equals(ii2), Utils.arrayEquality(set1.iterator(), set2.iterator()));
         }
     }
 

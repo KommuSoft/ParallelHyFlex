@@ -47,7 +47,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
     }
 
     public boolean contains(int low, int high) {
-        return this.low <= low && high <= this.high;
+        return high < low || (this.low <= low && high <= this.high);
     }
 
     public boolean contains(IntegerInterval si) {
@@ -60,7 +60,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
 
     @Override
     public boolean canUnion(IntegerInterval si) {
-        return Math.max(this.low, si.low) - 1 <= Math.min(this.high, si.high);
+        return (Math.max(this.low, si.low) - 1 <= Math.min(this.high, si.high)) || this.empty() || si.empty();
     }
 
     public boolean empty() {
@@ -108,25 +108,16 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
 
     @Override
     public int hashCode() {
-        return 79*this.low+this.high+43687;
+        return 79 * this.low + this.high + 43687;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+        if (obj != null && obj instanceof IntegerInterval) {
+            final IntegerInterval other = (IntegerInterval) obj;
+            return ((this.low == other.low && this.high == other.high) || (this.empty() && other.empty()));
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final IntegerInterval other = (IntegerInterval) obj;
-        if (this.low != other.low) {
-            return false;
-        }
-        if (this.high != other.high) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     @Override
