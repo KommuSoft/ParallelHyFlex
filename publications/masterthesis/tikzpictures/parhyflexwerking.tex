@@ -1,0 +1,58 @@
+\begin{center}
+\selectcolormodel{gray}
+\begin{tikzpicture}[scale=\sc]
+\drawmem{MEM}{8}{3}
+\begin{scope}[yshift=3.5 cm]
+\foreach \x/\y/\i in {-0.9/0/1,-2/0.4/2,-1.7/-0.3/3,2.3/0/4,1.6/0.4/5,1.2/-0.3/6,2.6/-0.65/7,0.7/0.35/8} {
+  \node[hypothesis] (H\i) at (\x,\y) {$H_{\i}$};
+}
+\node [minimum width=4 cm,minimum height=2.5 cm,draw=black] (PSS) at (-1.625,0) {\large{\textbf{+}}};
+\node [minimum width=4 cm,minimum height=2.5 cm,draw=black] (NSS) at (1.625,0) {\large{\textbf{-}}};
+\node [minimum width=9 cm,minimum height=4.5 cm,draw=black] (SS) at (0,-0.25) {};
+\node[anchor=north] at (SS.north) {Zoekruimte};
+\node[solution] (SI) at (-3.75,-1.45) {$s_{1}^{(0)}$};
+\foreach \x in {1,2,3,4} {
+  \coordinate (SIE) at (SI.east);
+  \node[solution] (SI) at (\x-3,-1.45) {$s_{1}^{(\x)}$};
+  \coordinate (SIM\x) at ($0.5*(SIE)+0.5*(SI.west)$);
+  \draw[->] (SIE) -- (SI);
+}
+\node[solution] (SIK) at (3.75,-1.45) {$s_{1}^{(E)}$};
+\draw[->] (SI) -- (SIK);
+\foreach \f/\t in {2/1,3/2,1/3,8/4} {
+  \draw[dashed] (H\f) -- (SIM\t);
+}
+\draw[->] (SI) -- (SIK);
+\draw[->] (SIK) .. controls ($(SIK)+(0,-1)$) and ($(MEM1)+(0,1)$) .. (MEM1);
+\end{scope}
+\begin{scope}[xshift=2 cm,yshift=6 cm]
+\coordinate (HdL) at (SIK.north |- 1.5,-2.5);
+\node[hypothesis] (Hd) at (HdL)  {$H_{d}$};
+\foreach \x in {-0.6,1.4} {
+ \draw (\x,0.25-0.5*2.35) -- (\x,0.25+0.5*2.35);
+}
+\foreach \y/\i/\ma/\va/\mb/\vb/\ev in {0/a/0/0.075/0.5/0.15/0.65,1/b/0.125/0.125/0.375/0.12/0.52,2/c/0.375/0.11/0.0875/0.2/0.42} {
+  \begin{scope}[yshift=0.75*\y cm]
+  \node[hypothesis] (H\i) at (-1,-0.65) {$H_{\i}$};
+  \draw[path fill=green,color=green] plot[domain=-0.5:1.3] (\x,{0.4*exp(-0.5*(\x-\ma)*(\x-\ma)/\va)/sqrt(6.28*\va)-0.8});%exp((\x-\ma)^2/\va)/sqrt(2*\va)
+  \draw[color=red] plot[domain=-0.5:1.3] (\x,{0.4*exp(-0.5*(\x-\mb)*(\x-\mb)/\vb)/sqrt(6.28*\vb)-0.8});
+  \draw[green] (\ma,-0.8) node[anchor=south] {\textbf{+}};
+  \draw[red] (\mb,-0.8) node[anchor=south] {\textbf{-}};
+  \node at (1.8,-0.65) {\ev};
+  \end{scope}
+}
+\node [minimum width=\sc*3.5 cm,minimum height=\sc*2.35 cm,draw=black] (ES) at (0.375,0.25) {};
+\draw[->] (Hd) to node[anchor=west,midway] {?} (ES.south -| Hd.north);
+\draw[dashed,->] (SIK) to node[above,sloped,midway] {\small hypogen} (Hd);
+\node (AM) at (Ha -| 3,0) {\small Amnesie};
+\draw[dashed,->] (Hb) .. controls ($(Hb)+(1,0.5)$) and ($(AM)+(0,3)$) .. (AM);
+\draw (ES.north) node[anchor=south] {Ervaring-set};
+\end{scope}
+\begin{scope}[xshift=-3 cm,yshift=6 cm]
+\node [minimum width=\sc*2.5 cm,minimum height=\sc*2.35 cm,draw=black] (NG) at (0.375,0.25) {};
+\draw (NG.north) node[anchor=south] {Onderhandelaar};
+\coordinate (ESH) at (ES.north -| Ha);
+\draw[->] (ESH) .. controls ($(ESH)+(0,1)$) and ($(NG.north east)+(1,1)$) .. (NG.north east);
+\end{scope}
+\end{tikzpicture}
+\end{center}

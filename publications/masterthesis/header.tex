@@ -5,7 +5,7 @@
 \newcommand{\deflab}[1]{\label{def:#1}}
 \newcommand{\defref}[1]{Definitie \ref{def:#1}}
 \newcommand{\imglab}[1]{\label{fig:#1}}
-\newcommand{\imgref}[1]{Afbeelding \ref{fig:#1}}
+\newcommand{\imgref}[1]{Figuur \ref{fig:#1}}
 \newcommand{\tbllab}[1]{\label{tbl:#1}}
 \newcommand{\tblref}[1]{Tabel \ref{tbl:#1}}
 \newcommand{\alglab}[1]{\label{alg:#1}}
@@ -139,3 +139,22 @@
 \SetKwBlock{ParFor}{parfor}{end}
 
 \newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=13.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
+
+\selectcolormodel{gray}
+\newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{figure}}
+
+\newcommand{\drawmem}[3]{
+\node[draw,rectangle,fill=gray!20,minimum width=\sc*0.5*#2 cm, minimum height=\sc*0.5cm] (#1) at (0,0.5) {};
+\foreach\x in {2,...,#2} {
+  \draw (0.5*\x-0.25*#2-0.5,0.25) -- ++(0,0.5);
+}
+\foreach\x in {#3,...,#2} {
+  \draw (0.5*\x-0.25*#2-0.5,0.25) -- ++(0.5,0.5);
+}
+\foreach\x in {1,...,#2} {
+  \node[minimum height=\sc*0.5 cm,minimum width=\sc*0.5 cm] (#1\x) at (0.5*\x-0.25*#2-0.25,0.5) {$s_{\x}$};
+}
+\draw (#1.north) node[anchor=south] {\small{Geheugen}};
+}
+
+\tikzset{hypothesis/.style={draw=black,regular polygon,regular polygon sides=3,scale=0.7,fill=gray,inner sep=0 pt},solution/.style={draw=black,circle,scale=0.7,inner sep=0 pt}}

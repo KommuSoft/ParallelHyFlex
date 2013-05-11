@@ -63,61 +63,9 @@
 % Deze lijst moet wel manueel aangemaakt worden, bv. als volgt:
 \chapter{Lijst van afkortingen en symbolen}
 \section*{Afkortingen}
-\begin{flushleft}
-  \renewcommand{\arraystretch}{1.1}
-  \begin{tabularx}{\textwidth}{@{}p{22mm}X@{}}%TODO: MODIFIED!!!
-    CHeSC	& Cross-domain Heuristic Search Challenge \\
-    LLH		&Low-level heuristics \\
-    MCHH-S	&Markov Chain Hyper-Heuristic\\
-    GISS	&Generic Iterative Simulated Annealing Search\\
-    DynILS	&Dynamic Iterated Local Search\\
-    ACO-HH	&Ant Colony Optimization Hyper-Heuristic\\
-    HAEA	&Hybrid Adaptive Evolutionary Algorithm\\
-    ISEA	&Iterated Search by Evolutionary Algorithm\\
-    EPH		&Evolutionary Programming Hyper-heuristic\\
-    VNS		&Variable Neighborhood Search\\
-    CBM		&Coalition Based Metaheuristic\\
-    ACO		&Ant Colony Optimization\\
-    SA		&Simulated Annealing\\
-    GA		&Genetic Algorithm\\
-    LS		&Local Search\\
-    ILS		&Iterated Local Search\\
-    VNS		&Variable Neighborhood Search\\
-    LMS		&Local Search Metaheuristics
-  \end{tabularx}
-\end{flushleft}
+\input{afkortingen}
 \section*{Symbolen}
-\begin{flushleft}
-  \renewcommand{\arraystretch}{1.1}
-  \begin{tabularx}{\textwidth}{@{}p{22mm}X@{}}
-    $\BoolSet$					& De verzameling van Booleaanse waarden: $\mathbb{B}=\left\{\mbox{\textbf{true}},\mbox{\textbf{false}}\right\}$. \\
-    $\NatSet$					& De verzameling van natuurlijke getallen: $\mathbb{N}=\left\{0,1,2,\ldots\right\}$ \\
-    $\zeromatrix[m\times n]$			& Een nulmatrix met dimensies $m\times n$\\
-    $\onematrix[m\times n]$			& Een matrix vol enen met dimensies $m\times n$\\
-    $\identitymatrix[m\times n]$		& Een identiteitsmatrix met dimensies $m\times n$\\
-    $\RealSet$					& De verzameling van re\"ele getallen\\
-    $\mean[\fun{\calD}{x}]{\fun{f}{x}}$	& Het gemiddelde van een functie $f$ volgens een verdeling $\calD$\\%: $\mean[\fun{\calD}{x}]{\fun{f}{x}}=\displaystyle\int\fun{f}{x}\fun{\calD}{x}\ dx$\\
-    $\Prob{e}$					& De kans op een gebeurtenis $e$\\
-    $\OpProblem$				& Optimalisatieprobleem\\
-    $\ConfigSet$				& De verzameling van mogelijke configuraties\\
-    $\ConfigOpSet$				& De set van de globaal optimale oplossingen\\
-    $\ConfigValSet$				& De verzameling van geldige configuraties: \\
-    $\sol$					& Een globaal optimale oplossing: $\sol\in\ConfigSet$\\
-    $\bestSol$					& Een globaal optimale oplossing: $\xstar\in\ConfigOpSet$\\
-    $\SolSet$					& Een oplossingsruimte in de context van een metaheuristiek. $S\subseteq X$\\
-    $\PopSet$					& Een verzameling oplossingen ofwel \emph{populatie}\\
-    $\hcfun$					& Harde beperkingen: $\funsig{\hcfun}{\ConfigSet}{\BoolSet}$\\
-    $\evalfun$					& Evaluatiefunctie: $\funsig{\evalfun}{\ConfigSet}{\RealSet}$\\
-    $\hittime$					& De raaktijd voor een optimalisatieprobleem in een sequenti\"ele context\\
-    $\phittime$					& De raaktijd voor een optimalisatieprobleem in een parallelle context\\
-    $\neighbr$					& Omgeving van een oplossing\\
-    $\ev[i,A]$					& De $i$-de eigenwaarde van een matrix $A$. De eigenwaardes zijn gerangschikt van groot naar klein: $\abs{\ev[i,A]}\geq\abs{\ev[i+1,A]}$\\
-    $\ev[A]$					& De dominante eigenwaarde van een matrix $A$\\
-    $\evl[i,A]$					& De linkse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
-    $\evr[i,A]$					& De rechtse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
-    $\krdelta{x}$				& De Kr\"onecker-delta voor een gegeven Booleaanse expressie $x$\\
-  \end{tabularx}
-\end{flushleft}
+\input{symbolen}
 
 % Nu begint de eigenlijke tekst
 \mainmatter

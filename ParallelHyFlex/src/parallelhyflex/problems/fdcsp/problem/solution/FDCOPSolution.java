@@ -52,6 +52,14 @@ public class FDCOPSolution implements Solution<FDCOPSolution> {
     public boolean equalSolution(FDCOPSolution other) {
         return Utils.arrayEquality(this.evals, other.evals) && Utils.arrayEquality(this.values, other.values);
     }
+    
+    public int[] getVariableValues () {
+        return this.values;
+    }
+    
+    public double[] getEvaluationValues () {
+        return this.evals;
+    }
 
     @Override
     public int hashCode() {

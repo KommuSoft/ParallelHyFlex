@@ -1,0 +1,70 @@
+\begin{center}
+\begin{tikzpicture}[scale=\sc]
+\begin{scope}[yshift=-0.2 cm]
+  \node[draw,rectangle,minimum width=\sc*6.5 cm,fill=white, minimum height=\sc*3cm] (PD) at (0.75,-1.4) {};
+  \coordinate (PDL) at ($(PD.north west)+(-0.5,0)$);
+  \draw[<->] (PDL |- PD.south west) to node[above,midway,sloped]{\small{Afhankelijk}} (PDL);
+  \begin{scope}[xshift=1.5 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (LL1) at (-3.35,-0.625) {};
+    \fill (-3.65,-0.55) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_0$}};
+    \fill (-3.35,-0.85) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_1$}};
+    \fill (-3.25,-0.65) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_2$}};
+    \draw (LL1.south) node[anchor=north,yshift=-0.1 cm] {\small{Mutatie}};
+  \end{scope}
+  \begin{scope}[xshift=2.75 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (LL2) at (-3.35,-0.625) {};
+    \fill (-3.65,-0.55) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_3$}};
+    \fill (-3.35,-0.85) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_4$}};
+    \fill (-3.25,-0.65) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_5$}};
+    \fill (-3.25,-0.35) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_6$}};
+    \draw (LL2.south) node[anchor=north,yshift=-0.1 cm] {\small{LS}};
+  \end{scope}
+  \begin{scope}[xshift=4 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (LL3) at (-3.35,-0.625) {};
+    \fill (-3.65,-0.55) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_7$}};
+    \fill (-3.35,-0.85) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_8$}};
+    \draw (LL3.south) node[anchor=north,yshift=-0.1 cm] {\small{RR}};
+  \end{scope}
+  \begin{scope}[xshift=5.25 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (LL4) at (-3.35,-0.625) {};
+    \fill (-3.65,-0.55) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$h_9$}};
+    \draw (LL4.south) node[anchor=north,yshift=-0.1 cm] {\small{Kruising}};
+  \end{scope}
+  \begin{scope}[xshift=6.5 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (OBJ) at (-3.35,-0.625) {};
+    \fill (-3.75,-0.45) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$O_0^*$}};
+    \fill (-3.35,-0.85) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$O_1$}};
+    \fill (-3.25,-0.65) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$O_2$}};
+    \draw (OBJ.south) node[anchor=north,yshift=-0.1 cm] {\small{Objectief$^{\star}$}};
+  \end{scope}
+  \begin{scope}[xshift=1.5 cm,yshift=-1.5 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (DIS) at (-3.35,-0.625) {};
+    \fill (-3.75,-0.45) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$\delta_0$}};
+    \fill (-3.35,-0.85) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$\delta_1$}};
+    \fill (-3.25,-0.65) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$=$}};
+    \draw (DIS.south) node[anchor=north,yshift=-0.1 cm] {\small{Afstand$^{\star}$}};
+  \end{scope}
+  \begin{scope}[xshift=2.75 cm,yshift=-1.5 cm]
+    \node[draw,rectangle,minimum width=\sc*1cm, minimum height=\sc*0.75cm] (HYP) at (-3.35,-0.625) {};
+    \fill (-3.75,-0.45) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$g_0$}};
+    \fill (-3.35,-0.85) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{$g_1$}};
+    \draw (HYP.south) node[anchor=north,yshift=-0.1 cm] {\small{Hypogen$^{\star}$}};
+  \end{scope}
+  \fill (0.45,-2.25) circle (0.05cm) node[anchor=west,xshift=0.125 cm] {\small{Initialisatie functie $I$}};
+  \node[draw,rectangle,inner sep=1pt,minimum width=\sc*2 cm, minimum height=\sc*0.5 cm] at (1.35,-1.75) {\small{Beperkingsruimte$^{\star}$ $\HypSet$}};
+\end{scope}
+
+\begin{scope}[xshift=-0.5 cm]
+  \node[draw,rectangle,fill=white,minimum width=\sc*4 cm, minimum height=\sc*2cm] (PI) at (0,1.1) {};
+  \coordinate (PIL) at ($(PI.north west)+(-0.5,0)$);
+  \draw[<->] (PIL |- PI.south west) to node[above,midway,sloped]{\small{Onafhankelijk}} (PIL);
+  \drawmem{MEM}{7}{3}
+  \node[draw,rectangle,fill=gray!20,minimum width=\sc*3.5 cm, minimum height=\sc*0.5cm] (EXC) at (0,1.5) {Uitvoermechanisme};
+\end{scope}
+\node[draw,rectangle,fill=orange!20,minimum width=\sc*2.25 cm, minimum height=\sc*2cm] (PH) at (2.875,1.1) {};
+\draw (PH.north) node[anchor=south] {\small{\emph{\textbf{ParHyFlex}}}$^{\star}$};
+\node[draw,fill=white,rectangle,minimum width=\sc*2 cm, minimum height=\sc*0.5 cm] at (2.875,1.1) {\small{Ervaring$^{\star}$}};
+\node[draw,fill=white,rectangle,minimum width=\sc*2 cm, minimum height=\sc*0.5 cm] at (2.875,1.7) {\small{Uitwisseling$^{\star}$}};
+\node[draw,fill=white,rectangle,minimum width=\sc*2 cm, minimum height=\sc*0.5 cm] at (2.875,0.5) {\small{Zoekruimte$^{\star}$}};
+\end{tikzpicture}
+\end{center}
