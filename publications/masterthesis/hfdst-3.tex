@@ -3,7 +3,7 @@
 
 \chapterquote{A skilled transition team leader will set the general goals for a transition and then confer on the other team leaders working with him the power to implement those goals.}{Richard V. Allen}
 
-Op basis van de analyse in hoofdstuk \ref{hoofdstuk:2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{https://www.github.com/KommuSoft/ParallelHyFlex??} en wordt nog verder actief ontwikkeld. Daar het beschrijven van parallelle algoritmes complex is, geven we eerst een algemeen overzicht. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
+Op basis van de analyse in hoofdstuk \ref{hoofdstuk:2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{https://www.github.com/KommuSoft/ParallelHyFlex} en wordt nog verder actief ontwikkeld. Daar het beschrijven van parallelle algoritmes complex is, geven we eerst een algemeen overzicht. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
 
 \section{Systeem}
 
@@ -74,7 +74,9 @@ Telkens wanneer \'e\'en van de processoren een nieuwe oplossing voortbrengt, kan
 
 Elke processor houdt een \emph{ervaring-set} bij. Het is de bedoeling dat deze ervaring wordt gebruikt om een nieuwe zoekruimte af te dwingen. Bovendien kan ervaring uitgewisseld worden met andere processoren zodat deze later ook hun zoekruimtes aanpassen. Tegelijk willen we voorkomen dat de zoekruimtes te homogeen worden en dus potentieel sterke oplossingen genegeerd worden. Dit zijn de taken van de \emph{onderhandelaar}. De \emph{onderhandelaar} is een component die af en toe geactiveerd wordt. Een deel van de afdwingbare beperkingen worden uit de \emph{ervaring-set} gehaald om opgenomen te worden in het positieve component van de \emph{zoekruimte}. Deze beperkingen worden via groepscommunicatie doorgestuurd naar de andere processoren. Een deel van de ontvangen beperkingen komen terecht in de \emph{ervaring-set} een andere deel vormt de basis van het negatieve gedeelte van de \emph{zoekruimte}. Omdat een deel van de afdwingbare beperkingen vanaf dan in de \emph{ervaring-set} van de andere processoren wordt ge\"evalueerd (met een andere zoekruimte), is men in staat om zo'n beperking op een objectievere manier te evalueren\footnote{Sommige afdwingbare beperkingen leiden immers enkel tot sterke resultaten in een bepaalde \emph{zoekruimte}.}.
 
-\subsubsection{Invloed van hoofdstuk \ref{hoofdstuk:2}}
+\subsubsection{Invloed van eerdere studies}
+
+
 
 \subsection{Overzicht}
 

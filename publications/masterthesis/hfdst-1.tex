@@ -14,39 +14,42 @@ De ``Wet van Moore''\cite{4785860} stelt dat het aantal transistors verdubbelt e
 Een reactie is de introductie van het ``\emph{parallel rekenen}'' ofwel ``\emph{parallel computing}''. Een probleem wordt opgelost door programma's die op verschillende processoren tegelijk te draaien en elk een deel van het probleem oplossen. Door berichten uit te wisselen tussen de verschillende processoren of door een gemeenschappelijk geheugen aan te bieden communiceren de programma's die op de verschillende processoren draaien met elkaar.
 
 \paragraph{}
-Door met verschillende processoren te werken . Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde multi-core processoren - processoren die andere hardware zoals geheugens delen - ook minder energie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken. Ook kunnen sommige problemen enkel opgelost worden met parallelle algoritmen: sommige simulaties gebruiken grote hoeveelheden geheugen die niet aanwezig zijn op \'e\'en machine. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost.
+Door met verschillende processoren te werken hoopt men de rekentijd drastisch naar beneden te kunnen halen. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde multi-core processoren - processoren die andere hardware zoals geheugens delen - ook minder energie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken. Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: weersimulaties gebruiken bijvoorbeeld grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost.
 
 \subsubsection{Prestaties van parallelle algoritmen}
 
 De prestaties van een parallel algoritme worden meestal gemeten op basis van \emph{speed-up}: de mate waarin we virtueel de kloksnelheid kunnen opdrijven. We defini\"eren eerst enkele concepten waarna we kort een taxonomie hieromtrent toelichten.
 
-\begin{definition}[Wall time, Speed-up]
+\begin{definition}[Wall time, Speed-up, Effici\"entie]
 We defini\"eren de \emph{wall time} $T$ als de tijd tussen de start van het algoritme en het moment waarop het algoritme stopt. De \emph{wall time} maakt abstractie van het aantal processoren. De \emph{speed-up} is de verhouding tussen de \emph{wall-time} bij \'e\'en processor $T_1$ en de \emph{wall-time} bij $p$ processoren $T_p$:
 \begin{equation}
 \funm{speed-up}{p}=\displaystyle\frac{T_1}{T_p}
 \end{equation}
-Indien de speedup gelijk is aan $p$ bij $p$ processoren, spreken we van \emph{lineaire speed-up}. Bij hogere versnellingen spreekt men van \emph{superlinaie speed-up}.
+In het geval $\funm{speed-up}{p}\approx p$ spreken we over \emph{lineaire speed-up}. In het geval $\funm{speed-up}{p}>\funm{speed-up}{p+1}$ is er sprake van \emph{negatieve speed-up}. Wanneer we de \emph{speed-up} delen door het aantal processoren $p$ spreken we over de \emph{effici\"entie}.
+\begin{equation}
+\funm{effici\"entie}{p}=\funm{speed-up}{p}/p
+\end{equation}
 \end{definition}
 
 \paragraph{}
-In eerder uitzonderlijke omstandigheden stelt men effectief superlineaire versnellingen vast. Dit is doorgaans het gevolg van het feit dat de hardware effectief effici\"enter gebruikt kan worden dan louter het opdrijven van de kloksnelheid. We kunnen hierbij bijvoorbeeld denken aan cache: bij multi-core processoren hebben de verschillende ``\emph{kernen}'' ofwel ``\emph{cores}'' meestal een eigen segment aan cache. Sommige gegevens worden gebruikt door alle processoren, bijgevolg wordt deze data in de gemeenschappelijke cache opgeslagen. Een gevolg is dat er meer ruimte beschikbaar is in de aparte caches voor specifieke data. Men noemt het effect van superlineaire versnellingen dan ook meestal het ``\emph{cache-effect}''\cite{cacheEffect}.
+Indien men een voor een ineffici\"ent algoritme een parallel equivalent schrijft, stelt men vaak een lineaire speed-up vast. Dit komt omdat een na\"ief algoritme meestal geen relaties tussen de verschillende componenten in de invoer zal uitbuiten. De lineaire speed-up is bijgevolg eerder optimistisch. Een sterkere metriek is daarom de \emph{strong speed-up}. In dit geval wordt de snelste parallelle implementatie tegenover de sterkste sequenti\"ele implementatie geplaatst. Omdat algoritmes in een parallelle context meestal maar een beperkt deel van de data ter beschikking hebben, wordt het ontwikkelen van lineaire speed-up bijgevolg complexer en in sommige gevallen zelfs onmogelijk.
+
+\paragraph{}
+In eerder uitzonderlijke omstandigheden stelt men effectief superlineaire versnellingen vast. Dit is te wijten aan het effici\"enter gebruik van de aanwezig hardware. Cache is hierbij een uitstekend voorbeeld: bij multi-core processoren hebben de verschillende ``\emph{kernen}'' ofwel ``\emph{cores}'' meestal een eigen segment aan cache. Sommige gegevens worden gebruikt door alle processoren, bijgevolg wordt deze data in de gemeenschappelijke cache opgeslagen. Een gevolg is dat er meer ruimte beschikbaar is in de aparte caches voor specifieke data. Men noemt het effect van superlineaire versnellingen dan ook meestal het ``\emph{cache-effect}''\cite{cacheEffect}.
 
 \subsubsection{Beperkingen en oplossingen}
 
-Het verhogen van de snelheid met behulp van parallelle algoritmen is meestal een feit. Al is het optekenen van lineaire speedup geen evidentie. Dit komt onder meer door de ``\emph{Wet van Amadahl}''\cite{Amdahl:1967:VSP:1465482.1465560}. De meeste algoritmes behouden immers een zekere nood aan het sequentieel uitvoeren van sommige instructies. De Wet van Amadahl stelt dat gegeven het aantal instructies die sequentieel moeten worden uitgevoerd, er een plafond bestaat en dat men met een willekeurig aantal processoren altijd onder dit plafond zal blijven. De ``\emph{Wet van Gustafson}''\cite{Gustafson:1988:RAL:42411.42415} stelt dan weer dat wanneer we de probleemgrootte arbitrair kunnen opdrijven, programma's wel een lineaire speedup kunnen halen. Dit komt omdat de fractie aan de nodige sequenti\"ele instructies verwaarloosbaar klein wordt. Vermits we vooral ge\"interesseerd in het parallelliseren van grote optimalisatieproblemen, behoort linaire speedup misschien alsnog tot de mogelijkheden.
-
-\paragraph{}
-Indien men een voor een ineffici\"ent algoritme een parallel equivalent schrijft, stelt men vaak een lineaire speed-up vast. Dit is meestal te wijten omdat een na\"ief algoritme geen relaties tussen de verschillende componenten in de invoer uitbuit. De lineaire speed-up is bijgevolg eerder optimistisch. Een sterkere metriek is daarom de \emph{strong speed-up}. In het geval van \emph{strong speed-up} wordt de snelste parallelle implementatie tegenover de sterkste sequenti\"ele implementatie geplaatst. Omdat algoritmes in een parallelle context meestal maar een beperkt deel van de data ter beschikking hebben, wordt het ontwikkelen van lineaire speed-up bijgevolg moeilijker.
+Het verhogen van de snelheid met behulp van parallelle algoritmen is meestal een feit. Het optekenen van lineaire speed-up is echter geen evidentie. Dit komt onder meer door de ``\emph{Wet van Amadahl}''\cite{Amdahl:1967:VSP:1465482.1465560}. De meeste algoritmes hebben een zekere nood aan het sequentieel uitvoeren van bepaalde instructies. De Wet van Amadahl stelt dat gegeven de fractie van het aantal verplicht sequenti\"ele instructies, er een plafond bestaat en dat men met een willekeurig aantal processoren altijd onder dit plafond zal blijven. De ``\emph{Wet van Gustafson}''\cite{Gustafson:1988:RAL:42411.42415} stelt dan weer dat wanneer we de probleemgrootte arbitrair kunnen opdrijven, programma's wel een lineaire speed-up kunnen halen. Dit komt omdat de fractie aan de nodige sequenti\"ele instructies verwaarloosbaar klein wordt. Vermits we vooral ge\"interesseerd in het parallelliseren van grote optimalisatieproblemen, behoort linaire speedup misschien alsnog tot de mogelijkheden. Een belangrijke opmerking is dat beide theorie\"en geen rekening houden met de eventuele overhead die bij parallelle algoritmen komt kijken zoals bijvoorbeeld het doorsturen van data over een netwerk.
 
 \subsection{De belangrijkste parallellisatie paradigma}
 
 Meestal beschouwd men twee verschillende modellen met betrekking tot parallellisatie: \emph{Message Passing Interface (MPI)} en \emph{Tuple Space}. We geven hieronder een korte samenvatting.
+
 \subsubsection{Message Passing Interface}
 
-In het geval van MPI beschouwen we een set \emph{agents}: processoren die onafhankelijk werken op een eigen stuk geheugen. Deze agenten interagerend door het uitwisselen van berichten over een netwerk. Dit hoeft niet te betekenen dat de agenten ook effectief draaien op verschillende machines: men kan op elke \emph{core} van een machine een onafhankelijke agent laten werken en vervolgens de boodschappen laten bezorgen met behulp van de faciliteiten die de meeste besturingssystemen aanbieden.
+In het geval van \emph{MPI} beschouwen we een set \emph{agents}: processoren die onafhankelijk werken op een eigen stuk geheugen. Deze agenten interagerend door het uitwisselen van berichten over een netwerk. Dit hoeft niet te betekenen dat de agenten ook effectief draaien op verschillende machines: men kan op elke \emph{core} van een machine een onafhankelijke agent laten werken en vervolgens de boodschappen laten bezorgen met behulp van de faciliteiten die de meeste besturingssystemen aanbieden.
 
 \paragraph{}
-
 In het geval de \emph{agents} wel degelijk op verschillende machines draaien werken ze meestal volgens een bepaalde \emph{topologie}: een structuur die bepaalt welke machines met elkaar verbonden zijn. Een belangrijk aspect in \emph{MPI} is ``\emph{Group Communication}'': agenten die met een significant gedeelte van de andere agenten tegelijk communiceren. Voor elke topologie zijn er dan ook algoritmes uitgewerkt om het aantal berichten tot een minimum te beperken.
 
 \subsubsection{Tuple Space}
@@ -195,9 +198,8 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 
 \emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we tot een betere oplossing komen, wordt de eerste omgeving $\neighbr_1$ opnieuw de actieve omgeving. In het andere geval kiezen we de volgende omgeving $\neighbr_{i+1}$. Op het moment dat alle omgevingen zijn uitgeput beginnen we ook opnieuw bij $\neighbr_1$.%in het geval we een lokaal optimum volgens omgeving $\calN_i$ bereiken, zullen we \emph{local search} toepassen op basis van de volgende omgeving $\calN_i$ in de hoop dat deze omgeving ons naar een betere oplossing zal leiden. In het geval alle
 
-% \subsubsection{Tabu Search}
-% 
-% \emph{Tabu Search}
+\subsubsection{Tabu Search}
+In het geval van \emph{Tabu Search} is de omgeving de unie van een reeks deelomgevingen. Onder bepaalde voorwaarden kan men beslissen een deel van de omgeving of oplossingsruimte tijdelijk ontoegankelijk te verklaren. De acties of locaties vallen op dat moment onder ``\emph{tabu}''. Dit kan bijvoorbeeld nuttig zijn om eerdere acties niet plots ongedaan te maken. Acties of oplossingsruimtes vallen maar tijdelijk onder tabu: na een aantal iteraties worden de elementen weer toegankelijk.
 
 \subsection{Classificatie in de ``Zoo van de Metaheuristieken''}
 
@@ -460,11 +462,24 @@ In het geval van \emph{Evolutionary Algorithms} ziet men drie bronnen tot parall
 \end{enumerate}
 
 \paragraph{}
-In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke speed-ups: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{alba4-43} rapporteert bijvoorbeeld een negatieve speed-up door het grote aantal synchronisatiestappen.
+In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke speed-ups: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve speed-up door het grote aantal synchronisatiestappen.
+
+\paragraph{}
+Crainic en Toulouse\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemene types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van Alba. \cite{crainicAndToulouse} stellen dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. Crainic en Toulouse argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in Alba minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
+
+\paragraph{}
+Crainic en Toulouse maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.
+
+\subsubsection{Empirische resultaten}
+
+Alba geeft in zijn boek een uitgebreid overzicht over verschillende pogingen om metaheuristieken te parallelliseren. In een groot aantal families van metaheuristieken is lineaire speed-up geen evidentie. In het geval van \emph{Ant Colony Optimisation (ACO)} bijvoorbeeld rapporteren zowel \cite{alba8-42,alba8-38,alba8-7,alba8-16} lage effici\"entie (meestal rond de 0.40) die meestal daalt naarmate het aantal processoren toeneemt. Andere paradigma's, zoals bijvoorbeeld \emph{Tabu Search}, halen wel sterke resultaten die meestal lineaire speed-up benaderen.
+
+\subsubsection{Parallellisatie met behulp van aangepast hardware}
+Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.
 
 \section{Hyperheuristieken}
 
-Deze masterthesis behandelt het parallelliseren van hyperheuristieken. Hyperheuristieken zijn een veralgemening van metaheuristieken. In \algref{metaheuristicGeneral} genereert het algoritme een nieuwe populatie uit de vorige populatie. Hoe dit concreet gebeurt is de verantwoordelijkheid van de metaheuristiek. Een hyperheuristiek werkt met een set transitiefuncties zonder de details van de functies te kennen. \algref{hyperheuristicsGeneral} geeft een beschrijving op hoog niveau hoe een hyperheuristiek met een sequentie transitiefuncties een oplossing probeert te genereren. De sequentie van transitiefuncties heeft dan ook een sterke invloed op het eindresultaat. Om tot een sequentie van transities te komen die effici\"ent een oplossing kan vinden wordt meestal gebruik gemaakt van online machine learning technieken.
+Deze masterthesis behandelt het parallelliseren van hyperheuristieken. Hyperheuristieken zijn een veralgemening van metaheuristieken. In \algref{metaheuristicGeneral} genereert het algoritme een nieuwe populatie uit de vorige populatie. Hoe dit concreet gebeurt is de verantwoordelijkheid van de metaheuristiek. Een hyperheuristiek werkt met een set transitiefuncties zonder de details van de functies te kennen\footnote{In de meeste implementaties kent de hyperheuristiek wel enkele gegevens over de transitiefunctie (zo worden transitiefuncties meestal onderverdeelt in verschillende types).}. \algref{hyperheuristicsGeneral} geeft een beschrijving op hoog niveau hoe een hyperheuristiek met een oplossing zoekt door een sequentie transitiefuncties toe te passen op een initi\"ele populatie. De hyperheuristiek maakt dan gebruik van on-line machine learning technieken om een zo optimaal mogelijke sequentie te genereren.
 
 \begin{algorithm}[H]
  \SetAlgoLined
@@ -480,7 +495,12 @@ Deze masterthesis behandelt het parallelliseren van hyperheuristieken. Hyperheur
  \alglab{hyperheuristicsGeneral}
 \end{algorithm}
 
+\paragraph{}
+Het doel van een hyperheuristiek is meestal om een grote verscheidenheid aan problemen te kunnen oplossen. Dit kunnen problemen zijn die werken met dezelfde transitiefuncties maar waar metaheuristieken soms bedrogen kunnen worden. Men kan echter ook verschillende problemen oplossen door telkens een andere set transitiefuncties in te voeren.
+
 \subsubsection{Parallelle Hyperheuristieken}
+
+
 
 % \begin{algorithm}[H]
 %  \SetAlgoLined
