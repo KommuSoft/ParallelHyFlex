@@ -1,6 +1,6 @@
 \begin{flushleft}
   \renewcommand{\arraystretch}{1.1}
-  \begin{tabularx}{\textwidth}{@{}p{22mm}X@{}}
+  \begin{tabularx}{\textwidth}{@{}p{18mm}X@{}}
     $\BoolSet$					& De verzameling van Booleaanse waarden: $\mathbb{B}=\left\{\mbox{\textbf{true}},\mbox{\textbf{false}}\right\}$. \\
     $\NatSet$					& De verzameling van natuurlijke getallen: $\mathbb{N}=\left\{0,1,2,\ldots\right\}$ \\
     $\zeromatrix[m\times n]$			& Een nulmatrix met dimensies $m\times n$\\
@@ -12,10 +12,10 @@
     $\OpProblem$				& Optimalisatieprobleem\\
     $\ConfigSet$				& De verzameling van mogelijke configuraties\\
     $\ConfigOpSet$				& De set van de globaal optimale oplossingen\\
-    $\ConfigValSet$				& De verzameling van geldige configuraties: \\
+    $\ConfigValSet$				& De verzameling van geldige configuraties: $\ConfigValSet=\accl{x|x\in\ConfigSet:\fun{c}{x}=\true{}}$\\
     $\sol$					& Een globaal optimale oplossing: $\sol\in\ConfigSet$\\
     $\bestSol$					& Een globaal optimale oplossing: $\xstar\in\ConfigOpSet$\\
-    $\SolSet$					& Een oplossingsruimte in de context van een metaheuristiek. $S\subseteq X$\\
+    $\SolSet$					& Een oplossingsruimte in de context van een metaheuristiek. $\SolSet\subseteq\ConfigValSet$\\
     $\PopSet$					& Een verzameling oplossingen ofwel \emph{populatie}\\
     $\hcfun$					& Harde beperkingen: $\funsig{\hcfun}{\ConfigSet}{\BoolSet}$\\
     $\evalfun$					& Evaluatiefunctie: $\funsig{\evalfun}{\ConfigSet}{\RealSet}$\\
@@ -27,5 +27,7 @@
     $\evl[i,A]$					& De linkse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
     $\evr[i,A]$					& De rechtse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
     $\krdelta{x}$				& De Kr\"onecker-delta voor een gegeven Booleaanse expressie $x$\\
+    $\TranSet$					& Set van transitiefuncties\\
+    $p$							& Aantal processoren\\
   \end{tabularx}
 \end{flushleft}

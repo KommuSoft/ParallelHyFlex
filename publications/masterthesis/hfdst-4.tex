@@ -1,8 +1,6 @@
 \chapter{Resultaten en Speed-up}
 \label{hoofdstuk:4}
-
-
-
+S
 \section{Probleemset}
 
 \subsection{\prbm{Max3-Sat}}
@@ -14,7 +12,7 @@ We kunnen \prbm{3Sat} omvormen tot het optimalisatieprobleem \prbm{Max3-Sat} doo
 
 \subsubsection{Motivatie}
 
-\prbm{Sat} is een \comp{NP-compleet} probleem en bijgevolg kan men elk probleem in \emph{NP} omzetten naar \prbm{Sat}. Door de prestaties van \prbm{Sat} te analyseren, analyseren we dus impliciet een grote set van problemen die allemaal omgezet kunnen worden.
+\prbm{Sat} is een \comp{NP-compleet} probleem en bijgevolg kan men elk probleem in \comp{NP} omzetten naar \prbm{Sat}. Door de prestaties van \prbm{Sat} te analyseren, analyseren we dus impliciet een grote set van problemen die allemaal omgezet kunnen worden.
 
 \paragraph{}
 \prbm{Sat} is een probleem die geen directe connectie met een praktisch probleem heeft. Hierdoor zijn de heuristieken doorgaans vrij inherent. Hierdoor zijn resultaten ook minder het gevolg van de set van onderliggende heuristieken. Dit laat ons beter toe de prestaties van de parallelle hyperheuristiek te evalueren.
@@ -30,6 +28,10 @@ Een laatste argument die we aanhalen in verband met \prbm{Sat} is de compactheid
 In deze subsubsectie beschouwen we kort de verschillende ge\"implementeerde functies (transitie-functies, afstandsmetrieken,...) in het \prbm{Sat} probleem. Een oplossing wordt voorgesteld als een bitvector: elke variabele heeft een vaste index en de $i$-de bit in de vector bepaalt de overeenkomstige waarde van de $i$-de variabele.
 
 \begin{itemize}
+ \item Initialisatie ($I$):
+\begin{description}
+ \item [$I_1$] Genereert een willekeurige bitvector.
+\end{description}
  \item Afstandsfuncties ($\delta$):
 \begin{description}
  \item [$\delta_1$] De Hamming-afstand tussen de twee verschillende bitvectors.
