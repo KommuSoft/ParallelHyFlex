@@ -485,101 +485,34 @@ Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan
 \section{Hyperheuristieken}
 
 Deze masterthesis behandelt het parallelliseren van hyperheuristieken. Hyperheuristieken zijn een veralgemening van metaheuristieken. In \algref{metaheuristicGeneral} genereert het algoritme een nieuwe populatie uit de vorige populatie. Hoe dit concreet gebeurt is de verantwoordelijkheid van de metaheuristiek. Een hyperheuristiek gaat in de eerste plaats op zoek naar een sterke oplossingsmethode, niet een sterke oplossing\cite{Burke_aclassification}.
+\begin{definition}[Hyperheuristiek\cite{Burke_aclassification}]
+Een hyperheuristiek is een automatische methodologie voor het selecteren of genereren van heuristieken om moeilijke computationele zoekproblemen op te lossen.
+\end{definition}
+
 \paragraph{}
-Met deze definitie vallen twee methodologi\"en samen:
+De definitie zelf maakt hierbij al een onderscheid tussen twee mechanismes\cite{Burke_aclassification}:
 \begin{enumerate}
- \item De gebruiker stelt een set transitiefuncties ter beschikking. De hyperheuristiek past vervolgens een sequentie van deze functies toe op de populatie.
- \item Men stelt componenten ter beschikking die de hyperheuristiek zelf kan samenstellen tot transitiefuncties.
+ \item \emph{Heuristic selection}: de hyperheuristiek kiest een transitiefunctie die wordt toegepast op de populatie.
+ \item \emph{Heuristic generation}: de hyperheuristiek ontwikkelt zelf transitiefuncties op basis van aangereikte componenten.
 \end{enumerate}
 
-werkt met een set transitiefuncties zonder de details van de functies te kennen\footnote{In de meeste implementaties kent de hyperheuristiek wel enkele gegevens over de transitiefunctie (zo worden transitiefuncties meestal onderverdeelt in verschillende types).}. \algref{hyperheuristicsGeneral} geeft een beschrijving op hoog niveau hoe een hyperheuristiek met een oplossing zoekt door een sequentie transitiefuncties toe te passen op een initi\"ele populatie. De hyperheuristiek maakt dan gebruik van on-line machine learning technieken om een zo optimaal mogelijke sequentie te genereren.
+Het selecteren of genereren van een hyperheuristiek kan op verschillende manieren gebeuren. Men maakt meestal een onderscheid tussen \emph{no-learning}, \emph{offline learning} en \emph{online learning}.
 
-\begin{algorithm}[H]
- \SetAlgoLined
- Bereken een initi\"ele set van oplossingen $\PopSet_1$ en hun fitness-waarde\;
- $b_1\leftarrow\displaystyle\argmin_{\sol\in\PopSet_1}{\fun{\evalfun}{\sol}}$\;
- \Repeat{het stopcriterium is bereikt}{
-  Voer een transitiefunctie $h_i\in\TranSet$ op \'e\'en of meer oplossingen in $\PopSet_{t}$ en genereer hiermee $\PopSet_{t+1}$\;
-  $b_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1}\cup\accl{b_t}}{\fun{\evalfun}{\sol}}$\;
-  $t\leftarrow t+1$\;
- }
- \KwRet{$b_t$}
- \caption{Hoog niveau beschrijving van een hyperheuristiek.}
- \alglab{hyperheuristicsGeneral}
-\end{algorithm}
-
+\subsection{Motivatie}
+Meestal gebruikt men hyperheuristieken in het geval het probleem complex is en men dus geen metaheuristiek kan voorstellen die het probleem effectief oplost. Meestal is dit het geval bij problemen waar de instanties heel divers kunnen zijn, en men in het ontwerp van de metaheuristiek er niet in slaagt alle families van probleeminstanties te beschouwen.
 \paragraph{}
-Het doel van een hyperheuristiek is om de doeltreffendheid te verhogen tegenover een metaheuristiek. Metaheuristieken zijn geprogrammeerd met een bepaald probleem in het achterhoofd. Speciale gevallen van het probleem zijn soms minder effectief op te lossen. Hyperheuristieken kunnen in dat geval een oplossing bieden.
+Hyperheuristieken kunnen ook ingezet worden bij de ontwikkeling van een mechanisme die verschillende problemen kan oplossen. De set van transitiefuncties (of componenten) maakt immers deel uit van de invoer. Door andere functies in te voeren kan men andere problemen oplossen. Hyperheuristieken worden daarom vaak voorgesteld als een oplossingstechniek die er op termijn moet in slagen alle optimalisatieproblemen benaderend op te lossen.
 
+\subsection{Het effect van de transitiefuncties}
+\cite{misirEffect} onderzoekt in welke mate het invoeren van andere transitiefuncties tot andere resultaten leidt. In plaats van totaal verschillende transitiefuncties in te voeren werden er echter varianten op bestaande transitiefuncties gebruikt waarbij de onderliggende transitiefunctie simpelweg een aantal keer werd herhaald. Dit leidt er dus toe dat de omgeving van een transitiefunctie sterker wordt.
 \paragraph{}
-Naast het oplossen van een groter aantal probleeminstanties, kunnen hyperheuristieken ook worden ingezet om een grote familie aan optimalisatieproblemen op te lossen. Vermits de transitiefuncties een vorm van invoer zijn, kan men een ander probleem oplossen door andere transitiefuncties te injecteren. Op termijn hoopt men dat men hiermee een algoritme kan ontwikkelen die eender welk optimalisatieprobleem kan oplossen.
+Vermits de achterliggende transitiefuncties echter dezelfde waren, verwachtte men dat hyperheuristieken die in de studie werden onderzocht verhoudingsgewijs even sterk zouden scoren. Dit bleek echter niet het geval te zijn. Hyperheuristiek die minder sterk scoorden op de orginele transitiefuncties, scoorden soms beter op de afgeleide heuristieken. Dit resultaat Vormt een indicatie dat de huidige hyperheuristieken momenteel onvoldoende leren de effecten van de onderliggende heuristieken kunnen begrijpen.
 
-\subsubsection{Het effect van de transitiefuncties als een metriek voor de huidige stand van zaken}
-Sinds een tiental jaar doet men actief onderzoek naar hyperheuristieken.
-
-\subsubsection{Parallelle Hyperheuristieken}
+\subsection{Parallelle Hyperheuristieken}
 
 
 
-% \begin{algorithm}[H]
-%  \SetAlgoLined
-%  \KwData{}
-%  \KwResult{how to write algorithm with \LaTeX2e }
-%  \ParFor($i=1\ldots p$){
-%   Bereken een initi\"ele set van oplossingen $\PopSet_{1,i}$ en hun fitness-waarde\;
-%   $b_{1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{1,i}}{\fun{\evalfun}{\sol}}$\;
-%  }
-%  $B_1\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{1,1},b_{1,2},\ldots,b_{1,p}}}{\fun{\evalfun}{\sol}}$\;
-%  $t\leftarrow1$\;
-%  \Repeat{het stopcriterium is bereikt}{
-%    \ParFor($i=1\ldots p$){
-% 	Genereer op basis van $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1,i}$ samen met hun fitness-waarde\;
-% 	$b_{t+1,i}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1,i}\cup\accl{b_{t,i}}}{\fun{\evalfun}{\sol}}$\;
-%    }
-%    $B_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\accl{b_{t+1,1},b_{t+1,2},\ldots,b_{t+1,p}}}{\fun{\evalfun}{\sol}}$\;
-%    $t\leftarrow t+1$\;
-%  }
-%  \KwRet{$B_t$}
-%  \caption{Hoog niveau beschrijving van een parallelle metaheuristiek.}
-%  \alglab{parallelMetaheuristicGeneral}
-% \end{algorithm}
 
-% \begin{figure}
-% \centering
-% \begin{tikzpicture}
-% \foreach \a/\x/\y/\t in {0/0/2/Doel,1/5/0/Niet-doel,2/7/0/Initieel,3/9/0/Limiet} {
-%   \node (L\a) at (\x,-\y+0.5) {\t};
-% }
-% \foreach \x/\t in {2/1,3/2,5/g} {
-%   \node[draw=black,minimum width=1.5 cm,rectangle] (G\x) at (0,-\x) {$\PopSet_{\t}$};
-% }
-% \node[draw=black,dashed,fit=(L0) (G2) (G5),minimum width=1.5 cm,inner sep=10pt,rectangle] (GA) {};
-% \foreach \x/\t/\u in {0/g+1/1,1/g+2/2,2/g+3/3,4/i/i-g,6/j/j-g,8/N+g/N} {
-%   \node[draw=black,minimum width=1.5 cm,rectangle] (P\x) at (5,-\x) {$\PopSet_{\t}$};
-%   \node (IP\x) at (P\x -| L2) {$\hat{\alpha}_{\u}$};
-%   \node (EP\x) at (P\x -| L3) {$w_{\u}$};
-%   \draw[->] (P\x.west) to node[above,midway,sloped]{$1-\hat{v}_{\u}$} (GA);
-% }
-% \node[draw=black,dashed,fit= (L1) (L3) (P0) (P8),minimum width=1.5 cm,inner sep=10pt,rectangle] (PA) {};
-% \coordinate (LC) at ($(PA.south)+(0,-0.25)$);
-% \coordinate (TR) at ($(PA.north east)+(0.25,0.25)$);
-% \draw[->] (PA.south) -- ++(0,-0.25) to node[above,midway,sloped]{$1-\lambda$} (GA.south |- LC) -- (GA.south);
-% \draw[->] (PA.north) -- ++(0,0.25) to node[above,midway,sloped]{$\lambda$} (TR) |- (PA.east);
-% \end{tikzpicture}
-% \caption{Schematische voorstelling van het effect van de parameters}
-% \end{figure}
-
-% \begin{figure}
-% \begin{tikzpicture}[scale=4,domain=0.1:0.9]
-% \draw[very thin,color=gray] (-0.1,-0.1) grid (1.1,1.1);
-% \draw[->] (-0.2,0) -- (1.2,0) node[right] {$\lambda$};
-% \draw[->] (0,-0.2) -- (0,1.2) node[above] {$\mean{\theta}$};
-% \foreach \s/\t in {0.1/,0.05/dashed,0.025/dotted} {
-%   \draw[\t] plot[id=x] function{\s/(x*(1-x))} node[right] {$\sigma=\s$};
-% }
-% \end{tikzpicture}
-% \caption{Invloed van de parameter $\lambda$ op de raaktijd}
-% \end{figure}
 \section{Besluit van dit hoofdstuk}
 Als je in dit hoofdstuk tot belangrijke resultaten of besluiten gekomen
 bent, dan is het ook logisch om het hoofdstuk af te ronden met een
