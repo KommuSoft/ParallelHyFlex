@@ -13,32 +13,39 @@ De ``Wet van Moore''\cite{4785860} stelt dat het aantal transistors verdubbelt e
 Een reactie is de introductie van het ``\emph{parallel rekenen}'' ofwel ``\emph{parallel computing}''. Een probleem wordt opgelost door programma's die op verschillende processoren tegelijk te draaien en elk een deel van het probleem oplossen. Door berichten uit te wisselen tussen de verschillende processoren of door een gemeenschappelijk geheugen aan te bieden communiceren de programma's die op de verschillende processoren draaien met elkaar.
 
 \paragraph{}
-Door met verschillende processoren te werken hoopt men de rekentijd drastisch naar beneden te kunnen halen. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde multi-core processoren - processoren die andere hardware zoals geheugens delen - ook minder energie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken. Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: weersimulaties gebruiken bijvoorbeeld grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost. Tot slot worden soms parallelle algoritmes ingeschakeld om problemen op te lossen die berusten op onafhankelijke entiteiten. Indien verschillende bedrijven bijvoorbeeld een globale planning willen opmaken, maar geen details over de interne werking openbaar wensen te maken, kunnen parallelle algoritmes een oplossing bieden.
+Door met verschillende processoren te werken hoopt men de rekentijd drastisch naar beneden te kunnen halen. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde multi-core processoren - processoren die andere hardware zoals geheugens delen - ook minder energie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken.
+
+\paragraph{}
+Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: weersimulaties houden variabelen bij voor heel wat locaties op de aarde. Deze variabelen leiden tot het gebruiken van grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost. Parallelle algoritmes worden ook ingeschakeld wanneer de data gevoelig is en niet zomaar kan worden uitgewisseld: indien bijvoorbeeld verschillende bedrijven bijvoorbeeld een globale planning willen opmaken, maar geen details over de interne werking openbaar wensen te maken, kunnen parallelle algoritmes een oplossing bieden\cite{Gaspero_amultiagent}.
 
 \subsubsection{Prestaties van parallelle algoritmen}
 
 De prestaties van een parallel algoritme worden meestal gemeten op basis van \emph{speed-up}: de mate waarin we virtueel de kloksnelheid kunnen opdrijven. We defini\"eren eerst enkele concepten waarna we kort een taxonomie hieromtrent toelichten.
 
-\begin{definition}[Wall time, Speed-up, Effici\"entie]
+\begin{definition}[Wall time, Speed-up, Effici\"entie\cite{Alba2005book}]
 We defini\"eren de \emph{wall time} $T$ als de tijd tussen de start van het algoritme en het moment waarop het algoritme stopt. De \emph{wall time} maakt abstractie van het aantal processoren. De \emph{speed-up} is de verhouding tussen de \emph{wall-time} bij \'e\'en processor $T_1$ en de \emph{wall-time} bij $p$ processoren $T_p$:
 \begin{equation}
 \funm{speed-up}{p}=\displaystyle\frac{T_1}{T_p}
 \end{equation}
-In het geval $\funm{speed-up}{p}\approx p$ spreken we over \emph{lineaire speed-up}. In het geval $\funm{speed-up}{p}>\funm{speed-up}{p+1}$ is er sprake van \emph{negatieve speed-up}. Wanneer we de \emph{speed-up} delen door het aantal processoren $p$ spreken we over de \emph{effici\"entie}.
+Indien de algoritmen stochastisch van aard zijn, wordt de verhoudingen tussen de gemiddelde \emph{wall-time} gebruikt.
+Wanneer we de \emph{speed-up} delen door het aantal processoren $p$ spreken we over de \emph{effici\"entie}:
 \begin{equation}
 \funm{effici\"entie}{p}=\funm{speed-up}{p}/p
 \end{equation}
 \end{definition}
 
 \paragraph{}
-Indien men een voor een ineffici\"ent algoritme een parallel equivalent schrijft, stelt men vaak een lineaire speed-up vast. Dit komt omdat een na\"ief algoritme meestal geen relaties tussen de verschillende componenten in de invoer zal uitbuiten. De lineaire speed-up is bijgevolg eerder optimistisch. Een sterkere metriek is daarom de \emph{strong speed-up}. In dit geval wordt de snelste parallelle implementatie tegenover de sterkste sequenti\"ele implementatie geplaatst. Omdat algoritmes in een parallelle context meestal maar een beperkt deel van de data ter beschikking hebben, wordt het ontwikkelen van lineaire speed-up bijgevolg complexer en in sommige gevallen zelfs onmogelijk.
+Men streeft ernaar dat de \emph{speed-up} in het geval van $p$ processoren gelijk is aan $p$. Dit fenomeen noemt men \emph{lineaire speed-up}. Het komt echter voor dat bij het uitvoeren van een algoritme op $p$ processoren, het algoritme minder snel werkt dan het geval met $1$ processor. Dan spreken we over \emph{negatieve speed-up}.
+
+\paragraph{}
+Indien men een voor een ineffici\"ent algoritme een parallel equivalent schrijft, stelt men vaak een lineaire speed-up vast. Dit komt omdat een na\"ief algoritme meestal geen relaties tussen de verschillende componenten in de invoer zal uitbuiten. De lineaire speed-up is bijgevolg eerder optimistisch. Een sterkere metriek is daarom de \emph{strong speed-up}. In dit geval wordt de snelste parallelle implementatie tegenover de sterkste sequenti\"ele implementatie geplaatst. Omdat algoritmes in een parallelle context meestal maar een beperkt deel van de data ter beschikking hebben, wordt het ontwikkelen van \emph{lineaire speed-up} bijgevolg complexer en in sommige gevallen zelfs onmogelijk.
 
 \paragraph{}
 In eerder uitzonderlijke omstandigheden stelt men effectief superlineaire versnellingen vast. Dit is te wijten aan het effici\"enter gebruik van de aanwezig hardware. Cache is hierbij een uitstekend voorbeeld: bij multi-core processoren hebben de verschillende ``\emph{kernen}'' ofwel ``\emph{cores}'' meestal een eigen segment aan cache. Sommige gegevens worden gebruikt door alle processoren, bijgevolg wordt deze data in de gemeenschappelijke cache opgeslagen. Een gevolg is dat er meer ruimte beschikbaar is in de aparte caches voor specifieke data. Men noemt het effect van superlineaire versnellingen dan ook meestal het ``\emph{cache-effect}''\cite{cacheEffect}.
 
 \subsubsection{Beperkingen en oplossingen}
 
-Het verhogen van de snelheid met behulp van parallelle algoritmen is meestal een feit. Het optekenen van lineaire speed-up is echter geen evidentie. Dit komt onder meer door de ``\emph{Wet van Amadahl}''\cite{Amdahl:1967:VSP:1465482.1465560}. De meeste algoritmes hebben een zekere nood aan het sequentieel uitvoeren van bepaalde instructies. De Wet van Amadahl stelt dat gegeven de fractie van het aantal verplicht sequenti\"ele instructies, er een plafond bestaat en dat men met een willekeurig aantal processoren altijd onder dit plafond zal blijven. De ``\emph{Wet van Gustafson}''\cite{Gustafson:1988:RAL:42411.42415} stelt dan weer dat wanneer we de probleemgrootte arbitrair kunnen opdrijven, programma's wel een lineaire speed-up kunnen halen. Dit komt omdat de fractie aan de nodige sequenti\"ele instructies verwaarloosbaar klein wordt. Vermits we vooral ge\"interesseerd in het parallelliseren van grote optimalisatieproblemen, behoort linaire speedup misschien alsnog tot de mogelijkheden. Een belangrijke opmerking is dat beide theorie\"en geen rekening houden met de eventuele overhead die bij parallelle algoritmen komt kijken zoals bijvoorbeeld het doorsturen van data over een netwerk.
+Het verhogen van de snelheid met behulp van parallelle algoritmen is meestal een feit. Het optekenen van lineaire speed-up is echter geen evidentie. Dit komt onder meer door de ``\emph{Wet van Amadahl}''\cite{Amdahl:1967:VSP:1465482.1465560}. De meeste algoritmes hebben een zekere nood aan het sequentieel uitvoeren van bepaalde instructies. De Wet van Amadahl stelt dat gegeven de fractie van het aantal verplicht sequenti\"ele instructies, er een plafond bestaat en dat men met een willekeurig aantal processoren altijd onder dit plafond zal blijven. De ``\emph{Wet van Gustafson}''\cite{Gustafson:1988:RAL:42411.42415} stelt dan weer dat wanneer we de probleemgrootte arbitrair kunnen opdrijven, programma's wel een \emph{lineaire speed-up} kunnen halen. Dit komt omdat in de meeste gevallen de fractie aan de nodige sequenti\"ele instructies verwaarloosbaar klein wordt. Vermits we vooral ge\"interesseerd in het parallelliseren van grote optimalisatieproblemen, behoort \emph{lineaire speed-up} misschien alsnog tot de mogelijkheden. Een belangrijke opmerking is dat beide theorie\"en geen rekening houden met de eventuele overhead die bij parallelle algoritmen komt kijken zoals bijvoorbeeld het doorsturen van data over een netwerk.
 
 \subsection{De belangrijkste parallellisatie paradigma}
 
@@ -131,7 +138,7 @@ Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpreta
 
 \subsection{Problemen met heuristieken}
 
-Heuristieken bieden een antwoord door een algoritme uit te voeren die in polynomiale tijd een oplossing zal uitrekenen. In het geval het algoritme snel genoeg is, en we kunnen leven met de garanties die dit algoritme biedt, is dit een acceptabele methode. In de meeste gevallen is dit echter niet zo. Praktische problemen zijn groot en complex en doorgaans kan een heuristiek weinig garanties bieden. Een ander probleem met heuristieken is dat ze weinig aanpasbaar zijn: stel dat we een bepaalde tijd ter beschikking stellen, dan zal het algoritme zich doorgaans niet aan deze beperking houden: ofwel loopt het algoritme eerder af en maakt het dus geen gebruik van alle beschikbaargestelde rekentijd, indien het algoritme niet afloopt binnen de gespecificeerde tijd is er ook geen sprake van een parti\"ele oplossing.
+Heuristieken bieden een antwoord door een algoritme uit te voeren die in polynomiale tijd een oplossing zal uitrekenen. In het geval het algoritme snel genoeg is, en we kunnen leven met de garanties die dit algoritme biedt, is dit een acceptabele methode. In de meeste gevallen is dit echter niet zo. Praktische problemen zijn groot en complex en doorgaans kan een heuristiek weinig garanties bieden. Een ander probleem met heuristieken is dat ze weinig aanpasbaar zijn: stel dat we een bepaalde tijd ter beschikking stellen, dan zal het algoritme zich doorgaans niet aan deze beperking houden: ofwel loopt het algoritme eerder af en maakt het dus geen gebruik van alle beschikbare rekentijd, indien het algoritme niet afloopt binnen de gespecificeerde tijd is er ook geen sprake van een parti\"ele oplossing.
 
 \subsection{Formele definitie}
 
@@ -158,7 +165,7 @@ Op basis van deze definitie kunnen we ook een algoritme op hoog niveau opstellen
  \alglab{metaheuristicGeneral}
 \end{algorithm}
 
-Typisch aan metaheuristieken is een (sterke) aanwezigheid van toevalsgetallen. Zo hebben we bij de signatuur van de overgangsfuncties ook een set re\"ele getallen opgenomen. Deze getallen worden door het toeval gegenereerd en bepalen mee het resultaat van de functie. Een belangrijk concept die we hiermee kunnen introduceren is de omgeving ofwel ``\emph{neighborhood}'' van een overgangsfunctie:
+Typisch aan metaheuristieken is een (sterke) aanwezigheid van toevalsgetallen. Zo hebben we bij de signatuur van de overgangsfuncties ook een set re\"ele getallen opgenomen. Deze getallen worden door het toeval gegenereerd en bepalen mee het resultaat van de functie. Een belangrijk concept die we hiermee kunnen introduceren is de \emph{omgeving} ofwel ``\emph{neighborhood}'' van een overgangsfunctie:
 
 \begin{definition}[Omgeving van een overgangsfunctie]
 De omgeving van een overgangsfunctie is de verzameling van alle oplossingen die we kunnen genereren vanuit een gegeven set van oplossingen ongeacht de waarde van de toevalsfactoren. De omgeving van een functie $h_i$ is dus:
@@ -170,7 +177,7 @@ De omgeving van een overgangsfunctie is de verzameling van alle oplossingen die 
 \subsubsection{Local Search}
 Het concept van een omgeving is belangrijke omdat het meteen ook een populaire zoekstrategie voor metaheuristieken introduceert: \emph{lokaal zoeken} ofwel ``\emph{local search (LS)}''. Deze zoekstrategie vertrekt van een gegeven oplossing en zoekt - volgens een bepaalde omgeving - alle oplossingen in de buurt af op zoek naar een betere oplossing. In het geval we zo'n oplossing vinden wordt deze oplossing de nieuwe oplossing en beginnen we vervolgens een zoektocht rond de nieuwe oplossing. Local Search komt voor in twee smaken: ``\emph{first-improvement}'' en ``\emph{best-improvement}''. In het geval van \emph{first-improvement} wordt de eerste oplossing die beter is dan de huidige oplossing de nieuwe actieve oplossing. In het geval van \emph{best-improvement} doorzoeken we de volledige omgeving en migreren we naar de beste oplossing in de omgeving.
 \paragraph{}
-Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabele resultaten kan leiden. Het probleem zit hem in het idempotente karakter van local search: \'e\'enmaal we local search op een oplossing hebben toegepast heeft een tweede maal local search toepassen met dezelfde omgevings-definitie geen zin: we weten immers dat er in de omgeving geen betere oplossingen gevonden zullen worden want anders was het algoritme de vorige keer niet bij deze oplossing gestopt. Omwille van deze reden kan local search zelf geen volwaardige metaheuristiek worden genoemd. We verwachten immers dat als we meer tijd investeren, we op termijn altijd tot betere resultaten $\xdot$ ofwel de echte oplossing $\xstar$ zullen komen. Local search vormt echter de basis voor een groot aantal metaheuristieken die doorgaans een mechanisme implementeren om de oplossing uit het lokaal optimum te laten migreren.
+Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabele resultaten kan leiden. Het probleem zit hem in het idempotente karakter van local search: \'e\'enmaal we local search op een oplossing hebben toegepast heeft een tweede maal local search toepassen met dezelfde omgevings-definitie geen zin: we weten immers dat er in de omgeving geen betere oplossingen gevonden zullen worden want anders was het algoritme de vorige keer niet bij deze oplossing gestopt. Omwille van deze reden kan local search zelf geen volwaardige metaheuristiek worden genoemd\cite{lsAndMh}. We verwachten immers dat als we meer tijd investeren, we op termijn altijd tot betere resultaten $\xdot$ ofwel de echte oplossing $\xstar$ zullen komen. Local search vormt echter de basis voor een groot aantal metaheuristieken die doorgaans een mechanisme implementeren om de oplossing uit het lokaal optimum te laten migreren.
 
 \subsection{De ``Zoo van de Metaheuristieken''}
 
@@ -200,7 +207,7 @@ In de vorige sectie bespraken we \emph{Local Search}. Het probleem met \emph{Loc
 \subsubsection{Tabu Search}
 In het geval van \emph{Tabu Search} is de omgeving de unie van een reeks deelomgevingen. Onder bepaalde voorwaarden kan men beslissen een deel van de omgeving of oplossingsruimte tijdelijk ontoegankelijk te verklaren. De acties of locaties vallen op dat moment onder ``\emph{tabu}''. Dit kan bijvoorbeeld nuttig zijn om eerdere acties niet plots ongedaan te maken. Acties of oplossingsruimtes vallen maar tijdelijk onder tabu: na een aantal iteraties worden de elementen weer toegankelijk.
 
-\subsection{Classificatie in de ``Zoo van de Metaheuristieken''}
+%\subsection{Classificatie in de ``Zoo van de Metaheuristieken''}
 
 \subsection{Omzetten van beperkingen naar evaluaties}
 
@@ -328,18 +335,14 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 \begin{equation}
 \begin{aligned}
 \mean{\phittime}&=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\phittime>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\hittime>i}^p}\\
-%&=1+\displaystyle\sum_{i=0}^{\infty}{\vec{\hat{\alpha}}_{0}\cdot\hat{P}^i\cdot\onematrix[1\times N-g]}\\
 &\approx 1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+\sigma^p\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\lambda_{1,\hat{P}}^{p\cdot i}}=1+\brak{\vec{\hat{\alpha}}_0\cdot\onematrix}^p+\displaystyle\frac{\sigma^p\cdot\lambda_{1,\hat{P}}^p}{1-\lambda_{1,\hat{P}}^p}\\
 &\approx\displaystyle\frac{\sigma^p}{\brak{1-\lambda_{1,\hat{P}}^p}\cdot\lambda_{1,\hat{P}}^{p}}
-%\Prob{\phittime\geq t}&=\Prob{\hittime_1\geq t\wedge\hittime_2\geq t\wedge\ldots\wedge\hittime_p\geq t}\\
-%&=\Prob{\hittime_1\geq t}\cdot\Prob{\hittime_2\geq t}\cdot\ldots\cdot\Prob{\hittime_p\geq t}\\
-%&=\Prob{\hittime\geq t}\cdot\Prob{\hittime\geq t}\cdot\ldots\cdot\Prob{\hittime\geq t}=\Prob{\hittime\geq t}^p
 \end{aligned}
 \eqnlab{probabilityPower}
 \end{equation}
 De \emph{speed-up} is bijgevolg gelijk aan:
 \begin{equation}
-\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{\sigma^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}\approx\displaystyle\frac{p\cdot\lambda^{p-1}}{\sigma^{p-1}}
+\funm{speed-up}{p}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\lambda_{1,\hat{P}}^{p-1}}{\sigma^{p-1}}\cdot\displaystyle\frac{1-\lambda_{1,\hat{P}}^{p}}{1-\lambda_{1,\hat{P}}}\approx\displaystyle\frac{p\cdot\lambda^{p-1}}{\sigma^{p-1}}
 \eqnlab{speedupMetaheuristic}
 \end{equation}
 In het laatste deel van de vergelijking vervangen we ook $\ev[\hat{P}]$ door $\lambda$. Dit is louter om de formules die hiervan afgeleid zijn leesbaar te houden.
@@ -481,7 +484,15 @@ Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan
 
 \section{Hyperheuristieken}
 
-Deze masterthesis behandelt het parallelliseren van hyperheuristieken. Hyperheuristieken zijn een veralgemening van metaheuristieken. In \algref{metaheuristicGeneral} genereert het algoritme een nieuwe populatie uit de vorige populatie. Hoe dit concreet gebeurt is de verantwoordelijkheid van de metaheuristiek. Een hyperheuristiek werkt met een set transitiefuncties zonder de details van de functies te kennen\footnote{In de meeste implementaties kent de hyperheuristiek wel enkele gegevens over de transitiefunctie (zo worden transitiefuncties meestal onderverdeelt in verschillende types).}. \algref{hyperheuristicsGeneral} geeft een beschrijving op hoog niveau hoe een hyperheuristiek met een oplossing zoekt door een sequentie transitiefuncties toe te passen op een initi\"ele populatie. De hyperheuristiek maakt dan gebruik van on-line machine learning technieken om een zo optimaal mogelijke sequentie te genereren.
+Deze masterthesis behandelt het parallelliseren van hyperheuristieken. Hyperheuristieken zijn een veralgemening van metaheuristieken. In \algref{metaheuristicGeneral} genereert het algoritme een nieuwe populatie uit de vorige populatie. Hoe dit concreet gebeurt is de verantwoordelijkheid van de metaheuristiek. Een hyperheuristiek gaat in de eerste plaats op zoek naar een sterke oplossingsmethode, niet een sterke oplossing\cite{Burke_aclassification}.
+\paragraph{}
+Met deze definitie vallen twee methodologi\"en samen:
+\begin{enumerate}
+ \item De gebruiker stelt een set transitiefuncties ter beschikking. De hyperheuristiek past vervolgens een sequentie van deze functies toe op de populatie.
+ \item Men stelt componenten ter beschikking die de hyperheuristiek zelf kan samenstellen tot transitiefuncties.
+\end{enumerate}
+
+werkt met een set transitiefuncties zonder de details van de functies te kennen\footnote{In de meeste implementaties kent de hyperheuristiek wel enkele gegevens over de transitiefunctie (zo worden transitiefuncties meestal onderverdeelt in verschillende types).}. \algref{hyperheuristicsGeneral} geeft een beschrijving op hoog niveau hoe een hyperheuristiek met een oplossing zoekt door een sequentie transitiefuncties toe te passen op een initi\"ele populatie. De hyperheuristiek maakt dan gebruik van on-line machine learning technieken om een zo optimaal mogelijke sequentie te genereren.
 
 \begin{algorithm}[H]
  \SetAlgoLined
