@@ -1,5 +1,5 @@
 \chapter{Definities en State-of-the-Art}
-\label{hoofdstuk:1}
+\chplab{1}
 
 In de inleiding hebben we de kort de verschillende concepten besproken die in deze thesis een belangrijke rol zullen spelen. In dit hoofdstuk gaan we hier dieper op in: we formaliseren de concepten in definities en geven een kort overzicht van de belangrijkste wetmatigheden rond deze concepten.
 
@@ -480,7 +480,7 @@ Alba geeft in zijn boek een uitgebreid overzicht over verschillende pogingen om 
 Empirische resultaten tonen dat de empirische speed-up sterk kan vari\"eren naargelang het paradigma van de metaheuristiek. Ook wanneer men een sterke \emph{speed-up} realiseert, ontbreken harde garanties dat dit op alle probleeminstanties het geval zal zijn. \cite{crainicAndToulouse} plaats daarom vraagtekens bij de betekenis van \emph{speed-up}. Omdat we meestal de exacte oplossing niet kennen is speed-up bovendien moeilijk te verifi\"eren: een parallel algoritme kan snel sterke oplossingen genereren, maar zal misschien niet significant sneller de echte oplossing vinden. Bovendien zal men meestal de uitvoer stopzetten alvorens een metaheuristiek de oplossing heeft gevonden. \cite{crainicAndToulouse} stelt daarom drie andere metrieken voor: kwalitatief sterkere oplossingen gedurende een significant deel van het zoekproces, robuustere systemen die meer garantie bieden op een sterke oplossing, of een algoritme die de algemene tijdscomplexiteit naar omlaag haalt.
 
 \subsubsection{Parallellisatie met behulp van aangepast hardware}
-Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.
+Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/glvlsi/HaldarNCB00,conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.
 
 \section{Hyperheuristieken}
 
@@ -510,14 +510,22 @@ Vermits de achterliggende transitiefuncties echter dezelfde waren, verwachtte me
 
 \subsection{Parallelle Hyperheuristieken}
 
+Hyperheuristieken zijn meestal minder effici\"ent voor specifieke optimalisatieproblemen waarvoor sterke metaheuristieken bestaan. De rede is dat eerst de sterktes en zwaktes van de verschillende heuristieken moeten worden geleerd. Vermits de heuristieken bovendien in eender welke sequentie kunnen voorkomen, kan men geen specifieke optimalisaties doorvoeren. In deze context kan het nuttig zijn om een hyperheuristiek op verschillende processoren te laten werken.
 
+\paragraph{}
+Het idee is niet nieuw en werd reeds op enkele problemen toegepast. \cite{conf/gecco/LeonMS08,conf/pdp/SeguraSL12} ontwikkelden een systeem gebaseerd op genetische algoritmen. Een genetisch algoritme wordt onderverdeeld in enkele componenten. Een \emph{master} stuurt bepaald welke de componenten die een \emph{worker} vervolgens gebruikt om lokaal een genetisch algoritme te laten werken. Wanneer een stopcriterium is bereikt, worden de resultaten doorgestuurd en zal de \emph{master} de \emph{worker} een nieuwe set componenten geven. In \cite{conf/pdp/SeguraSL12} voert men een studie uit op het adaptief vermogen van dit systeem. Er wordt aangetoond dat het systeem snel meer dan de helft van de beschikbare rekenkracht aan de sterkste genetische configuratie geeft. Het systeem maakt echter gebruik van een parameter en de robuustheid is nog niet aangetoond. Wanneer men met dit systeem het \prbm{Antenna Positioning Problem (APP)} oplost, stelt men vast dat de verbetering stagneert naarmate men het aantal processoren opdrijft. Bovendien boekt men op middellange termijn meestal slechtere prestaties met meerdere processoren.
+
+\paragraph{}
+Planningsproblemen werden opgelost met behulp van parallelle hyperheuristieken in \cite{Rattadilok04adistributed}. Men laat heuristieken uitvoeren op oplossingen door verschillende processoren. Deze processoren worden aangestuurd door een \emph{controller}. Verschillende \emph{controller}s communiceren met elkaar om ervaring uit te wisselen. Een probleem met deze benadering is dat de \emph{controller} zelf op een processor draait en meestal amper data verwerkt en bijgevolg ineffici\"ent omspringt met de aangeboden rekenkracht. Men stelt een consistente \emph{speed-up} vast maar de effici\"entie daalt naarmate het aantal processoren stijgt. Bovendien zijn de oplossing niet altijd kwalitatief beter.
+
+\paragraph{}
+\emph{Multiobjectivisation} -- het omzetten van \'e\'en evaluatiefunctie in verschillende evaluatiefuncties -- is de drijvende kracht in \cite{Luna08usinga}. Doordat elke processor een andere functie probeert te optimaliseren hoopt men tot een meer robuuste oplossingsmethode te komen.
 
 
 \section{Besluit van dit hoofdstuk}
-Als je in dit hoofdstuk tot belangrijke resultaten of besluiten gekomen
-bent, dan is het ook logisch om het hoofdstuk af te ronden met een
-overzicht ervan. Voor hoofdstukken zoals de inleiding en het
-literatuuroverzicht is dit niet strikt nodig.
+Optimalisatieproblemen die een grote zoekruimte omvatten kunnen doorgaans niet exact opgelost worden. Meestal maken we daarom gebruik van een heuristiek: een methode die een banaderende oplossing voorstelt.
+\paragraph{}
+Een metaheuristiek is een benaderingmethode die met behulp van toevalscomponenten probeert tot aanvaardbare configuratie te komen. Een metaheuristiek is eerder een verzamelnaam voor een groot aantal verschillende algoritmen die 
 
 %%% Local Variables:
 %%% mode: latex
