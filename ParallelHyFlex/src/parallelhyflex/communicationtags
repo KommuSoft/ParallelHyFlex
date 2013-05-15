@@ -1,0 +1,8 @@
+Tag     Meaning                   Senders                         Receivers
+--------------------------------------------------------------------------------
+0       Solution                  PushSenderBase                  ProxyMemory
+1       State                     WritableStateExchangerBase      WriteableStateExchangerBase
+2       Search space negotiation  FetchControl                    FetchControl
+3
+3
+4

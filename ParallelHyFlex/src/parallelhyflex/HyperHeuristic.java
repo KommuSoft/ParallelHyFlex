@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import mpi.MPI;
+import mpi.Request;
 import mpi.Status;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
@@ -45,6 +46,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private final PacketRouterBase prr = new PacketRouterBase();
     private final double[] bestObjectives;
     private final int[] bestObjectiveSolutionIndices;
+    private final FetchControl fetchContol;
 
     /**
      * @note: This constructor can only be initialized if the machine is the
@@ -72,6 +74,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.stopTime = new Date();
             this.durationTicks = durationTicks;
             this.negotiationTicks = negotiationTicks;
+            this.fetchContol = new FetchControl();
             this.problem = problem;
             this.experience = experience.generate(problem);
             this.negotiator = negotiator.generate(this.problem);
@@ -131,6 +134,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.stopTime = new Date();
             this.durationTicks = durationTicks;
             this.negotiationTicks = negotiationTicks;
+            this.fetchContol = new FetchControl();
             this.proxyMemory = new ProxyMemory<>(localMemorySize, localMemoryExchangePolicy, solutionReader);
             this.registerPacketReceiver(this.proxyMemory);
             byte[][] data = new byte[1][];
@@ -154,7 +158,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
     public void applyHeuristic(int heuristic, int from, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from, to);
-        updateBestObjectives(to);
+        postHeuristicApplication(to);
     }
 
     public double getBestObjectiveSolution(int objective) {
@@ -175,7 +179,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
 
     public void applyHeuristic(int heuristic, int from1, int from2, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from1, from2, to);
-        updateBestObjectives(to);
+        postHeuristicApplication(to);
     }
 
     public final void initializeSolution(int index) {
@@ -218,9 +222,8 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.startTime.setTime(time);
         this.stopTime.setTime(time + durationTicks);
         NegotiationThread nt = new NegotiationThread();
-        FetchThread ft = new FetchThread();
+        fetchContol.init();
         nt.start();
-        ft.start();
         this.execute();
     }
 
@@ -375,26 +378,42 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.proxyMemory.initializeProxyMemory(this.problem.getSolutionGenerator());
     }
 
-    private class FetchThread extends Thread {
+    private void postHeuristicApplication(int to) {
+        updateBestObjectives(to);
+        this.fetchContol.recheck();
+    }
 
-        FetchThread() {
-            this.setDaemon(true);
+    private class FetchControl implements PacketReceiver {
+
+        private final Object[] buffer = new Object[1];
+        private Request req;
+        private long lastNegotiation = 0;
+
+        public void recheck() {
+            Status stat = req.Test();
+            if(stat != null) {
+                prr.routePacket(stat.source, stat.tag, buffer[0x00]);
+                reinit();
+            }
+        }
+        
+        public void init() {
+            reinit();
+            this.lastNegotiation = new Date().getTime();
+        }
+
+        private void reinit() {
+            req = Communication.nbRv(buffer, 0, 1, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
         }
 
         @Override
-        public void run() {
-            Object[] buffer = new Object[1];
-            TSolution sol;
-            ByteArrayInputStream bais;
-            DataInputStream dis;
-            while (true) {
-                try {
-                    Status status = Communication.rV(buffer, 0, 1, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
-                    prr.routePacket(status.source, status.tag, buffer[0x00]);
-                } catch (Exception e) {
-                    Communication.log(e);
-                }
-            }
+        public int[] getPacketTags() {
+            return new int[] {2};
+        }
+
+        @Override
+        public void receivePacket(int from, int tag, Object data) throws Exception {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 
@@ -416,7 +435,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 Communication.logFileTime(LoggingParameters.LOG_NEGOTI_START, LoggingParameters.LOG_NEGOTI_START_TEXT);
                 ss = negotiator.negotiate(experience.generateEnforceableConstraints());
                 Communication.logFileTime(LoggingParameters.LOG_NEGOTI_STOP, LoggingParameters.LOG_NEGOTI_STOP_TEXT);
-                Communication.logFileTime(LoggingParameters.LOG_SEASPA_SETV, LoggingParameters.LOG_SEASPA_SETV_TEXT,ss);
+                Communication.logFileTime(LoggingParameters.LOG_SEASPA_SETV, LoggingParameters.LOG_SEASPA_SETV_TEXT, ss);
                 proxyMemory.setSearchSpace(ss);
             }
         }
