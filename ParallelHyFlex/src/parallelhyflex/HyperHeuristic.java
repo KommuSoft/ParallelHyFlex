@@ -35,7 +35,7 @@ import parallelhyflex.utils.CompactBitArray;
  * @author kommusoft
  */
 public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution>, PacketRouter {
-
+    
     private final ProxyMemory<TSolution> proxyMemory;
     private final WritableExperience<TSolution, TEC> experience;
     private final Date startTime, stopTime;
@@ -155,38 +155,38 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             throw new ProtocolException("Cannot construct the HyperHeuristic with this constructor: Rank of the machine cannot be equal to zero!");
         }
     }
-
+    
     public void applyHeuristic(int heuristic, int from, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from, to);
         postHeuristicApplication(to);
     }
-
+    
     public double getBestObjectiveSolution(int objective) {
         return this.bestObjectives[objective];
     }
-
+    
     public int getBestObjectiveSolutionIndex(int objective) {
         return this.bestObjectiveSolutionIndices[objective];
     }
-
+    
     public double getBestObjectiveSolution() {
         return this.getBestObjectiveSolution(0);
     }
-
+    
     public int getBestObjectiveSolutionIndex() {
         return this.getBestObjectiveSolutionIndex(0);
     }
-
+    
     public void applyHeuristic(int heuristic, int from1, int from2, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from1, from2, to);
         postHeuristicApplication(to);
     }
-
+    
     public final void initializeSolution(int index) {
         this.proxyMemory.setSolution(index, this.problem.getSolutionGenerator().generateSolution());
         updateBestObjectives(index);
     }
-
+    
     public double getObjectiveFunction(int objective, int solutionIndex) {
         TSolution tsol = this.proxyMemory.getSolution(solutionIndex);
         if (tsol != null) {
@@ -195,116 +195,114 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             return Double.POSITIVE_INFINITY;
         }
     }
-
+    
     public double getObjectiveFunction(int solutionIndex) {
         return this.getObjectiveFunction(0, solutionIndex);
     }
-
+    
     public int getReadableMemory() {
         return this.proxyMemory.getMemorySize();
     }
-
+    
     public final int getWritableMemory() {
         return this.proxyMemory.getLocalMemorySize();
     }
-
+    
     public double getDistanceFunction(int distance, int index1, int index2) {
         return this.problem.getDistanceFunction(distance).evaluateDistance(this.proxyMemory.getSolution(index1), this.proxyMemory.getSolution(index2));
     }
-
+    
     public boolean areEqual(int solution1, int solution2) {
         return this.proxyMemory.peekSolution(solution1).equalSolution(this.proxyMemory.peekSolution(solution2));
     }
-
+    
     public final void startExecute() {
         Date date = new Date();
         long time = date.getTime();
         this.startTime.setTime(time);
         this.stopTime.setTime(time + durationTicks);
-        NegotiationThread nt = new NegotiationThread();
         fetchContol.init();
-        nt.start();
         this.execute();
     }
-
+    
     public boolean hasTimeLeft() {
         return this.stopTime.after(new Date());
     }
-
+    
     public long getRemaingTime() {
         return this.stopTime.getTime() - new Date().getTime();
     }
-
+    
     public long getTotalTime() {
         return this.durationTicks;
     }
-
+    
     public long getElapsedTime() {
         return new Date().getTime() - this.startTime.getTime();
     }
-
+    
     protected abstract void execute();
-
+    
     @Override
     public double getDepthOfSearch() {
         return this.problem.getDepthOfSearch();
     }
-
+    
     @Override
     public double getIntensityOfMutation() {
         return this.problem.getIntensityOfMutation();
     }
-
+    
     @Override
     public int getNumberOfDistanceFunctions() {
         return this.problem.getNumberOfDistanceFunctions();
     }
-
+    
     @Override
     public int getNumberOfHeuristics() {
         return this.problem.getNumberOfHeuristics();
     }
-
+    
     @Override
     public int getNumberOfObjectiveFunctions() {
         return this.problem.getNumberOfObjectiveFunctions();
     }
-
+    
     @Override
     public void setDepthOfSearch(double dos) {
         this.problem.setDepthOfSearch(dos);
     }
-
+    
     @Override
     public void setIntensityOfMutation(double iom) {
         this.problem.setIntensityOfMutation(iom);
     }
-
+    
     @Override
     public int getNumberOfLocalSearchHeuristics() {
         return this.problem.getNumberOfLocalSearchHeuristics();
     }
-
+    
     @Override
     public int getNumberOfMutationHeuristics() {
         return this.problem.getNumberOfMutationHeuristics();
     }
-
+    
     @Override
     public int getNumberOfCrossoverHeuristics() {
         return this.problem.getNumberOfCrossoverHeuristics();
     }
-
+    
     @Override
     public int getNumberOfRuinRecreateHeuristics() {
         return this.problem.getNumberOfRuinRecreateHeuristics();
     }
-
+    
     @Override
     public HeuristicType getHeuristicType(int heuristic) {
         return this.problem.getHeuristicType(heuristic);
     }
-
+    
     @Override
     public int getNumberOfHeuristicsOfType(HeuristicType type) {
         return this.problem.getNumberOfHeuristicsOfType(type);
@@ -323,36 +321,36 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     public final void setNegotiationTicks(long negotiationTicks) {
         this.negotiationTicks = negotiationTicks;
     }
-
+    
     @Override
     public final void registerPacketReceiver(PacketReceiver receiver) {
         this.prr.registerPacketReceiver(receiver);
     }
-
+    
     @Override
     public final void unregisterPacketReceiver(PacketReceiver receiver) {
         this.prr.unregisterPacketReceiver(receiver);
     }
-
+    
     @Override
     public void routePacket(int sender, int tag, Object data) {
         this.prr.routePacket(sender, tag, data);
     }
-
+    
     @Override
     public int[] getPacketTags() {
         return this.prr.getPacketTags();
     }
-
+    
     @Override
     public void receivePacket(int from, int tag, Object data) throws Exception {
         this.prr.receivePacket(from, tag, data);
     }
-
+    
     public CompactBitArray getExchangeBlockingMask() {
         return this.proxyMemory.getExchangeBlockingMask();
     }
-
+    
     private void updateBestObjectives(int to) {
         for (int o = this.problem.getNumberOfObjectiveFunctions() - 1; o >= 0; o--) {
             double eval = this.getObjectiveFunction(o, to);
@@ -362,11 +360,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             }
         }
     }
-
+    
     public void copySolution(int from, int to) {
         this.proxyMemory.copySolution(from, to);
     }
-
+    
     private void init(int O, int nw) {
         for (int i = 0; i < O; i++) {
             this.bestObjectives[i] = Double.POSITIVE_INFINITY;
@@ -376,68 +374,49 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.initializeSolution(i);
         }
         this.proxyMemory.initializeProxyMemory(this.problem.getSolutionGenerator());
+        this.prr.registerPacketReceiver(this.negotiator);
     }
-
+    
     private void postHeuristicApplication(int to) {
         updateBestObjectives(to);
         this.fetchContol.recheck();
     }
-
-    private class FetchControl implements PacketReceiver {
-
+    
+    private class FetchControl {
+        
         private final Object[] buffer = new Object[1];
         private Request req;
         private long lastNegotiation = 0;
-
+        
         public void recheck() {
             Status stat = req.Test();
-            if(stat != null) {
+            if (stat != null) {
                 prr.routePacket(stat.source, stat.tag, buffer[0x00]);
                 reinit();
+                if (negotiator.isReady()) {
+                    SearchSpace ss = negotiator.getSearchSpace();
+                    if (ss != null) {
+                        HyperHeuristic.this.proxyMemory.setSearchSpace(ss);
+                    }
+                    Communication.logFileTime(LoggingParameters.LOG_NEGOTI_STOP, LoggingParameters.LOG_NEGOTI_STOP_TEXT);
+                    Communication.logFileTime(LoggingParameters.LOG_SEASPA_SETV, LoggingParameters.LOG_SEASPA_SETV_TEXT, ss);
+                }
+            }
+            long now = new Date().getTime();
+            if ((now - lastNegotiation >= HyperHeuristic.this.negotiationTicks) && !negotiator.isActive()) {
+                this.lastNegotiation = now;
+                Communication.logFileTime(LoggingParameters.LOG_NEGOTI_START, LoggingParameters.LOG_NEGOTI_START_TEXT);
+                negotiator.sendEnforceableConstraints(experience.generateEnforceableConstraints());
             }
         }
         
         public void init() {
-            reinit();
             this.lastNegotiation = new Date().getTime();
+            reinit();
         }
-
+        
         private void reinit() {
             req = Communication.nbRv(buffer, 0, 1, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
-        }
-
-        @Override
-        public int[] getPacketTags() {
-            return new int[] {2};
-        }
-
-        @Override
-        public void receivePacket(int from, int tag, Object data) throws Exception {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
-    private class NegotiationThread extends Thread {
-
-        NegotiationThread() {
-            this.setDaemon(true);
-        }
-
-        @Override
-        public void run() {
-            SearchSpace<TSolution> ss = new DummySearchSpace<>();
-            while (hasTimeLeft()) {
-                try {
-                    Thread.sleep(getNegotiationTicks());
-                } catch (Exception e) {
-                    Communication.log(e);
-                }
-                Communication.logFileTime(LoggingParameters.LOG_NEGOTI_START, LoggingParameters.LOG_NEGOTI_START_TEXT);
-                ss = negotiator.negotiate(experience.generateEnforceableConstraints());
-                Communication.logFileTime(LoggingParameters.LOG_NEGOTI_STOP, LoggingParameters.LOG_NEGOTI_STOP_TEXT);
-                Communication.logFileTime(LoggingParameters.LOG_SEASPA_SETV, LoggingParameters.LOG_SEASPA_SETV_TEXT, ss);
-                proxyMemory.setSearchSpace(ss);
-            }
         }
     }
 }

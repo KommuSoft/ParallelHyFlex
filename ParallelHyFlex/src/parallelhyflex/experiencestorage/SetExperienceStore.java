@@ -18,8 +18,7 @@ import parallelhyflex.utils.ProbabilityUtils;
  */
 public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, THypothesis extends EnforceableConstraint<TSolution>> extends ExperienceBase<TSolution, TProblem, THypothesis> {
 
-    private final HashSet<SetHypothesisItem<TSolution, THypothesis>> innerHypothesis = new HashSet<>();
-    private final Set<SetHypothesisItem<TSolution, THypothesis>> hypothesis;
+    private final HashSet<SetHypothesisItem<TSolution, THypothesis>> hypothesis = new HashSet<>();
     //private final ReentrantReadWriteLock setLock;
     private final int historySize;
     private final int hypothesisSize;
@@ -30,7 +29,6 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
 
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem);
-        this.hypothesis = Collections.synchronizedSet(innerHypothesis);
         //this.setLock = new ReentrantReadWriteLock();
         this.historySize = historySize;
         this.hypothesisSize = hypothesisSize;

@@ -26,7 +26,7 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
         this.historySize = historySize;
     }
 
-    public synchronized void checkInstance(TSolution solution, double evaluation) {
+    public void checkInstance(TSolution solution, double evaluation) {
         if (this.getHypothesis().isSatisfied(solution)) {
             if (this.getBestEvaluations().size() < this.getHistorySize() || this.getBestEvaluations().peek() > evaluation) {
                 if (this.getBestEvaluations().size() > this.historySize) {
