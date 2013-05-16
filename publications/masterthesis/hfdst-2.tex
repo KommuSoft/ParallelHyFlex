@@ -44,7 +44,7 @@ Om meer aandacht te vestigen op \abhf{} werd in 2011 een wedstrijd georganiseerd
 De wedstrijd omvatte problemen uit zes verschillende domeinen: \prbm{Maximal Satisfiability (Max-Sat)}, \prbm{Bin Packing}, \prbm{Personnel Scheduling}, \prbm{Flow Shop}, \prbm{Travelling Salesman Problem (TSP)} en het \prbm{Vehicle Routing Problem (VRP)}.
 
 \paragraph{}
-In totaal telde de competitie 20 teams. We hebben met onze studie de zestien implementaties die gedocumenteerd werden bestudeerd. Tabel \ref{tbl:chescParticipants} bevat een lijst met de verschillende implementaties en geeft aan welke systemen in de studie opgenomen werden.
+In totaal telde de competitie 20 teams. We hebben met onze studie de zestien implementaties die gedocumenteerd werden bestudeerd. \tblref{chescParticipants} bevat een lijst met de verschillende implementaties en geeft aan welke systemen in de studie opgenomen werden.
 
 \begin{table}[hbt]
   \centering
@@ -73,7 +73,7 @@ In totaal telde de competitie 20 teams. We hebben met onze studie de zestien imp
     \bottomrule
   \end{tabular}
   \caption{Deelnemers van de \abchescy{} competitie\cite{chesc-results}.}
-  \label{tbl:chescParticipants}
+  \tbllab{chescParticipants}
 \end{table}
 
 we zullen de bestudeerde implementaties kort bespreken en vervolgens enkele hypotheses aanbrengen waaraan goed presterende hyperheuristieken waarschijnlijk dienen te voldoen.
@@ -253,6 +253,10 @@ Betere \abhhn{} bestraffen dan ook \abhn{} die een oplossing voorstellen die equ
 Heel wat algoritmes bevatten veel parameters. Sommige systemen ontwikkelen leersystemen die deze parameters moeten zetten. Een probleem met deze aanpak is dat deze leersystemen op hun beurt weer parameters introduceren. Meestal is er geen enkele garantie is dat deze parameters robuuster zullen zijn. Bij de meeste systemen ontbreekt een duidelijke motivatie die leersystemen voor parameters rechtvaardigt.
 \paragraph{}
 De meest succesvolle oplossing voor het oplossen van dit probleem bestaat er dan ook uit verschillende leersystemen tegelijk te beschouwen. Indien \'e\'en van de systemen dan faalt om op een effici\"ente manier tot een goede oplossing te komen is er nog altijd de hoop dat de andere systemen daar wel in slagen. Dit concept is bijvoorbeeld duidelijk ge\"implementeerd in \emph{AdapHH} waar naast een systeem met ``\emph{Tabu Search}'' ook het ``\emph{Hybrid Relay}'' systeem gebruikt wordt.
+
+\section{Argumentatie bij de conclusies}
+
+
 
 %%% Local Variables: 
 %%% mode: latex

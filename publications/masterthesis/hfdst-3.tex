@@ -3,15 +3,32 @@
 
 \chapterquote{A skilled transition team leader will set the general goals for a transition and then confer on the other team leaders working with him the power to implement those goals.}{Richard V. Allen}
 
-Op basis van de analyse in hoofdstuk \ref{hoofdstuk:2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{https://www.github.com/KommuSoft/ParallelHyFlex} en wordt nog verder actief ontwikkeld. Daar het beschrijven van parallelle algoritmes complex is, geven we eerst een algemeen overzicht. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
+Op basis van de analyse in hoofdstuk \ref{hoofdstuk:2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{http://goo.gl/3YNnp} en wordt verder actief ontwikkeld.
+\paragraph{}
+Het beschrijven van parallelle algoritmes is vaak complex. We geven eerst een algemeen overzicht van het volledige systeem. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
 
 \section{Systeem}
 
-\paragraph{}
-Zoals al eerder aangehaald maakt een hyperheuristiek een keuze uit verschillende transitie-functies. Deze transitiefuncties kunnen parallel ge\"implementeerd worden. Zo kunnen we bijvoorbeeld \emph{Local Search} heuristieken over verschillende processoren verdelen. Een nadeel van deze %TODO
+\subsection{Overzicht}
+
+Hyperheuristieken kiezen uit een divers aanbod aan heuristieken. De meeste van deze heuristieken verschillen in tijdgebruik.
 
 \paragraph{}
-Zowel \emph{HyFlex} als \emph{ParHyFlex} maken een duidelijk onderscheid tussen enerzijds het probleemafhankelijke gedeelte (de kennis die een de gebruiker zelf dient te injecteren om het systeem te laten werken) en het probleemonafhankelijke gedeelte (de strategie die bepaalt welke heuristieken we uitvoeren).
+We kunnen er voor opteren om de heuristieken zelf in parallel uit te voeren ofwel dus \emph{type 1}-parallellisatie van \emph{Crainic and Toulouse}\cite{crainicAndToulouse}. Het nadeel van deze aanpak is dat de onderliggende heuristieken zelf aangepast moeten worden voor een parallelle context. Bovendien verliezen we rekenkracht bij het opstarten en aflopen van een heuristiek: de opdracht moet eerst naar de verschillende processoren worden gecommuniceerd. Op het moment dat alle processoren hun werk be\"eindigt hebben moet men bovendien de resultaten terug naar de centrale processor sturen. Tussen het moment dat de processoren een vorige heuristiek hebben afgewerkt en een nieuwe opdracht krijgen, wordt de rekenkracht niet gebruikt. Sommige heuristieken zijn bovendien niet eenvoudig te parallelliseren. In het geval van een mutatie bijvoorbeeld zal in sommige gevallen het doorsturen van een oplossing meer tijd vragen dan de mutatie zelf uit te voeren.
+
+\paragraph{}
+Daarom hebben we geopteerd voor een model waarbij elke processor de volledige heuristieken uitvoert. Deze vorm valt dus onder \emph{Type 3}-parallellisatie. De processen werken niet volledig onafhankelijk: oplossingen kunnen worden uitgewisseld naar andere processoren. Op die manier kunnen met behulp van een kruisingsoperator ofwel \emph{\abco{}} sterke delen uit een oplossing worden uitgewisseld. Oplossing worden uitgewisseld zonder dat de processor wacht tot de oplossing is doorgestuurd. We hopen hiermee de effici\"entie verder te kunnen opdrijven.
+
+\paragraph{}
+Met behulp van \emph{afdwingbare beperkingen}, een concept die we in de volgende sectie introduceren kunnen we ook de zoekruimte beperken. Dit is het \emph{Type 2}-parallellisme: per processor wordt er een op geregelde tijdstippen een nieuwe zoekruimte berekend waarin dan meer geconcentreerd wordt gezocht. Men dient echter te voorkomen dat teveel processoren hetzelfde deel van de zoekruimte afzoeken. Daarom wordt 
+
+% 
+% 
+% \paragraph{}
+% Zoals al eerder aangehaald maakt een hyperheuristiek een keuze uit verschillende transitie-functies. Deze transitiefuncties kunnen parallel ge\"implementeerd worden. Zo kunnen we bijvoorbeeld \emph{Local Search} heuristieken over verschillende processoren verdelen. Een nadeel van deze %TODO
+% 
+% \paragraph{}
+% Zowel \emph{HyFlex} als \emph{ParHyFlex} maken een duidelijk onderscheid tussen enerzijds het probleemafhankelijke gedeelte (de kennis die een de gebruiker zelf dient te injecteren om het systeem te laten werken) en het probleemonafhankelijke gedeelte (de strategie die bepaalt welke heuristieken we uitvoeren).
 
 \subsection{Probleemafhankelijk gedeelte}
 
