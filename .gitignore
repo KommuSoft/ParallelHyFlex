@@ -98,3 +98,6 @@ ParallelHyFlex/build/*
 /publications/masterthesis/doc/*
 /HyFlexTests/nbproject/private/
 /HyFlexTests/build/
+
+#data
+*.dat

@@ -3,7 +3,7 @@
 
 \chapterquote{A skilled transition team leader will set the general goals for a transition and then confer on the other team leaders working with him the power to implement those goals.}{Richard V. Allen}
 
-Op basis van de analyse in hoofdstuk \ref{hoofdstuk:2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{http://goo.gl/3YNnp} en wordt verder actief ontwikkeld.
+Op basis van de analyse in \chpref{2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{http://goo.gl/3YNnp} en wordt verder actief ontwikkeld.
 \paragraph{}
 Het beschrijven van parallelle algoritmes is vaak complex. We geven eerst een algemeen overzicht van het volledige systeem. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
 
@@ -20,15 +20,20 @@ We kunnen er voor opteren om de heuristieken zelf in parallel uit te voeren ofwe
 Daarom hebben we geopteerd voor een model waarbij elke processor de volledige heuristieken uitvoert. Deze vorm valt dus onder \emph{Type 3}-parallellisatie. De processen werken niet volledig onafhankelijk: oplossingen kunnen worden uitgewisseld naar andere processoren. Op die manier kunnen met behulp van een kruisingsoperator ofwel \emph{\abco{}} sterke delen uit een oplossing worden uitgewisseld. Oplossing worden uitgewisseld zonder dat de processor wacht tot de oplossing is doorgestuurd. We hopen hiermee de effici\"entie verder te kunnen opdrijven.
 
 \paragraph{}
-Met behulp van \emph{afdwingbare beperkingen}, een concept die we in de volgende sectie introduceren kunnen we ook de zoekruimte beperken. Dit is het \emph{Type 2}-parallellisme: per processor wordt er een op geregelde tijdstippen een nieuwe zoekruimte berekend waarin dan meer geconcentreerd wordt gezocht. Men dient echter te voorkomen dat teveel processoren hetzelfde deel van de zoekruimte afzoeken. Daarom wordt 
+Met behulp van \emph{afdwingbare beperkingen}, een concept die we in de volgende sectie introduceren kunnen we ook de zoekruimte beperken. Dit is het \emph{Type 2}-parallellisme: per processor wordt er een op geregelde tijdstippen een nieuwe zoekruimte berekend waarin dan meer geconcentreerd wordt gezocht. Men dient echter te voorkomen dat teveel processoren hetzelfde deel van de zoekruimte afzoeken. Daarom vinden onderhandelingen tussen de verschillende processoren plaats. Ook deze onderhandeling vinden asynchroon plaats.
 
-% 
-% 
-% \paragraph{}
-% Zoals al eerder aangehaald maakt een hyperheuristiek een keuze uit verschillende transitie-functies. Deze transitiefuncties kunnen parallel ge\"implementeerd worden. Zo kunnen we bijvoorbeeld \emph{Local Search} heuristieken over verschillende processoren verdelen. Een nadeel van deze %TODO
-% 
-% \paragraph{}
-% Zowel \emph{HyFlex} als \emph{ParHyFlex} maken een duidelijk onderscheid tussen enerzijds het probleemafhankelijke gedeelte (de kennis die een de gebruiker zelf dient te injecteren om het systeem te laten werken) en het probleemonafhankelijke gedeelte (de strategie die bepaalt welke heuristieken we uitvoeren).
+\paragraph{}
+Communicatie kan een significante overhead voor een algoritme betekenen. Vooral het \emph{serializeren} en \emph{deserializeren} van data is een taak die aan processoren wordt uitbesteed en dus rekenkracht vergt. In de meeste bestudeerde implementaties verloopt de communicatie ofwel synchroon (de uitvoering wordt geblokkeerd op verschillende punten in de tijd om een boodschap te verzenden of te ontvangen), ofwel met behulp van verschillende ``\emph{threads}''. Wanneer men met \emph{threads} kunnen manipulaties op gegevensstructuren tegelijk plaatsvinden wat tot inconsistentie kan leiden. Een oplossing is gebruik maken van \emph{locks} of andere synchronisatie-directieven. Deze synchronisatie introduceert nieuwe vormen van verlies aan rekenkracht.
+
+\paragraph{}
+Dit is de motivatie om in het geval van \emph{ParHyFlex} met \'e\'en \emph{thread} te werken. Doordat het toepassen van heuristieken de kern is van iedere hyperheuristiek kunnen we de assumptie maken dat gedurende het hele proces deze methodes zullen worden opgeroepen. Nadat een heuristiek is uitgevoerd controleert het systeem of er nieuwe berichten zijn toegekomen en wordt er \'e\'en bericht verwerkt. De argumentatie is dat sommige berichten ertoe leiden dat de processor zelf berichten uitstuurt en zo een domino-effect teweeg brengt. Door slechts \'e\'en bericht te verwerken hopen we de communicatie in de hand houden. Hierdoor garanderen we dat een minimale hoeveelheid rekenkracht in de heuristieken wordt ge\"investeerd.
+
+\paragraph{}
+Als we de assumptie maken dat er hoogstens \'e\'en bericht zal toekomen tijdens de uitvoer van een heuristiek zou dit bovendien niet tot significant ander gedrag mogen leiden. De hyperheuristiek maakt een keuze op basis van eigen ervaring en ervaring die door middel van boodschappen wordt doorgestuurd. Vermits deze boodschappen worden verwerkt alvorens de hyperheuristiek opnieuw controle krijgt over de processor, zal de hyperheuristiek met dezelfde data een nieuwe keuze maken. In het geval een oplossing wordt uitgewisseld kan dit tot een ander resultaat leiden wanneer een kruisingsoperator wordt uitgevoerd. 
+
+\paragraph{}
+Het systeem omvat \'e\'en hi\"erarchisch aspect: er is \'e\'en processor die het probleem inleest en naar de verschillende processoren stuurt. Wanneer de tijd afloopt zal deze processor ook de oplossingen van de verschillende processoren verzamelen en de beste oplossing rapporteren. Naast deze communicatie werkt het systeem volledig in een \emph{peer-to-peer} mode. Heel wat implementaties werken wel volgens het \emph{master-slave} model\cite{}. Dit heeft tot gevolg dat \'e\'en van de processen zich meer met communicatie bezighoudt wat tot een onbalans kan leiden in het systeem (we verwachten dat deze processor minder kwalitatieve oplossingen naar andere processoren zal sturen wat ertoe kan leiden dat de evolutie naar betere oplossingen wordt afgeremd). In andere implementaties\cite{} stelt men een processor aan die zich uitsluitend met communicatie bezighoudt. De meeste publicaties rapporteren dat deze processor meestal 90\% van de tijd geen taken uitvoert. Dit leidt ertoe dat de processor zijn rekenkracht niet optimaal gebruikt. Bovendien is het complexer om resultaten te rapporteren: het weglaten van deze processor in de berekeningen leidt tot optimistische resultaten.
+
 
 \subsection{Probleemafhankelijk gedeelte}
 

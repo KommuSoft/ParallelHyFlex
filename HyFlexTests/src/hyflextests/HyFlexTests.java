@@ -33,12 +33,16 @@ public class HyFlexTests {
         }
         for (int i = 0; i < 100; i++) {
             for (ProblemDomain problem : domains) {
-                HyperHeuristic hyper_heuristic_object = generateHyperHeuristic(rand, i);
-                problem.loadInstance(2);
-                hyper_heuristic_object.setTimeLimit(60000);
-                hyper_heuristic_object.loadProblemDomain(problem);
-                hyper_heuristic_object.run();
-                System.out.println(hyper_heuristic_object.getBestSolutionValue());
+                try {
+                    HyperHeuristic hyper_heuristic_object = generateHyperHeuristic(rand, i);
+                    problem.loadInstance(2);
+                    hyper_heuristic_object.setTimeLimit(60000);
+                    hyper_heuristic_object.loadProblemDomain(problem);
+                    hyper_heuristic_object.run();
+                    System.out.println(hyper_heuristic_object.getBestSolutionValue());
+                } catch (Throwable e) {
+                    System.err.println(e);
+                }
             }
         }
     }
