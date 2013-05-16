@@ -1,32 +1,47 @@
 \chapter{Studie naar Sequenti\"ele Hyperheuristieken (CHeSC2011)}
 \chplab{2}
 
-Alvorens zelf hyperheuristieken te implementeren, is het interessant om te analyseren aan welke eigenschappen een goede hyperheuristiek moet voldoen. We verwachten immers dat bij het effici\"ent paralleliseren van deze algoritmen sommige wetmatigheden kunnen worden overgenomen. Vandaar deze studie naar \abseqe{} \abhhn{}.
+Alvorens zelf hyperheuristieken te implementeren, is het interessant om te analyseren aan welke eigenschappen een goede hyperheuristiek moet voldoen. We verwachten immers dat bij het effici\"ent parallelliseren van deze algoritmen sommige wetmatigheden kunnen worden overgenomen. Vandaar deze studie naar \abseqe{} \abhhn{}.
 
 \section{Implementatie-set}
 
 \subsection{\abhf{}}
 
-In 2010 publiceren \auth[5586064]{Burke et al.} een paper waarin ze \abhf{} voorstellen. \abhf{} is een klassenbibliotheek geschreven in \abjava{}. Het laat toe dat de gebruiker hyperheuristieken implementeert zonder dat het algoritme de details kent van het onderliggende probleem en de \abllhn{}. Het systeem werkt op basis van geheugen: een lijst waarin tussentijdse oplossingen worden opgeslagen en uitgelezen. Het systeem biedt vervolgens de mogelijkheid om een \abllh{} met een specifieke index toe te passen op de oplossing op een specifieke plaats in het geheugen en het resultaat op een specifieke plaats op te slaan. Daarnaast kunnen gebruikers ook de objectiviteitswaarde van een bepaalde oplossing in het geheugen opvragen en vragen of twee oplossingen in het geheugen equivalent zijn.
+In 2010 publiceren \auth[5586064]{Burke et al.} een paper waarin ze \abhf{} voorstellen. \abhf{} is een klassenbibliotheek geschreven in \abjava{}. Het laat toe dat de gebruiker hyperheuristieken implementeert waardoor de prestaties uniform getest kunnen worden.
 
 \paragraph{}
-Het programma heeft dan wel geen idee wat de onderliggende \abllhn{} precies doen, ze worden wel gecategoriseerd in 4 verschillende types:
-\begin{enumerate}
+Het systeem werkt op basis van geheugen: een lijst waarin tussentijdse oplossingen worden opgeslagen en uitgelezen. Het systeem biedt vervolgens de mogelijkheid om een \abllh{} met een specifieke index toe te passen op de oplossing op een specifieke plaats in het geheugen en het resultaat op een specifieke plaats op te slaan. Hyperheuristieken ook de objectiviteitswaarde van een bepaalde oplossing in het geheugen opvragen en vragen of twee oplossingen in het geheugen equivalent zijn.
+
+\paragraph{}
+De onderliggende \abllhn{} zijn niet geheel black-box: men deelt ze op in vier categorie\"en en de hyperheuristiek kan de categorie inspecteren. Deze categorie\"en zijn:
+\begin{itemize}
  \item \emph{\abmt{}}: hierbij wordt de oplossing op een toevallig manier aangepast. Dit soort heuristieken heeft geen componenten die inschatten of de verandering onmiddellijk of op termijn tot betere resultaten zal leiden.
  \item \emph{\abco{}}: dit zijn de enige heuristieken die twee oplossingen recombineren in een nieuwe oplossing. Het is uiteraard de bedoeling dat de nieuwe oplossing karakteristieken gemeen heeft met beide ``ouders''.
  \item \emph{\abrr{}}: deze heuristieken breken een deel van de oplossing af, om ze dan vervolgens met behulp van bijvoorbeeld een gretig algoritme terug op te bouwen.
  \item \emph{\abls{}}: dit is een familie van algoritmen die herhaaldelijk mutaties uitvoeren indien deze mutaties ook per stap winst opleveren. Indien geen enkele mutatie meer tot een beter resultaat leidt stopt het algoritme.
-\end{enumerate}
-\abllhn[L]{} die tot de types \abmt{}, \abco{} en \abrr{} behoren worden ook wel \abpts{} genoemd. Het softwaresysteem houdt ook de mogelijkheid open om een \abllh{} te classificeren onder ``other'', maar voor zover ons bekend zijn er nog geen heuristieken in \abhf{} geschreven die onder deze categorie vallen. Verder kan er verwarring optreden over het feitelijke verschil tussen \abrr{} en \abls{}. We kunnen immers bij beide families verwachten dat ze minstens een oplossing opleveren die beter is dan het origineel (\abrr{} zal immers tot in dat geval het afgebroken gedeelte reconstrueren zoals het origineel). Een verschil die men doorgaans maakt is dat \abls{} een operator is die idempotent is.
+\end{itemize}
+\abllhn[L]{} die tot de types \abmt{}, \abco{} en \abrr{} behoren worden ook wel \abpts{} genoemd. Het softwaresysteem houdt ook de mogelijkheid open om een \abllh{} te classificeren onder ``other'', maar voor zover ons bekend zijn er nog geen heuristieken in \abhf{} geschreven die onder deze categorie vallen.
 
 \paragraph{}
-\importtikz[1.4]{hyflexstructure}{parhyflexstructure}{Schematische voorstelling van \emph{HyFlex}.}
+Het verschil tussen \abrr{} en \abls{} komt niet zo sterk uit de definitie naar voor. In beide gevallen verwachten we dat de oplossing sterker is dan de orginele oplossing (\abrr{} zal in het slechte geval, meestal de originele oplossing reconstrueren). Een verschil die men doorgaans maakt is dat \abls{} een operator is die idempotent is: meermaals de operator toepassen zal geen ander resultaat opleveren.
+
+\paragraph{}
+Sommige \abllhn{} zijn ook afhankelijk van een parameter. Deze parameters zijn re\"ele getallen tussen 0 en 1 en kunnen het gedrag van de \abllh{} aanpassen. \abhf{} definieert twee verschillende parameters:
+\begin{itemize}
+ \item \emph{Depth of Search}: deze parameter bepaalt in welke mate men een omgeving zal afzoeken in het geval van \abrr{} en \abls{}.
+ \item \emph{Intensity of Mutation}: deze parameter bepaalt in welke mate een nieuwe oplossing kan afwijken van het origineel na het toepassen van een \abmt{}.
+\end{itemize}
+
+
+\paragraph{}
+\importtikz[1.4]{hyflexstructure}{hyflexstructure}{Schematische voorstelling van \abhf{}.}
+\imgref{hyflexstructure} geeft de verschillende componenten in het \abhf{} systeem schematisch weer. We hebben het schema opgedeeld in een probleemafhankelijk en een probleemonafhankelijk gedeelte. Het is de bedoeling dat de programmeur zelf het uitvoeringsmechanisme implementeert.
 
 
 \subsection{\abchescy{}}
 
 Om meer aandacht te vestigen op \abhf{} werd in 2011 een wedstrijd georganiseerd door de universiteit van Nottingham: de ``\emph{Cross-domain Heuristic Search Challenge (\abchescy)}''\cite{Burke:2011:CHS:2177360.2177415}. De verschillende programma's krijgen een set van verschillende problemen en worden gequoteerd op basis van de kwaliteit van de oplossingen die ze na 10 minuten uitvoer afleveren.%TODO(check)
-De wedstrijd omvatte problemen uit zes verschillende domeinen: \prob{Maximal Satisfiability}, \prob{Bin Packing}, \prob{Personnel Scheduling}, \prob{Flow Shop}, \prob{Travelling Salesman Problem} en het \prob{Vehicle Routing Problem}.
+De wedstrijd omvatte problemen uit zes verschillende domeinen: \prbm{Maximal Satisfiability (Max-Sat)}, \prbm{Bin Packing}, \prbm{Personnel Scheduling}, \prbm{Flow Shop}, \prbm{Travelling Salesman Problem (TSP)} en het \prbm{Vehicle Routing Problem (VRP)}.
 
 \paragraph{}
 In totaal telde de competitie 20 teams. We hebben met onze studie de zestien implementaties die gedocumenteerd werden bestudeerd. Tabel \ref{tbl:chescParticipants} bevat een lijst met de verschillende implementaties en geeft aan welke systemen in de studie opgenomen werden.

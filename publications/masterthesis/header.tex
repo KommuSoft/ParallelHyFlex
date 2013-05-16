@@ -146,7 +146,7 @@
 \newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=13.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
 
 \selectcolormodel{gray}
-\newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{figure}}
+\newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\begin{center}\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{center}\end{figure}}
 
 \newcommand{\drawmem}[3]{
 \node[draw,rectangle,fill=gray!20,minimum width=\sc*0.5*#2 cm, minimum height=\sc*0.5cm] (#1) at (0,0.5) {};

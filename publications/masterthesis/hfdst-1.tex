@@ -523,9 +523,28 @@ Planningsproblemen werden opgelost met behulp van parallelle hyperheuristieken i
 
 
 \section{Besluit van dit hoofdstuk}
-Optimalisatieproblemen die een grote zoekruimte omvatten kunnen doorgaans niet exact opgelost worden. Meestal maken we daarom gebruik van een heuristiek: een methode die een banaderende oplossing voorstelt.
+Optimalisatieproblemen die een grote zoekruimte omvatten kunnen doorgaans niet exact opgelost worden. Meestal maken we daarom gebruik van een heuristiek: een methode die een benaderende oplossing voorstelt.
+
 \paragraph{}
-Een metaheuristiek is een benaderingmethode die met behulp van toevalscomponenten probeert tot aanvaardbare configuratie te komen. Een metaheuristiek is eerder een verzamelnaam voor een groot aantal verschillende algoritmen die 
+Een metaheuristiek is een verzamelnaam voor een diverse groep algoritmen die voor een gegeven optimalisatieprobleem een aanvaardbare oplossing proberen uit te rekenen. Al deze methodes werken in grote mate met toevalsgetallen.
+
+\paragraph{}
+De meeste metaheuristieken omvatten verschillende bronnen om het algoritme parallel uit te voeren. \cite{DBLP:journals/jc/ShonkwilerV94} beschrijft een model die aantoont dat wanneer men onafhankelijke metaheuristieken op verschillende processoren laat lopen, men soms lineaire \emph{speed-up} kan benaderen. De concrete speed-up hangt af van het probleem en de oplossingsmethode.
+
+\paragraph{}
+\cite{Alba2005book} is een naslagwerk die verschillende parallelle implementaties van metaheuristieken groepeert. Men kan vaststellen dat de \emph{speed-up} eerder wisselvallig is. In sommige gevallen is er zelfs sprake van negatieve \emph{speed-up} door een hoge communicatie-kost.
+
+\paragraph{}
+Hyperheuristieken proberen een oplossingsmethode aan te reiken die minder afhankelijk is van een concreet probleem. Dit doet men door een algoritme een keuze te laten maken uit een set transitiefuncties een gaandeweg de sterktes en zwaktes van de concrete transitiefuncties te laten kennen.
+
+\paragraph{}
+Er bestaan reeds implementaties van parallelle hyperheuristieken. Deze algoritmen werken meestal in een \emph{master-slave} verhouding waar de \emph{master} zich voornamelijk bezighoudt met de selectie van de heuristieken en het \emph{slave}-gedeelte de heuristieken uitvoert. Soms is er sprake van meerdere \emph{master}-componenten die informatie met elkaar uitwisselen.
+
+\paragraph{}
+Een andere techniek die gebruikt wordt is \emph{multiobjectivisation}: het opsplitsen van de evaluatiefunctie in verschillende functies zodat elke processor een aangepast optimalisatieprobleem uitvoert.
+
+\paragraph{}
+De huidige prestaties van parallelle hyperheuristieken zijn eerder wisselvallig en hangen vaak af van het probleem in kwestie.
 
 %%% Local Variables:
 %%% mode: latex
