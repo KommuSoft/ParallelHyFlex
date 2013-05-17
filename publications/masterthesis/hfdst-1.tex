@@ -121,19 +121,6 @@ Een heuristiek is een programma die gegeven een optimalisatieprobleem $\OpProble
 
 Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op hoe ver de fitness-waarde $\fun{\evalfun}{\goodSol}$ mag afwijken van de optimale fitness-waarde $\fun{\evalfun}{\bestSol}$, al zijn beide voorwaarden niet strikt noodzakelijk.
 
-%Minsky\cite{minskyHeuristic} schrijf hierover:
-% \begin{quote}
-% ``Hints'', ``suggestions'', or ``rules of thumb'', which only usually work are called heuristics. A program which works on such a basis is called a heuristic program. It is difficult to give a more precise definition of heuristic program - this is to be expected in the light of Turing's demonstration that there is no systematic procedure which can distinguish between algorithms (programs that always work) and programs that do not always work.
-% \end{quote}
-
-% Een belangrijke theorema stelt dat fout onmogelijk constant kan zijn:
-% \begin{theorem}
-% Voor geen enkele heuristiek bestaat geen getal $E$ waarvoor geldt:
-% \begin{quote}
-% dat voor elke probleem-instantie van het probleem, $\fun{f}{\xdot}-\fun{f}{L}\leq L$.
-% \end{quote}
-% \end{theorem}
-
 
 \section{Metaheuristieken}
 
@@ -280,15 +267,6 @@ In deze vergelijking tellen we elke kans $\Prob{\theta=k}$ juist $k$ keer.
 \paragraph{}
 Vermits $\hat{P}$ een matrix met kansen voorstelt is elke element $\hat{p}_{i,j}\geq 0$. We maken verder de assumptie dat we na een arbitrair aantal stappen $m$, vanuit elke normale populatie $\calP_i$ een kans bestaat dat we naar een andere normale populatie $\calP_j$ kunnen migreren. Vermits hierdoor de matrix primitief is, en er minstens \'e\'en rij van $\hat{P}$ niet sommeert naar 1 (anders zouden we nooit in een doel-populatie kunnen terechtkomen), weten we dat de grootste eigenwaarde $\ev[\hat{P}]<1$.
 
-% Een theorema stelt:
-% \begin{theorem}
-% stel de twee grootste eigenwaardes $\lambda_1>\abs{\lambda_2}$ van een $n\times n$ matrix $A$. Dan bestaat er een vaste veelterm $h$ met een graad $0\leq\funm{deg}{h}< n-1$ zodat:
-% \begin{equation}
-% \forall k=1,2,\ldots:\abs{\displaystyle\frac{\vec{x}\cdot A\cdot\onematrix[1\times n]}{\lambda_1^k}-\vec{x}\cdot\vec{v}}<\fun{h}{k}\cdot\abs{\displaystyle\frac{\lambda_2}{\lambda_1}}^k
-% \end{equation}
-% Met $\vec{x}$ een willekeurige vector en $\vec{v}$ de rechtse eigenvector van $\lambda_1$.
-% \thelab{eigenValuesMatrix}
-% \end{theorem}
 \paragraph{}
 We kunnen een eigenvector benaderen door een $\onematrix$-vector een groot aantal maal toe te passen op de matrix in kwestie en vervolgens te normaliseren. Daarom kunnen we stellen dat voor een grote $t$:
 \begin{equation}
@@ -471,7 +449,7 @@ In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stij
 Crainic en Toulouse\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemene types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van Alba. \cite{crainicAndToulouse} stellen dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. Crainic en Toulouse argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in Alba minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
 
 \paragraph{}
-Crainic en Toulouse maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.
+Crainic en Toulouse maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten uit in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.
 
 \subsubsection{Empirische resultaten}
 
@@ -501,11 +479,13 @@ Het selecteren of genereren van een hyperheuristiek kan op verschillende maniere
 
 \subsection{Motivatie}
 Meestal gebruikt men hyperheuristieken in het geval het probleem complex is en men dus geen metaheuristiek kan voorstellen die het probleem effectief oplost. Meestal is dit het geval bij problemen waar de instanties heel divers kunnen zijn, en men in het ontwerp van de metaheuristiek er niet in slaagt alle families van probleeminstanties te beschouwen.
+
 \paragraph{}
 Hyperheuristieken kunnen ook ingezet worden bij de ontwikkeling van een mechanisme die verschillende problemen kan oplossen. De set van transitiefuncties (of componenten) maakt immers deel uit van de invoer. Door andere functies in te voeren kan men andere problemen oplossen. Hyperheuristieken worden daarom vaak voorgesteld als een oplossingstechniek die er op termijn moet in slagen alle optimalisatieproblemen benaderend op te lossen.
 
 \subsection{Het effect van de transitiefuncties}
 \cite{misirEffect} onderzoekt in welke mate het invoeren van andere transitiefuncties tot andere resultaten leidt. In plaats van totaal verschillende transitiefuncties in te voeren werden er echter varianten op bestaande transitiefuncties gebruikt waarbij de onderliggende transitiefunctie simpelweg een aantal keer werd herhaald. Dit leidt er dus toe dat de omgeving van een transitiefunctie sterker wordt.
+
 \paragraph{}
 Vermits de achterliggende transitiefuncties echter dezelfde waren, verwachtte men dat hyperheuristieken die in de studie werden onderzocht verhoudingsgewijs even sterk zouden scoren. Dit bleek echter niet het geval te zijn. Hyperheuristiek die minder sterk scoorden op de orginele transitiefuncties, scoorden soms beter op de afgeleide heuristieken. Dit resultaat Vormt een indicatie dat de huidige hyperheuristieken momenteel onvoldoende leren de effecten van de onderliggende heuristieken kunnen begrijpen.
 

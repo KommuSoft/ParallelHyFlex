@@ -1,0 +1,48 @@
+\begin{tikzpicture}[scale=\sc,llh/.style={circle,fill=black,thick,draw=gray}]
+
+\begin{scope}
+\node[rectangle,draw=black,minimum width=2 cm, minimum height=3 cm] (ADHS) at (0,0) {};
+\draw (ADHS.north) node[anchor=south] {ADHS};
+\node[llh] (HA1) at (0,0) {};
+\node[llh] (HA2) at (0.8,1) {};
+\node[llh] (HA3) at (0.75,-0.25) {};
+\node[llh] (HA4) at (-0.5,-0.33) {};
+\node[llh] (HA5) at (-0.2,-0.75) {};
+\node[llh] (HA5) at (-0.4,0.85) {};
+\end{scope}
+
+\begin{scope}[xshift=2 cm,scale=1.4]
+\def\n{4};
+\draw[thick] (-0.5,-1.25) -- (-0.25,-1) to node[sloped,midway,above]{tabu-lijst} (-0.25,1) -- (-0.5,1.25);
+\draw[thick] (0.5,-1.25) -- (0.25,-1) -- (0.25,1) -- (0.5,1.25);
+\foreach \y in {1,...,\n} {
+  \node[llh] (HB\y) at (0,0.5*\y-0.25*\n-0.25) {};
+}
+\coordinate (TADHST) at (0,1);
+\coordinate (TADHSB) at (0,-1);
+\end{scope}
+
+\begin{scope}[xshift=4 cm]
+\def\n{5};
+\def\l{3};
+\node[rectangle,draw=black,minimum width=0.5 cm, minimum height=5 cm] (RH) at (0,0) {};
+\draw (RH.west) node[rotate=90,anchor=south] {Learning automaton};
+\coordinate (RHOF) at (RH.north west);
+\foreach \i/\p/\c in {1/0.1/10,2/0.3/30,3/0.2/50,4/0.25/70,5/0.15/90} {
+  \filldraw[fill=black!\c,draw=black] (RHOF) rectangle ++(0.5,-5*\p);
+  \coordinate (RH\i) at ($(RHOF)+(0.25,-2.5*\p)$);
+  \coordinate (RHOF) at ($(RHOF)+(0,-5*\p)$);
+  \node[llh] (HC\i) at (1,-\i+0.5*\n+0.5) {};
+  \draw[->] (RH\i) -- (HC\i);
+  \draw (1.75+0.5*\l,-\i+0.5*\n+0.75) -- ++(-0.5*\l-0.0625,0) -- ++(0,-0.5) -- ++(0.5*\l+0.0625,0);
+  \foreach \x in {1,...,\l} {
+	\node[llh] (HC\i-\x) at (1.5+0.5*\x,-\i+0.5*\n+0.5) {};
+	\draw (1.75+0.5*\x,-\i+0.5*\n+0.75) -- ++(0,-0.5);
+  }
+}
+\end{scope}
+
+\ubridge{ADHS.south}{TADHSB};
+\nbridge{ADHS.north}{TADHST};
+
+\end{tikzpicture}

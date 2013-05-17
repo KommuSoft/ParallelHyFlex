@@ -118,9 +118,12 @@ Op geregelde tijdstippen treed er amnesie op in de \emph{ervaring-set}: een deel
 \paragraph{}
 Op vaste tijdsintervallen zal de \emph{onderhandelaar} een deel van de hypotheses uit de \emph{ervaring-set} halen. Een deel van deze hypotheses vormen de nieuwe positieve set van de \emph{zoekruimte}. De overige worden doorgestuurd in de \emph{ervaring-set} van de andere processoren ge\"injecteerd. Een deel van de doorgestuurde hypotheses vormt ook een basis van de negatieve set van de \emph{zoekruimte}.
 
+\paragraph{}
+De figuur toont de verschillende stromen van informatie: volle lijnen duiden op informatiestromen die lokaal worden uitgevoerd. Streepjeslijnen duiden op informatie die de processor uitstuurt naar andere processoren. Stippellijnen tonen de informatie die de processor ontvangt van andere processoren.
+
 \section{\emph{ParAdapHH}}
 
-Naast het ontwikkelen van een systeem om hyperheuristieken op verschillende processoren te kunnen laten werken, vereist het testen van het systeem sowieso dat we een concrete hyperheuristiek ontwikkelen. Een logische keuze is om \emph{AdapHH}, de hyperheuristiek voorgesteld door Mustafa M\i{}s\i{}r te implementeren. We geven eerst een motivatie voor deze hyperheuristiek. Daarna bespreken we in meer detail de werking van de hyperheuristiek samen met de wijzigingen om het systeem op verschillende processoren te laten werken.
+Naast het ontwikkelen van een systeem om hyperheuristieken op verschillende processoren te kunnen laten werken, vereist het testen van het systeem dat we een concrete hyperheuristiek ontwikkelen. Een logische keuze is om \emph{AdapHH}, de hyperheuristiek voorgesteld door Mustafa M\i{}s\i{}r te implementeren. We geven eerst een motivatie voor deze hyperheuristiek. Daarna bespreken we in meer detail de werking van de hyperheuristiek samen met de wijzigingen om het systeem op verschillende processoren te laten werken.
 
 \subsection{Motiviatie}
 
@@ -181,3 +184,7 @@ We kunnen dit systeem verreiken door in de lijst van beste fitness-waardes ook d
 
 \paragraph{Kruisingsheuristieken}
 In het geval \emph{AdapHH} een kruisingsoperator selecteert, dient men een andere oplossing te selecteren. In dat geval kiest \emph{AdapHH} een historisch beste oplossing. Dit hoeven niet noodzakelijk de laatste beste oplossingen te zijn. Telkens wanneer er immers een nieuwe beste oplossing wordt gevonden, wordt dit op een willekeurige plaats in een lijst met vaste grootte gezet. We kunnen het uitwisselingsmechanisme van \emph{ParHyFlex} uitbuiten: in plaats van uitsluitend te kiezen uit de lijst van lokale oplossingen, kunnen ook oplossingen die door een andere machine werden gegenereerd en doorgestuurd worden gebruikt.
+
+\subsubsection{Overzicht}
+
+\importtikz[1]{adaphhwerking}{paradaphh}{Werking van \emph{ParAdapHH}.}

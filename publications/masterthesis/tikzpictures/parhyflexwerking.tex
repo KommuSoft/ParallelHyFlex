@@ -1,6 +1,5 @@
-\begin{center}
-\selectcolormodel{gray}
 \begin{tikzpicture}[scale=\sc]
+\def\iomargin{-5};
 \drawmem{MEM}{8}{3}
 \begin{scope}[yshift=3.5 cm]
 \foreach \x/\y/\i in {-0.9/0/1,-2/0.4/2,-1.7/-0.3/3,2.3/0/4,1.6/0.4/5,1.2/-0.3/6,2.6/-0.65/7,0.7/0.35/8} {
@@ -10,12 +9,13 @@
 \node [minimum width=4 cm,minimum height=2.5 cm,draw=black] (NSS) at (1.625,0) {\large{\textbf{-}}};
 \node [minimum width=9 cm,minimum height=4.5 cm,draw=black] (SS) at (0,-0.25) {};
 \node[anchor=north] at (SS.north) {Zoekruimte};
-\node[solution] (SI) at (-3.75,-1.45) {$s_{1}^{(0)}$};
+\node[solution] (SI0) at (-3.75,-1.45) {$s_{1}^{(0)}$};
+\coordinate (SIE) at (SI0.east);
 \foreach \x in {1,2,3,4} {
-  \coordinate (SIE) at (SI.east);
   \node[solution] (SI) at (\x-3,-1.45) {$s_{1}^{(\x)}$};
   \coordinate (SIM\x) at ($0.5*(SIE)+0.5*(SI.west)$);
   \draw[->] (SIE) -- (SI);
+  \coordinate (SIE) at (SI.east);
 }
 \node[solution] (SIK) at (3.75,-1.45) {$s_{1}^{(E)}$};
 \draw[->] (SI) -- (SIK);
@@ -25,6 +25,12 @@
 \draw[->] (SI) -- (SIK);
 \draw[->] (SIK) .. controls ($(SIK)+(0,-1)$) and ($(MEM1)+(0,1)$) .. (MEM1);
 \end{scope}
+
+\coordinate (SGI) at (SI.west -| \iomargin,0);
+\coordinate (SGO) at ($(SGI)+(0,-0.25)$);
+\draw[thick,dotted,->] (SGI) -- (SI0);
+\draw[dashed,->] (MEM1) .. controls ($(MEM1)+(0,-1)$) and ($(SGI)+(1,0)$) .. (SGO);
+
 \begin{scope}[xshift=2 cm,yshift=6 cm]
 \coordinate (HdL) at (SIK.north |- 1.5,-2.5);
 \node[hypothesis] (Hd) at (HdL)  {$H_{d}$};
@@ -49,22 +55,28 @@
 \draw (ES.north) node[anchor=south] {Ervaring-set};
 \end{scope}
 \begin{scope}[xshift=-3 cm,yshift=6 cm]
-\node [minimum width=\sc*2.5 cm,minimum height=\sc*2.35 cm,draw=black] (NG) at (2,0.25) {};
+\node [minimum width=\sc*2.5 cm,minimum height=\sc*0.5 cm,draw=black] (NG) at (2,-0.5) {};
 \draw (NG.north) node[anchor=south] {Onderhandelaar};
+\end{scope}
+\begin{scope}[xshift=-2.5 cm,yshift=7.5 cm]
+\node [draw,rectangle,fill=gray] (EXM) at (0,0) {Uitvoeringsmechanisme};
+\end{scope}
+\draw[->] (EXM.south -| SI0) -- (SI0);
 \coordinate (ESH) at (ES.north -| Ha);
 \coordinate (ESHO) at ($(ESH)+(-0.25,0)$);
 \coordinate (ESHI) at ($(ESH)+(0.25,0)$);
-\coordinate (NGPI) at ($(NG.north west)+(0.5,0)$);
-\coordinate (NGNI) at ($(NG.north east)+(-0.5,0)$);
-\coordinate (NGIVNI) at ($(NG.north west)+(-0.5,0.5)$);
-\coordinate (NGO) at ($(NG.west)+(-2,0)$);
-\coordinate (NGI) at ($(NGO)+(0,0.5)$);
-\draw[->] (ESHO) .. controls ($(ESHO)+(0,1)$) and ($(NGPI)+(0,1)$) .. (NGPI);
+\coordinate (NGPI) at (NG.west -| PSS);
+\coordinate (NGNI) at ($(NG.east)+(-0.5,0)$);
+\coordinate (NGIVNI) at ($(NG.north west)+(-0.25,0.25)$);
+\coordinate (NGO) at (NG.west -| \iomargin,0);
+\coordinate (NGI) at ($(NGO)+(0,0.25)$);
+\node[draw,rectangle] (NGPIN) at (NGPI) {};
+\node[draw,rectangle] (NGNIN) at (NGNI) {};
+\draw[->] (ESHO) .. controls ($(ESHO)+(0,1)$) and ($(NGPIN.north)+(0,1)$) .. (NGPIN);
 \draw (NG.north) -- (NG.south);
-\draw[dashed,->] (NGPI) .. controls ($(NGPI)+(0,-1)$) and ($(NGO)+(1,0)$) .. (NGO);
-\draw[dotted,thick,<-] (NGNI) .. controls ($(NGNI)+(0,1)$) and ($(NGIVNI)+(0.5,0.5)$) .. (NGIVNI) .. controls ($(NGIVNI)+(-0.5,-0.5)$) and ($(NGI)+(1,0)$) .. (NGI);
+\draw[dashed,->] (NGPIN) .. controls ($(NGPIN.south)+(0,-1)$) and ($(NGO)+(1,0)$) .. (NGO);
+\draw[dotted,thick,<-] (NGNIN) .. controls ($(NGNIN.north)+(0,1)$) and ($(NGIVNI)+(0.5,0.5)$) .. (NGIVNI) .. controls ($(NGIVNI)+(-0.5,-0.5)$) and ($(NGI)+(1,0)$) .. (NGI);
 \draw[dotted,thick,<-] (ESHI) .. controls ($(ESHI)+(0,1.25)$) and ($(NGIVNI)+(0.5,0.5)$) .. (NGIVNI);
-\draw[->] (NGPI) .. controls ($(NGPI)+(0,-1)$) and ($(PSS.north)+(0,1)$) .. (PSS.north);
-\end{scope}
+\draw[->] (NGPIN) -- (PSS);
+\draw[->] (NGNIN) .. controls ($(NGNIN.south)+(0,-0.5)$) and ($(NSS.north)+(0,0.5)$) .. (NSS.north);
 \end{tikzpicture}
-\end{center}

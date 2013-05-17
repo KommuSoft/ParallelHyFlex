@@ -5,11 +5,11 @@
 \newcommand{\deflab}[1]{\label{def:#1}}
 \newcommand{\defref}[1]{Definitie \ref{def:#1}}
 \newcommand{\imglab}[1]{\label{fig:#1}}
-\newcommand{\imgref}[1]{Figuur \ref{fig:#1}}
+\newcommand{\imgref}[1]{\textsc{Figuur \ref{fig:#1}}}
 \newcommand{\tbllab}[1]{\label{tbl:#1}}
-\newcommand{\tblref}[1]{Tabel \ref{tbl:#1}}
+\newcommand{\tblref}[1]{\textsc{Tabel \ref{tbl:#1}}}
 \newcommand{\alglab}[1]{\label{alg:#1}}
-\newcommand{\algref}[1]{Algoritme \ref{alg:#1}}
+\newcommand{\algref}[1]{\textsc{Algoritme \ref{alg:#1}}}
 \newcommand{\eqnlab}[1]{\label{eqn:#1}}
 \newcommand{\eqnref}[1]{Vergelijking (\ref{eqn:#1})}
 \newcommand{\thelab}[1]{\label{the:#1}}
@@ -163,3 +163,5 @@
 }
 
 \tikzset{hypothesis/.style={draw=black,regular polygon,regular polygon sides=3,scale=0.7,fill=gray,inner sep=0 pt},solution/.style={draw=black,circle,scale=0.7,inner sep=0 pt}}
+
+\input{tikzcommands}
