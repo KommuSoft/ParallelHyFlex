@@ -110,7 +110,7 @@ De implementatie in \algref{gatherallsequential} werkt met synchrone communicati
 
 \begin{algorithm}[hbt]
  $\rslt\leftarrow\funm{array}{p,\nult}$\;
- $\impt\leftarrow\funm{array}{d,\fals}$\;
+ $\impt\leftarrow\funm{array}{d+1,\fals}$\;
  $z\leftarrow0$\;
  \WhnRcv($\tupl{\sndr,\msgt}$){
    $k\leftarrow\idet\mbox{ XOR }\sndr$\;

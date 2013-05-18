@@ -127,6 +127,7 @@ public class Communication {
     private final int rank;
     private final int size;
     private final int dim;
+    private final int nonNeighborCache;
 
     private Communication(String[] args) {
         MPI.Init(args);
@@ -145,6 +146,14 @@ public class Communication {
             tmp >>= 1;
             d++;
         }
+        int nc = 0;
+        for(int i = 0; i < d; i++) {
+            int l = 1<<i;
+            if((rank^l) >= size) {
+                nc |= 1<<i;
+            }
+        }
+        this.nonNeighborCache = nc;
         dim = d;
     }
 
@@ -203,5 +212,12 @@ public class Communication {
         else {
             return -1;
         }
+    }
+
+    /**
+     * @return the nonNeighborCache
+     */
+    public int getNonNeighborCache() {
+        return nonNeighborCache;
     }
 }
