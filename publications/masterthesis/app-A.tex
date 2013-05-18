@@ -108,6 +108,9 @@ De implementatie in \algref{gatherallsequential} werkt met synchrone communicati
 \paragraph{}
 \emph{ParHyFlex} werkt met \'e\'en \emph{thread}. Ontvangen berichten worden verwerkt telkens wanneer een heuristiek is uitgevoerd. \algref{gatherallasync} is een aangepaste versie van het synchrone algoritme. Het algoritme werkt met twee lijsten: $\rslt$ en $\impt$. $\rslt$ houdt de tot dusver ontvangen gegevens bij, deze kunnen dan later uitgelezen worden en verder uitgestuurd worden. $\impt$ slaat per dimensie op of de bijbehorende buur reeds zijn deel van data heeft opgestuurd. $z$ bevat de kleinste dimensie waar we nog geen data naar hebben gestuurd. Wanneer we een bericht ontvangen van een buur, berekenen we waar deze data moet worden opgeslagen en markeren we het relevante item in de $\impt$-lijst. Dit doen we ook wanneer we de lokale data aangeboden krijgen\footnote{Vermits het algoritme asynchroon verloopt kunnen er berichten vanuit de andere processoren worden gestuurd alvorens de lokale processor de \texttt{GatherAll}-instructie oproept.}. Bij beide gebeurtenissen controleren we of we op dat moment zelf data kunnen uitsturen: de \mbox{zendData}-functie. Deze functie controleert per dimensie of we over voldoende data beschikken: dit wil zeggen dat alle buren met een lagere dimensie de data al hebben doorgestuurd. Vervolgens stellen we het pakket met de relevante data samen en wordt dit asynchroon verstuurd. De operatie is uitgevoerd wanneer we naar alle buren data hebben verstuurd en ontvangen hebben.
 
+\paragraph{}
+Een aantal problemen worden ge\"introduceerd door het asynchrone karakter: processoren kunnen al beginnen met het sturen van berichten, terwijl andere processoren 
+
 \begin{algorithm}[hbt]
  $\rslt\leftarrow\funm{array}{p,\nult}$\;
  $\impt\leftarrow\funm{array}{d+1,\fals}$\;
@@ -115,29 +118,36 @@ De implementatie in \algref{gatherallsequential} werkt met synchrone communicati
  \WhnRcv($\tupl{\sndr,\msgt}$){
    $k\leftarrow\idet\mbox{ XOR }\sndr$\;
    $\bset\leftarrow\sndr\mbox{ AND }\brak{\mbox{NEG } k-1}$\;
-   $\impt\fbrk{\log_2k}\leftarrow\true$\;
-   $\rslt\fbrk{\bset:\bset+k-1}\leftarrow\msgt\fbrk{0:k-1}$\;
+   $\impt\fbrk{1+\log_2k}\leftarrow\true$\;
+   $l\leftarrow\funm{min}{k,p-\bset}$\;
+   $\rslt\fbrk{\bset:\bset+l-1}\leftarrow\msgt\fbrk{0:l-1}$\;
    $\funm{zendData}{}$\;
  }
  \Func($\funm{GatherAll}{\owdt}$){
    $\rslt\fbrk{\idet}\leftarrow\owdt$\;
    $\impt\fbrk{0}\leftarrow\true$\;
    \funm{zendData}{}
- }{}
+ }
  \Func($\funm{gereed}{}$){
-   \Return{$z\geq d\wedge\impt\fbrak{d}$}\;
- }{}
+   \Return{$z\geq d\wedge\impt\fbrk{d}$}\;
+ }
  \Func($\funm{reset}{}$){
-   $\impt\leftarrow\funm{array}{d-1,\fals}$\;
+   $\impt\leftarrow\funm{array}{d+1,\fals}$\;
    $z\leftarrow 0$\;
  }{}
  \Func($\funm{zendData}{}$){
-   \While{$z< d\wedge\impt\fbrk{z}$}{
+   \While{\emph{$z<d\wedge\impt\fbrk{z}$}}{
 	 $l\leftarrow 2^z$\;
-	 $\bset\leftarrow\idet\mbox{ AND }\brak{\mbox{NEG } l-1}$\;
-	 $\msgt\leftarrow\funm{array}{l}$\;
-	 $\msgt\fbrk{0:l-1}\leftarrow\rslt\fbrk{\bset:\bset+l-1}$\;
-	 $\funm{isend}{\idet\mbox{ XOR }l,\msgt}$\;
+	 $\rcvr\leftarrow \idet\mbox{ XOR }l$\;
+	 \eIf{\emph{$\rcvr < p$}}{
+	   $\bset\leftarrow\idet\mbox{ AND }\brak{\mbox{NEG } l-1}$\;
+	   $m\gets\funm{min}{l,p-\bset}$\;
+	   $\msgt\leftarrow\funm{array}{m}$\;
+	   $\msgt\fbrk{0:m-1}\leftarrow\rslt\fbrk{\bset:\bset+m-1}$\;
+	   $\funm{isend}{\rcvr,\msgt}$\;
+	 }{
+	   $\impt\fbrk{z+1}\leftarrow\true$
+	 }
 	 $z\leftarrow z+1$\;
    }
  }{}

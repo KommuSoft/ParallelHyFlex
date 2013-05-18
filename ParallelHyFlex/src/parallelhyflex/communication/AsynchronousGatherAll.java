@@ -31,7 +31,7 @@ public class AsynchronousGatherAll<T> implements PacketReceiver {
     }
 
     public boolean ready() {
-        return this.currentDimension >= Communication.getCommunication().getDimensions();
+        return this.currentDimension >= Communication.getCommunication().getDimensions() && (this.receiveCache&(1<<Communication.getCommunication().getDimensions())) != 0x00;
     }
 
     @Override
