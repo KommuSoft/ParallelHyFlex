@@ -1,2 +1,37 @@
-\newcommand{\ubridge}[3][1]{\nbridge[-#1]{#2}{#3}}
-\newcommand{\nbridge}[3][1]{\draw (#2) .. controls ($(#2)+(0,#1)$) and ($(#3)+(0,#1)$) .. (#3);}
+\newcommand{\ubridge}[4][1]{\nbridge[-#1]{#2}{#3}{#4}}
+\newcommand{\nbridge}[4][1]{\draw[#2] (#3) .. controls ($(#3)+(0,#1)$) and ($(#4)+(0,#1)$) .. (#4);}
+\newcommand{\nubridge}[4][1]{\draw[#2] (#3) .. controls ($(#3)+(0,#1)$) and ($(#4)-(0,#1)$) .. (#4);}
+\newcommand{\unbridge}[4][1]{\nubridge[-#1]{#2}{#3}{#4}}
+
+\newcommand{\ubridgearrow}[3][1]{\ubridge[#1]{->}{#2}{#3}}
+\newcommand{\nbridgearrow}[3][1]{\nbridge[#1]{->}{#2}{#3}}
+\newcommand{\unbridgearrow}[3][1]{\unbridge[#1]{->}{#2}{#3}}
+\newcommand{\nubridgearrow}[3][1]{\nubridge[#1]{->}{#2}{#3}}
+
+\newcommand{\defrect}[5][]{\node[rectangle,draw=black,minimum width=#4, minimum height=#5,#1] (#2) at (#3) {};}
+
+\newcommand{\drawcube}[2]{
+\coordinate (A) at (0,0,0);
+\coordinate (B) at (0,0,#1);
+\coordinate (C) at (0,#1,0);
+\coordinate (D) at (0,#1,#1);
+\coordinate (E) at (#1,0,0);
+\coordinate (F) at (#1,0,#1);
+\coordinate (G) at (#1,#1,0);
+\coordinate (H) at (#1,#1,#1);
+\foreach \x/\t in {#2} {
+  \fill (\x) circle (0.1 cm) node[anchor=south east]{\t};
+}
+\foreach \x/\y in {B/D,B/F,C/D,C/G,D/H,E/F,E/G,F/H,G/H} {
+  \draw (\x) -- (\y);
+}
+\draw[dashed] (B) -- (A);
+\draw (C) -- (C |- D);
+\draw[dashed] (C |- D) -- (A);
+\draw (E) -- (E -| F);
+  \draw[dashed] (E -| F) -- (A);
+}
+
+\newcommand{\edgeinteraction}[3][0.25,0]{
+\draw[<->] ($0.85*(#2)+0.15*(#3)+(#1)$) -- ($0.15*(#2)+0.85*(#3)+(#1)$);
+}

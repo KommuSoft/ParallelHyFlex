@@ -1,24 +1,154 @@
-\chapter{De eerste bijlage}
-\label{app:A}
-In de bijlagen vindt men de data terug die nuttig kunnen zijn voor de
-lezer, maar die niet essentieel zijn om het betoog in de normale tekst te
-kunnen volgen. Voorbeelden hiervan zijn bronbestanden,
-configuratie-informatie, langdradige wiskundige afleidingen, enz.
+\chapter{Communicatiemodel van \emph{ParHyFlex}}
+\applab{a}
 
-In een bijlage kunnen natuurlijk ook verdere onderverdelingen voorkomen,
-evenals figuren en referenties\cite{h2g2}.
+\chapterquote{The most important thing in communication is to hear what isn't being said.}{Peter F. Drucker}
 
-%\section{Meer lorem}
-%\lipsum[50]
+Bij de uitwisseling van oplossingen en ervaring, het onderhandelen over een nieuwe zoekruimte en het uitwisselen van toestanden is communicatie vereist. \emph{ParHyFlex} gebruikt hiervoor twee vormen van communicatie: \emph{Message Passing Interface (MPI)} en \emph{User Datagram Protocol (UDP)}.
 
-%\subsection{Lorem 15--17}
-%\lipsum[15-17]
+\subsection{Motivatie}
 
-%\subsection{Lorem 18--19}
-%\lipsum[18-19]
+\subsubsection{\emph{Message Passing Interface (MPI)}}
 
-%\section{Lorem 51}
-%\lipsum[51]
+\emph{MPI} is een standaard communicatieprotocol speciaal ontwikkeld voor parallelle algoritmen. Het omvat zowel directieven voor \emph{point-to-point} communicatie en \emph{collectieve} communicatie. Zowel de zender en de ontvanger kunnen kiezen om deze communicatie op een synchrone of asynchrone manier af te handelen.
+
+\paragraph{}
+Een groot voordeel van \emph{MPI} is dat er voor de meeste configuraties een implementatie beschikbaar is. Bovendien heeft men veel onderzoek ge\"investeerd in effici\"ente implementaties voor groepscommunicatie op verschillende netwerkstructuren (\emph{hypercube}, \emph{cycle},...). Er zijn verschillende netwerkkaarten ge\"implementeerd waar de \emph{MPI} commando's rechtstreeks in de hardware worden ge\"implementeerd en op die manier de processor ontlasten van een groot deel van de communicatie-aspecten.
+
+\paragraph{}
+\emph{MPI} legt weinig voorwaarden op inzake hoe de commando's ge\"implementeerd worden. De meeste implementaties werken op een manier die vergelijkbaar is met \emph{TCP} waarbij men meestal enkele optimalisaties inzake groepscommunicatie.
+
+\paragraph{}
+\emph{MPI} kent verschillende versies. %TODO
+
+\subsubsection{\emph{User Datagraph Protocol (UDP)}}
+
+\emph{UDP} is een protocol in de transportlaag die op een onbetrouwbare manier boodschappen doorstuurt. Boodschappen worden in pakketten doorgestuurd: sequenties aan bytes die op zichzelf staan.
+
+\paragraph{}
+Onbetrouwbare communicatie is vrij ongewoon in een parallelle context. De meeste parallelle algoritmen falen immers wanneer de resultaten die door andere processoren niet worden doorgestuurd. In het geval van metaheuristieken en hyperheuristieken is het echter niet noodzakelijk om informatie uit te wisselen: stel dat een oplossing niet wordt doorgestuurd, kan de potenti\"ele ontvanger nog altijd de oude oplossing gebruiken om verder te rekenen.
+
+\paragraph{}
+Werken met onbetrouwbare communicatie levert bovendien ook enkele voordelen op. Wanneer men moet verzekeren dat informatie wel degelijk de ontvanger bereikt, moet men een systeem implementeren waarbij de ontvanger een bericht terugstuurt dat de boodschap is aangekomen\footnote{De zogenaamde \emph{ACK}-pakketten.}. Heel wat implementaties zullen deze boodschappen effici\"ent proberen te implementeren. Toch zal men een deel van de beschikbare bandbreedte altijd gebruikt worden om de communicatie betrouwbaar te maken. Zeker in de context van een lokaal netwerk -- een configuratie waarbij een groot deel van de pakketten sowieso toekomt -- is dit een niet onbelangrijke kostprijs.
+
+\paragraph{}
+\emph{UDP} maakt ook het gebruik van \emph{multicast} pakketten eenvoudiger. Een \emph{multicast} pakket wordt naar meerdere ontvangers tegelijk gestuurd om zo de bandbreedte te sparen. Omdat betrouwbaarheid geen vereiste is, zal een pakket een constante kost teweegbrengen in het netwerk. In het geval we dit op een betrouwbare manier doen (bijvoorbeeld over het \emph{Transmission Control Protocol (TCP)}) moeten er bevestigingspakketten worden teruggestuurd die in totaal een kost teweegbrengen die schaalt met het aantal ontvangers. In het geval van \emph{TCP} werken we bovendien met een \emph{sliding window protocol}: slechts een deel van de fragmenten van een boodschap zijn tegelijk in omloop zijn. Indien \'e\'en ontvanger dus niet antwoordt -- bijvoorbeeld omdat deze op dat moment andere pakketten ontvangt -- kan dit ertoe leiden dat andere ontvangers geen verdere boodschappen meer ontvangen. \emph{Multicast} onder \emph{TCP} is bovendien geen sinecure\cite{dshp}: ontvangers moeten zichzelf eerst toevoegen aan een \emph{multicast group} om pakketten te ontvangen.
+
+\paragraph{}
+Een beperking aan \emph{UDP} is de pakketgrootte. Elk pakket heeft een maximale grote van 65'527 bytes aan data. Deze beperking is ingevoerd om te voorkomen dat een pakket lange tijd een communicatielijn kan opeisen waardoor andere entiteiten in het netwerk niet meer aan bod komen\cite{Tanen2003}. Vermits het niet zeker is dat een \emph{UDP} pakket wel degelijk op de bestemming toekomt, moet alle informatie dus in \'e\'en pakket worden opgeslagen. Het gevolg is dat sommige data niet uitwisselbaar is met behulp van \emph{UDP}. Door enkele eigenschappen van \emph{TCP} over te nemen in een nieuw protocol kan men dit probleem oplossen.
+
+\section{Overzicht van de Communicatie}
+
+In het algemeen beschouwen we volgende vormen van communicatie in \emph{ParHyFlex}:
+\begin{enumerate}
+ \item de probleeminstantie;
+ \item geheugenconfiguratie;
+ \item oplossingen;
+ \item onderhandelingen over een nieuwe zoekruimte; en
+ \item een deel van de toestand van de hyperheuristiek.
+\end{enumerate}
+in de volgende subsecties zullen we de verschillende vormen verder bespreken.
+
+\subsubsection{De probleeminstantie en geheugenconfiguratie}
+
+Wanneer \emph{ParHyFlex} wordt opgestart, zal \'e\'en van de processoren het optimalisatieprobleem inlezen. Het is de bedoeling dat het probleem vervolgens ook door de andere processoren wordt ingeladen. Hiervoor maken we gebruik van synchrone communicatie over \emph{MPI}. De probleeminstantie is immers een noodzakelijk deel van de data en als processoren reeds andere communicatie zouden aangaan met de processoren zijn de effecten oncontroleerbaar. Bovendien betreft het een eenmalige uitwisseling in het begin van het proces. Hierdoor zijn de communicatiekosten van minder belang.
+
+\paragraph{}
+Ook de geheugenconfiguratie wordt uitgewisseld. Hieronder verstaan we het aantal oplossingen die een processor tegelijk opslaat samen met enkele instellingen hoe oplossingen zullen worden gecommuniceerd. \emph{ParHyFlex} laat enkel toe dat de hyperheuristiek bij aanvang het geheugen juist afstelt. Daarom verloopt ook deze communicatie over een synchrone \emph{MPI} verbinding. De argumentatie is dezelfde als bij het uitwisselen van de probleeminstantie.
+
+\subsubsection{Uitwisselen van oplossingen}
+
+Het uitwisselen van oplossingen
+
+\subsubsection{Onderhandelingen over een nieuwe zoekruimte}
+
+Op geregelde tijdstippen vat \emph{ParHyFlex} een proces aan waarbij men over een nieuwe zoekruimte onderhandelt. Hiervoor dienen de verschillende processoren een voorstel voor hun eigen zoekruimte aan de andere processen mee te delen. Dit is een typisch voorbeeld van een \texttt{GatherAll}-operatie: een vorm van groepscommunicatie waarbij elke processor een deel van de data bezit. Op het einde van de operatie bezitten alle processoren alle delen. De meeste van \emph{MPI} bevatten geen implementatie voor een asynchrone \texttt{GatherAll}-operatie\footnote{De versies die dit niet ondersteunen zijn 1.0\cite{mpi10}, 1.3\cite{mpi13}, 2.0\cite{conf/europar/GeistGHLLSSS96,mpi20}, 2.1\cite{mpi21} en 2.2\cite{mpi22}. Versie 3.0\cite{mpi30} ondersteund dit commando wel.}, daarom hebben we deze zelf ge\"implementeerd. De details van deze implementatie staan in \secref{mpimod}.
+
+\subsubsection{De toestand van de hyperheuristiek}
+
+Een hyperheuristiek houdt meestal een toestand bij waarin hij bijvoorbeeld de prestaties van de heuristieken in opslaat. Daar de waarde van deze parameters sterk afhangt van het aantal gevallen waaruit deze data is opgebouwd, kan het interessant zijn deze data uit te wisselen: we doen dan immers een uitspraak op basis van meer gegevens. Voor deze taak werd een component ge\"implementeerd ter ondersteuning. De hyperheuristiek beschrijft in het begin welke data uitgewisseld moet worden en schuift de lokale data vervolgens in het systeem. Het systeem zal stuurt regelmatig de data rond waardoor de data van de andere systemen ook uitgelezen kan worden in het lokaal systeem. Ook hiervoor maken we gebruik van een asynchrone \texttt{gather all} implementatie (zie \secref{mpimod}).
+
+\section{Aangepast \emph{MPI}-model: \emph{Non-blocking Gather All}}
+\seclab{mpimod}
+
+Het \texttt{GatherAll} commando zorgt voor de uitwisseling van gegevens tussen meerdere processoren. Voordat het commando wordt opgeroepen beschikt elke processor over een deel van de data. Na de operatie zitten bij alle processoren alle delen in het geheugen. Een \texttt{GatherAll} instructie kan men dus bekijken als een collectieve \texttt{Broadcast}: elke processor stuurt zijn deel van data naar alle andere processoren.
+
+\paragraph{}De na\"ieve implementatie waarbij men inderdaad elke processor een \texttt{Broadcast} operatie laat ondernemen, vereist dat we $\bigoh{p\cdot\brak{p-1}/2}=\bigoh{p^2}$ berichten over het netwerkt sturen. Men kan stellen dat een voordeel van deze implementatie is dat de berichten in \bigoh{1} over het netwerk worden verstuurd. Als we echter de assumptie maken dat elke machine slechts \'e\'en bericht tegelijk kan ontvangen of de communicatielijnen de berichten sequentieel doorsturen, vereist deze operatie dus \bigoh{p} tijd.
+
+\subsection{\texttt{GatherAll} met \bigoh{p\log p} berichten}
+Een implementatie die minder berichten oplevert ordent de processoren in een \emph{hypercube}\cite[algoritme 4.7]{books/bc/KumarGGK94}. In het geval van $p$ processoren. Stel $d=\ceil{\log_2p}$, dan kunnen we de processoren ordenen in een $d$-dimensionale kubus. Elke processor heeft hierbij ofwel $d$ ofwel $d-1$ buren: processoren die slechts in \'e\'en dimensie van elkaar verschillen.
+
+\paragraph{}
+Processoren kunnen informatie uitwisselen met de buur van een bepaalde dimensie: zelf zend de processor alle data door waarover men op dat moment beschikt naar deze buur. Vermits de buur-relatie voor een specifieke dimensie symmetrisch is, zal deze buur ook alle data waarover hij beschikt doorsturen.
+
+\paragraph{}
+
+
+\subsection{Algoritme}
+
+\importtikz[1]{asynchronegatherall}{asynchronegatherall}{Werking van een \texttt{GatherAll} operatie op een \emph{HyperCube}.}
+\paragraph{}
+\imgref{asynchronegatherall} toont dat door incrementeel informatie uit te wisselen met de buur van een telkens hogere dimensie, na $d$ stappen alle processoren over alle informatie beschikken. Een formele beschrijving van dit algoritme staat in \algref{gatherallsequential}.
+
+\begin{algorithm}[hbt]
+ $\rslt\leftarrow\mbox{eigen deel van de data}$\;
+ \For{$i=0\mbox{ \textbf{\emph{to}} }d-1$}{
+  $\mbox{\textbf{partner}}\leftarrow\idet\mbox{ XOR }2^i$\;
+  $\funm{send}{\textbf{partner},\rslt}$\;
+  $\msgt\leftarrow\funm{receive}{\textbf{partner}}$\;
+  $\rslt\leftarrow\rslt\cup\mbox{\textbf{bericht}}$\;
+ }
+ \caption{\texttt{GatherAll}\cite{books/bc/KumarGGK94}.}
+ \alglab{gatherallsequential}
+\end{algorithm}
+
+\subsection{Asynchrone aspecten}
+
+De implementatie in \algref{gatherallsequential} werkt met synchrone communicatie: processen worden geblokkeerd tot een succesvolle uitwisseling plaatsvind. Het algoritme die we willen implementeren zal met asynchrone communicatie werken. Men kan dit implementeren door dit proces bijvoorbeeld op een aparte \emph{thread} te laten werken: een proces brengt de data onder in de context van de \emph{thread} en werkt verder. Nadien wordt regelmatig gecontroleerd over de \emph{thread} al de nodige informatie heeft verzameld.
+
+\paragraph{}
+\emph{ParHyFlex} werkt met \'e\'en \emph{thread}. Ontvangen berichten worden verwerkt telkens wanneer een heuristiek is uitgevoerd. \algref{gatherallasync} is een aangepaste versie van het synchrone algoritme. Het algoritme werkt met twee lijsten: $\rslt$ en $\impt$. $\rslt$ houdt de tot dusver ontvangen gegevens bij, deze kunnen dan later uitgelezen worden en verder uitgestuurd worden. $\impt$ slaat per dimensie op of de bijbehorende buur reeds zijn deel van data heeft opgestuurd. $z$ bevat de kleinste dimensie waar we nog geen data naar hebben gestuurd. Wanneer we een bericht ontvangen van een buur, berekenen we waar deze data moet worden opgeslagen en markeren we het relevante item in de $\impt$-lijst. Dit doen we ook wanneer we de lokale data aangeboden krijgen\footnote{Vermits het algoritme asynchroon verloopt kunnen er berichten vanuit de andere processoren worden gestuurd alvorens de lokale processor de \texttt{GatherAll}-instructie oproept.}. Bij beide gebeurtenissen controleren we of we op dat moment zelf data kunnen uitsturen: de \mbox{zendData}-functie. Deze functie controleert per dimensie of we over voldoende data beschikken: dit wil zeggen dat alle buren met een lagere dimensie de data al hebben doorgestuurd. Vervolgens stellen we het pakket met de relevante data samen en wordt dit asynchroon verstuurd. De operatie is uitgevoerd wanneer we naar alle buren data hebben verstuurd en ontvangen hebben.
+
+\begin{algorithm}[hbt]
+ $\rslt\leftarrow\funm{array}{p,\nult}$\;
+ $\impt\leftarrow\funm{array}{d,\fals}$\;
+ $z\leftarrow0$\;
+ \WhnRcv($\tupl{\sndr,\msgt}$){
+   $k\leftarrow\idet\mbox{ XOR }\sndr$\;
+   $\bset\leftarrow\sndr\mbox{ AND }\brak{\mbox{NEG } k-1}$\;
+   $\impt\fbrk{\log_2k}\leftarrow\true$\;
+   $\rslt\fbrk{\bset:\bset+k-1}\leftarrow\msgt\fbrk{0:k-1}$\;
+   $\funm{zendData}{}$\;
+ }
+ \Func($\funm{GatherAll}{\owdt}$){
+   $\rslt\fbrk{\idet}\leftarrow\owdt$\;
+   $\impt\fbrk{0}\leftarrow\true$\;
+   \funm{zendData}{}
+ }{}
+ \Func($\funm{gereed}{}$){
+   \Return{$z\geq d\wedge\impt\fbrak{d}$}\;
+ }{}
+ \Func($\funm{reset}{}$){
+   $\impt\leftarrow\funm{array}{d-1,\fals}$\;
+   $z\leftarrow 0$\;
+ }{}
+ \Func($\funm{zendData}{}$){
+   \While{$z< d\wedge\impt\fbrk{z}$}{
+	 $l\leftarrow 2^z$\;
+	 $\bset\leftarrow\idet\mbox{ AND }\brak{\mbox{NEG } l-1}$\;
+	 $\msgt\leftarrow\funm{array}{l}$\;
+	 $\msgt\fbrk{0:l-1}\leftarrow\rslt\fbrk{\bset:\bset+l-1}$\;
+	 $\funm{isend}{\idet\mbox{ XOR }l,\msgt}$\;
+	 $z\leftarrow z+1$\;
+   }
+ }{}
+ \caption{Asynchrone \texttt{GatherAll}.}
+ \alglab{gatherallasync}
+\end{algorithm}
+
+
+\subsection{Onbetrouwbare communicatie}
+
+
 
 %%% Local Variables: 
 %%% mode: latex

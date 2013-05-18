@@ -1,4 +1,6 @@
-\begin{tikzpicture}[scale=\sc,llh/.style={circle,fill=black,thick,draw=gray}]
+\begin{tikzpicture}[scale=\sc]
+
+\def\iomargin{-5};
 
 \begin{scope}
 \node[rectangle,draw=black,minimum width=2 cm, minimum height=3 cm] (ADHS) at (0,0) {};
@@ -8,7 +10,7 @@
 \node[llh] (HA3) at (0.75,-0.25) {};
 \node[llh] (HA4) at (-0.5,-0.33) {};
 \node[llh] (HA5) at (-0.2,-0.75) {};
-\node[llh] (HA5) at (-0.4,0.85) {};
+\node[llh] (HA6) at (-0.4,0.85) {};
 \end{scope}
 
 \begin{scope}[xshift=2 cm,scale=1.4]
@@ -42,7 +44,73 @@
 }
 \end{scope}
 
-\ubridge{ADHS.south}{TADHSB};
-\nbridge{ADHS.north}{TADHST};
+\begin{scope}[xshift=3 cm, yshift=4 cm]
+\def\n{8};
+\defrect{HHR}{0,0}{6 cm}{1 cm};
+\draw (HHR) to node[above,midway] {bepaalt} (TADHST);
+\draw (HHR.north) node[anchor=south] {Low Level Heuristic Records};
+\foreach \x in {1,...,\n} {
+  \filldraw[draw=black,fill=white] (0.7*\x-0.35*\n-0.65,0.3) -- ++(0,-0.6) -- ++(0.6,0) -- ++(0,0.5) -- ++(-0.1,0.1) -- cycle;
+  \node[llh] (HR\x) at (0.7*\x-0.35*\n-0.35,0) {};
+}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=-7 cm]
+\def\n{5};
+\def\dy{0.5};
+\defrect{AILLA}{0,0}{3 cm}{3.6 cm}
+\draw (AILLA.north) node[anchor=south] {AILLA};
+\defrect{AILLAL}{0.9,0}{0.8 cm}{2.6 cm}
+\foreach \y in {1,...,\n} {
+  \node[solution] (S\y) at (0.9,0.5*\n*\dy+0.5*\dy-\dy*\y) {$S^{\star}_{\y}$};
+}
+\node[solution] (S?) at (-0.9,1) {$S_{?}$};
+\draw[<->] (S?) to node[sloped,midway,above]{$<?$} (S2);
+\draw[very thick,<-] (AILLAL.east |- S2.east) -- ++(0.5,0) node[anchor=west]{\small \# pogingen};
+\coordinate (AILLAI) at (S? |- AILLA.north);
+\draw[<-] (S?) -- (AILLAI);
+\unbridge{->}{S?}{AILLAL.north};
+\end{scope}
 
+\begin{scope}[yshift=-5 cm]
+\node[solution] (SI) at (-2,1) {$S_{I}$};
+\node[solution] (SM1) at (2,0.5) {$S_A$};
+\node[solution] (SR1) at (4,1.5) {$S_{R1}$};
+\node[solution] (SR2) at (6,1.5) {$S_{R2}$};
+\draw[->] (SI) -- (SM1);
+\draw[->] (SI) -- (SR1);
+\draw[->] (SR1) -- (SR2);
+\unbridge{}{HA3}{$0.5*(SI)+0.5*(SM1)$};
+\unbridge{}{HC4}{$0.5*(SI)+0.5*(SR1)$};
+\unbridge{}{HC4-2}{$0.5*(SR1)+0.5*(SR2)$};
+\unbridgearrow{SM1}{AILLAI};
+\unbridgearrow{SR2}{AILLAI};
+\ubridgearrow{S?}{SI};
+\end{scope}
+\coordinate (HHRF) at ($(HHR.south west)+(0,0.25)$);
+\draw[->] (AILLA.west) to node[above,midway]{Feedback} ++(-7,0) |- (HHRF);
+\coordinate (MidA) at ($(RH.north)+(5,0.5)$);
+\coordinate (MidB) at ($0.75*(AILLA.north east)+0.25*(AILLA.east)$);
+\draw[<-] (RH.north) |- ++(5,0.5) to node[above,sloped,midway]{Aanpassen} (MidA |- MidB) -- (MidB);
+
+\ubridgearrow{TADHSB}{ADHS.south};
+\nbridgearrow{ADHS.north}{TADHST};
+\coordinate (AILLAIO) at ($(AILLA)+(0,-0.5)$);
+\coordinate (AILLAIOI) at (AILLAIO -| \iomargin,0);
+\coordinate (AILLAIOO) at ($(AILLAIOI)+(0,-0.25)$);
+\draw[instream,->] (AILLAIOI) -- (AILLA.west |- AILLAIOI);
+\draw[outstream,<-] (AILLAIOO) -- (AILLA.west |- AILLAIOO);
+
+\coordinate (RHIO) at ($(RH.south west)+(0,0.5)$);
+\coordinate (RHIOI) at (RHIO -| \iomargin,0);
+\coordinate (RHIOO) at ($(RHIOI)+(0,-0.25)$);
+
+\draw[instream,->] (RHIOI) -- (RH.west |- RHIOI);
+\draw[outstream,<-] (RHIOO) -- (RH.west |- RHIOO);
+
+\coordinate (HHRIO) at ($(HHR.south west)+(0,0.75)$);
+\coordinate (HHRIOI) at (HHRIO -| \iomargin,0);
+\coordinate (HHRIOO) at ($(HHRIOI)+(0,-0.25)$);
+
+\draw[instream,->] (HHRIOI) -- (HHR.west |- HHRIOI);
+\draw[outstream,<-] (HHRIOO) -- (HHR.west |- HHRIOO);
 \end{tikzpicture}

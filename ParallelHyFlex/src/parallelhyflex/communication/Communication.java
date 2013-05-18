@@ -24,7 +24,7 @@ public class Communication {
         MainCommunication = new Communication(args);
         logFile = new File("log" + MainCommunication.rank + ".txt");
         logWriter = new BufferedWriter(new FileWriter(logFile));
-        logFileTime(LoggingParameters.LOG_START,LoggingParameters.LOG_START_TEXT);
+        logFileTime(LoggingParameters.LOG_START, LoggingParameters.LOG_START_TEXT);
     }
 
     public static int[] others() {
@@ -126,6 +126,7 @@ public class Communication {
     }
     private final int rank;
     private final int size;
+    private final int dim;
 
     private Communication(String[] args) {
         MPI.Init(args);
@@ -138,6 +139,13 @@ public class Communication {
         for (int i = rank + 1; i < size; i++) {
             other[i - 1] = i;
         }
+        int tmp = size - 1;
+        int d = 0;
+        while (tmp != 0x00) {
+            tmp >>= 1;
+            d++;
+        }
+        dim = d;
     }
 
     @Override
@@ -157,5 +165,43 @@ public class Communication {
      */
     public int getSize() {
         return size;
+    }
+
+    public int getDimensions() {
+        return dim;
+    }
+
+    public int getDimensionId(int dimension) {
+        return ((this.rank >> dimension) & 0x01);
+    }
+
+    public boolean hasNeighbor(int dimension) {
+        int neighbor = this.getRank() ^ (0x01 << dimension);
+        return (neighbor < this.getSize());
+    }
+
+    public int getNeighbor(int dimension) {
+        int rank = this.getRank();
+        int neighbor = rank ^ (0x01 << dimension);
+        if (neighbor < this.getSize()) {
+            return neighbor;
+        } else {
+            return rank;
+        }
+    }
+    
+    public int getDimensionDifference(int neighbor) {
+        int diff = this.getRank()^neighbor;
+        int d = 0;
+        while(diff != 0 && (diff&1) != 1) {
+            diff >>= 1;
+            d++;
+        }
+        if(diff != 0) {
+            return d;
+        }
+        else {
+            return -1;
+        }
     }
 }

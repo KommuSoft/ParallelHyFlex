@@ -57,10 +57,15 @@
 \end{abstract}
 
 % Een lijst van figuren en tabellen is optioneel
-%\listoffigures
-%\listoftables
-% Bij een beperkt aantal figuren en tabellen gebruik je liever het volgende:
-\listoffiguresandtables
+\listoffigures
+\begingroup
+\let\clearpage\relax
+\listoftables
+\begingroup
+\let\clearpage\relax
+\listofalgorithms
+\endgroup
+\endgroup
 % De lijst van symbolen is eveneens optioneel.
 % Deze lijst moet wel manueel aangemaakt worden, bv. als volgt:
 \chapter{Lijst van afkortingen en symbolen}
@@ -83,7 +88,7 @@
 % Indien er bijlagen zijn:
 \appendixpage*          % indien gewenst
 \appendix
-%\include{app-A}
+\include{app-A}
 % ... en zo verder tot
 \include{app-n}
 

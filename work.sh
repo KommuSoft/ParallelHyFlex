@@ -1,6 +1,7 @@
 rhythmbox-client --hide
 while true
 do
+	bash clean.sh
 	speaker-test -t sine -b 1000 -p 1000 -f 1000 -l 2
 	echo | date
 	rhythmbox-client --play
