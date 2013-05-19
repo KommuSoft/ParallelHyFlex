@@ -26,11 +26,11 @@ public class SimpleThreeSatHyperHeuristic extends HyperHeuristic<ThreeSatSolutio
     }
 
     public SimpleThreeSatHyperHeuristic(ThreeSatProblem problem, long intervalTicks) throws ProtocolException, IOException {
-        super(problem, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
+        super(problem, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, 1_000, new ThreeSatSolutionGenerator(null));
     }
 
     public SimpleThreeSatHyperHeuristic(ProblemReader<ThreeSatSolution, ThreeSatProblem> problemReader, long intervalTicks) throws ProtocolException, IOException {
-        super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
+        super(problemReader, intervalTicks, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, 1_000, new ThreeSatSolutionGenerator(null));
     }
 
     @Override

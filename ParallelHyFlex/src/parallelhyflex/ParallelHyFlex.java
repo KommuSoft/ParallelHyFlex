@@ -37,9 +37,9 @@ public class ParallelHyFlex {
             //long timespan = 7200000;//two hours
             if (Communication.getCommunication().getRank() == 0) {
                 ThreeSatProblem tsp = tspg.generateProblem();
-                dummy = new AdapHH(tsp, timespan, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
+                dummy = new AdapHH(tsp, timespan, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, 1_000, new ThreeSatSolutionGenerator(null));
             } else {
-                dummy = new AdapHH(tspg, timespan, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, new ThreeSatSolutionGenerator(null));
+                dummy = new AdapHH(tspg, timespan, new CloningGenerator<>(new ThreeSatExperience(null)), negoGenerator(), 1_000, 1_000, new ThreeSatSolutionGenerator(null));
             }
             dummy.startExecute();
         } catch (ProtocolException | IOException e) {

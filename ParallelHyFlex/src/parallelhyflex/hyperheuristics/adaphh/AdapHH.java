@@ -79,8 +79,8 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * @throws ProtocolException If this constructor is initialized by a machine
      * with a rank different from zero!
      */
-    public AdapHH(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
-        super(problem, durationTicks, experience, negotiator, negotiationTicks, solutionReader, LOCAL_MEMORY_SIZE, MemoryExchangePolicy.QueuedProbableDistributed);
+    public AdapHH(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+        super(problem, durationTicks, experience, negotiator, negotiationTicks,stateExchangeTicks, solutionReader, LOCAL_MEMORY_SIZE, MemoryExchangePolicy.QueuedProbableDistributed);
         this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));
@@ -101,8 +101,8 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
      * is not the root
      * @throws IOException
      */
-    public AdapHH(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
-        super(problemReader, durationTicks, experience, negotiator, negotiationTicks, solutionReader, LOCAL_MEMORY_SIZE, MemoryExchangePolicy.QueuedProbableDistributed);
+    public AdapHH(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+        super(problemReader, durationTicks, experience, negotiator, negotiationTicks, stateExchangeTicks, solutionReader, LOCAL_MEMORY_SIZE, MemoryExchangePolicy.QueuedProbableDistributed);
         this.learningAutomaton = new LearningAutomaton<>(LAMBDA1);
         this.heuristicSelector = new ProbabilityVectorBase(this.getNumberOfHeuristics());
         this.adhs = new AdaptiveDynamicHeuristicSetStrategy(new AdapHHHeuristicRecordEvaluator(this));

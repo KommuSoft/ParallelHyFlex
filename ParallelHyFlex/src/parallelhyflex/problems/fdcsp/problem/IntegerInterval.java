@@ -108,7 +108,7 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
 
     @Override
     public int hashCode() {
-        return 79 * this.low + this.high + 43687;
+        return 79 * this.low + this.high + 43_687;
     }
 
     @Override

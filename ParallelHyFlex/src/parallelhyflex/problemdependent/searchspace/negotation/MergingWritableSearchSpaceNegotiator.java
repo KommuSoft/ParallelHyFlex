@@ -20,9 +20,9 @@ import parallelhyflex.problemdependent.solution.Solution;
  * @author kommusoft
  */
 public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>, TRG extends ReadableGenerator<TEC>> extends AsynchronousGatherAll<byte[]> implements WritableSearchSpaceNegotiator<TSolution, TEC> {
+    public static final int SendTag = 2;
 
     private final TRG generator;
-    public static final int SendTag = 2;
     private boolean active;
     private boolean ready;
     private final HashSet<TEC> own = new HashSet<>();

@@ -100,6 +100,6 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new CastingIterator<Object,T>(new ArrayIterator<>(this.cache));
+        return new CastingIterator<>(new ArrayIterator<>(this.cache));
     }
 }

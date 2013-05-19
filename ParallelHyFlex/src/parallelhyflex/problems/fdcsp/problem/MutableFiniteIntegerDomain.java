@@ -26,12 +26,12 @@ import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
  */
 @TokenAnnotation(token = "(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\})(u(\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}))*")
 public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFiniteIntegerDomain> implements FiniteIntegerDomain, ReadWriteable, ReadableGenerator<MutableFiniteIntegerDomain>, Token {
+    private static final Pattern subPattern = Pattern.compile("\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}");
 
     public static MutableFiniteIntegerDomain all() {
         return new MutableFiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     private final TreeSet<IntegerInterval> singleIntervals;
-    private static final Pattern subPattern = Pattern.compile("\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}");
 
     public MutableFiniteIntegerDomain() {
         singleIntervals = new TreeSet<>();

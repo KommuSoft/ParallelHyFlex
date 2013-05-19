@@ -31,6 +31,7 @@ public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSo
     /**
      * @return the searchSpace
      */
+    @Override
     public TwoSetSearchSpace<TSolution> getSearchSpace() {
         return searchSpace;
     }

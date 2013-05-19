@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.TreeSet;
 import org.junit.Assert;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 import parallelhyflex.TestParameters;
 import parallelhyflex.utils.Utils;
 
