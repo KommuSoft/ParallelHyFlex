@@ -1,11 +1,11 @@
-\usepackage{amssymb,amsmath,slantsc,bbm,tikz}
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
 \SetKwInput{KwData}{Data}
 
 \usetikzlibrary{shapes,fit,calc}
 
 \newcommand{\baselab}[2]{\label{#1:#2}}
-\newcommand{\baseref}[3]{\textsc{#3 \ref{#1:#2}}}
+\newcommand{\baseref}[3]{\textsc{#3~\ref{#1:#2}}}
 
 \newcommand{\deflab}[1]{\baselab{def}{#1}}
 \newcommand{\defref}[1]{\baseref{def}{#1}{Definitie}}
@@ -16,7 +16,7 @@
 \newcommand{\alglab}[1]{\baselab{alg}{#1}}
 \newcommand{\algref}[1]{\baseref{alg}{#1}{Algoritme}}
 \newcommand{\eqnlab}[1]{\baselab{eqn}{#1}}
-\newcommand{\eqnref}[1]{\textsc{Vergelijking (\ref{eqn:#1})}}
+\newcommand{\eqnref}[1]{\textsc{Vergelijking~(\ref{eqn:#1})}}
 \newcommand{\thelab}[1]{\baselab{the}{#1}}
 \newcommand{\theref}[1]{\baseref{the}{#1}{Theorema}}
 \newcommand{\chplab}[1]{\baselab{chp}{#1}}
@@ -30,22 +30,22 @@
 \newcommand{\ssslab}[1]{\baselab{sss}{#1}}
 \newcommand{\sssref}[1]{\baseref{sss}{#1}{Subsubsectie}}
 
-\newtheorem{definition}{Definitie}
+\newtheorem{defnition}{Definitie}
+\numberwithin{defnition}{chapter}
 \newtheorem{theorem}{Theorema}
 
-\newcommand{\mathbftxt}[1]{\ensuremath{\mbox{\textbf{#1}}}}
+\newcommand{\listdefinitionname}{Lijst van definities}
+\newlistof{X}{eX}{\listdefinitionname}
+\newenvironment{definition}[1][]{
+  \addcontentsline{eX}{figure}{\protect\numberline{\thechapter}#1}
+\begin{defnition}[#1]}
+{\end{defnition}}
 
-\newcommand{\true}{\mathbftxt{true}}
-\newcommand{\fals}{\mathbftxt{false}}
-\newcommand{\nult}{\mathbftxt{null}}
-\newcommand{\idet}{\mathbftxt{id}}
-\newcommand{\rslt}{\mathbftxt{resultaat}}
-\newcommand{\sndr}{\mathbftxt{zender}}
-\newcommand{\rcvr}{\mathbftxt{ontvanger}}
-\newcommand{\msgt}{\mathbftxt{bericht}}
-\newcommand{\bset}{\mathbftxt{base}}
-\newcommand{\impt}{\mathbftxt{import}}
-\newcommand{\owdt}{\mathbftxt{eigenData}}
+\makeatletter
+\preto\chapter{\addtocontents{def}{\protect\addvspace{10\p@}}}%
+\makeatother
+
+\newcommand{\mathbftxt}[1]{\ensuremath{\mbox{\textbf{#1}}}}
 
 \newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
 \newcommand{\fbrk}[1]{\ensuremath{\left[#1\right]}}
@@ -167,14 +167,40 @@
 \newcommand{\isdefinedas}{\ensuremath{:=}}%right eigenvalue
 \newcommand{\smbox}[1]{\ensuremath{\mbox{\small{#1}}}}%right eigenvalue
 
+\SetKw{true}{\mathbftxt{true}}
+\SetKw{fals}{\mathbftxt{false}}
+\SetKw{nult}{\mathbftxt{null}}
+
 \SetKwBlock{ParFor}{parfor}{end}
-\SetKwBlock{WhnRcv}{when received}{}
-\SetKwBlock{Func}{function}{end}
+\SetKwBlock{WhnRcv}{When receiving}{}
+\SetKwBlock{myalg}{Algorithm}{end}
+\SetKwBlock{myproc}{Procedure}{end}
+
+\SetKwFunction{pinit}{Initialiseer}
+\SetKwFunction{pgata}{GatherAll}
+\SetKwFunction{predy}{Gereed}
+\SetKwFunction{prest}{Reset}
+\SetKwFunction{pzedt}{ZendData}
+\SetKwFunction{psend}{send}
+\SetKwFunction{pisnd}{isend}
+\SetKwFunction{precv}{receive}
+\SetKwFunction{parry}{array}
+
+\SetKwData{dres}{resultaat}
+\SetKwData{ddim}{dimensies}
+\SetKwData{dbas}{basis}
+\SetKwData{didq}{id}
+\SetKwData{dsnd}{zender}
+\SetKwData{drcv}{ontvanger}
+\SetKwData{dmsg}{bericht}
+\SetKwData{dodt}{eigenData}
+\SetKwData{dprt}{partner}
 
 \newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=13.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
 
 \selectcolormodel{gray}
 \newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\begin{center}\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{center}\end{figure}}
+\newcommand{\importalgo}[3]{\begin{algorithm}[hbt]\input{algorithms/#1}\caption{#2}\alglab{#3}\end{algorithm}}
 
 \newcommand{\drawmem}[3]{
 \node[draw,rectangle,fill=gray!20,minimum width=\sc*0.5*#2 cm, minimum height=\sc*0.5cm] (#1) at (0,0.5) {};

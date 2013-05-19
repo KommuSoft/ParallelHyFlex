@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author kommusoft
  */
-public class ProbabilityUtils {
+public final class ProbabilityUtils {
 
     public static <T> T randomElement(List<T> list) {
         return list.get(Utils.StaticRandom.nextInt(list.size()));

@@ -1,0 +1,7 @@
+$\dres\leftarrow\mbox{eigen deel van de data}$\;
+ \For{$i=0\mbox{ \textbf{\emph{to}} }d-1$}{
+  $\dprt\leftarrow\didq\mbox{ XOR }2^i$\;
+  $\psend{\dprt,\dres}$\;
+  $\dmsg\leftarrow\precv{\dprt}$\;
+  $\dres\leftarrow\dres\cup\dmsg$\;
+ }

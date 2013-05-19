@@ -1,0 +1,41 @@
+\myproc(\pinit{}){
+ $\dres\leftarrow\parry{p,\nult}$\;
+ $\ddim\leftarrow\parry{d+1,\fals}$\;
+ $z\leftarrow0$\;
+}
+\WhnRcv($\tupl{\dsnd,\dmsg}$){
+ $k\leftarrow\didq\mbox{ XOR }\dsnd$\;
+ $\dbas\leftarrow\dsnd\mbox{ AND }\brak{\mbox{NEG } k-1}$\;
+ $\ddim\fbrk{1+\log_2k}\leftarrow\true$\;
+ $l\leftarrow\funm{min}{k,p-\dbas}$\;
+ $\dres\fbrk{\dbas:\dbas+l-1}\leftarrow\dmsg\fbrk{0:l-1}$\;
+ \pzedt{}\;
+}
+\myproc(\pgata{\dodt}){
+ $\dres\fbrk{\didq}\leftarrow\dodt$\;
+ $\ddim\fbrk{0}\leftarrow\true$\;
+ \pzedt{}\;
+}
+\myproc(\predy{}){
+ \Return{$z\geq d\wedge\ddim\fbrk{d}$}\;
+}
+\myproc(\prest{}){
+ $\ddim\leftarrow\parry{d+1,\fals}$\;
+ $z\leftarrow 0$\;
+}{}
+\myproc(\pzedt{}){
+ \While{\emph{$z<d\wedge\ddim\fbrk{z}$}}{
+   $l\leftarrow 2^z$\;
+   $\drcv\leftarrow \didq\mbox{ XOR }l$\;
+   \eIf{\emph{$\drcv < p$}}{
+	 $\dbas\leftarrow\didq\mbox{ AND }\brak{\mbox{NEG } l-1}$\;
+	 $m\gets\funm{min}{l,p-\dbas}$\;
+	 $\dmsg\leftarrow\parry{m}$\;
+	 $\dmsg\fbrk{0:m-1}\leftarrow\dres\fbrk{\dbas:\dbas+m-1}$\;
+	 $\pisnd{\drcv,\dmsg}$\;
+   }{
+	 $\ddim\fbrk{z+1}\leftarrow\true$
+   }
+   $z\leftarrow z+1$\;
+ }
+}

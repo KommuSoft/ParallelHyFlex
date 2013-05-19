@@ -3,7 +3,7 @@
 
 \chapterquote{A skilled transition team leader will set the general goals for a transition and then confer on the other team leaders working with him the power to implement those goals.}{Richard V. Allen}
 
-Op basis van de analyse in \chpref{2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \url{http://goo.gl/3YNnp} en wordt verder actief ontwikkeld.
+Op basis van de analyse in \chpref{2}, werd een systeem genaamd \emph{ParHyFlex} ge\"implementeerd die het mogelijk maakt om hyperheuristieken te implementeren in een parallelle context. De broncode van dit systeem is te vinden onder \mbox{\url{http://goo.gl/3YNnp}} en wordt verder actief ontwikkeld.
 \paragraph{}
 Het beschrijven van parallelle algoritmes is vaak complex. We geven eerst een algemeen overzicht van het volledige systeem. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
 
@@ -69,7 +69,7 @@ Afdwingbare beperkingen kunnen we eveneens gebruiken om de zoekruimtes te beperk
 
 \paragraph{}
 De hyperheuristieken zelf kunnen geen ervaring genereren, ze hebben immers geen weet van de structuur van een oplossing. Daarom zal het specifieke probleem dus een set functies defini\"eren die we \emph{hypothese-generatoren (hypogen)} noemen:
-\begin{definition}
+\begin{definition}[Hypothese-generator]
 Een \emph{hypothese-generator (hypogen)} $g_i:\SolSet^{n_{g_i}}\rightarrow\HypSet$ is een functie die op basis van een set oplossingen een afdwingbare beperking kan genereren.	
 \end{definition}
 

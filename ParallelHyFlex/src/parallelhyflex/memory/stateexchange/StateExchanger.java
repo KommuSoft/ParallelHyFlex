@@ -1,14 +1,37 @@
 package parallelhyflex.memory.stateexchange;
 
-import parallelhyflex.algebra.Observer0;
+import parallelhyflex.algebra.collections.ArrayIterator;
+import parallelhyflex.communication.AsynchronousGatherAll;
+import parallelhyflex.communication.Communication;
 
 /**
  *
  * @author kommusoft
  */
-public interface StateExchanger<TSingleState extends LocalState> extends Observer0 {
+public class StateExchanger extends AsynchronousGatherAll<byte[]> {
     
-    public TSingleState getStateOf (int machineId);
-    public TSingleState getLocalState ();
+    public static final int SendTag = 3;
+    private final ExchangeState[] states;
+    
+    public StateExchanger () {
+        super(SendTag);
+        int s = Communication.getCommunication().getSize();
+        this.states = new ExchangeState[s];
+        for(int i = 0; i < s; i++) {
+            this.states[i] = new ExchangeState(0);
+        }
+    }
+    
+    public ExchangeState getLocalState () {
+        return states[Communication.getCommunication().getRank()];
+    }
+    
+    public ExchangeState getState (int rank) {
+        return this.states[rank];
+    }
+
+    public ArrayIterator<ExchangeState> stateIterator() {
+        return new ArrayIterator<>(this.states);
+    }
     
 }

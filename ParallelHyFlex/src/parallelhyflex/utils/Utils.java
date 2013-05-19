@@ -15,7 +15,7 @@ import parallelhyflex.algebra.tuples.Tuple2;
  *
  * @author kommusoft
  */
-public class Utils {
+public final class Utils {
 
     public static final Random StaticRandom = new Random();
     public static final double InvSqrt2 = Math.sqrt(0.5d);
@@ -303,6 +303,15 @@ public class Utils {
             mapping.put(t, index++);
         }
         return mapping;
+    }
+    
+    public static int priority2Log(int tmp) {
+        int d = 0;
+        while (tmp != 0x00) {
+            tmp >>= 1;
+            d++;
+        }
+        return d;
     }
 
     private Utils() {

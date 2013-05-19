@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 import mpi.*;
 import parallelhyflex.logging.LoggingParameters;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -141,11 +142,7 @@ public class Communication {
             other[i - 1] = i;
         }
         int tmp = size - 1;
-        int d = 0;
-        while (tmp != 0x00) {
-            tmp >>= 1;
-            d++;
-        }
+        int d = Utils.priority2Log(tmp);
         int nc = 0;
         for(int i = 0; i < d; i++) {
             int l = 1<<i;
@@ -220,4 +217,5 @@ public class Communication {
     public int getNonNeighborCache() {
         return nonNeighborCache;
     }
+
 }

@@ -5,21 +5,21 @@
   \edgeinteraction{\x}{\y}
 }
 \end{scope}
-\begin{scope}[xshift=8 cm]
+\begin{scope}[xshift=7.5 cm]
 \drawcube{3}{A/{$a,b$},B/{$a,b$},C/{$c,d$},D/{$c,d$},E/{$e,f$},F/{$e,f$},G/{$g,h$},H/{$g,h$}}
 \foreach \x/\y in {A/C,B/D,E/G,F/H} {
   \edgeinteraction{\x}{\y}
 }
 \end{scope}
 
-\begin{scope}[xshift=0 cm,yshift=-8 cm]
+\begin{scope}[xshift=0 cm,yshift=-5.5 cm]
 \drawcube{3}{A/{$a,b,c,d$},B/{$a,b,c,d$},C/{$a,b,c,d$},D/{$a,b,c,d$},E/{$e,f,g,h$},F/{$e,f,g,h$},G/{$e,f,g,h$},H/{$e,f,g,h$}}
 \foreach \x/\y in {A/E,B/F,C/G,D/H} {
   \edgeinteraction[0,-0.25]{\x}{\y}
 }
 \end{scope}
 
-\begin{scope}[xshift=8 cm,yshift=-8 cm]
+\begin{scope}[xshift=7.5 cm,yshift=-5.5 cm]
 \drawcube{3}{A/{$a,b,c,d,e,f,g,h$},B/{$a,b,c,d,e,f,g,h$},C/{$a,b,c,d,e,f,g,h$},D/{$a,b,c,d,e,f,g,h$},E/{$a,b,c,d,e,f,g,h$},F/{$a,b,c,d,e,f,g,h$},G/{$a,b,c,d,e,f,g,h$},H/{$a,b,c,d,e,f,g,h$}}
 \end{scope}
 \end{tikzpicture}

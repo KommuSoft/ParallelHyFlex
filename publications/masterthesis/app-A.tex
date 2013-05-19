@@ -81,7 +81,7 @@ Een implementatie die minder berichten oplevert ordent de processoren in een \em
 Processoren kunnen informatie uitwisselen met de buur van een bepaalde dimensie: zelf zend de processor alle data door waarover men op dat moment beschikt naar deze buur. Vermits de buur-relatie voor een specifieke dimensie symmetrisch is, zal deze buur ook alle data waarover hij beschikt doorsturen.
 
 \paragraph{}
-
+De totale tijdscomplexiteit van dit algoritme blijft minimaal \bigoh{p}: we sturen minder berichten door, maar de berichten zelf zijn langer. Een netwerk schaalt echter beter volgens de grootte van de pakketten dan het aantal pakketten. Bovendien verwerkt \emph{ParHyFlex} \'e\'en bericht per oproep naar een heuristiek. Door meer gegevens te groeperen in \'e\'en pakket wordt de \texttt{GatherAll}-instructie dus effici\"enter uitgevoerd.
 
 \subsection{Algoritme}
 
@@ -89,71 +89,25 @@ Processoren kunnen informatie uitwisselen met de buur van een bepaalde dimensie:
 \paragraph{}
 \imgref{asynchronegatherall} toont dat door incrementeel informatie uit te wisselen met de buur van een telkens hogere dimensie, na $d$ stappen alle processoren over alle informatie beschikken. Een formele beschrijving van dit algoritme staat in \algref{gatherallsequential}.
 
-\begin{algorithm}[hbt]
- $\rslt\leftarrow\mbox{eigen deel van de data}$\;
- \For{$i=0\mbox{ \textbf{\emph{to}} }d-1$}{
-  $\mbox{\textbf{partner}}\leftarrow\idet\mbox{ XOR }2^i$\;
-  $\funm{send}{\textbf{partner},\rslt}$\;
-  $\msgt\leftarrow\funm{receive}{\textbf{partner}}$\;
-  $\rslt\leftarrow\rslt\cup\mbox{\textbf{bericht}}$\;
- }
- \caption{\texttt{GatherAll}\cite{books/bc/KumarGGK94}.}
- \alglab{gatherallsequential}
-\end{algorithm}
+\importalgo{syncga}{GatherAll\cite{books/bc/KumarGGK94}.}{gatherallsequential}
 
 \subsection{Asynchrone aspecten}
 
 De implementatie in \algref{gatherallsequential} werkt met synchrone communicatie: processen worden geblokkeerd tot een succesvolle uitwisseling plaatsvind. Het algoritme die we willen implementeren zal met asynchrone communicatie werken. Men kan dit implementeren door dit proces bijvoorbeeld op een aparte \emph{thread} te laten werken: een proces brengt de data onder in de context van de \emph{thread} en werkt verder. Nadien wordt regelmatig gecontroleerd over de \emph{thread} al de nodige informatie heeft verzameld.
 
-\paragraph{}
-\emph{ParHyFlex} werkt met \'e\'en \emph{thread}. Ontvangen berichten worden verwerkt telkens wanneer een heuristiek is uitgevoerd. \algref{gatherallasync} is een aangepaste versie van het synchrone algoritme. Het algoritme werkt met twee lijsten: $\rslt$ en $\impt$. $\rslt$ houdt de tot dusver ontvangen gegevens bij, deze kunnen dan later uitgelezen worden en verder uitgestuurd worden. $\impt$ slaat per dimensie op of de bijbehorende buur reeds zijn deel van data heeft opgestuurd. $z$ bevat de kleinste dimensie waar we nog geen data naar hebben gestuurd. Wanneer we een bericht ontvangen van een buur, berekenen we waar deze data moet worden opgeslagen en markeren we het relevante item in de $\impt$-lijst. Dit doen we ook wanneer we de lokale data aangeboden krijgen\footnote{Vermits het algoritme asynchroon verloopt kunnen er berichten vanuit de andere processoren worden gestuurd alvorens de lokale processor de \texttt{GatherAll}-instructie oproept.}. Bij beide gebeurtenissen controleren we of we op dat moment zelf data kunnen uitsturen: de \mbox{zendData}-functie. Deze functie controleert per dimensie of we over voldoende data beschikken: dit wil zeggen dat alle buren met een lagere dimensie de data al hebben doorgestuurd. Vervolgens stellen we het pakket met de relevante data samen en wordt dit asynchroon verstuurd. De operatie is uitgevoerd wanneer we naar alle buren data hebben verstuurd en ontvangen hebben.
+\importalgo{asyncga}{Asynchrone GatherAll.}{gatherallasync}
 
 \paragraph{}
-Een aantal problemen worden ge\"introduceerd door het asynchrone karakter: processoren kunnen al beginnen met het sturen van berichten, terwijl andere processoren 
+\emph{ParHyFlex} werkt met \'e\'en \emph{thread}. Ontvangen berichten worden verwerkt telkens wanneer een heuristiek is uitgevoerd. \algref{gatherallasync} is een aangepaste versie van het synchrone algoritme. Het algoritme werkt met twee lijsten: \dres en \ddim. \dres houdt de tot dusver ontvangen gegevens bij, deze kunnen dan later uitgelezen worden en verder uitgestuurd worden. $\ddim$ slaat per dimensie op of de bijbehorende buur reeds zijn deel van data heeft opgestuurd. $z$ bevat de kleinste dimensie waar we nog geen data naar hebben gestuurd. Wanneer we een bericht ontvangen van een buur, berekenen we waar deze data moet worden opgeslagen en markeren we het relevante item in de $\ddim$-lijst. Dit doen we ook wanneer we de lokale data aangeboden krijgen\footnote{Vermits het algoritme asynchroon verloopt kunnen er berichten vanuit de andere processoren worden gestuurd alvorens de lokale processor de \texttt{GatherAll}-instructie oproept.}.
 
-\begin{algorithm}[hbt]
- $\rslt\leftarrow\funm{array}{p,\nult}$\;
- $\impt\leftarrow\funm{array}{d+1,\fals}$\;
- $z\leftarrow0$\;
- \WhnRcv($\tupl{\sndr,\msgt}$){
-   $k\leftarrow\idet\mbox{ XOR }\sndr$\;
-   $\bset\leftarrow\sndr\mbox{ AND }\brak{\mbox{NEG } k-1}$\;
-   $\impt\fbrk{1+\log_2k}\leftarrow\true$\;
-   $l\leftarrow\funm{min}{k,p-\bset}$\;
-   $\rslt\fbrk{\bset:\bset+l-1}\leftarrow\msgt\fbrk{0:l-1}$\;
-   $\funm{zendData}{}$\;
- }
- \Func($\funm{GatherAll}{\owdt}$){
-   $\rslt\fbrk{\idet}\leftarrow\owdt$\;
-   $\impt\fbrk{0}\leftarrow\true$\;
-   \funm{zendData}{}
- }
- \Func($\funm{gereed}{}$){
-   \Return{$z\geq d\wedge\impt\fbrk{d}$}\;
- }
- \Func($\funm{reset}{}$){
-   $\impt\leftarrow\funm{array}{d+1,\fals}$\;
-   $z\leftarrow 0$\;
- }{}
- \Func($\funm{zendData}{}$){
-   \While{\emph{$z<d\wedge\impt\fbrk{z}$}}{
-	 $l\leftarrow 2^z$\;
-	 $\rcvr\leftarrow \idet\mbox{ XOR }l$\;
-	 \eIf{\emph{$\rcvr < p$}}{
-	   $\bset\leftarrow\idet\mbox{ AND }\brak{\mbox{NEG } l-1}$\;
-	   $m\gets\funm{min}{l,p-\bset}$\;
-	   $\msgt\leftarrow\funm{array}{m}$\;
-	   $\msgt\fbrk{0:m-1}\leftarrow\rslt\fbrk{\bset:\bset+m-1}$\;
-	   $\funm{isend}{\rcvr,\msgt}$\;
-	 }{
-	   $\impt\fbrk{z+1}\leftarrow\true$
-	 }
-	 $z\leftarrow z+1$\;
-   }
- }{}
- \caption{Asynchrone \texttt{GatherAll}.}
- \alglab{gatherallasync}
-\end{algorithm}
+\paragraph{}
+Bij beide gebeurtenissen controleren we of we op dat moment zelf data kunnen uitsturen: de \pzedt{}-functie. Deze functie controleert per dimensie of we over voldoende data beschikken: dit wil zeggen dat alle buren met een lagere dimensie de data al hebben doorgestuurd. Vervolgens stellen we het pakket met de relevante data samen en wordt dit asynchroon verstuurd. De operatie is uitgevoerd wanneer we naar alle buren data hebben verstuurd en ontvangen hebben.
+
+\paragraph{}
+Een aantal problemen worden ge\"introduceerd door het asynchrone karakter: processoren kunnen al beginnen met het sturen van berichten, terwijl andere processoren nog niet tot het punt gekomen zijn waarop de \texttt{GatherAll} instructie begint. Omdat het proces in \'e\'en \emph{thread} werkt, moet het ontvangen bericht toch verwerkt worden. Indien men dus toch een bericht ontvangt zal het systeem zelf de datastructuren aanmaken en de berichten opslaan in afwachting van de \texttt{GatherAll}-instructie.
+
+\paragraph{}
+Indien meerdere \texttt{GatherAll} instructies door elkaar kunnen worden uitgevoerd is het niet duidelijk welk bericht voor welke \texttt{GatherAll}-instructie bedoelt is. \emph{MPI} laat toe om een \emph{tag} te plaatsen op een bericht en op die manier een betekenis aan het bericht te geven. Soms is het niet mogelijk om deze \emph{tags} te bepalen: indien we bijvoorbeeld niet weten welke \emph{tags} er op dat moment nog in gebruik zijn. In dat geval zal men eerst een \emph{tag} moeten bepalen of simpelweg niet toelaten dat er meerdere \texttt{GatherAll}-instructies tegelijk plaatsvinden.
 
 
 \subsection{Onbetrouwbare communicatie}

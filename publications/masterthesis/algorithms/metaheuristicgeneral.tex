@@ -1,0 +1,8 @@
+Bereken een initi\"ele set van oplossingen $\PopSet_1$ en hun fitness-waarde\;
+ $b_1\leftarrow\displaystyle\argmin_{\sol\in\PopSet_1}{\fun{\evalfun}{\sol}}$\;
+ \Repeat{het stopcriterium is bereikt}{
+  Genereer op basis van $\PopSet_t$ en $t$ stochastisch een nieuwe set oplossingen $\PopSet_{t+1}$ samen met hun fitness-waarde\;
+  $b_{t+1}\leftarrow\displaystyle\argmin_{\sol\in\PopSet_{t+1}\cup\accl{b_t}}{\fun{\evalfun}{\sol}}$\;
+  $t\leftarrow t+1$\;
+ }
+ \KwRet{$b_t$}

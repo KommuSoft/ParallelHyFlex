@@ -7,7 +7,7 @@ import java.util.HashMap;
  *
  * @author kommusoft
  */
-public class StatisticsUtils {
+public final class StatisticsUtils {
 
     public static double mean(double[] vals) {
         double sum = 0.0d;
