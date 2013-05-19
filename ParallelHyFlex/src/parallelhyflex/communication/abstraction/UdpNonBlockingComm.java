@@ -4,14 +4,15 @@ import mpi.Datatype;
 import mpi.Op;
 
 public class UdpNonBlockingComm implements CommAbstraction {
-    
-    private static final UdpNonBlockingComm singleInstance  = new UdpNonBlockingComm();
-    
-    public static UdpNonBlockingComm getInstance () {
+
+    private static final UdpNonBlockingComm singleInstance = new UdpNonBlockingComm();
+
+    public static UdpNonBlockingComm getInstance() {
         return singleInstance;
     }
-    
-    private UdpNonBlockingComm () {}
+
+    private UdpNonBlockingComm() {
+    }
 
     @Override
     public UdpNonBlockingRequestResult Allgather(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) throws NotSupportedByCommModeException {
@@ -91,5 +92,10 @@ public class UdpNonBlockingComm implements CommAbstraction {
     @Override
     public CommMode getCommMode() {
         return CommMode.UdpNonBlocking;
+    }
+
+    @Override
+    public RequestResult BcastRoot(Object buf, int offset, int count, Datatype type, int tag) throws NotSupportedByCommModeException {
+        throw new NotSupportedByCommModeException();
     }
 }

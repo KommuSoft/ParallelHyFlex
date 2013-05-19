@@ -3,16 +3,18 @@ package parallelhyflex.communication.abstraction;
 import mpi.Datatype;
 import mpi.MPI;
 import mpi.Op;
+import parallelhyflex.communication.Communication;
 
 public class MpiBlockingComm implements CommAbstraction {
-    
-    private static final MpiBlockingComm singleInstance  = new MpiBlockingComm();
-    
-    public static MpiBlockingComm getInstance () {
+
+    private static final MpiBlockingComm singleInstance = new MpiBlockingComm();
+
+    public static MpiBlockingComm getInstance() {
         return singleInstance;
     }
-    
-    private MpiBlockingComm () {}
+
+    private MpiBlockingComm() {
+    }
 
     @Override
     public MpiBlockingRequestResult Allgather(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
@@ -54,6 +56,11 @@ public class MpiBlockingComm implements CommAbstraction {
     public MpiBlockingRequestResult Bcast(Object buf, int offset, int count, Datatype type, int root) {
         MPI.COMM_WORLD.Bcast(buf, offset, count, type, root);
         return MpiBlockingRequestResult.getInstance();
+    }
+
+    @Override
+    public MpiBlockingRequestResult BcastRoot(Object buf, int offset, int count, Datatype type, int tag) throws NotSupportedByCommModeException {
+        throw new NotSupportedByCommModeException();
     }
 
     @Override

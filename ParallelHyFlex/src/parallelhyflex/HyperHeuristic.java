@@ -9,11 +9,12 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpi.MPI;
-import mpi.Request;
 import mpi.Status;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.communication.Communication;
+import parallelhyflex.communication.abstraction.CommMode;
+import parallelhyflex.communication.abstraction.RequestResult;
 import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.communication.routing.PacketRouter;
 import parallelhyflex.communication.routing.PacketRouterBase;
@@ -98,7 +99,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 }
                 data = new byte[][]{baos.toByteArray()};
             }
-            Communication.bC(data, 0, 1, MPI.OBJECT, 0);
+            Communication.Bcast(CommMode.MpiBlocking, data, 0, 1, MPI.OBJECT, 0);
             int nw = this.getWritableMemory();
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
@@ -148,7 +149,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.proxyMemory = new ProxyMemory<>(localMemorySize, localMemoryExchangePolicy, solutionReader);
             this.registerPacketReceiver(this.proxyMemory);
             byte[][] data = new byte[1][];
-            Communication.bC(data, 0, 1, MPI.OBJECT, 0);
+            Communication.Bcast(CommMode.MpiBlocking, data, 0, 1, MPI.OBJECT, 0);
             try (ByteArrayInputStream bais = new ByteArrayInputStream(data[0]); DataInputStream dis = new DataInputStream(bais)) {
                 this.problem = problemReader.readAndGenerate(dis);
             }
@@ -430,7 +431,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private class FetchControl {
 
         private final Object[] buffer = new Object[1];
-        private Request req;
+        private RequestResult req;
         private long lastNegotiation = 0;
         private long lastStateExchange = 0;
 
@@ -471,7 +472,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         }
 
         private void reinit() {
-            req = Communication.nbRv(buffer, 0, 1, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
+            req = Communication.Recv(CommMode.MpiNonBlocking, buffer, 0, 1, MPI.OBJECT, MPI.ANY_SOURCE, MPI.ANY_TAG);
         }
     }
 }

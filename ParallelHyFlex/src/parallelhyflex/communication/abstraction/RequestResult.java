@@ -8,7 +8,7 @@ import mpi.Status;
  */
 public interface RequestResult extends CommModeSensitive {
 
-    Status Wait() throws Exception;
+    Status Wait();
 
-    Status Test() throws Exception;
+    Status Test();
 }

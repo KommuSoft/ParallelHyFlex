@@ -38,4 +38,6 @@ public interface CommAbstraction extends CommModeSensitive {
     RequestResult Recv(Object buf, int offset, int count, Datatype datatype, int source, int tag) throws NotSupportedByCommModeException;
 
     RequestResult Send(Object buf, int offset, int count, Datatype datatype, int dest, int tag) throws NotSupportedByCommModeException;
+
+    RequestResult BcastRoot(Object buf, int offset, int count, Datatype type, int tag) throws NotSupportedByCommModeException;
 }

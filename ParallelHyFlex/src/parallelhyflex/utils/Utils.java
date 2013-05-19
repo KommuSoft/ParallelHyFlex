@@ -40,6 +40,13 @@ public final class Utils {
         return hash;
     }
 
+    public static <T> T headOrNull(Iterable<T> iterable) {
+        for (T t : iterable) {
+            return t;
+        }
+        return null;
+    }
+
     public static <T> int hashCode(int... values) {
         int hash = 7;
         for (int val : values) {
@@ -80,11 +87,11 @@ public final class Utils {
         }
         return true;
     }
-    
-    public static<T> boolean arrayEquality(Iterator<T> ta, Iterator<T> tb) {
+
+    public static <T> boolean arrayEquality(Iterator<T> ta, Iterator<T> tb) {
         boolean na = ta.hasNext(), nb = tb.hasNext();
-        while(na && nb) {
-            if(!ta.next().equals(tb.next())) {
+        while (na && nb) {
+            if (!ta.next().equals(tb.next())) {
                 return false;
             }
             na = ta.hasNext();
@@ -304,7 +311,7 @@ public final class Utils {
         }
         return mapping;
     }
-    
+
     public static int ceiling2Log(int tmp) {
         int d = 0;
         while (tmp != 0x00) {
@@ -313,26 +320,26 @@ public final class Utils {
         }
         return d;
     }
-    
+
     public static int priority2Log(int tmp) {
-        return ceiling2Log(tmp)-1;
+        return ceiling2Log(tmp) - 1;
     }
-    
-    public static int next2Pow (int original) {
+
+    public static int next2Pow(int original) {
         original = fillTail(original);
-        return original+1;
+        return original + 1;
     }
-    
-    public static int base2Pow (int original) {
-        return (fillTail(original)+1)>>1;
+
+    public static int base2Pow(int original) {
+        return (fillTail(original) + 1) >> 1;
     }
 
     public static int fillTail(int original) {
-        original |= original>>0x10;
-        original |= original>>0x08;
-        original |= original>>0x04;
-        original |= original>>0x02;
-        original |= original>>0x01;
+        original |= original >> 0x10;
+        original |= original >> 0x08;
+        original |= original >> 0x04;
+        original |= original >> 0x02;
+        original |= original >> 0x01;
         return original;
     }
 

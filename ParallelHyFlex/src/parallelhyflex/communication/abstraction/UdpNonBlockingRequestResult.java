@@ -3,23 +3,23 @@ package parallelhyflex.communication.abstraction;
 import mpi.Status;
 
 public class UdpNonBlockingRequestResult implements RequestResult {
-    
+
     private static final UdpNonBlockingRequestResult singleInstance = new UdpNonBlockingRequestResult();
 
     public static UdpNonBlockingRequestResult getInstance() {
         return singleInstance;
     }
 
-        public UdpNonBlockingRequestResult() {
+    public UdpNonBlockingRequestResult() {
     }
 
     @Override
-    public Status Wait() throws Exception {
+    public Status Wait() {
         return null;
     }
-    
+
     @Override
-    public Status Test () throws Exception {
+    public Status Test() {
         return null;
     }
 

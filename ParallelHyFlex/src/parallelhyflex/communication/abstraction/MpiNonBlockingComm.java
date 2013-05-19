@@ -3,6 +3,7 @@ package parallelhyflex.communication.abstraction;
 import mpi.Datatype;
 import mpi.MPI;
 import mpi.Op;
+import parallelhyflex.communication.Communication;
 
 public class MpiNonBlockingComm implements CommAbstraction {
     
@@ -87,6 +88,14 @@ public class MpiNonBlockingComm implements CommAbstraction {
     @Override
     public MpiNonBlockingRequestResult Send(Object buf, int offset, int count, Datatype datatype, int dest, int tag) {
         return new MpiNonBlockingRequestResult(MPI.COMM_WORLD.Isend(buf, offset, count, datatype, dest, tag));
+    }
+    
+    @Override
+    public MpiNonBlockingRequestResult BcastRoot(Object buf, int offset, int count, Datatype type, int tag) {
+        for (int root : Communication.others()) {
+            this.Send(buf, offset, count, type, root, tag);
+        }
+        return MpiNonBlockingRequestResult.getInstance();
     }
 
     @Override

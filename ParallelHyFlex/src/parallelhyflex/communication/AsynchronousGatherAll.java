@@ -5,6 +5,7 @@ import java.util.Iterator;
 import mpi.MPI;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.algebra.collections.CastingIterator;
+import parallelhyflex.communication.abstraction.CommMode;
 import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.utils.Utils;
 
@@ -29,10 +30,10 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
         this.receiveCache = Communication.getCommunication().getNeighbor(currentDimension) << 1;
         this.currentDimension = 0;
     }
-    
-    public boolean available (int rank) {
-        int diff = Utils.base2Pow(Communication.getCommunication().getRank()^rank);
-        return (this.receiveCache&diff) != 0x00;
+
+    public boolean available(int rank) {
+        int diff = Utils.base2Pow(Communication.getCommunication().getRank() ^ rank);
+        return (this.receiveCache & diff) != 0x00;
     }
 
     public void send(T value) {
@@ -83,7 +84,7 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
                 int red = Math.min(l, s - base);
                 Object[][] packet = new Object[1][red];
                 System.arraycopy(cache, base, packet[0], 0, red);
-                Communication.nbS(packet, 0, 1, MPI.OBJECT, other, this.packetTags[0x00]);
+                Communication.Send(CommMode.MpiNonBlocking, packet, 0, 1, MPI.OBJECT, other, this.packetTags[0x00]);
             }
             cd++;
             l <<= 1;
