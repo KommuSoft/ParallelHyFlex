@@ -81,7 +81,7 @@ Een implementatie die minder berichten oplevert ordent de processoren in een \em
 Processoren kunnen informatie uitwisselen met de buur van een bepaalde dimensie: zelf zend de processor alle data door waarover men op dat moment beschikt naar deze buur. Vermits de buur-relatie voor een specifieke dimensie symmetrisch is, zal deze buur ook alle data waarover hij beschikt doorsturen.
 
 \paragraph{}
-De totale tijdscomplexiteit van dit algoritme blijft minimaal \bigoh{p}: we sturen minder berichten door, maar de berichten zelf zijn langer. Een netwerk schaalt echter beter volgens de grootte van de pakketten dan het aantal pakketten. Bovendien verwerkt \emph{ParHyFlex} \'e\'en bericht per oproep naar een heuristiek. Door meer gegevens te groeperen in \'e\'en pakket wordt de \texttt{GatherAll}-instructie dus effici\"enter uitgevoerd.
+De totale tijdscomplexiteit van dit algoritme blijft minimaal \bigoh{p}: we sturen minder berichten door, maar de berichten zelf zijn langer. Een studie in \cite{journals/tjs/TaboadaTD12} toont echter dat de grootte van het pakket slechts een beperkte invloed heeft op de vertraging: pas vanaf 1'024 bytes aan data stelt men een significante vertraging vast, de grootste bijdrage aan de vertraging is dan ook het pakket zelf. Een netwerk schaalt dus beter volgens de grootte van de pakketten dan het aantal pakketten. Bovendien verwerkt \emph{ParHyFlex} \'e\'en bericht per oproep naar een heuristiek. Door meer gegevens te groeperen in \'e\'en pakket wordt de \texttt{GatherAll}-instructie dus effici\"enter uitgevoerd.
 
 \subsection{Algoritme}
 
@@ -113,7 +113,8 @@ Indien meerdere \texttt{GatherAll} instructies door elkaar kunnen worden uitgevo
 Een voordeel van een asynchrone \texttt{GatherAll} instructie is dat men kan werken op gedeeltelijke data. Stel dat een parallel algoritme alle data op termijn nodig heeft, maar ook kan rekenen wanneer al een deel van de data beschikbaar is. Met behulp van groepscommunicatie reduceert men de impact op het netwerk. Het feit dat de communicatie asynchroon gebeurt laat dan weer toe om geregeld te testen of al een deel van de data werd ontvangen. Wanneer alle cruciale data beschikbaar is voor een deeltaak kan de processor verder rekenen.
 
 
-\subsection{Onbetrouwbare communicatie}
+\section{Onbetrouwbare communicatie}
+
 
 
 

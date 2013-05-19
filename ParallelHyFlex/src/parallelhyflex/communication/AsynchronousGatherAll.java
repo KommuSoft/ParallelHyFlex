@@ -1,11 +1,11 @@
 package parallelhyflex.communication;
 
-import parallelhyflex.communication.routing.PacketReceiver;
 import java.util.ArrayList;
 import java.util.Iterator;
 import mpi.MPI;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.algebra.collections.CastingIterator;
+import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.utils.Utils;
 
 /**
