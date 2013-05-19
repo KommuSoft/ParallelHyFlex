@@ -10,7 +10,7 @@ import parallelhyflex.communication.Communication;
  */
 public class StateExchanger extends AsynchronousGatherAll<byte[]> {
     
-    public static final int SendTag = 3;
+    public static final int SendTag = 1;
     private final ExchangeState[] states;
     
     public StateExchanger () {

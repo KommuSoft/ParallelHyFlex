@@ -5,6 +5,7 @@ import java.util.Iterator;
 import mpi.MPI;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.algebra.collections.CastingIterator;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -29,7 +30,8 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
     }
     
     public boolean available (int rank) {
-        return false;
+        int diff = Utils.base2Pow(Communication.getCommunication().getRank()^rank);
+        return (this.receiveCache&diff) != 0x00;
     }
 
     public void send(T value) {

@@ -305,13 +305,35 @@ public final class Utils {
         return mapping;
     }
     
-    public static int priority2Log(int tmp) {
+    public static int ceiling2Log(int tmp) {
         int d = 0;
         while (tmp != 0x00) {
             tmp >>= 1;
             d++;
         }
         return d;
+    }
+    
+    public static int priority2Log(int tmp) {
+        return ceiling2Log(tmp)-1;
+    }
+    
+    public static int next2Pow (int original) {
+        original = fillTail(original);
+        return original+1;
+    }
+    
+    public static int base2Pow (int original) {
+        return (fillTail(original)+1)>>1;
+    }
+
+    public static int fillTail(int original) {
+        original |= original>>0x10;
+        original |= original>>0x08;
+        original |= original>>0x04;
+        original |= original>>0x02;
+        original |= original>>0x01;
+        return original;
     }
 
     private Utils() {

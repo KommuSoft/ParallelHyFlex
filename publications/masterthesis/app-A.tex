@@ -57,7 +57,7 @@ Ook de geheugenconfiguratie wordt uitgewisseld. Hieronder verstaan we het aantal
 
 \subsubsection{Uitwisselen van oplossingen}
 
-Het uitwisselen van oplossingen
+Het uitwisselen van oplossingen %TODO
 
 \subsubsection{Onderhandelingen over een nieuwe zoekruimte}
 
@@ -108,6 +108,9 @@ Een aantal problemen worden ge\"introduceerd door het asynchrone karakter: proce
 
 \paragraph{}
 Indien meerdere \texttt{GatherAll} instructies door elkaar kunnen worden uitgevoerd is het niet duidelijk welk bericht voor welke \texttt{GatherAll}-instructie bedoelt is. \emph{MPI} laat toe om een \emph{tag} te plaatsen op een bericht en op die manier een betekenis aan het bericht te geven. Soms is het niet mogelijk om deze \emph{tags} te bepalen: indien we bijvoorbeeld niet weten welke \emph{tags} er op dat moment nog in gebruik zijn. In dat geval zal men eerst een \emph{tag} moeten bepalen of simpelweg niet toelaten dat er meerdere \texttt{GatherAll}-instructies tegelijk plaatsvinden.
+
+\paragraph{}
+Een voordeel van een asynchrone \texttt{GatherAll} instructie is dat men kan werken op gedeeltelijke data. Stel dat een parallel algoritme alle data op termijn nodig heeft, maar ook kan rekenen wanneer al een deel van de data beschikbaar is. Met behulp van groepscommunicatie reduceert men de impact op het netwerk. Het feit dat de communicatie asynchroon gebeurt laat dan weer toe om geregeld te testen of al een  terwijl men ook regelmatig kan testen of al een deel van de data beschikbaar is en met deze data kan rekenen in afwachting van meer.
 
 
 \subsection{Onbetrouwbare communicatie}

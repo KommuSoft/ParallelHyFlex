@@ -142,7 +142,7 @@ public class Communication {
             other[i - 1] = i;
         }
         int tmp = size - 1;
-        int d = Utils.priority2Log(tmp);
+        int d = Utils.ceiling2Log(tmp);
         int nc = 0;
         for(int i = 0; i < d; i++) {
             int l = 1<<i;

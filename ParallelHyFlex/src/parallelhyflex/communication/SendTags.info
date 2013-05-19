@@ -1,0 +1,15 @@
+Tagged transmission
+============================================================================================================================
+Tag|Content                 |Sender                              |Receiver                            |Protocol|Method
+---+------------------------+------------------------------------+------------------------------------+--------+-----------
+0  |Solution                |PushSenderBase                      |ProxyMemory                         |MPI     |ISend,IRecv
+1  |State exchange          |StateExchanger                      |StateExchanger                      |MPI     |IGatherAll
+2  |SearchSpace Negotiations|MergingWritableSearchSpaceNegotiator|MergingWritableSearchSpaceNegotiator|MPI     |IGatherAll
+
+
+Non-Tagged transmission
+============================================================================================================================
+Tag|Content                 |Sender                              |Receiver                            |Protocol|Method
+---+------------------------+------------------------------------+------------------------------------+--------+------------
+///|Problem Instance        |HyperHeuristic                      |HyperHeuristic                      |MPI     |Bcast
+///|Memory Configuration    |ProxyMemory                         |ProxyMemory                         |MPI     |GatherAll
