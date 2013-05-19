@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
-import parallelhyflex.communication.SerialisationUtils;
+import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.SolutionGeneratorBase;
 import parallelhyflex.problems.fdcsp.problem.FDCOPConstraint;
 import parallelhyflex.problems.fdcsp.problem.FDCOPProblem;

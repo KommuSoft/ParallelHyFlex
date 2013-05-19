@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.solution;
 
 import java.io.Serializable;
-import parallelhyflex.communication.ReadWriteable;
+import parallelhyflex.communication.serialisation.ReadWriteable;
 
 /**
  *

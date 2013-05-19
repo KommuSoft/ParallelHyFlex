@@ -1,6 +1,6 @@
 package parallelhyflex.problemdependent.solution;
 
-import parallelhyflex.communication.ReadableGenerator;
+import parallelhyflex.communication.serialisation.ReadableGenerator;
 
 /**
  *

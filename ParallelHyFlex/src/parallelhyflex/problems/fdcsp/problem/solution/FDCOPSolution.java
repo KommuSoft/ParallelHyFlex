@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import parallelhyflex.communication.SerialisationUtils;
+import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problems.fdcsp.problem.Variable;
 import parallelhyflex.utils.Utils;

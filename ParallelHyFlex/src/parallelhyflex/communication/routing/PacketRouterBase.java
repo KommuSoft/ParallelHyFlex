@@ -1,8 +1,9 @@
-package parallelhyflex.communication;
+package parallelhyflex.communication.routing;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import mpi.MPI;
+import parallelhyflex.communication.Communication;
 
 public class PacketRouterBase implements PacketRouter {
 

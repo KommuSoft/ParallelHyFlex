@@ -2,7 +2,7 @@ package parallelhyflex.problemdependent.searchspace.negotation;
 
 import java.util.Collection;
 import parallelhyflex.algebra.ArgumentCloneable;
-import parallelhyflex.communication.ReadableGenerator;
+import parallelhyflex.communication.serialisation.ReadableGenerator;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;

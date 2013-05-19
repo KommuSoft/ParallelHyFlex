@@ -4,7 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import parallelhyflex.communication.SerialisationUtils;
+import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.distance.DistanceFunction;
 import parallelhyflex.problemdependent.heuristics.Heuristic;
 import parallelhyflex.problemdependent.problem.ObjectiveFunction;

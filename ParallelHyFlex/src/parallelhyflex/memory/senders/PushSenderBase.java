@@ -3,7 +3,7 @@ package parallelhyflex.memory.senders;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.communication.SendTagged;
+import parallelhyflex.communication.routing.SendTagged;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**

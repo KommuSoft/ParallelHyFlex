@@ -1,5 +1,6 @@
 package parallelhyflex.communication;
 
+import parallelhyflex.communication.routing.PacketReceiver;
 import java.util.ArrayList;
 import java.util.Iterator;
 import mpi.MPI;

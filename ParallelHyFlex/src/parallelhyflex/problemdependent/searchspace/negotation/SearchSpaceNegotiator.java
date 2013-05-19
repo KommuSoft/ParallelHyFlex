@@ -1,7 +1,7 @@
 package parallelhyflex.problemdependent.searchspace.negotation;
 
 import java.util.Collection;
-import parallelhyflex.communication.PacketReceiver;
+import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.solution.Solution;

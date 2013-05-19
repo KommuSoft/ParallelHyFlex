@@ -1,6 +1,6 @@
 package parallelhyflex.problemdependent.constraints;
 
-import parallelhyflex.communication.ReadableGenerator;
+import parallelhyflex.communication.serialisation.ReadableGenerator;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**

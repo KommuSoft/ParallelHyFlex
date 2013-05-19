@@ -1,4 +1,4 @@
-package parallelhyflex.communication;
+package parallelhyflex.communication.serialisation;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,7 +8,7 @@ import java.io.IOException;
  *
  * @author kommusoft
  */
-public class SerialisationUtils {
+public final class SerialisationUtils {
 
     public static void writeLongArray(DataOutputStream dos, long... array) throws IOException {
         dos.writeInt(array.length);

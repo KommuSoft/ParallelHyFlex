@@ -1,4 +1,4 @@
-package parallelhyflex.communication;
+package parallelhyflex.communication.serialisation;
 
 import java.io.DataInputStream;
 import java.io.IOException;

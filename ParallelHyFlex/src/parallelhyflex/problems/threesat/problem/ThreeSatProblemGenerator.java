@@ -2,7 +2,7 @@ package parallelhyflex.problems.threesat.problem;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import parallelhyflex.communication.SerialisationUtils;
+import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;

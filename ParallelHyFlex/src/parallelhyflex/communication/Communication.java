@@ -58,7 +58,7 @@ public class Communication {
         return MPI.COMM_WORLD.Recv(buf, offset, count, type, source, tag);
     }
 
-    public static Request nbRv(Object buf, int offset, int count, Datatype type, int source, int tag) {
+    public static mpi.Request nbRv(Object buf, int offset, int count, Datatype type, int source, int tag) {
         return MPI.COMM_WORLD.Irecv(buf, offset, count, type, source, tag);
     }
 
@@ -66,7 +66,7 @@ public class Communication {
         MPI.COMM_WORLD.Send(buf, offset, count, type, dest, tag);
     }
 
-    public static Request nbS(Object buf, int offset, int count, Datatype type, int dest, int tag) {
+    public static mpi.Request nbS(Object buf, int offset, int count, Datatype type, int dest, int tag) {
         return MPI.COMM_WORLD.Isend(buf, offset, count, type, dest, tag);
     }
 

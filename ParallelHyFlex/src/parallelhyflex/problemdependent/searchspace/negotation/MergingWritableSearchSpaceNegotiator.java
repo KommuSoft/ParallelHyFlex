@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import parallelhyflex.communication.AsynchronousGatherAll;
-import parallelhyflex.communication.ReadableGenerator;
+import parallelhyflex.communication.serialisation.ReadableGenerator;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.solution.Solution;

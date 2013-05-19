@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 import mpi.MPI;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
-import parallelhyflex.communication.PacketReceiver;
+import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.memory.senders.PushSenderBase;
 import parallelhyflex.problemdependent.experience.WritableExperience;
