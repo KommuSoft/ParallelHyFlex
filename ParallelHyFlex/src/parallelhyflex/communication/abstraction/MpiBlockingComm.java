@@ -3,7 +3,6 @@ package parallelhyflex.communication.abstraction;
 import mpi.Datatype;
 import mpi.MPI;
 import mpi.Op;
-import parallelhyflex.communication.Communication;
 
 public class MpiBlockingComm implements CommAbstraction {
 
