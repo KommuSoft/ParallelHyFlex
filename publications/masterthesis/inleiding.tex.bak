@@ -2,7 +2,7 @@
 \chplab{inleiding}
 \chapterquote{If a man will begin with certainties, he shall end in doubts; but if he will be content to begin with doubts, he shall end in certainties.}{Francis Bacon}
 
-Optimalisatie is een belangrijk onderwerp in de artifici\"ele intelligentie. Allereerst komen bij heel wat algemene problemen in de artifici\"ele intelligentie vormen van optimalisatie kijken. Het bepalen van de optimale parameters, het kortste pad of de kleinste beslissingsboom die een bepaalde fractie van de data juist classificeert zijn enkele voorbeelden.
+Optimalisatie is een belangrijk onderwerp in de artifici\"ele intelligentie. Allereerst komen bij heel wat algemene problemen in de artifici\"ele intelligentie vormen van optimalisatie kijken. Het bepalen van de optimale parameters, het kortste pad of de kleinste beslissingsboom die een bepaalde fractie van de testdata juist classificeert zijn enkele voorbeelden.
 
 \paragraph{}
 Hoewel elke tak in de artifici\"ele intelligentie met deze problemen wordt geconfronteerd, bestaat er een specifieke tak die zich focust op deze problemen: ``Operationeel Onderzoek'' ofwel ``Operational Research''. Problemen die men tracht op te lossen zijn doorgaans moeilijk van aard: er is sprake van een groot aantal potenti\"ele oplossingen, het evalueren van een mogelijke oplossing is geen sinecure en de regels aan dewelke een oplossing moet voldoen zijn vrij complex.

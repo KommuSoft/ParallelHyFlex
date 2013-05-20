@@ -1,8 +1,7 @@
 package parallelhyflex.hyperheuristics.adaphh.records;
 
+import parallelhyflex.communication.Communication;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
-import parallelhyflex.hyperheuristics.adaphh.AdapHHPointer;
-import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordEvaluatorBase;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W1;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W2;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W3;
@@ -10,6 +9,8 @@ import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W4;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W5;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W6;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W7;
+import parallelhyflex.hyperheuristics.adaphh.AdapHHPointer;
+import parallelhyflex.hyperheuristics.records.EvaluatedHeuristicRecordEvaluatorBase;
 
 /**
  *
@@ -32,14 +33,24 @@ public class AdapHHHeuristicRecordEvaluator extends EvaluatedHeuristicRecordEval
         double fpwrs = rec.getFpwrs();
         double tspent = rec.getTspent();
         double tpspent = rec.getTpspent();
-        double var = 0.0d;
-        if (this.getAdapHH().getPeriodGlobalImprovement()) {
-            var = cpbest + 1;
-            var *= ADHS_W1 * var * this.getAdapHH().getRemaingTime();
+        double tgspent = 0.0d;
+        double fgimp = 0.0d;
+        double fgwrs = 0.0d;
+
+        for (AdapHHHeuristicExchangeRecord her : rec.getForeignProxy()) {
+            if (her != null) {
+                tgspent += her.getTspent();
+                fgimp += her.getFimp();
+                fgwrs += her.getFwrs();
+            }
         }
-        var += ADHS_W2 * fpimp - ADHS_W3 * fpwrs;
+        double var = ADHS_W2 * fpimp - ADHS_W3 * fpwrs;
+        if (this.getAdapHH().getPeriodGlobalImprovement()) {
+            var += (cpbest + 1) * (ADHS_W1 * var * this.getAdapHH().getRemaingTime());
+        }
         var /= tpspent;
         var += (ADHS_W4 * fimp - ADHS_W5 * fwrs) / tspent;
+        var += (ADHS_W6 * fgimp - ADHS_W7 * fgwrs) / tgspent;
         return var;
     }
 

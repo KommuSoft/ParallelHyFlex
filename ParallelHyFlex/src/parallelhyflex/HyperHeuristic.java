@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ import parallelhyflex.memory.ProxyMemory;
 import parallelhyflex.memory.stateexchange.ExchangeState;
 import parallelhyflex.memory.stateexchange.StateExchanger;
 import parallelhyflex.memory.stateexchange.StateExchangerBase;
+import parallelhyflex.memory.stateexchange.StateExchangerProxy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
@@ -412,6 +414,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
     private void postHeuristicApplication(int to) {
         updateBestObjectives(to);
         this.fetchContol.recheck();
+    }
+
+    @Override
+    public <T extends Serializable> StateExchangerProxy<T> generateProxy(int index) {
+        return this.stateExchanger.generateProxy(index);
     }
 
     /**

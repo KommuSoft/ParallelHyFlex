@@ -1,4 +1,4 @@
-\documentclass[master=elt,masteroption=ge]{kulemt}
+\documentclass[master=cws,masteroption=ai]{kulemt}
 \input{header}
 \input{texabbrev}
 \setup{title={Parallelle Hyperheuristieken},
@@ -32,17 +32,24 @@
 %%%%%%%
 % Om wat tekst te genereren wordt hier het lipsum pakket gebruikt.
 % Bij een echte masterproef heb je dit natuurlijk nooit nodig!
+%%%%%%%
+
 \IfFileExists{lipsum.sty}%
  {\usepackage{lipsum}\setlipsumdefault{11-13}}%
  {\newcommand{\lipsum}[1][11-13]{\par Hier komt wat tekst: lipsum ##1.\par}}
-%%%%%%%
 
 %\includeonly{hfdst-n}
 \begin{document}
 
 \begin{preface}
 \chapterquote{Begegnet uns jemand, der uns Dank schuldig ist, gleich f\"alt uns ein. Wie oft k\"onnen wir jemand begegnen, dem wir Dank schuldig sind, ohne daran zu denken.}{Johann Wolfgang von Goethe}
-  Bij deze wenst de auteur van dit werk iedereen te bedanken die dit jaar aan hem gedacht heeft of op enige manier -- rechtstreeks of onrechtstreeks -- heeft bijgedragen tot deze thesis. In de eerste plaats gaat deze dank naar de promotor, prof. Demoen, de . Ook wenst de auteur enkele vrienden te bedanken voor mentale steun en interessante conversaties tijdens het academiejaar: \nohyphens{Ingmar~Dasseville}, \nohyphens{Ruben~Lapauw}, \nohyphens{Katie~Pauwelyn}, \nohyphens{Nicolas~Callens}, \nohyphens{Karel~Moens}, \nohyphens{Tom~Lebacq}, \nohyphens{Ruben~Crevits}, \nohyphens{Frederik~Lavigne} en \nohyphens{Jeroen~Vaelen}.
+  Bij deze wenst de auteur van dit werk iedereen te bedanken die dit jaar aan hem gedacht heeft of op enige manier -- rechtstreeks of onrechtstreeks -- heeft bijgedragen tot deze thesis. In de eerste plaats gaat deze dank naar de promotor, prof. Demoen, de .
+  \paragraph{}
+  Ook de familie heeft de auteur gesteund.%TODO
+  \paragraph{}
+  De auteur wenst enkele vrienden speciaal te bedanken voor mentale steun en interessante conversaties tijdens het academiejaar: \nohyphens{Ingmar~Dasseville}, \nohyphens{Ruben~Lapauw}, \nohyphens{Katie~Pauwelyn}, \nohyphens{Nicolas~Callens}, \nohyphens{Karel~Moens}, \nohyphens{Tom~Lebacq}, \nohyphens{Ruben~Crevits}, \nohyphens{Frederik~Lavigne} en \nohyphens{Jeroen~Vaelen}.
+  \paragraph{}
+  Tot slot zijn er de studenten computerwetenschappen die (hopelijk) in 2014 zullen afstuderen. Omdat het combineren van een masterthesis met het vervolledigen van een cursus \emph{Digitale Elektronica en Processoren} zal deze groep nog niet kunnen werken met een afgewerkte cursus. Desalniettemin bracht een significant deel de moed op om errata te melden waardoor de cursus deze vakantie waarschijnlijk sneller zal afgewerkt worden.
   %In de eerste plaats omdat dit waarde hiervan niet opwoog tegen het denken aan iets anders. \cite{gastonVanCamp} stelt dat een mens in 1971 biologisch een waarde heeft van 180 frank ofwel 30.00 euro in 2013.
 \end{preface}
 
@@ -53,7 +60,7 @@
   samenvatting van het werk gegeven. De bedoeling is wel dat dit tot
   1~bladzijde beperkt blijft.
 
-  \lipsum[1]
+%  \lipsum[1]
 \end{abstract}
 
 % Een lijst van figuren en tabellen is optioneel
@@ -90,6 +97,7 @@
 \appendix
 \include{app-A}
 \include{app-B}
+\include{app-C}
 % ... en zo verder tot
 \include{app-n}
 

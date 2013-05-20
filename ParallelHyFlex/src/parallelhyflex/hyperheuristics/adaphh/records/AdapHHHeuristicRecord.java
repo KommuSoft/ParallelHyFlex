@@ -27,6 +27,7 @@ import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.Im
 import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.ImprovingOrEqual;
 import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.WorseningMore;
 import parallelhyflex.logging.LoggingParameters;
+import parallelhyflex.memory.stateexchange.StateExchangerProxy;
 import parallelhyflex.problemdependent.heuristics.HeuristicType;
 import parallelhyflex.utils.Utils;
 
@@ -48,6 +49,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     private double dosiom = 0.6d;
     private HeuristicPerformanceType performanceType = HeuristicPerformanceType.OnlyEqual;
     private final AdapHHHeuristicExchangeRecord exchangeRecord = new AdapHHHeuristicExchangeRecord();
+    private StateExchangerProxy<AdapHHHeuristicExchangeRecord> foreignProxy;
 
     /**
      *
@@ -411,5 +413,19 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      */
     public AdapHHHeuristicExchangeRecord getExchangeRecord() {
         return exchangeRecord;
+    }
+
+    /**
+     * @return the foreignProxy
+     */
+    public StateExchangerProxy<AdapHHHeuristicExchangeRecord> getForeignProxy() {
+        return foreignProxy;
+    }
+
+    /**
+     * @param foreignProxy the foreignProxy to set
+     */
+    public void setForeignProxy(StateExchangerProxy<AdapHHHeuristicExchangeRecord> foreignProxy) {
+        this.foreignProxy = foreignProxy;
     }
 }

@@ -2,16 +2,18 @@
 
 \subsubsection{Motivatie}
 
-De ``Wet van Moore''\cite{4785860} stelt dat het aantal transistors verdubbelt elke achttien maanden. De klokfrequentie stagneert echter en is door fysische grenzen niet langer makkelijk te verhogen. Het gevolg van deze evolutie is dat complexe problemen enkel uitgerekend kunnen worden indien men voldoende rekentijd beschikbaar stelt.
+De ``Wet van Moore''\cite{4785860} stelt dat het aantal transistors verdubbelt elke achttien maanden. De klokfrequentie stagneert echter. \cite{nomoore} verklaart dit door te stellen de gemiddelde afstand van een geleider slechts met $1/\sqrt{2}$ afneemt, vermits het kloksignaal beperkt is tot de overdrachtssnelheid van een geleider, leidt men hieruit af dat de kloksnelheid niet evenredig verhoogt. Het gevolg van deze evolutie is dat complexe problemen enkel uitgerekend kunnen worden indien men voldoende rekentijd beschikbaar stelt.
+\paragraph{}
+Een reactie is de introductie van het ``\emph{parallel rekenen}'' ofwel ``\emph{parallel computing}''. Een probleem wordt opgelost door programma's die op verschillende processoren tegelijk te draaien en elk een deel van het probleem oplossen. Door berichten uit te wisselen tussen de verschillende processoren of door een gemeenschappelijk geheugen aan te bieden communiceren de programma's die op de verschillende processoren draaien met elkaar.\cite{books/bc/KumarGGK94}
 
 \paragraph{}
-Een reactie is de introductie van het ``\emph{parallel rekenen}'' ofwel ``\emph{parallel computing}''. Een probleem wordt opgelost door programma's die op verschillende processoren tegelijk te draaien en elk een deel van het probleem oplossen. Door berichten uit te wisselen tussen de verschillende processoren of door een gemeenschappelijk geheugen aan te bieden communiceren de programma's die op de verschillende processoren draaien met elkaar.
+Door met verschillende processoren te werken hoopt men de rekentijd drastisch naar beneden te kunnen halen. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde \emph{multi-core} processoren - processoren waarbij verschillende \emph{kernen} op dezelfde machine aanwezig zijn - ook minder energie. Dit komt bijvoorbeeld omdat andere hardware zoals het moederbord slechts \'e\'enmaal voorkomen in de configuratie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken.\cite{energyEfficency}
 
 \paragraph{}
-Door met verschillende processoren te werken hoopt men de rekentijd drastisch naar beneden te kunnen halen. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde multi-core processoren - processoren die andere hardware zoals geheugens delen - ook minder energie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken.
+Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: weersimulaties houden variabelen bij voor heel wat locaties op de aarde. Deze variabelen leiden tot het gebruiken van grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan\cite{parallelLargeMemory}. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost.
 
 \paragraph{}
-Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: weersimulaties houden variabelen bij voor heel wat locaties op de aarde. Deze variabelen leiden tot het gebruiken van grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost. Parallelle algoritmes worden ook ingeschakeld wanneer de data gevoelig is en niet zomaar kan worden uitgewisseld: indien bijvoorbeeld verschillende bedrijven bijvoorbeeld een globale planning willen opmaken, maar geen details over de interne werking openbaar wensen te maken, kunnen parallelle algoritmes een oplossing bieden\cite{Gaspero_amultiagent}.
+Parallelle algoritmes worden ook ingeschakeld wanneer de data gevoelig is en niet zomaar kan worden uitgewisseld: indien bijvoorbeeld verschillende bedrijven een globale planning willen opstellen, maar geen details over de interne werking openbaar wensen te maken, kunnen parallelle algoritmes een oplossing bieden\cite{Gaspero_amultiagent}.
 
 \subsubsection{Prestaties van parallelle algoritmen}
 

@@ -25,7 +25,15 @@ public class ExchangeState extends ArrayList<Serializable> {
     }
 
     public <T extends Serializable> T readObject(int index) {
-        return (T) this.get(index);
+        if (index < this.size() && index >= 0x00) {
+            try {
+                return (T) this.get(index);
+            } catch (Exception e) {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     public void readPacket(byte[] data) throws IOException, ClassNotFoundException {

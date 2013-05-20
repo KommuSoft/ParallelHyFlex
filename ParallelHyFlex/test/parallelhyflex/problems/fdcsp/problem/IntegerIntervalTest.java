@@ -68,7 +68,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii = fillRandom(set);
             int val1 = this.randomDomainValue();
             int val2 = this.randomDomainValue();
-            Assert.assertEquals(String.format("(%s,%s) in? %s",val1,val2,ii),containsTreeInterval(set, val1, val2), ii.contains(val1, val2));
+            Assert.assertEquals(String.format("(%s,%s) in? %s", val1, val2, ii), containsTreeInterval(set, val1, val2), ii.contains(val1, val2));
         }
     }
 
@@ -82,8 +82,8 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii = fillRandom(set);
             int val1 = this.randomDomainValue();
             int val2 = this.randomDomainValue();
-            IntegerInterval ii2 = new IntegerInterval(val1,val2);
-            Assert.assertEquals(String.format("%s in? %s",ii2,ii),containsTreeInterval(set, val1, val2), ii.contains(ii2));
+            IntegerInterval ii2 = new IntegerInterval(val1, val2);
+            Assert.assertEquals(String.format("%s in? %s", ii2, ii), containsTreeInterval(set, val1, val2), ii.contains(ii2));
         }
     }
 
@@ -110,7 +110,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii1 = fillRandom(set1);
             IntegerInterval ii2 = fillRandom(set2);
             set1.addAll(set2);
-            Assert.assertEquals(String.format("%s u? %s",ii1,ii2),this.representable(set1), ii1.canUnion(ii2));
+            Assert.assertEquals(String.format("%s u? %s", ii1, ii2), this.representable(set1), ii1.canUnion(ii2));
         }
     }
 
@@ -160,12 +160,12 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
      */
     @Test
     public void testSetLow() {
-        System.out.println("setLow");
-        int low = 0;
-        IntegerInterval instance = null;
-        instance.setLow(low);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            IntegerInterval ii = fillRandom();
+            int low = this.randomDomainValue();
+            ii.setLow(low);
+            Assert.assertEquals(low, (int) ii.low());
+        }
     }
 
     /**
@@ -188,12 +188,12 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
      */
     @Test
     public void testSetHigh() {
-        System.out.println("setHigh");
-        int high = 0;
-        IntegerInterval instance = null;
-        instance.setHigh(high);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            IntegerInterval ii = fillRandom();
+            int high = this.randomDomainValue();
+            ii.setHigh(high);
+            Assert.assertEquals(high, (int) ii.low());
+        }
     }
 
     /**
@@ -201,14 +201,19 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
      */
     @Test
     public void testCompareTo() {
-        System.out.println("compareTo");
-        IntegerInterval t = null;
-        IntegerInterval instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(t);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
+            IntegerInterval ii1 = fillRandom();
+            IntegerInterval ii2 = fillRandom();
+            if(ii1.low() < ii2.low()) {
+                Assert.assertTrue(ii1.compareTo(ii2) < 0);
+            }
+            else if(ii1.low() > ii2.low()) {
+                Assert.assertTrue(ii1.compareTo(ii2) > 0);
+            }
+            else {
+                Assert.assertEquals(0,ii1.compareTo(ii2));
+            }
+        }
     }
 
     /**
@@ -220,7 +225,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii = fillRandom();
             IntegerInterval ii2 = fillRandom();
             if (ii.equals(ii2)) {
-                Assert.assertEquals(ii2.hashCode(), ii.hashCode());
+                Assert.assertEquals(String.format("h %s=? h %s",ii,ii2),ii2.hashCode(), ii.hashCode());
             }
         }
     }
@@ -234,7 +239,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             TreeSet<Integer> set1 = new TreeSet<>(), set2 = new TreeSet<>();
             IntegerInterval ii1 = fillRandom(set1);
             IntegerInterval ii2 = fillRandom(set2);
-            Assert.assertEquals(String.format("%s ==? %s",ii1,ii2),ii1.equals(ii2), Utils.arrayEquality(set1.iterator(), set2.iterator()));
+            Assert.assertEquals(String.format("%s ==? %s", ii1, ii2), ii1.equals(ii2), Utils.arrayEquality(set1.iterator(), set2.iterator()));
         }
     }
 

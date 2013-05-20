@@ -1,6 +1,7 @@
 package parallelhyflex.memory.stateexchange;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import parallelhyflex.algebra.collections.ArrayIterator;
@@ -89,5 +90,10 @@ public class StateExchangerBase extends AsynchronousGatherAll<byte[]> implements
                 Logger.getLogger(StateExchangerBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @Override
+    public <T extends Serializable> StateExchangerProxy<T> generateProxy(int index) {
+        return new StateExchangerProxy<>(this, index);
     }
 }

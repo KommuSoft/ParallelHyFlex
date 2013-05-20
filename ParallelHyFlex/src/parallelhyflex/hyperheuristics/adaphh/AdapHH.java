@@ -6,6 +6,7 @@ import parallelhyflex.HyperHeuristic;
 import parallelhyflex.ProtocolException;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
+import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicExchangeRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecord;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHeuristicRecordEvaluator;
 import parallelhyflex.hyperheuristics.adaphh.records.AdapHHHybridRelaxationHeuristicRecord;
@@ -14,6 +15,7 @@ import parallelhyflex.hyperheuristics.learning.LearningAutomaton;
 import parallelhyflex.hyperheuristics.records.ProbabilityVectorBase;
 import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.memory.stateexchange.ExchangeState;
+import parallelhyflex.memory.stateexchange.StateExchangerProxy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -164,9 +166,12 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         int durationoffset = (int) Math.round(Math.sqrt(2.0d * this.records.length));
         AdapHHHeuristicRecord hr;
         ExchangeState es = this.getLocalState();
+        StateExchangerProxy<AdapHHHeuristicExchangeRecord> proxy;
         for (int i = 0; i < this.records.length; i++) {
             hr = new AdapHHHeuristicRecord(this, i, durationoffset);
+            proxy = this.generateProxy(es.size());
             this.records[i] = hr;
+            hr.setForeignProxy(proxy);
             es.add(hr.getExchangeRecord());
             this.getAdhs().add(this.records[i]);
         }
