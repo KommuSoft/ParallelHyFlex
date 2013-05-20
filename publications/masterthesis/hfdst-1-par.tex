@@ -54,15 +54,19 @@ Meestal zullen we het aantal processoren echter enkel verhogen wanneer het compu
 
 \subsection{De belangrijkste parallellisatie paradigma's}
 
-Meestal beschouwd men twee verschillende modellen met betrekking tot parallellisatie: \emph{Message Passing Interface (MPI)} en \emph{Tuple Space}. We geven hieronder een korte samenvatting.
+Meestal beschouwd men twee verschillende modellen met betrekking tot parallellisatie: \emph{Message Passing Interface (MPI)}, \emph{Shared-Adress-Space}. \cite{books/daglib/0066939} beschrijft ook een derde paradigma: \emph{Live Datastructures}. Dit paradigma sluit nauw aan bij \emph{Shared-Adress-Space} en wordt daarom niet beschouwd. We geven hieronder een korte samenvatting.\cite{books/bc/KumarGGK94,books/daglib/0066939}
 
 \subsubsection{Message Passing Interface}
 
-In het geval van \emph{MPI} beschouwen we een set \emph{agents}: processoren die onafhankelijk werken op een eigen stuk geheugen. Deze agenten interagerend door het uitwisselen van berichten over een netwerk. Dit hoeft niet te betekenen dat de agenten ook effectief draaien op verschillende machines: men kan op elke \emph{core} van een machine een onafhankelijke agent laten werken en vervolgens de boodschappen laten bezorgen met behulp van de faciliteiten die de meeste besturingssystemen aanbieden.
+In het geval van \emph{MPI} beschouwen we een set \emph{agents}: processen die onafhankelijk werken op een eigen stuk geheugen. Agenten kunnen met elkaar samenwerken door berichten uit te wisselen over een netwerk. Men kan dit paradigma ook implementeren op systemen waarbij de agenten op de verschillende \emph{cores} van eenzelfde machine: in dat geval is het de taak van het besturingssysteem om de berichten af te leveren bij het relevante proces.\cite{books/bc/KumarGGK94,books/daglib/0066939,books/daglib/0015079,mpi10}
 
 \paragraph{}
-In het geval de \emph{agents} wel degelijk op verschillende machines draaien werken ze meestal volgens een bepaalde \emph{topologie}: een structuur die bepaalt welke machines met elkaar verbonden zijn. Een belangrijk aspect in \emph{MPI} is ``\emph{Group Communication}'': agenten die met een significant gedeelte van de andere agenten tegelijk communiceren. Voor elke topologie zijn er dan ook algoritmes uitgewerkt om het aantal berichten tot een minimum te beperken.
+Indien de \emph{agents} op verschillende machines draaien, werken ze meestal volgens een bepaalde \emph{topologie}: een structuur die bepaalt welke machines met elkaar verbonden zijn. \emph{MPI} heeft een sterke focus op \emph{group communication}: het uitwisselen van data met een significant deel van de agenten tegelijk. In plaats van in dit geval alle agenten een bericht te sturen kan men afhankelijk van de topologie het aantal berichten reduceren.\cite{books/bc/KumarGGK94}
 
-\subsubsection{Tuple Space}
+\subsubsection{Shared-Adress-Space}
 
-Een \emph{Tuple Space} is een model waarbij agenten kennis hebben van een globale wereld: de \emph{Tuple Space}. Elke agent kan tuples toevoegen in de tuple space en een query op de ruimte uitvoeren. Door tuples toe te voegen die dan door andere agenten worden verwerkt ontstaat er een communicatieprincipe. Een \emph{tuple space} verschilt echter van een \emph{message passing interface} omdat men meer abstractie maakt van de bestemming van een boodschap.
+In het geval van \emph{Shared-Adress-Space} beschouwd men een geheugen die toegankelijk is voor alle processoren. Elke processor kan data bijgevolg deze data uitlezen en manipuleren. Bij voorkeur zal betekent dit dat we \'e\'en machine beschouwen met \'e\'en fysisch geheugen en verschillende processoren. Wanneer er sprake is van meerdere processoren wordt het gedeelde geheugen ge\"emuleerd door de data over een netwerk te sturen. Om te voorkomen dat men voor rekenintensieve taken teveel data over het netwerk stuurt zal men meestal een onderscheid maken tussen het lokaal en vreemd geheugen.\cite{books/bc/KumarGGK94}
+
+\paragraph{}
+\emph{Tuple Space} is een vorm van \emph{Shard-Adress-Space} met een globaal geheugen: de \emph{tuple space}. Elke agent kan tuples toevoegen in de tuple space en een query op de ruimte uitvoeren. Door tuples toe te voegen die dan door andere agenten worden verwerkt ontstaat er een communicatieprincipe. Een \emph{tuple space} verschilt echter van een \emph{message passing interface} omdat men meer abstractie maakt van de bestemming van een boodschap. Bekende implementaties van een \emph{Tuple Space} zijn \emph{Linda} en \emph{JavaSpaces}\cite{books/bc/KumarGGK94,books/daglib/0066939,books/daglib/0015079,Gelernter85,javaspaces}.
+

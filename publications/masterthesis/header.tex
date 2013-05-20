@@ -1,5 +1,8 @@
 \usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
+\usepackage[showframe]{geometry}
+\usepackage[all]{xy}
+
 \SetKwInput{KwData}{Data}
 
 \SetAlgorithmName{Algoritme}{willemvanonsem}{Lijst van algoritmes}
@@ -199,6 +202,8 @@
 \SetKwData{dprt}{partner}
 
 \newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=\textwidth-1.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
+
+\setlength{\parindent}{0cm}
 
 \selectcolormodel{gray}
 \newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\begin{center}\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{center}\end{figure}}
