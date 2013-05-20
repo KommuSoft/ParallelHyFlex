@@ -25,7 +25,7 @@ public class StateExchangerBase extends AsynchronousGatherAll<byte[]> implements
         int r = Communication.getCommunication().getRank();
         this.states = new ExchangeState[s];
         for (int i = 0; i < s; i++) {
-            this.states[i] = new ExchangeState(0);
+            this.states[i] = new ExchangeState();
         }
         synced.set(r, true);
     }

@@ -38,16 +38,16 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
 
     private final boolean crossover;
     private final AdapHH adaphh;
-    private int cpbest = 0, cbest = 0, cmoves = 0;
-    private double fimp = 0.0d, fwrs = 0.0d;
+    private int cpbest = 0;
     private double fpimp = 0.0d, fpwrs = 0.0d;
-    private long tspent = 0x00, tpspent = 0x00;
+    private long tpspent = 0x00;
     private final int tabuDurationOffset, tabuDurationLimit;
     private int tabuDuration;
     private boolean tabued = true;
     private int tabuEscapeCounter = 0;
     private double dosiom = 0.6d;
     private HeuristicPerformanceType performanceType = HeuristicPerformanceType.OnlyEqual;
+    private final AdapHHHeuristicExchangeRecord exchangeRecord = new AdapHHHeuristicExchangeRecord();
 
     /**
      *
@@ -91,23 +91,22 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public void processed(long dt) {
-        this.cmoves++;
-        this.tspent += dt;
+        this.getExchangeRecord().processed(dt);
         this.tpspent += dt;
     }
 
     public void newBest() {
-        this.cbest++;
+        this.getExchangeRecord().newBest();
         this.cpbest++;
     }
 
     public void addImprovement(double df) {
+        this.getExchangeRecord().addImprovement(df);
         this.fpimp += df;
-        this.fimp += df;
     }
 
     public void addWorsening(double df) {
-        this.fwrs += df;
+        this.getExchangeRecord().addWorsening(df);
         this.fpwrs += df;
     }
 
@@ -122,14 +121,14 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * @return the fimp
      */
     public double getFimp() {
-        return fimp;
+        return this.getExchangeRecord().getFimp();
     }
 
     /**
      * @return the fwrs
      */
     public double getFwrs() {
-        return fwrs;
+        return this.getExchangeRecord().getFwrs();
     }
 
     /**
@@ -150,7 +149,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * @return the tspent
      */
     public double getTspent() {
-        return tspent;
+        return this.getExchangeRecord().getTspent();
     }
 
     /**
@@ -218,14 +217,14 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      * @return the cmoves
      */
     public int getCmoves() {
-        return cmoves;
+        return this.getExchangeRecord().getCmoves();
     }
 
     /**
      * @return the cbest
      */
     public int getCbest() {
-        return cbest;
+        return this.getExchangeRecord().getCbest();
     }
 
     public void processed(long dt, double delta) {
@@ -252,7 +251,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     }
 
     public double getCiMove() {
-        return (double) this.cmoves / (double) this.tspent;
+        return (double) this.getCmoves() / (double) this.getTspent();
     }
 
     public void execute() {
@@ -405,5 +404,12 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
      */
     public void setPerformanceType(HeuristicPerformanceType performanceType) {
         this.performanceType = performanceType;
+    }
+
+    /**
+     * @return the exchangeRecord
+     */
+    public AdapHHHeuristicExchangeRecord getExchangeRecord() {
+        return exchangeRecord;
     }
 }
