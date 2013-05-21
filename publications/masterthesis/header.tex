@@ -1,7 +1,10 @@
-\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx}
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx,cite,multicol}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
 \usepackage[showframe]{geometry}
 \usepackage[all]{xy}
+
+\setlength{\parskip}{1.3ex plus 0.2ex minus 0.2ex}
+\setlength{\parindent}{0pt}
 
 \SetKwInput{KwData}{Data}
 
@@ -10,7 +13,7 @@
 \usetikzlibrary{shapes,fit,calc}
 
 \newcommand{\baselab}[2]{\label{#1:#2}}
-\newcommand{\baseref}[3]{\textsc{#3~\textup{\ref{#1:#2}}}}
+\newcommand{\baseref}[3]{\textsc{\nohyphens{#3}~\textup{\ref{#1:#2}}}}
 
 \newcommand{\deflab}[1]{\baselab{def}{#1}}
 \newcommand{\defref}[1]{\baseref{def}{#1}{Definitie}}
@@ -83,7 +86,7 @@
 
 \newcommand{\comp}[1]{\textsc{\mbox{#1}}}
 \newcommand{\prbm}[1]{\textsc{#1}}
-\newcommand{\algo}[1]{\textsc{#1}}
+\newcommand{\algo}[1]{\nohyphens{\textsc{#1}}}
 
 \newcommand{\AAA}{\mathbb{A}}
 \newcommand{\BBB}{\mathbb{B}}
@@ -171,6 +174,19 @@
 \newcommand{\ev}[1][]{\ensuremath{\lambda_{#1}}}%right eigenvalue
 \newcommand{\isdefinedas}{\ensuremath{:=}}%right eigenvalue
 \newcommand{\smbox}[1]{\ensuremath{\mbox{\small{#1}}}}%right eigenvalue
+\newcommand{\fitnessval}{\ensuremath{v}}
+\newcommand{\ntarpop}{\ensuremath{g}}
+\newcommand{\npop}{\ensuremath{N}}
+\newcommand{\transmat}{\ensuremath{P}}
+\newcommand{\bridgemat}{\ensuremath{B}}
+\newcommand{\removmat}{\ensuremath{\hat{P}}}
+\newcommand{\probdistmeta}[1]{\ensuremath{\vec{\alpha}_{#1}}}
+\newcommand{\probdistgoalmeta}[1]{\ensuremath{\vec{\alpha}^G_{#1}}}
+\newcommand{\probdistnormmeta}[1]{\ensuremath{\vec{\hat{\alpha}}_{#1}}}
+\newcommand{\arbitraryval}{\ensuremath{m}}
+\newcommand{\arbitraryvec}{\ensuremath{\vec{x}}}
+\newcommand{\metapa}{\ensuremath{\sigma}}
+\newcommand{\metapb}{\ensuremath{\lambda}}
 
 \SetKw{true}{\mathbftxt{true}}
 \SetKw{fals}{\mathbftxt{false}}
@@ -201,9 +217,7 @@
 \SetKwData{dodt}{eigenData}
 \SetKwData{dprt}{partner}
 
-\newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=\textwidth-1.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
-
-\setlength{\parindent}{0cm}
+\newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
 
 \selectcolormodel{gray}
 \newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\begin{center}\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{center}\end{figure}}

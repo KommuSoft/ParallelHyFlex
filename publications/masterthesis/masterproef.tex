@@ -1,5 +1,4 @@
-\documentclass[master=cws,masteroption=ai]{kulemt}
-\input{header}
+\documentclass[draft,master=cws,masteroption=ai]{kulemt}
 \input{texabbrev}
 \setup{title={Parallelle Hyperheuristieken},
   author={Willem~Van~Onsem},
@@ -13,7 +12,8 @@
   shortabstract={Hier komt een heel bondig abstract van hooguit 500
     woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen
     (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten!
-    \endgraf \lipsum[2]}}
+    \endgraf}}
+\input{header}
 % Verwijder de "%" op de volgende lijn als je de kaft wil afdrukken
 %\setup{coverpageonly}
 % Verwijder de "%" op de volgende lijn als je enkel de eerste pagina's wil
@@ -34,9 +34,9 @@
 % Bij een echte masterproef heb je dit natuurlijk nooit nodig!
 %%%%%%%
 
-\IfFileExists{lipsum.sty}%
- {\usepackage{lipsum}\setlipsumdefault{11-13}}%
- {\newcommand{\lipsum}[1][11-13]{\par Hier komt wat tekst: lipsum ##1.\par}}
+% \IfFileExists{lipsum.sty}%
+%  {\usepackage{lipsum}\setlipsumdefault{11-13}}%
+%  {\newcommand{\lipsum}[1][11-13]{\par Hier komt wat tekst: lipsum ##1.\par}}
 
 %\includeonly{hfdst-n}
 \begin{document}
@@ -49,7 +49,7 @@
   \paragraph{}
   De auteur wenst enkele vrienden speciaal te bedanken voor mentale steun en interessante conversaties tijdens het academiejaar: \nohyphens{Ingmar~Dasseville}, \nohyphens{Ruben~Lapauw}, \nohyphens{Katie~Pauwelyn}, \nohyphens{Nicolas~Callens}, \nohyphens{Karel~Moens}, \nohyphens{Tom~Lebacq}, \nohyphens{Ruben~Crevits}, \nohyphens{Frederik~Lavigne} en \nohyphens{Jeroen~Vaelen}.
   \paragraph{}
-  Tot slot zijn er de studenten computerwetenschappen die (hopelijk) in 2014 zullen afstuderen. Omdat het combineren van een masterthesis met het vervolledigen van een cursus \emph{Digitale Elektronica en Processoren} zal deze groep nog niet kunnen werken met een afgewerkte cursus. Desalniettemin bracht een significant deel de moed op om errata te melden waardoor de cursus deze vakantie waarschijnlijk sneller zal afgewerkt worden.
+  Tot slot zijn er de studenten computerwetenschappen die (hopelijk) in 2014 zullen afstuderen. Omdat het schrijven van een masterthesis en het vervolledigen van een cursus \emph{Digitale Elektronica en Processoren} niet te combineren bleek, zal deze groep nog niet kunnen werken met een afgewerkte cursus. Desalniettemin bracht een significant deel de moed op om errata te melden waardoor de cursus deze vakantie waarschijnlijk sneller zal afgewerkt worden.
   %In de eerste plaats omdat dit waarde hiervan niet opwoog tegen het denken aan iets anders. \cite{gastonVanCamp} stelt dat een mens in 1971 biologisch een waarde heeft van 180 frank ofwel 30.00 euro in 2013.
 \end{preface}
 
@@ -104,8 +104,10 @@
 \backmatter
 % Na de bijlagen plaatst men nog de bibliografie.
 % Je kan de  standaard "abbrv" bibliografiestijl vervangen door een andere.
+\begin{multicols}{2}
 \bibliographystyle{abbrv}
 \bibliography{referenties}
+\end{multicols}
 
 \end{document}
 

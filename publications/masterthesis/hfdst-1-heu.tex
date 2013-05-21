@@ -1,9 +1,20 @@
 \section{Heuristieken}
 
-Hoewel de meeste optimalisatieproblemen \comp{NP-hard} zijn, is in een praktische context de configuratie met een optimale evaluatiefunctie net van cruciaal belang. Voor de meeste toepassingen is een configuratie die aan de harde beperkingen voldoet en de fitness-waarde van de echte oplossing benadert voldoende. In dat geval wordt meestal een heuristiek ge\"implementeerd:
+In de vorige sectie stellen we dat de meeste optimalisatieproblemen \comp{NP-hard} zijn. Dit betekent doorgaans dat we voor grote probleeminstanties er niet in slagen om de optimale configuratie te vinden. In de praktijk lost men deze problemen meestal op met een programma die een benaderende oplossing berekend.
+
+\paragraph{}
+Meestal haalt men volgende argumentatie aan om het gebruik van benaderende oplossingen te rechtvaardigen:%TODO: controleer 3
+\begin{enumerate}
+ \item Een benaderende oplossing kan sneller worden uitgerekend en vormt meestal de grens tussen haalbaar en onhaalbaar.
+ \item De fitness-waarde van een benaderende oplossing zal meestal dicht bij deze van het globale optimum liggen.
+ \item Praktische problemen zijn meestal complex. Bovendien is de exacte evaluatiefunctie moeilijk of zelfs niet te modelleren\footnote{Soms kan men deze evaluatiefunctie niet modelleren omdat de waarde van de verschillende parameters niet volledig gekend is.}. Er is bijgevolg geen garantie dat het globale optimum ook de werkelijke oplossing weerspiegelt.
+\end{enumerate}
+
+\paragraph{}
+Een programma die een benaderende oplossing berekend wordt ook wel een heuristiek genoemd:
 
 \begin{definition}[Heuristiek]
 Een heuristiek is een programma die gegeven een optimalisatieprobleem $\OpProblem=\tupl{\ConfigSet,\hcfun,\evalfun}$ een oplossing berekent $\goodSol$ in een redelijke tijd. Doorgaans voldoet deze oplossing aan de harde beperkingen ($\fun{\hcfun}{\goodSol}=\true$) en ligt de voorgestelde oplossing $\goodSol$ in fitness-waarde niet ver van de werkelijke oplossing $\bestSol$.
 \end{definition}
 
-Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op hoe ver de fitness-waarde $\fun{\evalfun}{\goodSol}$ mag afwijken van de optimale fitness-waarde $\fun{\evalfun}{\bestSol}$, al zijn beide voorwaarden niet strikt noodzakelijk.
+Deze definitie blijft redelijk vaag en geeft dan ook veel ruimte voor interpretatie. Doorgaans verwachten we dat het algoritme stop in polynomiale tijd en in de meeste gevallen worden er ook beperkingen gezet op de mate waarin de fitness-waarde $\fun{\evalfun}{\goodSol}$ mag afwijken van de optimale fitness-waarde $\fun{\evalfun}{\bestSol}$, al zijn beide voorwaarden niet strikt noodzakelijk.
