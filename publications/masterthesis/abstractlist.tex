@@ -1,0 +1,27 @@
+\tableofcontents*
+
+\begin{abstract}
+  In dit \texttt{abstract} environment wordt een al dan niet uitgebreide
+  samenvatting van het werk gegeven. De bedoeling is wel dat dit tot
+  1~bladzijde beperkt blijft.
+
+%  \lipsum[1]
+\end{abstract}
+
+% Een lijst van figuren en tabellen is optioneel
+\listoffigures
+\begingroup
+\let\clearpage\relax
+\listoftables
+\begingroup
+\let\clearpage\relax
+\listofalgorithms
+\endgroup
+\endgroup
+% De lijst van symbolen is eveneens optioneel.
+% Deze lijst moet wel manueel aangemaakt worden, bv. als volgt:
+\chapter{Lijst van afkortingen en symbolen}
+\section*{Afkortingen}
+\input{afkortingen}
+\section*{Symbolen}
+\input{symbolen}

@@ -7,7 +7,19 @@
 
 \section{Geciteerde problemen}
 
+Doorheen de tekst hebben we verschillende problemen aangehaald. Meestal zonder concreet in te gaan op de details van het probleem. In deze sectie lichten we elk probleem kort toe en geven we het zoekdomein $\ConfigSet$, de harde beperkingen $\hcfun$ en evaluatiefunctie $\evalfun$.
+
 \subsection{\prbm{Lineair Optimalisatie Probleem}}
+
+Dit probleem is ook bekend onder de namen \prbm{Lineair Programmeren}, \emph{Linear Programming} en \emph{Linear Optimization}. Men zoekt naar een vector $\xstar\in\ConfigSet=\QbitSet{L}^n$ zodat het dot-product met een gegeven vector $\vec{c}$ minimaal is. Alle oplossingen moeten indien ze vermenigvuldigt worden met een gegeven matrix $A$ ook elementgewijs groter of gelijk zijn aan een gegeven vector $\vec{b}$. Tot slot moeten alle variabelen groter of gelijk zijn aan $\vec{0}$.
+\begin{equation}
+\guards{
+\ConfigSet=\QbitSet{L}^n\\
+\fun{\evalfun}{\vec{x}}=\transpose{\vec{x}}\cdot\vec{c}\\
+\fun{\hcfun}{\vec{x}}=\vec{x}\cdot A\leq\vec{b}\wedge\vec{x}\geq\zeromatrix[1\times n]
+}
+\end{equation}
+
 
 \subsection{\prbm{Maximum Flow Problem}}
 
@@ -17,9 +29,27 @@
 
 \subsection{\prbm{Travelling Salesman Problem}}
 
+\begin{equation}
+\guards{
+\ConfigSet=\accl{1,2,\ldots,n}^n\\
+\fun{\evalfun}{\vec{x}}=\displaystyle\sum_{i=1}^{n-1}\funm{cost}{\vec{x}_i,\vec{x}_{i+1}}\\
+\fun{\hcfun}{\vec{x}}=\forall i,j: i\neq j\rightarrow \vec{x}_i\neq\vec{x}_j
+}
+\end{equation}
+
 \subsection{\prbm{Integer Programming}}
 
-\subsection{\prbm{Lineair Optimalisatie Probleem}}
+\subsection{\prbm{Maximal Satisfyiability Problem (Max-Sat)}}
+
+\subsection{\prbm{Bin Packing Problem}}
+
+\subsection{\prbm{Personnel Scheduling}}
+
+\subsection{\prbm{Flow Shop Problem}}
+
+\subsection{\prbm{Travelling Salesman Problem (TSP)}}
+
+\subsection{\prbm{Vechicle Routing	 Problem (VRP)}}
 
 \section{Ingebouwde functies}
 

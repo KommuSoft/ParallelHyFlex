@@ -1,34 +1,36 @@
 \begin{flushleft}
   \renewcommand{\arraystretch}{1.1}
-  \begin{tabularx}{\textwidth}{@{}p{18mm}X@{}}
-    $\BoolSet$					& De verzameling van Booleaanse waarden: $\mathbb{B}=\left\{\mbox{\textbf{true}},\mbox{\textbf{false}}\right\}$. \\
-    $\NatSet$					& De verzameling van natuurlijke getallen: $\mathbb{N}=\left\{0,1,2,\ldots\right\}$ \\
+  \begin{tabularx}{\textwidth}{@{}p{20mm}X@{}}
+    $\BoolSet$							& De verzameling van Booleaanse waarden: $\BoolSet=\accl{\mbox{\textbf{true}},\mbox{\textbf{false}}}$. \\
+    $\NatSet$							& De verzameling van natuurlijke getallen: $\NatSet=\accl{0,1,2,\ldots}$ \\
+    $\QbitSet{\bitvar}$					& De verzameling van rationale getallen die met $\bitvar$ bits kunnen worden voorgesteld. Hier gedefinieerd als:\\ &$\QbitSet{\bitvar}=\accl{x/2^{\bitvar/2},-x/2^{\bitvar/2}|x\in\NatSet:x<2^{\bitvar-1}}$ \\
     $\zeromatrix[m\times n]$			& Een nulmatrix met dimensies $m\times n$\\
-    $\onematrix[m\times n]$			& Een matrix vol enen met dimensies $m\times n$\\
+    $\onematrix[m\times n]$				& Een matrix met dimensies $m\times n$ waarbij elk element gelijk is aan $1$\\
     $\identitymatrix[m\times n]$		& Een identiteitsmatrix met dimensies $m\times n$\\
-    $\RealSet$					& De verzameling van re\"ele getallen\\
-    $\mean[\fun{\calD}{x}]{\fun{f}{x}}$	& Het gemiddelde van een functie $f$ volgens een verdeling $\calD$\\%: $\mean[\fun{\calD}{x}]{\fun{f}{x}}=\displaystyle\int\fun{f}{x}\fun{\calD}{x}\ dx$\\
-    $\Prob{e}$					& De kans op een gebeurtenis $e$\\
-    $\OpProblem$				& Optimalisatieprobleem\\
-    $\ConfigSet$				& De verzameling van mogelijke configuraties\\
-    $\ConfigOpSet$				& De set van de globaal optimale oplossingen\\
-    $\ConfigValSet$				& De verzameling van geldige configuraties: $\ConfigValSet=\accl{x|x\in\ConfigSet:\fun{c}{x}=\true{}}$\\
-    $\sol$					& Een globaal optimale oplossing: $\sol\in\ConfigSet$\\
-    $\bestSol$					& Een globaal optimale oplossing: $\xstar\in\ConfigOpSet$\\
-    $\SolSet$					& Een oplossingsruimte in de context van een metaheuristiek. $\SolSet\subseteq\ConfigValSet$\\
-    $\PopSet$					& Een verzameling oplossingen ofwel \emph{populatie}\\
-    $\hcfun$					& Harde beperkingen: $\funsig{\hcfun}{\ConfigSet}{\BoolSet}$\\
-    $\evalfun$					& Evaluatiefunctie: $\funsig{\evalfun}{\ConfigSet}{\RealSet}$\\
-    $\hittime$					& De raaktijd voor een optimalisatieprobleem in een sequenti\"ele context\\
-    $\phittime$					& De raaktijd voor een optimalisatieprobleem in een parallelle context\\
-    $\neighbr$					& Omgeving van een oplossing\\
-    $\ev[i,A]$					& De $i$-de eigenwaarde van een matrix $A$. De eigenwaardes zijn gerangschikt van groot naar klein: $\abs{\ev[i,A]}\geq\abs{\ev[i+1,A]}$\\
-    $\ev[A]$					& De dominante eigenwaarde van een matrix $A$\\
-    $\evl[i,A]$					& De linkse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
-    $\evr[i,A]$					& De rechtse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
-    $\krdelta{x}$				& De Kr\"onecker-delta voor een gegeven Booleaanse expressie $x$\\
-    $\TranSet$					& Set van transitiefuncties\\
-    $p$							& Aantal processoren\\
-    $\dabs[k]{\vec{v}}$			& $k$-norm van vector $\vec{v}$: $\dabs[k]{\vec{v}}=\sqrt[k]{\sum_i\abs{v_i}^k}$
+    $\RealSet$							& De verzameling van re\"ele getallen\\
+    $\mean[\fun{\calD}{x}]{\fun{f}{x}}$	& Het gemiddelde van een functie $f$ volgens een verdeling $\calD$\\
+    $\Prob{e}$							& De kans op een gebeurtenis $e$\\
+    $\OpProblem$						& Optimalisatieprobleem\\
+    $\ConfigSet$						& De verzameling van mogelijke configuraties\\
+    $\ConfigOpSet$						& De set van de globaal optimale oplossingen\\
+    $\ConfigValSet$						& De verzameling van geldige configuraties: $\ConfigValSet=\accl{x|x\in\ConfigSet:\fun{c}{x}=\true{}}$\\
+    $\sol$								& Een globaal optimale oplossing: $\sol\in\ConfigSet$\\
+    $\bestSol$							& Een globaal optimale oplossing: $\xstar\in\ConfigOpSet$\\
+    $\SolSet$							& Een oplossingsruimte in de context van een metaheuristiek. $\SolSet\subseteq\ConfigValSet$\\
+    $\PopSet$							& Een verzameling oplossingen ofwel \emph{populatie}\\
+    $\hcfun$							& Harde beperkingen: $\funsig{\hcfun}{\ConfigSet}{\BoolSet}$\\
+    $\evalfun$							& Evaluatiefunctie: $\funsig{\evalfun}{\ConfigSet}{\RealSet}$\\
+    $\hittime$							& De raaktijd voor een optimalisatieprobleem in een sequenti\"ele context\\
+    $\phittime$							& De raaktijd voor een optimalisatieprobleem in een parallelle context\\
+    $\neighbr$							& Omgeving van een oplossing\\
+    $\ev[i,A]$							& De $i$-de eigenwaarde van een matrix $A$. De eigenwaarden zijn gerangschikt van groot naar klein: $\abs{\ev[i,A]}\geq\abs{\ev[i+1,A]}$\\
+    $\ev[A]$							& De dominante eigenwaarde van een matrix $A$\\
+    $\evl[i,A]$							& De linkse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
+    $\evr[i,A]$							& De rechtse eigenvector die bij de $i$-de eigenwaarde van matrix $A$ hoort\\
+    $\krdelta{x}$						& De Kroneckerdelta voor een gegeven Booleaanse expressie $x$\\
+    $\TranSet$							& Set van transitiefuncties\\
+    $p$									& Aantal processoren in een parallelle configuratie\\
+    $\dabs[k]{\vec{v}}$					& $k$-norm van vector $\vec{v}$: $\dabs[k]{\vec{v}}=\sqrt[k]{\sum_i\abs{v_i}^k}$. Indien $k$ niet vermeld wordt is $k=2$.\\
+    $\transpose{A}$						& De getransponeerde matrix van een matrix $A$\\
   \end{tabularx}
 \end{flushleft}

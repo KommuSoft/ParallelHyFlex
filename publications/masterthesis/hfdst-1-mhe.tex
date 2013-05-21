@@ -193,16 +193,16 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 \end{aligned}
 \eqnlab{probabilityPower}
 \end{equation}
-De \emph{speed-up} is bijgevolg gelijk aan:
+De \absu{} is bijgevolg gelijk aan:
 \begin{equation}
-\funm{speed-up}{p}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\ev[1,\removmat]^{p-1}}{\metapa^{p-1}}\cdot\displaystyle\frac{1-\ev[1,\removmat]^{p}}{1-\ev[1,\removmat]}\approx\displaystyle\frac{p\cdot\metapb^{p-1}}{\metapa^{p-1}}
+\funm{\absu{}}{p}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}=\displaystyle\frac{\ev[1,\removmat]^{p-1}}{\metapa^{p-1}}\cdot\displaystyle\frac{1-\ev[1,\removmat]^{p}}{1-\ev[1,\removmat]}\approx\displaystyle\frac{p\cdot\metapb^{p-1}}{\metapa^{p-1}}
 \eqnlab{speedupMetaheuristic}
 \end{equation}
 In het laatste deel van de vergelijking vervangen we ook $\ev[1,\removmat]$ door $\metapb$. Dit is louter om de formules die hiervan afgeleid zijn leesbaar te houden.
 
 \subsubsection{Semantiek van parameters $\metapa$ en $\metapb$}
 
-\eqnref{speedupMetaheuristic} formaliseert de verwachte \emph{speed-up} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal processoren $p$ is het niet triviaal om de overige parameters te interpreteren.
+\eqnref{speedupMetaheuristic} formaliseert de verwachte \absu{} bij een probleem. Deze formule bevat 3 parameters en kan daarom niet zomaar ge\"interpreteerd worden. Behalve het aantal processoren $p$ is het niet triviaal om de overige parameters te interpreteren.
 
 \paragraph{}
 We hebben in \eqnref{longTermAlpha} een benadering geformuleerd voor de distributie over \emph{normale populaties}. Elke initi\"ele distributie zal bijgevolg altijd convergeren naar een distributie proportioneel aan de sterkste linkse eigenvector $\evl[1,\removmat]$. Eenmaal $\probdistnormmeta{t}\approx\evl[1,\removmat]$ kunnen we stellen dat:
@@ -242,7 +242,7 @@ Uit de formule kunnen we afleiden dan $\metapa$ aan slechts \'e\'en kant begrens
 
 \subsubsection{Superlineaire Speed-up}
 
-Vermits $0\leq\metapb<1$ en $0<\metapa$, kunnen we met behulp van \eqnref{speedupMetaheuristic} bepalen welke \emph{speed-up} mogelijk is. Opmerkelijk is dat indien $\metapa<\metapb$, \emph{superlineaire speed-up} mogelijk is. \auth{Shonkwiler} en \auth{Van Vleck} ontwikkelen in hun paper\cite{DBLP:journals/jc/ShonkwilerV94} enkele metaheuristieken voor problemen waar men ook effectief \emph{superlineaire speed-up} kan vaststellen. Uit de sectie rond parallelle algoritmes zouden we echter kunnen afleiden dat dit niet mogelijk is.
+Vermits $0\leq\metapb<1$ en $0<\metapa$, kunnen we met behulp van \eqnref{speedupMetaheuristic} bepalen welke \absu{} mogelijk is. Opmerkelijk is dat indien $\metapa<\metapb$, \abslsu{} mogelijk is. \auth{Shonkwiler} en \auth{Van Vleck} ontwikkelen in hun paper\cite{DBLP:journals/jc/ShonkwilerV94} enkele metaheuristieken voor problemen waar men ook effectief \abslsu{} kan vaststellen. Uit de sectie rond parallelle algoritmes zouden we echter kunnen afleiden dat dit niet mogelijk is.
 
 \paragraph{}
 De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties op. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\metapa$ klein indien de beginverdeling $\probdistnormmeta{0}$ klein is of sterk afwijkt van $\evr[1,\removmat]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\metapa<\metapb$, de metaheuristiek slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P}, of problemen met slecht ge\"implementeerde metaheuristieken.
@@ -282,48 +282,54 @@ In het geval dat we dit algoritme op $p$ machines laten draaien bekomen we:
 \begin{equation}
 \mean{\phittime}=\displaystyle\sum_{i=1}^N\Prob{\phittime\geq i}=\displaystyle\sum_{i=1}^N\Prob{\hittime\geq i}^p=\displaystyle\frac{1}{N^p}\displaystyle\sum_{i=1}^Ni^p\approx\displaystyle\frac{N}{p+1}
 \end{equation}
-De laatste benadering bekomen we omdat de som een veelterm van graad $p+1$ is met $1/p+1$ als leidende co\"effici\"ent. Bijgevolg is de \emph{speed-up} bij benadering gelijk aan:
+De laatste benadering bekomen we omdat de som een veelterm van graad $p+1$ is met $1/p+1$ als leidende co\"effici\"ent. Bijgevolg is de \absu{} bij benadering gelijk aan:
 \begin{equation}
-\mbox{speed-up}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}\approx\displaystyle\frac{\brak{N+1}\cdot\brak{p+1}}{2\cdot N}\approx\displaystyle\frac{p+1}{2}
+\mbox{\absu{}}=\displaystyle\frac{\mean{\hittime}}{\mean{\phittime}}\approx\displaystyle\frac{\brak{N+1}\cdot\brak{p+1}}{2\cdot N}\approx\displaystyle\frac{p+1}{2}
 \eqnlab{minimalSpeedupMetaheuristic}
 \end{equation}
-De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt tot dezelfde speed-up. Men dient wel op te merken dat er doorgaans betere algoritmen bestaan om naar de oplossing te zoeken dan louter per toeval configuraties te genereren en in dat geval is het meestal minder evident om dezelfde speed-up te realiseren.
+De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt tot dezelfde \absu{}. Men dient wel op te merken dat er doorgaans betere algoritmen bestaan om naar de oplossing te zoeken dan louter per toeval configuraties te genereren en in dat geval is het meestal minder evident om dezelfde \absu{} te realiseren.
 
 
 
 \subsection{Parallelliseren van metaheuristieken in de praktijk}
 
-Een referentiewerk in verband met het uitvoeren van metaheuristieken op verschillende processoren in de praktijk is \work{Parallel Metaheuristics: A New Class of Algorithms} van \auth[Alba2005book]{Enrique Alba}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}.
+Een referentiewerk in verband met het uitvoeren van metaheuristieken op verschillende processoren in de praktijk is \work{Parallel Metaheuristics: A New Class of Algorithms} van \auth[Alba2005book]{Enrique Alba}. In het boek maakt men een onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en \emph{Evolutionary Algorithms (EA)} anderzijds.
 \paragraph{}
-Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellisme:
+Onder \emph{Local Search Metaheuristics} verstaan we metaheuristieken die slechts met \'e\'en actieve oplossing werken. Bij deze metaheuristieken ziet men drie bronnen tot parallellisme:
 \begin{enumerate}
  \item \emph{Parallel multistart}: de processoren starten met een verschillende initi\"ele populatie en werken min of meer onafhankelijk. Dit is het parallellisatie-paradigma die we in de modellering hebben beschouwd.
- \item \emph{Parallel moves}: we beschouwen \'e\'en globale actieve oplossing. Wanneer we een migratie uitvoeren op een sequenti\"ele implementatie genereren we echter \'e\'en oplossing. We kunnen elke processor een migratie laten uitvoeren en vervolgens uit de verzameling van oplossingen uit de omgeving een nieuwe actieve oplossing kiezen. In het geval we een \emph{Local Search} stap uitvoeren kunnen we bijvoorbeeld ook elke processor een deel van de volledige omgeving laten afzoeken.
- \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. Bij \emph{move acceleration} zijn we in staat om de oplossing op te delen in min of meer onafhankelijke delen. Elke processor past een deel van de configuratie aan en rekent de verandering van fitness-waarde met betrekking tot dit deel uit. Soms is er nog postprocessing vereist om de uiteindelijke fitness-waarde te berekenen. In andere modellen laat men fouten toe in de evaluatiefunctie en berekend men de fitness-waarde maar sporadisch correct.
+ \item \emph{Parallel moves}: er is sprake van \'e\'en gedistribueerde actieve oplossing. Elke processor berekend vervolgens een kandidaat die als volgende actieve oplossing wordt voorgedragen. Uit deze verzameling van oplossingen wordt dan een nieuwe gedistribueerde actieve oplossing gekozen. In het geval we een \emph{Local Search} stap uitvoeren kunnen we bijvoorbeeld ook elke processor een deel van de volledige omgeving laten afzoeken.
+ \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. In het geval van \emph{move acceleration} wordt de oplossing opgedeeld in min of meer onafhankelijk delen. Elke processor past een deel van de configuratie aan en rekent de verandering van de fitness-waarde met betrekking tot dit deel uit. Meestal is nog een postprocessing-fase vereist om de uiteindelijke fitness-waarde te berekenen. In sommige modellen laat men fouten toe in de evaluatiefunctie en berekent men de fitness-waarde maar sporadisch correct.
 \end{enumerate}
 
 \paragraph{}
-In het geval van \emph{Evolutionary Algorithms} ziet men twee bronnen tot parallellisme:
+In het geval van \emph{Evolutionary Algorithms} wordt er gerekend met een populatie van oplossingen. Er worden twee vormen van parallellisme voorgesteld:
 \begin{enumerate}
- \item \emph{Parallel computation}: meestal dient men operaties toe te passen op een significant deel van de populatie (bijvoorbeeld het berekenen van fitness-waardes). Vermits oplossingen nog steeds onafhankelijke entiteiten zijn, is dit een inherente vorm van parallellisatie.
- \item \emph{Parallel population}: men kan ook op elke processor en onafhankelijke populatie beschouwen waarop de processor dan werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{islandModel}.
+ \item \emph{Parallel population}: men kan ook voor elke processor en onafhankelijke populatie beschouwen waarop een evolutionair algoritme werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{islandModel}.
+ \item \emph{Parallel computation}: Operaties zoals het berekenen van de fitness-waarde moeten op alle oplossingen in de populatie worden berekend. Vermits oplossingen onafhankelijke entiteiten zijn, kan men het berekenen van deze waarden inherent parallelliseren.
 \end{enumerate}
 
 \paragraph{}
-In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke speed-ups: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve speed-up door het grote aantal synchronisatiestappen.
+In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke \absus{}: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve \absu{} door het grote aantal synchronisatiestappen.
 
 \paragraph{}
-\auth{Crainic} en \auth{Toulouse}\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemene types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van Alba. Men stelt in\cite{crainicAndToulouse} dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. Crainic en Toulouse argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in Alba minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
+Andere bronnen spelen dan weer vooral bij een lagere granulariteit: het is bijvoorbeeld mogelijk dat na verloop van tijd twee populaties in een parallel evolutionair algoritme convergeren. De resultaten uit twee gelijkaardige populaties zijn meestal ook gelijkaardig, waardoor er dus weinig winst geboekt wordt met het uitvoeren van het algoritme op verschillende processoren.
 
 \paragraph{}
-Crainic en Toulouse maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten uit in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.
+\auth{Crainic} en \auth{Toulouse}\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemenere types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van \auth{Alba}. Men stelt in\cite{crainicAndToulouse} dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. \auth{Crainic} en \auth{Toulouse} argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in \auth{Alba} minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
+
+\paragraph{}
+\auth{Crainic} en \auth{Toulouse} maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten uit in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.
 
 \subsubsection{Empirische resultaten}
 
-Alba geeft in zijn boek een uitgebreid overzicht over verschillende pogingen om metaheuristieken te parallelliseren. In een groot aantal families van metaheuristieken is lineaire speed-up geen evidentie. In het geval van \emph{Ant Colony Optimisation (ACO)} bijvoorbeeld rapporteren zowel \cite{alba8-42,alba8-38,alba8-7,alba8-16} lage effici\"entie (meestal rond de 0.40) die meestal daalt naarmate het aantal processoren toeneemt. Andere paradigma's, zoals bijvoorbeeld \emph{Tabu Search}, halen wel sterke resultaten die meestal lineaire speed-up benaderen.
+\auth{Alba} geeft in zijn boek een uitgebreid overzicht over verschillende pogingen om metaheuristieken te parallelliseren. In een groot aantal families van metaheuristieken is \ablsu{} geen evidentie. In het geval van \emph{Ant Colony Optimisation (ACO)} bijvoorbeeld rapporteren zowel \cite{Souto2004,Randall2002,Delisle2001,Catalano:2001:PRH:761889.761897} lage effici\"entie (meestal rond de 0.40) die meestal daalt naarmate het aantal processoren toeneemt. Andere paradigma's, zoals bijvoorbeeld \emph{Tabu Search}, halen wel sterke resultaten die meestal \ablsu{} benaderen.
 
 \subsubsection{Speed-up als een goede metriek?}
-Empirische resultaten tonen dat de empirische speed-up sterk kan vari\"eren naargelang het paradigma van de metaheuristiek. Ook wanneer men een sterke \emph{speed-up} realiseert, ontbreken harde garanties dat dit op alle probleeminstanties het geval zal zijn. \cite{crainicAndToulouse} plaats daarom vraagtekens bij de betekenis van \emph{speed-up}. Omdat we meestal de exacte oplossing niet kennen is speed-up bovendien moeilijk te verifi\"eren: een parallel algoritme kan snel sterke oplossingen genereren, maar zal misschien niet significant sneller de echte oplossing vinden. Bovendien zal men meestal de uitvoer stopzetten alvorens een metaheuristiek de oplossing heeft gevonden. \cite{crainicAndToulouse} stelt daarom drie andere metrieken voor: kwalitatief sterkere oplossingen gedurende een significant deel van het zoekproces, robuustere systemen die meer garantie bieden op een sterke oplossing, of een algoritme die de algemene tijdscomplexiteit naar omlaag haalt.
+Empirische resultaten tonen dat de empirische \absu{} sterk kan vari\"eren naargelang het paradigma van de metaheuristiek. Ook wanneer men een sterke \absu{} realiseert, ontbreken harde garanties dat dit op alle probleeminstanties het geval zal zijn. \cite{crainicAndToulouse} plaats daarom vraagtekens bij de betekenis van \absu{}.
+
+\paragraph{}
+Omdat we meestal de exacte oplossing niet kennen is de \absu{} moeilijk te verifi\"eren: een parallel algoritme kan snel sterke oplossingen genereren, maar zal misschien niet significant sneller de echte oplossing vinden. Bovendien zal men meestal de uitvoer stopzetten alvorens een metaheuristiek de oplossing heeft gevonden. \cite{crainicAndToulouse} stelt daarom drie andere metrieken voor: kwalitatief sterkere oplossingen gedurende een significant deel van het zoekproces, robuustere systemen die meer garantie bieden op een sterke oplossing, of een algoritme die de algemene tijdscomplexiteit naar omlaag haalt.
 
 \subsubsection{Parallellisatie met behulp van aangepast hardware}
 Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/glvlsi/HaldarNCB00,conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.
