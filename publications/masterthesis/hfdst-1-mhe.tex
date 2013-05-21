@@ -126,17 +126,17 @@ Net als bij de transitiematrix $\transmat$ kunnen we de probabiliteitsvector $\p
 \end{equation}
 We zijn vooral ge\"interesseerd in de fractie van Markov-ketens die in stap $t$ naar een \emph{doel-populatie} migreren ofwel de kans dat we stap $t$ een gewenste oplossing bereiken:
 \begin{equation}
-\Prob{\hittime=t}=\displaystyle\sum_{i=\ntarpop+1}^{N}\brak{\probdistmeta{t-1,i}\cdot\displaystyle\sum_{j=1}^{\ntarpop}\fun{p}{t,i,j}}=\probdistnormmeta{t-1}\cdot \bridgemat\cdot\onematrix[\ntarpop\times 1]
+\Prob{\hittime=t}=\displaystyle\sum_{i=\ntarpop+1}^{N}\brak{\probdistmeta{t-1,i}\cdot\displaystyle\sum_{j=1}^{\ntarpop}\fun{p}{t,i,j}}=\dabs[1]{\probdistnormmeta{t-1}\cdot \bridgemat}
 \eqnlab{exhaust}
 \end{equation}
 Een ander logische gevolg uit \eqnref{oneStepTransition} zijn de transities van \emph{normale populaties} naar andere \emph{normale populaties}. De som van de kansen die in deze deelvector aanwezig zijn, is de kans dat we na deze $t$ stappen nog steeds geen acceptabele oplossing gevonden hebben:
 \begin{eqnarray}
 \probdistnormmeta{t}=\probdistnormmeta{t-1}\cdot\removmat=\probdistnormmeta{t-2}\cdot\removmat^2=\ldots=\probdistnormmeta{0}\cdot\removmat^t\eqnlab{remainder}\\
-\Prob{\hittime>t}=\displaystyle\sum_{i=\ntarpop+1}^{\npop}\probdistmeta{t,i}=\probdistnormmeta{t}\cdot\onematrix[\npop-\ntarpop\times1]=\probdistnormmeta{0}\cdot\removmat^t\cdot\onematrix[\npop-\ntarpop\times1]\eqnlab{nothit}
+\Prob{\hittime>t}=\displaystyle\sum_{i=\ntarpop+1}^{\npop}\probdistmeta{t,i}=\dabs[1]{\probdistnormmeta{t}}=\dabs[1]{\probdistnormmeta{0}\cdot\removmat^t}\eqnlab{nothit}
 \end{eqnarray}
 Op basis van \eqnref{remainder} en \eqnref{nothit} kunnen we nu de verwachte stap berekenen waarop we een \emph{doel-populatie} zullen bereiken:
 \begin{equation}
-\mean{\hittime}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\hittime>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\probdistnormmeta{0}\cdot\removmat^i\cdot\onematrix[\npop-\ntarpop\times1]}
+\mean{\hittime}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\hittime>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\dabs[1]{\probdistnormmeta{0}\cdot\removmat^i}}
 \eqnlab{meanHit}
 \end{equation}
 In deze vergelijking tellen we elke kans $\Prob{\hittime=k}$ juist $k$ keer.
@@ -147,15 +147,15 @@ Vermits $\removmat$ een kansenmatrix voorstelt kunnen we stellen dat $\hat{p}_{i
 We kunnen een eigenvector benaderen door een $\onematrix$-vector een groot aantal maal toe te passen op de matrix in kwestie en vervolgens te normaliseren. Daarom kunnen we stellen dat voor een grote $t$:
 \begin{equation}
 \begin{array}{cc}
-\arbitraryvec\cdot\removmat^t\cdot\onematrix[\npop-\ntarpop\times1]\approx\arbitraryvec\cdot\ev[1,\removmat]^t\cdot\evr[1,\removmat]=\ev[1,\removmat]^t\cdot\metapa&\mbox{($t\gg 1$)}
+\arbitraryvec\cdot\removmat^t\cdot\onematrix[\npop-\ntarpop\times1]\approx\arbitraryvec\cdot\ev[1,\removmat]^t\cdot\evr[1,\removmat]^{\top}=\ev[1,\removmat]^t\cdot\metapa&\mbox{($t\gg 1$)}
 \end{array}
 \eqnlab{longTermAlpha}
 \end{equation}
 Wanneer we voor $\arbitraryvec$ de begindistributie $\probdistnormmeta{0}$ nemen, kunnen we het dot-product tussen $\probdistnormmeta{0}$ en $\evr[1,\removmat]$ defini\"eren als $\metapa$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die een benaderende waarde voor de gemiddelde raaktijd oplevert:
 \begin{equation}
-\mean{\hittime}\approx 1+\probdistnormmeta{0}\cdot\onematrix[1\cdot\npop-\ntarpop]+\metapa\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\ev[1,\removmat]^i}=1+\probdistnormmeta{0}\cdot\onematrix[1\cdot\npop-\ntarpop]+\displaystyle\frac{\metapa\cdot \ev[1,\removmat]}{1-\ev[1,\removmat]}
+\mean{\hittime}\approx 1+\dabs[1]{\probdistnormmeta{0}}+\metapa\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\ev[1,\removmat]^i}=1+\dabs[1]{\probdistnormmeta{0}}+\displaystyle\frac{\metapa\cdot \ev[1,\removmat]}{1-\ev[1,\removmat]}
 \end{equation}
-Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnref{longTermAlpha}, kunnen we de eerste termen benaderen door deze vergelijking omgekeerd toe te passen. We stellen dus dat $1+\probdistnormmeta{0}\cdot\onematrix[1\cdot\npop-\ntarpop]=\metapa\cdot\brak{1+\ev[1,\removmat]^{-1}}$. Dit levert ons een ruwe schatting voor de raaktijd op:
+Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnref{longTermAlpha}, kunnen we de eerste termen benaderen door deze vergelijking omgekeerd toe te passen. We stellen dus dat $1+\dabs[1]{\probdistnormmeta{0}}=\metapa\cdot\brak{1+\ev[1,\removmat]^{-1}}$. Dit levert ons een ruwe schatting voor de raaktijd op:
 \begin{equation}
 \mean{\hittime}\approx\displaystyle\frac{\metapa}{\brak{1-\ev[1,\removmat]}\cdot\ev[1,\removmat]}
 \eqnlab{hitTimeSingle}
@@ -188,7 +188,7 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 \begin{equation}
 \begin{aligned}
 \mean{\phittime}&=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\phittime>i}}=1+\displaystyle\sum_{i=0}^{\infty}{\Prob{\hittime>i}^p}\\
-&\approx 1+\brak{\probdistnormmeta{0}\cdot\onematrix}^p+\metapa^p\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\ev[1,\removmat]^{p\cdot i}}=1+\brak{\probdistnormmeta{0}\cdot\onematrix}^p+\displaystyle\frac{\metapa^p\cdot\ev[1,\removmat]^p}{1-\ev[1,\removmat]^p}\\
+&\approx 1+\dabs[1]{\probdistnormmeta{0}}^p+\metapa^p\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\ev[1,\removmat]^{p\cdot i}}=1+\dabs[1]{\probdistnormmeta{0}}^p+\displaystyle\frac{\metapa^p\cdot\ev[1,\removmat]^p}{1-\ev[1,\removmat]^p}\\
 &\approx\displaystyle\frac{\metapa^p}{\brak{1-\ev[1,\removmat]^p}\cdot\ev[1,\removmat]^{p}}
 \end{aligned}
 \eqnlab{probabilityPower}
@@ -242,7 +242,7 @@ Uit de formule kunnen we afleiden dan $\metapa$ aan slechts \'e\'en kant begrens
 
 \subsubsection{Superlineaire Speed-up}
 
-Vermits $0\leq\metapb<1$ en $0<\metapa$, kunnen we met behulp van \eqnref{speedupMetaheuristic} bepalen welke \emph{speed-up} mogelijk is. Opmerkelijk is dat indien $\metapa<\metapb$, \emph{superlineaire speed-up} mogelijk is. Skonkwiler en Van Vleck ontwikkelen in hun paper\cite{DBLP:journals/jc/ShonkwilerV94} enkele metaheuristieken voor problemen waar men ook effectief \emph{superlineaire speed-up} kan vaststellen. Uit de sectie rond parallelle algoritmes zouden we echter kunnen afleiden dat dit niet mogelijk is.
+Vermits $0\leq\metapb<1$ en $0<\metapa$, kunnen we met behulp van \eqnref{speedupMetaheuristic} bepalen welke \emph{speed-up} mogelijk is. Opmerkelijk is dat indien $\metapa<\metapb$, \emph{superlineaire speed-up} mogelijk is. \auth{Shonkwiler} en \auth{Van Vleck} ontwikkelen in hun paper\cite{DBLP:journals/jc/ShonkwilerV94} enkele metaheuristieken voor problemen waar men ook effectief \emph{superlineaire speed-up} kan vaststellen. Uit de sectie rond parallelle algoritmes zouden we echter kunnen afleiden dat dit niet mogelijk is.
 
 \paragraph{}
 De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties op. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\metapa$ klein indien de beginverdeling $\probdistnormmeta{0}$ klein is of sterk afwijkt van $\evr[1,\removmat]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\metapa<\metapb$, de metaheuristiek slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P}, of problemen met slecht ge\"implementeerde metaheuristieken.
@@ -293,7 +293,7 @@ De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt to
 
 \subsection{Parallelliseren van metaheuristieken in de praktijk}
 
-Een referentiewerk hoe men metaheuristieken in de praktijk op verschillende processoren laat werken is ``\emph{Parallel Metaheuristics: A New Class of Algorithms}'' van Alba\cite{Alba2005book}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}.
+Een referentiewerk in verband met het uitvoeren van metaheuristieken op verschillende processoren in de praktijk is \work{Parallel Metaheuristics: A New Class of Algorithms} van \auth[Alba2005book]{Enrique Alba}. In het boek maakt men het eerder vermelde onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en anderzijds \emph{Evolutionary Algorithms (EA)}.
 \paragraph{}
 Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellisme:
 \begin{enumerate}
@@ -303,7 +303,7 @@ Bij de \emph{Local Search Metaheuristics} ziet men drie bronnen tot parallellism
 \end{enumerate}
 
 \paragraph{}
-In het geval van \emph{Evolutionary Algorithms} ziet men drie bronnen tot parallellisme:
+In het geval van \emph{Evolutionary Algorithms} ziet men twee bronnen tot parallellisme:
 \begin{enumerate}
  \item \emph{Parallel computation}: meestal dient men operaties toe te passen op een significant deel van de populatie (bijvoorbeeld het berekenen van fitness-waardes). Vermits oplossingen nog steeds onafhankelijke entiteiten zijn, is dit een inherente vorm van parallellisatie.
  \item \emph{Parallel population}: men kan ook op elke processor en onafhankelijke populatie beschouwen waarop de processor dan werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{islandModel}.
@@ -313,7 +313,7 @@ In het geval van \emph{Evolutionary Algorithms} ziet men drie bronnen tot parall
 In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke speed-ups: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve speed-up door het grote aantal synchronisatiestappen.
 
 \paragraph{}
-Crainic en Toulouse\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemene types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van Alba. \cite{crainicAndToulouse} stellen dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. Crainic en Toulouse argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in Alba minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
+\auth{Crainic} en \auth{Toulouse}\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemene types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van Alba. Men stelt in\cite{crainicAndToulouse} dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. Crainic en Toulouse argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in Alba minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
 
 \paragraph{}
 Crainic en Toulouse maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten uit in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.

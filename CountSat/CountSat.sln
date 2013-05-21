@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountSat", "CountSat\CountSat.csproj", "{C811B2AE-AE0C-4FDA-8F2B-2EF3BBFC0552}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C811B2AE-AE0C-4FDA-8F2B-2EF3BBFC0552}.Debug|x86.ActiveCfg = Debug|x86
+		{C811B2AE-AE0C-4FDA-8F2B-2EF3BBFC0552}.Debug|x86.Build.0 = Debug|x86
+		{C811B2AE-AE0C-4FDA-8F2B-2EF3BBFC0552}.Release|x86.ActiveCfg = Release|x86
+		{C811B2AE-AE0C-4FDA-8F2B-2EF3BBFC0552}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = CountSat\CountSat.csproj
+	EndGlobalSection
+EndGlobal
