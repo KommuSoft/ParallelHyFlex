@@ -1,8 +1,11 @@
 \section{Systeem}
 
+\paragraph{}
+Het beschrijven van parallelle algoritmes is vaak complex. In dit hoofdstuk zullen we eerst een algemeen overzicht geven van het volledige systeem. Daarna bespreken we welke probleemafhankelijke componenten we hebben toegevoegd om dit systeem beter te doen werken. Vervolgens beschrijven we de principes achter het parallel uitvoeren van de hyperheuristieken. We eindigen met een bondig overzicht en bespreken welke inzichten uit het vorige hoofdstuk relevant waren voor de implementatie van dit systeem.
+
 \subsection{Overzicht}
 
-Hyperheuristieken kiezen uit een divers aanbod aan heuristieken. De meeste van deze heuristieken verschillen in tijdgebruik.
+Hyperheuristieken kiezen uit een divers aanbod aan heuristieken. De meeste van deze heuristieken verschillen in tijdgebruik. Daarom is het niet evident om systemen te implementeren met een hoge granulariteit: indien \'e\'en van de processoren een \abls{} \abh{} kiest, zal deze veel rekentijd gebruiken en andere processoren blokkeren. \abmt[M]{} \abhn{} daarentegen worden meestal vrij snel uitgevoerd waardoor de communicatie over deze heuristiek waarschijnlijk meer tijd zo vragen dan de eigenlijke heuristiek uitvoeren. Zeker wanneer we een schaalbaar model willen bouwen, is een model met hoge granulariteit dus niet gewenst.
 
 \paragraph{}
 We kunnen er voor opteren om de heuristieken zelf in parallel uit te voeren ofwel dus \emph{type 1}-parallellisatie van \emph{Crainic and Toulouse}\cite{crainicAndToulouse}. Het nadeel van deze aanpak is dat de onderliggende heuristieken zelf aangepast moeten worden voor een parallelle context. Bovendien verliezen we rekenkracht bij het opstarten en aflopen van een heuristiek: de opdracht moet eerst naar de verschillende processoren worden gecommuniceerd. Op het moment dat alle processoren hun werk be\"eindigt hebben moet men bovendien de resultaten terug naar de centrale processor sturen. Tussen het moment dat de processoren een vorige heuristiek hebben afgewerkt en een nieuwe opdracht krijgen, wordt de rekenkracht niet gebruikt. Sommige heuristieken zijn bovendien niet eenvoudig te parallelliseren. In het geval van een mutatie bijvoorbeeld zal in sommige gevallen het doorsturen van een oplossing meer tijd vragen dan de mutatie zelf uit te voeren.

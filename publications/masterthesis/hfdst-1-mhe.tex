@@ -182,7 +182,6 @@ Vermits de verschillende processoren een onafhankelijk en equivalent proces uitv
 &=\Prob{\hittime_1\geq t}\cdot\Prob{\hittime_2\geq t}\cdot\ldots\cdot\Prob{\hittime_p\geq t}\\
 &=\Prob{\hittime\geq t}\cdot\Prob{\hittime\geq t}\cdot\ldots\cdot\Prob{\hittime\geq t}=\Prob{\hittime\geq t}^p
 \end{aligned}
-\eqnlab{probabilityPower}
 \end{equation}
 Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op basis van \eqnref{meanHit}:
 \begin{equation}
@@ -191,7 +190,6 @@ Op basis van deze regel kunnen we de gemiddelde parallelle raaktijd bepalen op b
 &\approx 1+\dabs[1]{\probdistnormmeta{0}}^p+\metapa^p\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\ev[1,\removmat]^{p\cdot i}}=1+\dabs[1]{\probdistnormmeta{0}}^p+\displaystyle\frac{\metapa^p\cdot\ev[1,\removmat]^p}{1-\ev[1,\removmat]^p}\\
 &\approx\displaystyle\frac{\metapa^p}{\brak{1-\ev[1,\removmat]^p}\cdot\ev[1,\removmat]^{p}}
 \end{aligned}
-\eqnlab{probabilityPower}
 \end{equation}
 De \absu{} is bijgevolg gelijk aan:
 \begin{equation}
@@ -265,7 +263,7 @@ De meeste metaheuristieken de voorkeur aan migratie naar sterke populaties. Hier
 
 \subsubsection{Minimale Speed-up}
 
-Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal van elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{kirkPatrick}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren. Bovendien kunnen we een programma zo ontwerpen dat het uitsluitend oplossingen genereert die nog niet eerder gegenereerd werden in dit in een tijdscomplexiteit onafhankelijk van het aantal eerder gegenereerde oplossingen.
+Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal van elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{Kalnis02viewselection}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren. Bovendien kunnen we een programma zo ontwerpen dat het uitsluitend oplossingen genereert die nog niet eerder gegenereerd werden in dit in een tijdscomplexiteit onafhankelijk van het aantal eerder gegenereerde oplossingen.
 \paragraph{}
 Stel dat het domein exact \'e\'en optimale oplossing bevat, dan is de kans dat we in iteratie $t$ deze waarde vinden gelijk aan:
 \begin{equation}
@@ -305,7 +303,7 @@ Onder \emph{Local Search Metaheuristics} verstaan we metaheuristieken die slecht
 \paragraph{}
 In het geval van \emph{Evolutionary Algorithms} wordt er gerekend met een populatie van oplossingen. Er worden twee vormen van parallellisme voorgesteld:
 \begin{enumerate}
- \item \emph{Parallel population}: men kan ook voor elke processor en onafhankelijke populatie beschouwen waarop een evolutionair algoritme werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{islandModel}.
+ \item \emph{Parallel population}: men kan ook voor elke processor en onafhankelijke populatie beschouwen waarop een evolutionair algoritme werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{Whitley98theisland,parallelgeneticalgorithms}.
  \item \emph{Parallel computation}: Operaties zoals het berekenen van de fitness-waarde moeten op alle oplossingen in de populatie worden berekend. Vermits oplossingen onafhankelijke entiteiten zijn, kan men het berekenen van deze waarden inherent parallelliseren.
 \end{enumerate}
 
