@@ -1,0 +1,30 @@
+\section{Overzicht van de Communicatie}
+
+In het algemeen beschouwen we volgende vormen van communicatie in \emph{ParHyFlex}:
+\begin{enumerate}
+ \item de probleeminstantie;
+ \item geheugenconfiguratie;
+ \item oplossingen;
+ \item onderhandelingen over een nieuwe zoekruimte; en
+ \item een deel van de toestand van de hyperheuristiek.
+\end{enumerate}
+in de volgende subsecties zullen we de verschillende vormen verder bespreken.
+
+\subsection{De probleeminstantie en geheugenconfiguratie}
+
+Wanneer \emph{ParHyFlex} wordt opgestart, zal \'e\'en van de processoren het optimalisatieprobleem inlezen. Het is de bedoeling dat het probleem vervolgens ook door de andere processoren wordt ingeladen. Hiervoor maken we gebruik van synchrone communicatie over \emph{MPI}. De probleeminstantie is immers een noodzakelijk deel van de data en als processoren reeds andere communicatie zouden aangaan met de processoren zijn de effecten oncontroleerbaar. Bovendien betreft het een eenmalige uitwisseling in het begin van het proces. Hierdoor zijn de communicatiekosten van minder belang.
+
+\paragraph{}
+Ook de geheugenconfiguratie wordt uitgewisseld. Hieronder verstaan we het aantal oplossingen die een processor tegelijk opslaat samen met enkele instellingen hoe oplossingen zullen worden gecommuniceerd. \emph{ParHyFlex} laat enkel toe dat de hyperheuristiek bij aanvang het geheugen juist afstelt. Daarom verloopt ook deze communicatie over een synchrone \emph{MPI} verbinding. De argumentatie is dezelfde als bij het uitwisselen van de probleeminstantie.
+
+\subsection{Uitwisselen van oplossingen}
+
+Het uitwisselen van oplossingen %TODO
+
+\subsection{Onderhandelingen over een nieuwe zoekruimte}
+
+Op geregelde tijdstippen vat \emph{ParHyFlex} een proces aan waarbij men over een nieuwe zoekruimte onderhandelt. Hiervoor dienen de verschillende processoren een voorstel voor hun eigen zoekruimte aan de andere processen mee te delen. Dit is een typisch voorbeeld van een \texttt{GatherAll}-operatie: een vorm van groepscommunicatie waarbij elke processor een deel van de data bezit. Op het einde van de operatie bezitten alle processoren alle delen. De meeste van \emph{MPI} bevatten geen implementatie voor een asynchrone \texttt{GatherAll}-operatie\footnote{De versies die dit niet ondersteunen zijn 1.0\cite{mpi10}, 1.3\cite{mpi13}, 2.0\cite{conf/europar/GeistGHLLSSS96,mpi20}, 2.1\cite{mpi21} en 2.2\cite{mpi22}. Versie 3.0\cite{mpi30} ondersteund dit commando wel.}, daarom hebben we deze zelf ge\"implementeerd. De details van deze implementatie staan in \secref{mpimod}.
+
+\subsection{De toestand van de hyperheuristiek}
+
+Een hyperheuristiek houdt meestal een toestand bij waarin hij bijvoorbeeld de prestaties van de heuristieken in opslaat. Daar de waarde van deze parameters sterk afhangt van het aantal gevallen waaruit deze data is opgebouwd, kan het interessant zijn deze data uit te wisselen: we doen dan immers een uitspraak op basis van meer gegevens. Voor deze taak werd een component ge\"implementeerd ter ondersteuning. De hyperheuristiek beschrijft in het begin welke data uitgewisseld moet worden en schuift de lokale data vervolgens in het systeem. Het systeem zal stuurt regelmatig de data rond waardoor de data van de andere systemen ook uitgelezen kan worden in het lokaal systeem. Ook hiervoor maken we gebruik van een asynchrone \texttt{gather all} implementatie (zie \secref{mpimod}).
