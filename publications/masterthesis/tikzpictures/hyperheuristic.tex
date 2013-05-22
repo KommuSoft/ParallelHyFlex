@@ -1,6 +1,25 @@
 \begin{tikzpicture}[scale=\sc]
-\node[draw=black,rectangle,minimum width=0.8*\textwidth,minimum height=3.6 cm] (HH) at (0,2) {};
+\node[draw=black,rectangle,minimum width=0.8*\textwidth,minimum height=2 cm] (HH) at (0,1.4) {};
 \node[draw=black,rectangle,minimum width=0.8*\textwidth] (DB) at (0,0) {Domein-barri\`ere};
-\node[draw=black,rectangle,minimum width=0.8*\textwidth,minimum height=3.6 cm] (PD) at (0,-2) {};
-\node[llh] (H1) at (1,-0.75) {};
+\node[draw=black,rectangle,minimum width=0.8*\textwidth,minimum height=3.6 cm] (PD) at (0,-2.2) {};
+\begin{scope}[xshift=-0.2*\textwidth,yshift=-1.9 cm]
+\node (HEU) at (0,0) {heuristieken};
+\foreach \a in {0,30,...,330} {
+  \node[llh] (H\a) at ({2*cos(\a)},{sin(\a)}) {};
+}
+\node[draw=black,rectangle] (PDO) at (0.4*\textwidth,0) {\begin{minipage}{5cm}\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+ \item Probleemrepresentatie
+ \item Probleeminstanties
+ \item Evaluatiefunctie
+ \item Initi\"ele oplossing
+ \item Andere...
+\end{itemize}\end{minipage}};
+\end{scope}
+\begin{scope}[yshift=1.2 cm]
+\node (HI) at (0,0) {\begin{minipage}{10cm}Verzamelen en beheren van probleemonafhankelijke informatie: aantal heuristieken, veranderingen in de evaluatiefunctie, nieuwe oplossingen, afstand tussen de oplossingen,...\end{minipage}};
+\end{scope}
+\draw (HH.north) node[anchor=north] {\textbf{Hyperheuristiek}};
+\draw (PD.south) node[anchor=south] {\textbf{Probleemdomein}};
+\draw[thick,->] (HEU) -- (HI.south -| HEU);
+\draw[thick,->] (HI.south -| PDO) -- (PDO);
 \end{tikzpicture}
