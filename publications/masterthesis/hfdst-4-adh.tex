@@ -1,22 +1,24 @@
 \section{ADHS: Adaptive Dynamic Heuristic Set}
-\emph{AdapHH} probeert een set van sterke heuristieken te onderhouden. Hiervoor werkt het algoritme in fases. Een heuristiek wordt beoordeelt volgens de prestaties die het sinds de start heeft afgelegd, maar de prestaties in de laatste fase wegen zwaarder door in het besluit of een hyperheuristiek in de set blijft of enkele fases niet meer wordt gebruikt. Om heuristieken te evalueren wordt van volgende metriek gebruik gemaakt:
+
+\emph{ADHS} probeert een set te onderhouden van sterk presterende heuristieken. Hiervoor maakt het gebruik van een metriek die een heuristiek beoordeelt volgens de prestaties die sinds de start werden afgelegd. Prestaties in de laatste fase wegen echter zwaarder door in het besluit of een hyperheuristiek in de set blijft of enkele fases niet meer wordt gebruikt. Deze metriek ziet er als volgt uit:
 \begin{align*}
 \funm{eval}{h_i}\isdefinedas{}&w_1\cdot\fbrk{\brak{1+\fun{C_{f,\smbox{best}}}{h_i}}\cdot t_{\smbox{rem.}}/t_{f,\smbox{spent}}}\cdot b+\\
 &w_2\cdot\fbrk{\fun{f_{f,\smbox{imp}}}{h_i}/t_{f,\smbox{spent}}}-w_3\cdot\fbrk{\fun{f_{f,\smbox{wrs}}}{h_i}/t_{f,\smbox{spent}}}+\\
 &w_4\cdot\fbrk{\fun{f_{\smbox{imp}}}{h_i}/t_{\smbox{spent}}}-w_5\cdot\fbrk{\fun{f_{\smbox{wrs}}}{h_i}/t_{\smbox{spent}}}\\\\
-b\isdefinedas{}&\krdelta{\exists h_j:\fun{C_{f,\smbox{best}}}{h_j}>0}
+b\isdefinedas{}&\krdelta{\exists h_j:\fun{C_{f,\smbox{best}}}{h_j}>0}\\\\
+&w_1\gg w_2\gg w_3\gg w_4\gg w_5
 \end{align*}
-Met $C_{\smbox{best}}$ het aantal globaal betere oplossingen die de heuristiek heeft gevonden, $f_{\smbox{imp}}$ en $f_{\smbox{wrs}}$ de totale verbetering en verslechtering die de heuristiek veroorzaakt heeft. $t_{\smbox{spent}}$ houdt de totale rekentijd van een specifieke heuristiek bij. Indien er een subscript $f$ bij de metrieken wordt geplaatst, gaat het om de metriek in de laatste fase.
+Met $C_{\smbox{best}}$ het aantal globaal beste oplossingen die de heuristiek gevonden heeft, $f_{\smbox{imp}}$ en $f_{\smbox{wrs}}$ de totale verbetering en verslechtering die de heuristiek veroorzaakt heeft. $t_{\smbox{spent}}$ houdt de totale rekentijd van een specifieke heuristiek bij. Indien er een subscript $f$ bij de metrieken wordt geplaatst, gaat het om de metriek in de laatste fase.
 
 \paragraph{}
-Een logische stap naar parallellisatie is het doorsturen van van de componenten van de metriek en vervolgens een uitspraak doen op basis van meer gegevens. Dit wordt echter bemoeilijkt door het feit dat de fases niet synchroon verlopen en dit bovendien de semantiek van een fase onderuit zou halen: uitspraken doen over hoe goed de heuristieken werken op een set gelijkaardige populaties. De metriek bevat echter ook enkele componenten die niet minder afhankelijk zijn van de laatste fase. Daarom introduceren we twee nieuwe termen die een uitspraak doen over het globale plaatje:
+Een logische stap naar parallellisatie is het doorsturen van van de componenten van de metriek en vervolgens een uitspraak doen op basis van meer gegevens. Dit wordt echter bemoeilijkt door het feit dat de fases niet synchroon verlopen en dit bovendien de semantiek van een fase onderuit zou halen: uitspraken doen over de prestaties van de heuristieken op een set gelijkaardige populaties\footnote{We maken de assumptie dat na het toepassen van een heuristiek, de populatie er nog steeds gelijkaardig uitziet.}. De metriek bevat echter ook enkele componenten die minder afhankelijk zijn van de laatste fase. Daarom introduceren we twee nieuwe termen die een uitspraak doen over de gedistribueerde toestand:
 \begin{align*}
 \funm{eval'}{h_i}\isdefinedas{}&w_1\cdot\fbrk{\brak{1+\fun{C_{f,\smbox{best}}}{h_i}}\cdot t_{\smbox{rem.}}/t_{f,\smbox{spent}}}\cdot b+\\
 &w_2\cdot\fbrk{\fun{f_{f,\smbox{imp}}}{h_i}/t_{f,\smbox{spent}}}-w_3\cdot\fbrk{\fun{f_{f,\smbox{wrs}}}{h_i}/t_{f,\smbox{spent}}}+\\
 &w_4\cdot\fbrk{\fun{f_{\smbox{imp}}}{h_i}/t_{\smbox{spent}}}-w_5\cdot\fbrk{\fun{f_{\smbox{wrs}}}{h_i}/t_{\smbox{spent}}}\\
 &w_6\cdot\fbrk{\fun{f_{g,\smbox{imp}}}{h_i}/t_{g,\smbox{spent}}}-w_7\cdot\fbrk{\fun{f_{g,\smbox{wrs}}}{h_i}/t_{g,\smbox{spent}}}
 \end{align*}
-Waarbij het subscript $g$ betekent dat het gaat over de som van de gegevens van alle processoren. De gegevens worden op geregelde tijdstippen doorgestuurd om minder bandbreedte en rekenwerk aan boekhoudkundige taken toe te wijzen.
+Het subscript $g$ duidt aan dat we de som van de gegevens van alle processoren beschouwen. De gegevens worden op geregelde tijdstippen asynchroon doorgestuurd (zie \appref{communication}) om minder bandbreedte en rekenwerk aan boekhoudkundige taken toe te wijzen.
 
 \paragraph{}
-Op basis van de evaluatie worden de heuristieken gerangschikt met een kwaliteitsindex. De heuristieken met een kwaliteitsindex die onder het gemiddelde ligt, worden uit voor een periode van $\sqrt{2\cdot n}$ uit de set verwijdert (met $n$ het aantal heuristieken). Heuristieken die tijdelijk niet meer tot de set behoren worden hebben allemaal een kwaliteitsindex van $1$. Indien een heuristiek de fase nadat deze terug in de set werd ge\"introduceerd opnieuw wordt verwijdert, neemt het aantal fases toe. Indien het aantal tabu-fases verdubbelt is, wordt de heuristiek definitief verwijdert.
+Op basis van de evaluatie worden de heuristieken gerangschikt met een kwaliteitsindex. De heuristieken met een kwaliteitsindex die onder het gemiddelde ligt, worden uit voor een periode van $\sqrt{2\cdot n}$ uit de set verwijdert (met $n$ het aantal heuristieken). Heuristieken die tijdelijk niet meer tot de set behoren worden hebben allemaal een kwaliteitsindex van $1$. Indien een heuristiek de fase nadat deze terug in de set werd ge\"introduceerd opnieuw wordt verwijdert, neemt het aantal fases toe. Indien het aantal \emph{tabu}-fases verdubbelt is, wordt de heuristiek definitief verwijdert.
