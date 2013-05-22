@@ -1,0 +1,37 @@
+\section{Probleemafhankelijk gedeelte}
+
+We werken echter in een parallelle context. Daarom is het interessant dat het probleemafhankelijke gedeelte meer functionaliteiten ter beschikking stelt die uitgebuit kunnen worden door het bovenliggende systeem. Concreet denken we hierbij aan vier zaken: \emph{afstandmetrieken}, \emph{ervaring-generatoren}, \emph{zoekruimte beperkers} en \emph{multi-objectieven}
+
+\subsection{Afstandmetrieken}
+\abhf{} laat problemen een functie aanbieden die twee oplossingen met elkaar kan vergelijken. Deze functie kunnen we theoretisch omvormen tot een afstandsmetriek (we stellen de afstand tussen twee dezelfde oplossingen gelijk aan 0, en tussen twee verschillende aan een arbitraire constante groter dan 0). Deze metriek levert echter weinig informatie op. In een sequenti\"ele context gebruikt men soms het aantal mutaties die tussen een oplossing en \'e\'en van zijn voorouders om de afstand af te schatten. Dit is natuurlijk slechts een benadering. In het geval van parallelle uitvoer zullen we bovendien meestal niet over deze informatie beschikken. Daarom is het nuttig om de afstand tussen twee oplossingen te kunnen inschatten. In het geval de afstand geen triviaal gegeven is, kan men verschillende afstandsmetrieken defini\"eren en beslist de bovenliggende hyperheuristiek over de waarde van de metrieken. Een afstandmetriek is dus gedefinieerd als:
+ \begin{equation}
+  \delta_i:\SolSet^2\rightarrow\RealSet^+
+ \end{equation}
+ 
+\subsection{Ervaring-generatoren}
+Elk proces draait een eigen hyperheuristiek en komt een sequentie heuristieken tegen. Uitwisselen van de sequentie kan potentieel een voordeel opleveren omdat de hyperheuristieken met meer kennis van zaken kunnen beslissen. Het doorsturen van alle heuristieken is doorgaans niet mogelijk omdat dit een te grote druk op het netwerk zet en bovendien de overige processoren te veel rekenkracht zouden investeren in het analyseren van de ontvangen oplossingen. Door het uitwisselen van ervaring, een compacte voorstelling van beschouwde oplossingen, zouden we dit probleem kunnen oplossen.
+
+\subsection{Zoekruimte-beperkers}
+Wanneer processoren oplossingen met elkaar uitwisselen lopen we de kans dat de verschillende processoren op termijn vergelijkbare populaties onderhouden. Dit laatste is nuttig wanneer sterke oplossingen in de buurt liggen van de oplossingen in de populatie. Indien de populaties echter rond eenzelfde lokaal optimum liggen, is dit nefast. In dat geval proberen alle processoren het lokale optimum te zoeken in een eenzelfde gebied, en wordt migratie naar mogelijk betere oplossingen in een ander gebied minder evident. Het introduceren van een component die diversificatie afdwingt kan helpen te voorkomen dat we op ijle populaties stuiten.
+
+\subsection{Multi-objectieven}
+Alle processoren proberen hetzelfde optimalisatieprobleem op te lossen. Door extra objectieven te introduceren, kunnen we echter een meer divers zoekproces aanbieden. Deze extra objectieven zijn eerder virtueel en dienen meer als een \emph{tie-breaker} in bijvoorbeeld gevallen waarbij twee oplossingen dezelfde fitness-waarde hebben.
+
+\subsection{Afdwingbare beperkingen als probleemonafhankelijke ervaring}
+
+Een probleem bij het genereren van \emph{ervaring} en het beperken van de \emph{zoekruimte} is dat dit op een probleemonafhankelijke manier dient te gebeuren: de bovenliggende hyperheuristiek heeft geen details over de structuur van de configuraties en kan bijgevolg niet zelf de zoekruimte beperken of conclusies genereren. We kunnen ervaring voorstellen als een object waar de hyperheuristiek de specificaties niet van kent, maar in dat geval moet ervaring wel enkele algemene functionaliteiten kunnen aanbieden die nuttig zijn. Om dit probleem op te lossen voeren we het concept van een \emph{afdwingbare beperking} in.
+
+\begin{definition}[Afdwingbare beperking]
+Een \emph{afdwingbare beperking} is een 3-tuple: $\tupl{c,c^+,c^-}$. $c:\SolSet\rightarrow\BoolSet$ is hierbij een functie die controleert of een gegeven oplossing aan een bepaalde voorwaarde voldoet. $c^+:\SolSet\rightarrow\SolSet$ is een functie die een gegeven oplossing minimaal kan aanpassen zodat deze aan de voorwaarde voldoet. $c^-:\SolSet\rightarrow\SolSet$ past oplossingen minimaal aan zodat ze niet aan de voorwaarde voldoen. De set van alle afdwingbare beperkingen die we op een probleem kunnen toepassen noteren we als $\HypSet$.
+\end{definition}
+
+We kunnen een afdwingbare beperking als een vorm van ervaring zijn. In de loop der tijd kunnen we immers een hypothese ontwikkelen dat sterke oplossingen aan een bepaalde voorwaarde voldoen (bijvoorbeeld een variabele in het probleem krijgt een vaste waarde). We kunnen dan oplossingen aantrekken naar de hypothese door $c^+$ op willekeurige oplossingen toe te passen. Anderzijds kunnen we ook oplossingen afstoten van de hypothese met $c^-$. De bovenliggende hyperheuristiek dient echter niet op de hoogte te zijn welke voorwaarden een concrete afdwingbare beperking stelt, zolang deze maar de oplossingen kan manipuleren.
+
+\paragraph{}
+Afdwingbare beperkingen kunnen we eveneens gebruiken om de zoekruimtes te beperken. Elk proces kan immers een aantal afdwingbare beperkingen gebruiken om een bepaalde zoekruimte te beschouwen, terwijl het de afdwingbare beperkingen van de andere processoren gebruikt om uit de buurt van de andere zoekruimtes te blijven.
+
+\paragraph{}
+De hyperheuristieken zelf kunnen geen ervaring genereren, ze hebben immers geen weet van de structuur van een oplossing. Daarom zal het specifieke probleem dus een set functies defini\"eren die we \emph{hypothese-generatoren (hypogen)} noemen:
+\begin{definition}[Hypothese-generator]
+Een \emph{hypothese-generator (hypogen)} $g_i:\SolSet^{n_{g_i}}\rightarrow\HypSet$ is een functie die op basis van een set oplossingen een afdwingbare beperking kan genereren.	
+\end{definition}

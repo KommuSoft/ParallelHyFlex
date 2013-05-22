@@ -1,0 +1,6 @@
+\section{Overzicht}
+
+In de volgende paragrafen bespreken we de details in verband met \emph{AdapHH} samen met de wijzigingen in de context van een parallel systeem bespreken.
+
+\paragraph{}
+\emph{AdapHH} is een hyperheuristiek die de gegeven tijd opdeelt in fases. Het maakt gebruik van twee mechanismes die een effici\"ente sequentie genereren: \emph{Adaptive Dynamic Heuristic Set (ADHS)} en \emph{Relay Hybridisation (RH)}. \emph{ADHS} onderhoudt een tabu-set van heuristieken die in het verleden tot sterke resultaten hebben geleid. Heuristieken die niet aan dit criterium voldoen, worden enkele fases uit de set gehaald en daarna opnieuw ge\"introduceerd. Het \emph{RH} component werkt met een \emph{learning automaton}\cite{RePEc:cla:levarc:481} en voert twee heuristieken na elkaar uit. De twee mechanismes worden door elkaar gebruikt. Telkens wanneer \'e\'en van de twee mechanismen een nieuwe oplossing berekend, zal het \emph{Adaptive Iteration Limited List-based Threshold Accepting (AILLA)}-component beslissen of de nieuwe oplossing als actieve oplossing wordt aanvaard.

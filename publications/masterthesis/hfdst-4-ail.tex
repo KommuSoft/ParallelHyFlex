@@ -1,0 +1,13 @@
+\section{AILLA}
+Nadat \'e\'en van de twee mechanismes (\emph{ADHS} of \emph{RH}) een nieuwe oplossing heeft gegenereerd, zal de heuristiek beslissen of deze oplossing de nieuwe actieve oplossing wordt. Dit is de verantwoordelijkheid van \emph{AILLA}. \emph{AILLA} beschouwd twee verschillende gevallen:
+\begin{enumerate}
+ \item In het geval de gegenereerde oplossing beter is dan de originele oplossing, wordt deze altijd geaccepteerd.
+ \item In het andere geval wordt de oplossing alleen geaccepteerd wanneer de fitness-waarde beter is dan de fitness-waarde een historisch beste oplossing. Hiervoor onderhoud \emph{AILLA} een lijst van de laatste globaal beste oplossingen. Het aantal maal tot nu toe na elkaar het accepteren van een oplossing werd geweigerd bepaald hoe diep er terug in het verleden wordt gekeken om een oplossing alsnog te accepteren.
+\end{enumerate}
+
+\importtikz[1.4]{ailla}{ailla}{Werkingsprincipe van \emph{AILLA}.}
+
+\imgref{ailla} illustreert dit principe. Op de figuur worden de verschillende mogelijke configuraties voorgesteld door de horizontale as. De verticale as geeft de fitness-waarde van de overeenkomstige configuratie weer. Wanneer we reeds enkele oplossingen hebben overlopen, hebben we enkele fitness-waardes. Deze waardes worden door de dunne grijze horizontale lijnen voorgesteld. Een oplossing zal altijd geaccepteerd worden wanneer deze zich onder de tot dan toe onderste horizontale lijn bevindt. Wanneer we een oplossing vanuit $x_4$ genereren ($x_4'$) zien we dat aan deze eis niet wordt voldaan. Daarom zullen we de eerste maal de oplossing verwerpen. Wanneer we dit de tweede maal een oplossing genereren ($x_4''$), moet deze zich enkel onder de op \'e\'en na onderste lijn bevinden. Opnieuw voldoet de oplossing niet aan de voorwaarde. De derde oplossing ($x_5$) ten slotte bevindt zich onder de op twee na onderste lijn. Daarom wordt deze oplossing wel geaccepteerd. Merk op dat $x_5$ een slechtere oplossing vormt dan $x_4'$.
+
+\paragraph{}
+We kunnen dit systeem verreiken door in de lijst van beste fitness-waardes ook de resultaten van andere processoren op te nemen. Hierdoor streven we naar sterkere stijgingen. Bovendien verwachten we dat dit op termijn gehaald zal worden: er worden immers ook oplossingen uitgewisseld waar andere processoren dan gebruik van kunnen maken. Door echter te strenge grenzen op te leggen kan een processor veel iteraties nodig hebben alvorens een nieuwe oplossing zal geaccepteerd worden. Daarom werd dit systeem aangepast zodat hooguit de helft van de lijst bestaat uit vreemde fitness-waardes.
