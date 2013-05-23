@@ -1,0 +1,9 @@
+\section{\emph{MCHH-S: Markov Chain Hyper-Heuristic} (\#19)}
+\label{sss:mchh-s}
+\subsection{Implementatie}
+\emph{MCHH-S}\cite{chesc-mchh-s,conf/gecco/McClymontK11} werkt op een gelijkaardig manier aan Ant-Q (zie \ref{sss:ant-q}): men ontwerpt een graaf waar de knopen de metaheuristieken voorstellen en de bogen overgangen die men met een kans labelt. Het algoritme verschilt echter omdat er slechts \'e\'en oplossing in het netwerk rondwandelt. Daarnaast worden de kansen ook op een andere manier berekend: enkel de laatste boog verandert op basis van de onmiddellijke verandering van de fitness-waarde van de oplossing. Het algoritme verschilt ook omdat het niet telkens de nieuwe oplossing accepteert: alleen indien de oplossing beter is, of probabilistisch volgens het aantal opeenvolgende iteraties dat er nog geen betere oplossing werd gevonden.
+\subsection{Kritiek}
+\begin{itemize}
+ \item Dit algoritme kan in een lokaal optimum terecht komen vermits \abls{} doorgaans voor de grootste winst zorgen en dus vaker beloond zullen worden. De idempotentie van \abls{} heuristieken zorgt er echter voor dat we veel rekenkracht verliezen met het herhaaldelijk toepassen van \abls{} heuristieken.
+ \item Men maakt geen onderscheid tussen de verschillende types heuristieken: mutatie zal meestal tot een tijdelijk slechtere oplossing leiden. De bogen naar mutaties bestraffen is echter waarschijnlijk niet wenselijk. (net als bij \emph{Ant-Q}, zie \ref{sss:ant-q}).
+\end{itemize}

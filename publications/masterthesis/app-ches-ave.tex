@@ -1,0 +1,17 @@
+\section{\emph{AVEG-Nep: Reinforcement Learning Approach} (\#16)}
+\label{sss:aveg-nep}
+\subsection{Implementatie}
+\emph{AVEG-Nep}\cite{chesc-aveg-nep} is gebaseerd op ``\emph{Reinforcement learning}''\cite{rlaiacaml}. Bij een reinforcement learning algoritme hebben we vijf componenten nodig:
+\begin{enumerate}
+ \item Een \emph{set acties}: hier is een actie een type van \abllhn{} (\abmt{}, \abls{}, \abco{}, \abrr{}) verreikt met de waarde van de relevante parameters gekwantiseerd per interval van 0.2. Wanneer we een bepaalde actie kiezen, kiezen we een \abllh{} die tot het geselecteerde type behoort en voeren deze uit met de geselecteerde parameters.
+ \item Een \emph{beloningsfunctie} ofwel ``\emph{reward function}'': het verschil in fitnesswaarde tussen de nieuwe oplossing en de oorspronkelijke oplossing gedeeld door de tijd die de heuristiek nodig had om de nieuwe oplossing te berekenen.
+ \item Een \emph{toestandsvoorstelling}: hier is dit het gewogen gemiddelde van het verschil in fitness-waarde over de tijd voor (we berekenen dit via ``\emph{exponential smoothing}''\cite{Taylor2003a})
+ \item Een \emph{beleid} ofwel ``\emph{policy}'': hiervoor gebruiken we de klassieke ``\emph{$\epsilon$-greedy}''-methode.
+ \item Een \emph{Leerfunctie} ofwel ``\emph{learning function}'': ook hiervoor gebruiken we bij \emph{AVEG-Nep} een ``\emph{exponential smoothing}''-functie.
+\end{enumerate}
+In \emph{AVEG-Nep} laten we 4 verschillende agenten tegelijk laat werken op de het probleem. De rede is dat men bij het toepassen van een \abco{} \abh{} een andere oplossing nodig heeft. In dat geval kiest men de oplossing van een andere agent om een \abco{} mee te realiseren.
+\subsection{Kritiek}
+\begin{itemize}
+ \item Geen onderscheid tussen metaheuristieken van dezelfde familie: terwijl de parameters een andere semantische betekenis kunnen hebben, en de \'en\'e heuristiek soms significant beter kan werken dan de andere.
+ \item Problemen met de voorstelling van de toestand: naarmate het algoritme vordert verwachten we een minder sterke groei van de fitness-functie (zie \ref{sss:gedragmetaheuristieken}). Hierdoor komen we in niet-verkende toestanden waar we weinig ervaring hebben opgebouwd.
+\end{itemize}

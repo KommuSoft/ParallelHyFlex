@@ -1,0 +1,10 @@
+\section{\emph{HAEA: Hybrid Adaptive Evolutionary Algorithm} (\#10)}
+\label{sss:haea}
+\subsection{Implementatie}
+\emph{HAEA}\cite{chesc-haea,Gomez04selfadaptation} is een hyperheuristiek die werkt op basis van drie oplossingen: de \emph{ouder}, het \emph{kind} (een oplossing gegenereerd uit de ouder) en de \emph{beste oplossing} tot dan toe. Daarnaast houdt men twee verzamelingen bij van heuristieken: \texttt{heu} houdt vier heuristieken bij uit de lijst van alle \abllhn{}. \texttt{loc} houdt vier heuristieken bij uit de lijst van \abls{} \abllhn{}. De heuristieken die in deze verzamelingen zitten zijn ``\emph{in use}''. Dat betekent dat bij iedere iteratie we een algemene heuristiek kiezen uit \texttt{heu} en een \abls{} \abllh{} uit \texttt{loc}. Vervolgens passen we deze heuristieken na elkaar toe op  de ouder. Bij een \abco{} \abllh{} combineren we de ouder met de beste oplossing tot dusver. Indien dit kind beter is dan de ouder accepteren we het kind als nieuwe ouder en belonen we beide heuristieken. Dit doen we door de kans te verhogen dat ze de volgende maal opnieuw gekozen worden. Indien het kind niet beter presteert verlagen we de kans dat de heuristieken nogmaals gekozen worden. Indien na enkele iteraties er nog steeds geen verbetering is, kiezen we nieuwe elementen voor \texttt{heu} en \texttt{loc}.
+\subsection{Kritiek}
+\begin{itemize}
+ \item \abco[C]{} wordt niet optimaal gebruikt: de kans is groot dat de huidige oplossing al dicht bij de beste oplossing zit.
+ \item Beide metaheuristieken worden beloond terwijl de oorzaak van de verbetering eerder te wijten kan zijn door het combineren van de twee configuraties.
+ \item Bij het kiezen van nieuwe sets wordt de opgedane kennis over metaheuristieken tenietgedaan.
+\end{itemize}

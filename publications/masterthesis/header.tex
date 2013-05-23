@@ -152,7 +152,7 @@
 \newcommand{\calZ}{\mathcal{Z}}
 
 \newcommand{\BoolSet}{\BBB}
-\newcommand{\NatSet}{\NNN}
+\newcommand{\NatSet}[1][]{\ifthenelse{\equal{#1}{}}{\NNN}{\funf{\NNN}{#1}}}
 \newcommand{\RealSet}{\RRR}
 \newcommand{\QbitSet}[1]{\funf{\QQQ}{#1}}
 \newcommand{\OpProblem}{\Pi}

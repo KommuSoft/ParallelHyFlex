@@ -1,30 +1,32 @@
 \section{Motivatie}
 
+In deze sectie geven we voor elk van de twee gebruikte protocols een motivatie die het gebruik rechtvaardigt.
+
 \subsection{\emph{Message Passing Interface (MPI)}}
 
 \emph{MPI} is een standaard communicatieprotocol speciaal ontwikkeld voor parallelle algoritmen. Het omvat zowel directieven voor \emph{point-to-point} communicatie en \emph{collectieve} communicatie. Zowel de zender en de ontvanger kunnen kiezen om deze communicatie op een synchrone of asynchrone manier af te handelen.
 
 \paragraph{}
-Een groot voordeel van \emph{MPI} is dat er voor de meeste configuraties een implementatie beschikbaar is. Bovendien heeft men veel onderzoek ge\"investeerd in effici\"ente implementaties voor groepscommunicatie op verschillende netwerkstructuren (\emph{hypercube}, \emph{cycle},...). Er zijn verschillende netwerkkaarten ge\"implementeerd waar de \emph{MPI} commando's rechtstreeks in de hardware worden ge\"implementeerd en op die manier de processor ontlasten van een groot deel van de communicatie-aspecten.
+Een groot voordeel van \emph{MPI} is dat er voor de meeste platformen een implementatie beschikbaar is. Bovendien heeft men veel onderzoek ge\"investeerd in effici\"ente implementaties voor groepscommunicatie op verschillende netwerkstructuren (\emph{hypercube}, \emph{cycle},...). Ook bestaan er enkele netwerkkaarten waar de \emph{MPI} commando's rechtstreeks in de hardware werden ge\"implementeerd en op die manier de processor ontlasten van een groot deel van de communicatie-aspecten.
 
 \paragraph{}
-\emph{MPI} legt weinig voorwaarden op inzake hoe de commando's ge\"implementeerd worden. De meeste implementaties werken op een manier die vergelijkbaar is met \emph{TCP} waarbij men meestal enkele optimalisaties inzake groepscommunicatie.
+\emph{MPI} legt weinig voorwaarden op inzake hoe de commando's ge\"implementeerd worden. De meeste implementaties werken op een manier die vergelijkbaar is met \emph{TCP}, al dan niet geoptimaliseerd voor parallelle algoritmen.
 
 \paragraph{}
-\emph{MPI} kent verschillende versies. %TODO
+\emph{MPI} kent verschillende versies. De eerste versie is vrij beperkt, zeker op het gebied van asynchrone communicatie. De meeste bindingen naar programmeertalen lopen niet gelijk met de nieuwe versie: \emph{MPI-3}. Daarom werd zelf een implementatie voor een \emph{asynchrone gatherall}-implementatie voorgesteld in \secref{mpimod}.
 
 \subsection{\emph{User Datagraph Protocol (UDP)}}
 
-\emph{UDP} is een protocol in de transportlaag die op een onbetrouwbare manier boodschappen doorstuurt. Boodschappen worden in pakketten doorgestuurd: sequenties aan bytes die op zichzelf staan.
+\emph{UDP} is een protocol in de transportlaag die op een onbetrouwbare manier boodschappen doorstuurt. Boodschappen worden in pakketten doorgestuurd: een sequenties aan bytes die op zichzelf staan.
 
 \paragraph{}
-Onbetrouwbare communicatie is vrij ongewoon in een parallelle context. De meeste parallelle algoritmen falen immers wanneer de resultaten die door andere processoren niet worden doorgestuurd. In het geval van metaheuristieken en hyperheuristieken is het echter niet noodzakelijk om informatie uit te wisselen: stel dat een oplossing niet wordt doorgestuurd, kan de potenti\"ele ontvanger nog altijd de oude oplossing gebruiken om verder te rekenen.
+Onbetrouwbare communicatie is vrij ongewoon in een parallelle context. De meeste parallelle algoritmen falen immers wanneer de resultaten net naar andere processoren kunnen worden doorgestuurd. Metaheuristieken en hyperheuristieken zijn minder afhankelijk van betrouwbare communicatie: stel dat een oplossing niet wordt doorgestuurd, kan de potenti\"ele ontvanger nog altijd de oude oplossing gebruiken om verder te rekenen.
 
 \paragraph{}
 Werken met onbetrouwbare communicatie levert bovendien ook enkele voordelen op. Wanneer men moet verzekeren dat informatie wel degelijk de ontvanger bereikt, moet men een systeem implementeren waarbij de ontvanger een bericht terugstuurt dat de boodschap is aangekomen\footnote{De zogenaamde \emph{ACK}-pakketten.}. Heel wat implementaties zullen deze boodschappen effici\"ent proberen te implementeren. Toch zal men een deel van de beschikbare bandbreedte altijd gebruikt worden om de communicatie betrouwbaar te maken. Zeker in de context van een lokaal netwerk -- een configuratie waarbij een groot deel van de pakketten sowieso toekomt -- is dit een niet onbelangrijke kostprijs.
 
 \paragraph{}
-\emph{UDP} maakt ook het gebruik van \emph{multicast} pakketten eenvoudiger. Een \emph{multicast} pakket wordt naar meerdere ontvangers tegelijk gestuurd om zo de bandbreedte te sparen. Omdat betrouwbaarheid geen vereiste is, zal een pakket een constante kost teweegbrengen in het netwerk. In het geval we dit op een betrouwbare manier doen (bijvoorbeeld over het \emph{Transmission Control Protocol (TCP)}) moeten er bevestigingspakketten worden teruggestuurd die in totaal een kost teweegbrengen die schaalt met het aantal ontvangers. In het geval van \emph{TCP} werken we bovendien met een \emph{sliding window protocol}: slechts een deel van de fragmenten van een boodschap zijn tegelijk in omloop zijn. Indien \'e\'en ontvanger dus niet antwoordt -- bijvoorbeeld omdat deze op dat moment andere pakketten ontvangt -- kan dit ertoe leiden dat andere ontvangers geen verdere boodschappen meer ontvangen. \emph{Multicast} onder \emph{TCP} is bovendien geen sinecure\cite{dshp}: ontvangers moeten zichzelf eerst toevoegen aan een \emph{multicast group} om pakketten te ontvangen.
+\emph{UDP} maakt ook het gebruik van \emph{multicast} pakketten eenvoudiger. Een \emph{multicast} pakket wordt naar meerdere ontvangers tegelijk gestuurd om zo de bandbreedte te sparen. Omdat betrouwbaarheid geen vereiste is, zal een pakket een constante kost teweegbrengen in het netwerk. In het geval van betrouwbare communicatie (bijvoorbeeld over het \emph{Transmission Control Protocol (TCP)}) worden bevestigingspakketten teruggestuurd. De totale kostprijs schaalt dus met het aantal ontvangers. In het geval van \emph{TCP} werken we bovendien met een \emph{sliding window protocol}: slechts een deel van de fragmenten van een boodschap zijn tegelijk in omloop zijn. Indien \'e\'en ontvanger dus niet antwoordt -- bijvoorbeeld omdat deze op dat moment andere pakketten ontvangt -- kan dit ertoe leiden dat andere ontvangers geen verdere boodschappen meer ontvangen. \emph{Multicast} onder \emph{TCP} is bovendien geen sinecure\cite{dshp}: ontvangers moeten zichzelf eerst toevoegen aan een \emph{multicast group} om pakketten te ontvangen.
 
 \paragraph{}
-Een beperking aan \emph{UDP} is de pakketgrootte. Elk pakket heeft een maximale grote van 65'527 bytes aan data. Deze beperking is ingevoerd om te voorkomen dat een pakket lange tijd een communicatielijn kan opeisen waardoor andere entiteiten in het netwerk niet meer aan bod komen\cite{Tanen2003}. Vermits het niet zeker is dat een \emph{UDP} pakket wel degelijk op de bestemming toekomt, moet alle informatie dus in \'e\'en pakket worden opgeslagen. Het gevolg is dat sommige data niet uitwisselbaar is met behulp van \emph{UDP}. Door enkele eigenschappen van \emph{TCP} over te nemen in een nieuw protocol kan men dit probleem oplossen.
+Een beperking aan \emph{UDP} is de pakketgrootte. Elk pakket heeft een maximale grote van 65'507 bytes aan data\footnote{Met IPv6 werden de zogenaamde jumbogram pakketten ontwikkeld die 4'294'967'287 bytes, anno 2013 bestaat hiervoor nog geen standaardbibliotheken.}. Vermits het niet zeker is dat een \emph{UDP} pakket wel degelijk op de bestemming toekomt, moet alle informatie dus in \'e\'en pakket worden opgeslagen. Het gevolg is dat sommige data niet uitwisselbaar is met behulp van \emph{UDP}. Door enkele eigenschappen van \emph{TCP} over te nemen in een nieuw protocol zou men dit probleem kunnen oplossen.

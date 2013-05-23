@@ -1,0 +1,9 @@
+\section{\emph{DynILS: Dynamic Iterated Local Search} (\#13)}
+\label{sss:dyn-ils}
+\subsection{Implementatie}
+\emph{Dynamic Iterated Local Search}\cite{chesc-dynils,journals/orsnz/ksosils} is een implementatie van ``\emph{Iterative Local Search}''\cite{Lourenco02iteratedlocal}. Men kiest telkens uniform een \abpte{} \abllh{} en past vervolgens alle \abls{} \abhn{} toe. Daarnaast introduceert met twee kleine wijzigingen: vermits de metaheuristieken parameters hebben, probeert het algoritme deze parameters te optimaliseren. Hiertoe houdt men een vector voor een aantal waardes van deze parameters. Met behulp van deze vector rekent men dan de kans uit dat de parameter op een bepaalde waarde wordt gezet. Indien een \abllh{} tot een betere oplossing komt verhoogt men de kans van de gekozen parameterwaarde. In het andere geval neemt de kans af. Een tweede aanpassing is de ``\emph{non-improvement bias}'': we verhogen de parameter evenredig met het aantal opeenvolgende iteraties waarin we de oplossing niet konden verbeteren. Door de parameter te verhogen zoeken we een groter gebied af met \abls{} en muteren we de oplossing ook sterker. Hierdoor hopen we uit een lokaal optimum te ontsnappen.
+\subsection{Kritiek}
+\begin{itemize}
+ \item Selectie van de mutatie is vrij eenvoudig: er wordt geen moeite gedaan om een bepaalde kansverdeling te leren.
+ \item Vaste volgorde bij het toepassen van \abls{}: hierdoor kan de ene \abls{} \abh{} de andere consistent blokkeren.
+\end{itemize}

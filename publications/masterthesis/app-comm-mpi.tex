@@ -1,30 +1,28 @@
 \section{Aangepast \emph{MPI}-model: \emph{Non-blocking Gather All}}
 \seclab{mpimod}
 
-Het \texttt{GatherAll} commando zorgt voor de uitwisseling van gegevens tussen meerdere processoren. Voordat het commando wordt opgeroepen beschikt elke processor over een deel van de data. Na de operatie zitten bij alle processoren alle delen in het geheugen. Een \texttt{GatherAll} instructie kan men dus bekijken als een collectieve \texttt{Broadcast}: elke processor stuurt zijn deel van data naar alle andere processoren.
+Het \pgata{\dodt} commando zorgt voor de uitwisseling van gegevens tussen meerdere processoren. Voordat het commando wordt opgeroepen beschikt elke processor over een deel van de data. Na de operatie kennen alle processoren alle delen. Een \texttt{GatherAll} instructie kan men dus bekijken als een collectieve \texttt{Broadcast}: elke processor stuurt zijn deel van data naar alle andere processoren.
 
-\paragraph{}De na\"ieve implementatie waarbij men inderdaad elke processor een \texttt{Broadcast} operatie laat ondernemen, vereist dat we $\bigoh{p\cdot\brak{p-1}/2}=\bigoh{p^2}$ berichten over het netwerkt sturen. Men kan stellen dat een voordeel van deze implementatie is dat de berichten in \bigoh{1} over het netwerk worden verstuurd. Als we echter de assumptie maken dat elke machine slechts \'e\'en bericht tegelijk kan ontvangen of de communicatielijnen de berichten sequentieel doorsturen, vereist deze operatie dus \bigoh{p} tijd.
+\paragraph{}De na\"ieve implementatie waarbij men elke processor een \texttt{Broadcast} operatie laat ondernemen, vereist dat we $\bigoh{p\cdot\brak{p-1}/2}=\bigoh{p^2}$ berichten over het netwerk sturen. Men kan stellen dat een voordeel van deze implementatie is dat de berichten in \bigoh{1} over het netwerk worden verstuurd. Als we echter de assumptie maken dat elke machine slechts \'e\'en bericht tegelijk kan ontvangen of de communicatielijnen de berichten sequentieel doorsturen, vereist deze operatie dus \bigoh{p} tijd.
 
 \subsection{\texttt{GatherAll} met \bigoh{p\log p} berichten}
-Een implementatie die minder berichten oplevert ordent de processoren in een \emph{hypercube}\cite[algoritme 4.7]{books/bc/KumarGGK94}. In het geval van $p$ processoren. Stel $d=\ceil{\log_2p}$, dan kunnen we de processoren ordenen in een $d$-dimensionale kubus. Elke processor heeft hierbij ofwel $d$ ofwel $d-1$ buren: processoren die slechts in \'e\'en dimensie van elkaar verschillen.
+Een implementatie die minder berichten oplevert ordent de processoren in een \emph{hypercube}\cite[algoritme 4.7]{books/bc/KumarGGK94}. In het geval van $p$ processoren, en $d=\ceil{\log_2p}$, kunnen we de processoren ordenen in een $d$-dimensionale kubus. Elke processor heeft hierbij ofwel $d$ ofwel $d-1$ buren: processoren die slechts in \'e\'en dimensie van elkaar verschillen.
 
 \paragraph{}
-Processoren kunnen informatie uitwisselen met de buur van een bepaalde dimensie: zelf zend de processor alle data door waarover men op dat moment beschikt naar deze buur. Vermits de buur-relatie voor een specifieke dimensie symmetrisch is, zal deze buur ook alle data waarover hij beschikt doorsturen.
-
-\paragraph{}
-De totale tijdscomplexiteit van dit algoritme blijft minimaal \bigoh{p}: we sturen minder berichten door, maar de berichten zelf zijn langer. Een studie in \cite{journals/tjs/TaboadaTD12} toont echter dat de grootte van het pakket slechts een beperkte invloed heeft op de vertraging: pas vanaf 1'024 bytes aan data stelt men een significante vertraging vast, de grootste bijdrage aan de vertraging is dan ook het pakket zelf. Een netwerk schaalt dus beter volgens de grootte van de pakketten dan het aantal pakketten. Bovendien verwerkt \emph{ParHyFlex} \'e\'en bericht per oproep naar een heuristiek. Door meer gegevens te groeperen in \'e\'en pakket wordt de \texttt{GatherAll}-instructie dus effici\"enter uitgevoerd.
-
-\subsection{Algoritme}
+Processoren kunnen informatie uitwisselen met de buur van een bepaalde dimensie: zelf zend de processor alle data door waarover deze op dat moment beschikt naar de buur in kwestie. Vermits de buur-relatie voor een specifieke dimensie symmetrisch is, zal deze buur ook alle data waarover hij beschikt doorsturen.
 
 \importtikz[1]{asynchronegatherall}{asynchronegatherall}{Werking van een \texttt{GatherAll} operatie op een \emph{HyperCube}.}
 \paragraph{}
-\imgref{asynchronegatherall} toont dat door incrementeel informatie uit te wisselen met de buur van een telkens hogere dimensie, na $d$ stappen alle processoren over alle informatie beschikken. Een formele beschrijving van dit algoritme staat in \algref{gatherallsequential}.
+\imgref{asynchronegatherall} toont dat door incrementeel informatie uit te wisselen met de buur van een telkens hogere dimensie, na $d$ stappen alle processoren over alle informatie beschikken. Een formele beschrijving vindt men terug in \algref{gatherallsequential}.
 
 \importalgo{syncga}{GatherAll\cite{books/bc/KumarGGK94}.}{gatherallsequential}
 
+\paragraph{}
+De totale tijdscomplexiteit van dit algoritme blijft minimaal \bigoh{p}: we sturen minder berichten door, maar de berichten zelf zijn langer. Een studie in \cite{journals/tjs/TaboadaTD12} toont echter dat de grootte van het pakket slechts een beperkte invloed heeft op de vertraging: pas vanaf 1'024 bytes aan data stelt men een significante vertraging vast, de grootste bijdrage aan de vertraging is dan ook het pakket zelf. Een netwerk schaalt dus beter met de grootte van de pakketten dan het aantal pakketten. Bovendien verwerkt \emph{ParHyFlex} \'e\'en bericht per oproep naar een heuristiek. Door meer gegevens te groeperen in \'e\'en pakket wordt de \texttt{GatherAll}-instructie dus effici\"enter uitgevoerd.
+
 \subsection{Asynchrone aspecten}
 
-De implementatie in \algref{gatherallsequential} werkt met synchrone communicatie: processen worden geblokkeerd tot een succesvolle uitwisseling plaatsvind. Het algoritme die we willen implementeren zal met asynchrone communicatie werken. Men kan dit implementeren door dit proces bijvoorbeeld op een aparte \emph{thread} te laten werken: een proces brengt de data onder in de context van de \emph{thread} en werkt verder. Nadien wordt regelmatig gecontroleerd over de \emph{thread} al de nodige informatie heeft verzameld.
+De implementatie in \algref{gatherallsequential} werkt met synchrone communicatie: processen worden geblokkeerd tot een succesvolle uitwisseling. Het algoritme die we willen implementeren zal met asynchrone communicatie werken. Men kan dit implementeren door dit proces bijvoorbeeld op een aparte \emph{thread} te laten werken: een proces brengt de data onder in de context van de \emph{thread} en werkt verder. Nadien wordt regelmatig gecontroleerd over de \emph{thread} al de nodige informatie heeft verzameld.
 
 \importalgo{asyncga}{Asynchrone GatherAll.}{gatherallasync}
 
@@ -38,7 +36,7 @@ Bij beide gebeurtenissen controleren we of we op dat moment zelf data kunnen uit
 Een aantal problemen worden ge\"introduceerd door het asynchrone karakter: processoren kunnen al beginnen met het sturen van berichten, terwijl andere processoren nog niet tot het punt gekomen zijn waarop de \texttt{GatherAll} instructie begint. Omdat het proces in \'e\'en \emph{thread} werkt, moet het ontvangen bericht toch verwerkt worden. Indien men dus toch een bericht ontvangt zal het systeem zelf de datastructuren aanmaken en de berichten opslaan in afwachting van de \texttt{GatherAll}-instructie.
 
 \paragraph{}
-Indien meerdere \texttt{GatherAll} instructies door elkaar kunnen worden uitgevoerd is het niet duidelijk welk bericht voor welke \texttt{GatherAll}-instructie bedoelt is. \emph{MPI} laat toe om een \emph{tag} te plaatsen op een bericht en op die manier een betekenis aan het bericht te geven. Soms is het niet mogelijk om deze \emph{tags} te bepalen: indien we bijvoorbeeld niet weten welke \emph{tags} er op dat moment nog in gebruik zijn. In dat geval zal men eerst een \emph{tag} moeten bepalen of simpelweg niet toelaten dat er meerdere \texttt{GatherAll}-instructies tegelijk plaatsvinden.
+Indien meerdere \texttt{GatherAll} instructies door elkaar kunnen worden uitgevoerd is het niet duidelijk welk bericht voor welke \texttt{GatherAll}-instructie bedoelt is. \emph{MPI} laat toe om een \emph{tag} te plaatsen op een bericht en op die manier een betekenis aan het bericht te geven. Soms is het niet mogelijk om deze \emph{tags} te bepalen: indien we bijvoorbeeld niet weten welke \emph{tags} er op een gegeven moment in gebruik zijn. In dat geval zal men eerst een \emph{tag} moeten bepalen of simpelweg niet toelaten dat er meerdere \texttt{GatherAll}-instructies tegelijk plaatsvinden.
 
 \paragraph{}
-Een voordeel van een asynchrone \texttt{GatherAll} instructie is dat men kan werken op gedeeltelijke data. Stel dat een parallel algoritme alle data op termijn nodig heeft, maar ook kan rekenen wanneer al een deel van de data beschikbaar is. Met behulp van groepscommunicatie reduceert men de impact op het netwerk. Het feit dat de communicatie asynchroon gebeurt laat dan weer toe om geregeld te testen of al een deel van de data werd ontvangen. Wanneer alle cruciale data beschikbaar is voor een deeltaak kan de processor verder rekenen.
+Een voordeel van een asynchrone \texttt{GatherAll} instructie is dat men kan werken met gedeeltelijke data. Stel dat een parallel algoritme alle data op termijn nodig heeft, maar ook kan rekenen wanneer al een deel van de data beschikbaar is. Met behulp van groepscommunicatie reduceert men de impact op het netwerk. Het feit dat de communicatie asynchroon gebeurt laat dan weer toe om geregeld te testen of al een deel van de data werd ontvangen. Wanneer alle cruciale data beschikbaar is voor een deeltaak kan de processor verder rekenen.
