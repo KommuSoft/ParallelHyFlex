@@ -5,7 +5,9 @@ import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *
+ * @param <TSolution> 
+ * @param <THypothesis> 
  * @author kommusoft
  */
-public interface InstanceHypothesisGenerator<TSolution extends Solution<TSolution>, THypothesis> extends Generator<TSolution, THypothesis> {
+public interface InstanceHypothesisGenerator<TSolution extends Solution<TSolution>, THypothesis> extends Generator<TSolution[], THypothesis> {
 }

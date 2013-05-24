@@ -10,6 +10,7 @@ No implementation found for style `graphicx'
 No implementation found for style `ltablex'
 No implementation found for style `enumitem'
 No implementation found for style `todonotes'
+No implementation found for style `rotating'
 No implementation found for style `algorithm2e'
 No implementation found for style `hyperref'
 
@@ -37,7 +38,11 @@ No number for "Werkingsprincipevan<SPANCLASS="textbf">AILLA</SPAN>."
 
 No number for "Werkingvan<SPANCLASS="textbf">ParAdapHH</SPAN>."
 
+No number for "Gebruiktetechnologiebij<SPANCLASS="textbf">CHeSC</SPAN>."
+
 No number for "Werkingvaneen<TT>GatherAll</TT>operatieopeen<SPANCLASS="textbf">HyperCube</SPAN>."
+
+masterproef.tex is newer than masterproef.bbl: Please rerun latex and bibtex.
 couldn't convert character nacute into available encodings
 
  ...set $ACCENT_IMAGES  to get an image 

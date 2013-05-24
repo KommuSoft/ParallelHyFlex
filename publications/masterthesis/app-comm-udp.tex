@@ -3,4 +3,7 @@
 Momenteel verloopt het uitwisselen van oplossingen over het onbetrouwbare \emph{UDP} protocol. Dit protocol plaats de beperking op de omvang van het pakket dat verstuurt kan worden. De jumbopakketten van die met de evolutie naar \emph{IPv6} worden gespecificeerd zijn immers nog niet ge\"implementeerd en veroorzaken bovendien een ander nadeel: wanneer een bericht wordt uitgewisseld bezet dit de lijn een lange tijd waardoor andere communicatie tijdelijk onmogelijk wordt.
 
 \paragraph{}
-Een interessant alternatief kan zijn om een pakket te 
+Om communicatie van grotere pakketten mogelijk te maken kan men een protocol implementeren die de fragmentatie van berichten mogelijk maakt. Elk bericht krijgt een volgnummer en specificeert de volgnummers van de pakketten \emph{voor} en \emph{na} het huidige pakket die tot dezelfde boodschap behoren. Aan de ontvangstzijde worden de pakketten vervolgens tijdelijk opgeslagen. Indien alle pakketten van hetzelfde bericht toekomen wordt de volledige boodschap gereconstrueerd en doorgestuurd naar het bovenliggend systeem. Indien een zekere \emph{timeout} wordt bereikt waarbij nog niet alle fragmenten zijn toegekomen worden de ontvangen fragmenten verwijdert en behandelt men het bericht alsof het in het geheel niet is toegekomen.
+
+\paragraph{}
+Het hierboven beschreven protocol deelt de karakteristiek van \emph{TCP} om volgnummers aan pakketten toe te kennen. Het initialiseren van een connectie is echter niet vereist omdat elk pakket zelf specificeert hoe het in verhouding staat tot het volledige bericht. Er worden geen bevestigingspakketten teruggestuurd en men kan van dezelfde faciliteiten gebruik maken inzake het versturen van een \emph{multicast} pakket zoals deze ook voor \emph{UDP} werden ge\"implementeerd.

@@ -46,7 +46,7 @@
   shortabstract={
   Hyperheuristieken zijn een familie van algoritmen die een optimalisatieprobleem benaderend oplossen met behulp van Monte-Carlo simulaties. Op basis van een set transitiefuncties manipuleert het algoritme op een probleemonafhankelijke manier een oplossing tot deze van acceptabele kwaliteit is.\\
   Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteund de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat teveel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Een concrete hyperheuristiek is \emph{AdapHH} van Mustafa M\i{}s\i{}r. In dit werk wordt een parallelle variant, \emph{ParAdapHH}, uitgewerkt om de effectiviteit van het systeem te testen. Op basis van \prbm{Max-3Sat} en \prbm{Finite Domain Constraint Optimisation} wordt onderzocht wat de effectiviteit is van de verschillende componenten in \emph{ParHyFlex}.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf
-\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages,amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes}
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages,amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes,rotating}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
 \usepackage[all]{xy}
 
@@ -70,6 +70,9 @@
 \providecommand{\baselab}[2]{\label{#1:#2}}%
 \providecommand{\baseref}[3]{\textsc{\nohyphens{#3}~\textup{\ref{#1:#2}}}}%
 \providecommand{\baserefq}[3]{\textsc{\textup{\ref{#1:#2}}}} 
+
+%
+\providecommand{\rot}[1]{\begin{sideways}#1\end{sideways}} 
 
 %
 \providecommand{\deflab}[1]{\label{def:#1}}%
@@ -582,9 +585,6 @@
 \setcounter{tocdepth}{2}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-\stepcounter{paragraph}
-\stepcounter{paragraph}
-\stepcounter{paragraph}
 \begingroup \endgroup
 \begingroup \endgroup
 \stepcounter{chapter}
@@ -645,9 +645,9 @@
 \stepcounter{paragraph}
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlfigureA{algorithm3747}%
+\lthtmlfigureA{algorithm3726}%
 \begin{algorithm}
-% latex2html id marker 3747
+% latex2html id marker 3726
 [hbt]\input{algorithms/metaheuristicgeneral}\caption{Hoog niveau beschrijving van een metaheuristiek\cite{DBLP:journals/jc/ShonkwilerV94}.}
 \end{algorithm}%
 \lthtmlfigureZ
@@ -785,12 +785,6 @@
 \stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline20346}%
-$ x_4'$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{section}
@@ -809,12 +803,24 @@ $ x_4'$%
 \stepcounter{subsubsection}
 \stepcounter{subsubsection}
 \stepcounter{subsubsection}
+\stepcounter{section}
 \stepcounter{chapter}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
@@ -823,6 +829,14 @@ $ x_4'$%
 \stepcounter{chapter}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
@@ -832,42 +846,57 @@ $ x_4'$%
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
-\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{subsection}
-\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{section}
-\stepcounter{subsection}
-\stepcounter{subsection}
-\stepcounter{section}
-\stepcounter{subsection}
-\stepcounter{subsection}
-\stepcounter{section}
-\stepcounter{subsection}
-\stepcounter{subsection}
-\stepcounter{section}
-\stepcounter{subsection}
 \stepcounter{chapter}
 \stepcounter{section}
 \stepcounter{subsection}
@@ -892,9 +921,9 @@ $ x_4'$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 {\newpage\clearpage
-\lthtmlfigureA{algorithm8351}%
+\lthtmlfigureA{algorithm8726}%
 \begin{algorithm}
-% latex2html id marker 8351
+% latex2html id marker 8726
 [hbt]\input{algorithms/syncga}\caption{GatherAll\cite{books/bc/KumarGGK94}.}
 \end{algorithm}%
 \lthtmlfigureZ
@@ -903,9 +932,9 @@ $ x_4'$%
 \stepcounter{paragraph}
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlfigureA{algorithm8364}%
+\lthtmlfigureA{algorithm8739}%
 \begin{algorithm}
-% latex2html id marker 8364
+% latex2html id marker 8739
 [hbt]\input{algorithms/asyncga}\caption{Asynchrone GatherAll.}
 \end{algorithm}%
 \lthtmlfigureZ
@@ -917,6 +946,7 @@ $ x_4'$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{section}
+\stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{chapter}
 \stepcounter{section}
