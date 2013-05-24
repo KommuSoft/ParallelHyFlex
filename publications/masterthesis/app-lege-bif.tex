@@ -1,3 +1,20 @@
 \section{Ingebouwde functies}
 
 In deze thesis hebben we in het in verschillende vergelijkingen en algoritmen gebruik gemaakt van functies die nergens gedefinieerd zijn. Deze sectie vormt een lijst van die de werking van deze functies in natuurlijke taal beschrijft.
+
+\begin{description}
+ \item [\psend{\drcv,\dmsg}] Synchroon versturen van \dmsg naar \drcv. Dit is een ingebouwd \emph{MPI} commando.
+ \item [\pisnd{\drcv,\dmsg}] Asynchroon versturen van \dmsg naar \drcv. Dit is een ingebouwd \emph{MPI} commando.
+ \item [\precv{\dsnd}] Synchroon ontvangen van een bericht verstuurd door \dsnd. Dit is een ingebouwd \emph{MPI} commando.
+ \item [\parry{$n$}] Aanmaken van een lijst met $n$ items.
+ \item [\parry{$n$,$v$}] Aanmaken van een lijst met $n$ items. Elk item wordt ge\"initialiseerd met $v$.
+ \item [$\argmin_{x\in D}\fun{f}{x}$] De $x$-waarde in $D$ waarvoor $\fun{f}{x}$ minimaal is.
+ \item [$\min X$] Het kleinste element uit een verzameling $X$.
+ \item [$\max X$] Het grootste element uit een verzameling $X$.
+ \item [$a \mbox{ XOR } b$] Bitgewijze XOR-operatie tussen $a$ en $b$.
+ \item [$a \mbox{ AND } b$] Bitgewijze AND-operatie tussen $a$ en $b$.
+ \item [$\mbox{ NEG } a$] Bitgewijze negatie van $a$.
+ \item [$\funf{a}{i}$] $i$-de element uit een lijst $a$.
+ \item [$\funf{a}{i:j}$] Een deellijst van $a$ vanaf index $i$ tot index $j$.
+ 
+\end{description}

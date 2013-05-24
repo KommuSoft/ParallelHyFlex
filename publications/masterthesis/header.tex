@@ -38,6 +38,7 @@
 \newcommand{\sscref}[1]{\baseref{ssc}{#1}{Subsectie}}
 \newcommand{\ssslab}[1]{\baselab{sss}{#1}}
 \newcommand{\sssref}[1]{\baseref{sss}{#1}{Subsubsectie}}
+\newcommand{\prblab}[1]{\baselab{prb}{#1}}
 
 \newtheorem{defnition}{Definitie}
 \numberwithin{defnition}{chapter}
@@ -90,7 +91,7 @@
 \newcommand{\algo}[1]{\nohyphens{\textsc{#1}}}
 \newcommand{\auth}[2][]{\emph{\nohyphens{#2}}\ifthenelse{\equal{#1}{}}{}{\cite{#1}}}
 \newcommand{\prob}[1]{\textup{\textsc{#1}}}
-\newcommand{\prbm}[1]{\textup{\textsc{#1}}}
+\newcommand{\prbm}[1]{\hyperref[prb:#1]{\textup{\textsc{#1}}}}
 \newcommand{\work}[1]{``\emph{#1}''}
 
 \newcommand{\AAA}{\mathbb{A}}

@@ -3,14 +3,34 @@
 
 \chapterquote{Man sage nicht, das schwerste sei die Tat; I da hilft der Mut, der Augenblick, die Regung; I das schwerste dieser Welt ist der Entschluss.}{Franz Grillparzer}
 
-De masterproeftekst wordt afgesloten met een hoofdstuk waarin alle
-besluiten nog eens samengevat worden. Dit is ook de plaats voor suggesties
-naar het verder gebruik van de resultaten, zowel industri"ele toepassingen
-als verder onderzoek.
-
 \section{Conclusies}
 
+\subsection{Metaheuristieken}
+Metaheuristieken zijn een familie van algoritmen die 
+
+\subsection{Hyperheuristieken}
+
+Hyperheuristieken veralgemenen metaheuristieken door probleemonafhankelijk te werken.
+
+\subsection{\emph{ParHyFlex} en \emph{ParAdapHH}}
+
+\emph{ParHyFlex} 
+
 \section{Potenti\"ele ontwikkelingen}
+
+Vooral op het gebied van het \prbm{Finite Domain Costraint Optimization Problem (FDCOP)} zien we potentieel interessante ontwikkelingen. Er bestaan reeds verschillende pakketten die toelaten op optimalisatieproblemen in logische taal uit te drukken. We denken dan bijvoorbeeld aan \emph{ECLiPSe}. De meeste van deze bibliotheken werken met behulp van een \emph{branch-and-bound}-mechanisme. Dit mechanisme garandeert dat de optimale oplossing op termijn gevonden wordt, maar kan in de meeste gevallen complexe problemen niet in aanvaardbare tijd oplossen. Door hyperheuristieken in het proces te betrekken zien we enkele voordelen.
+
+\paragraph{}
+Hyperheuristieken leveren altijd een oplossing afleveren binnen een zekere termijn. Dit is ook mogelijk met het \emph{branch-and-bound} principe, maar dit mechanisme zal in een beperkte tijd meestal een zoekruimte van gelijkaardige oplossingen hebben afgezocht. De kans is groot dat hyperheuristieken in deze tijd tot betere oplossingen komen.
+
+\paragraph{}
+Daarnaast kan men een hyperheuristiek ook gebruiken als een vorm van \emph{preprocessing}. Door een hyperheuristiek eerst een benaderende oplossing te laten uitrekenen, wordt een strenge \emph{bound} bepaald. Het aantal \emph{backtracking}-stappen in het effectieve zoekproces kan hierdoor gereduceerd worden.
+
+\paragraph{}
+Het parallel uitrekenen van hyperheuristieken kan resulteren in een softwarepakket die optimalisatieproblemen gespecificeerd in een logische taal met uitrekent. Door dit in een parallelle context uit te voeren kan men een oplossing met een arbitraire fout in een arbitraire tijd uitrekenen.
+
+\paragraph{}
+Tot slot kan men ook een brug maken met \emph{energy complexity}\cite{Roy:2013:ECM:2422436.2422470,conf/icpp/KorthikantiAG11}: het berekenen met hoeveel processoren men het effici\"entst een kwalitatieve oplossing kan berekenen.
 
 %%% Local Variables: 
 %%% mode: latex

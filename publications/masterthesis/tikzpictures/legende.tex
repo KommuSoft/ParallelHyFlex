@@ -1,0 +1,20 @@
+\begin{tikzpicture}[scale=\sc]
+\begin{scope}
+\draw[->] (0,0) to node[above,midway] {lokale informatiestromen} ++(6,0);
+\end{scope}
+\begin{scope}[yshift=-1 cm]
+\draw[dashed,->] (0,0) to node[above,midway] {communicatie naar buiten} ++(6,0);
+\end{scope}
+\begin{scope}[yshift=-2 cm]
+\draw[dotted,->] (0,0) to node[above,midway] {communicatie naar binnen} ++(6,0);
+\end{scope}
+\begin{scope}[yshift=-3.5 cm]
+\node[llh] (LLH) at (1,0) {};
+\node[hypothesis] (HYP) at (3,0) {$H_i$};
+\node[solution] (SOL) at (5,0) {$S_i$};
+\draw (LLH.north |- HYP.north) node[anchor=south] {heuristiek};
+\draw (HYP.north) node[anchor=south] {hypothese};
+\draw (SOL.north |- HYP.north) node[anchor=south] {oplossing};
+\end{scope}
+
+\end{tikzpicture}

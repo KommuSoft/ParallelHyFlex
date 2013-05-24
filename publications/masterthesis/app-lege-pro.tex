@@ -2,35 +2,63 @@
 
 Doorheen de tekst hebben we verschillende problemen aangehaald. Meestal zonder concreet in te gaan op de details van het probleem. In deze sectie lichten we elk probleem kort toe. In eenvoudige gevallen wordt het zoekdomein $\ConfigSet$, de harde beperkingen $\hcfun$ en evaluatiefunctie $\evalfun$ van het probleem gespecificeerd.
 
-\subsection{\prbm{Lineair Optimalisatie Probleem}}
+\subsection{\prbm{Lineaire Optimalisatie Probleem}}
+\prblab{Lineaire Optimalisatie Probleem}
+\prblab{Lineaire Optimalisatie}
+\prblab{lineair Programmeren}
+\prblab{Linear Programming}
+\prblab{Linear Optimization}
 
 Dit probleem is ook bekend onder de namen \prbm{Lineair Programmeren}, \emph{Linear Programming} en \emph{Linear Optimization}. Men zoekt naar een vector $\xstar\in\ConfigSet=\QbitSet{\bitvar}^n$ zodat het dot-product met een gegeven vector $\vec{c}$ minimaal is. Alle oplossingen moeten indien ze vermenigvuldigt worden met een gegeven matrix $A$ ook elementgewijs groter of gelijk zijn aan een gegeven vector $\vec{b}$. Tot slot moeten alle variabelen groter of gelijk zijn aan $\vec{0}$.
 \begin{equation}
 \guards{
 \ConfigSet=\QbitSet{\bitvar}^n\\
-\fun{\evalfun}{\vec{x}}=\transpose{\vec{x}}\cdot\vec{c}\\
+\fun{\evalfun}{\vec{x}}=\vec{x}\cdot\transpose{\vec{c}}\\
 \fun{\hcfun}{\vec{x}}=\vec{x}\cdot A\leq\vec{b}\wedge\vec{x}\geq\zeromatrix[1\times n]
+}
+\end{equation}
+
+\subsection{\prbm{Kwadratische Optimalisatie Probleem}}
+\prblab{Kwadratische Optimalisatie Probleem}
+
+\prbm{Kwadratische Optimalisatie} ofwel \prbm{Kwadratisch Programmeren} is een veralgemening van \prbm{Lineaire Optimalisatie}. Zo bevat de evaluatiefunctie ook termen die een product tussen twee variabelen bevatten. Deze termen worden voorgesteld door een product van de variabelen-vector $\vec{x}$, een gegeven matrix $Q$ en de transpose van de variabelen-vector:
+
+\begin{equation}
+\guards{
+\ConfigSet=\QbitSet{\bitvar}^n\\
+\fun{\evalfun}{\vec{x}}=\vec{x}\cdot Q\cdot\transpose{\vec{x}}+\vec{x}\cdot\transpose{\vec{c}}\\\
+\fun{\hcfun}{\vec{x}}=\vec{x}\cdot A\leq\vec{b}
 }
 \end{equation}
 
 
 \subsection{\prbm{Maximum Flow Problem}}
+\prblab{Maximum Flow Problem}
+
+In een \prbm{Maximum Flow Problem} beschouwen we een graaf. Twee knopen in deze graaf krijgen een speciale betekenis: de \emph{source} en \emph{sink}. De bogen in de graaf worden gelabeld met een getal die de maximale verwerkingscapaciteit van de ene knoop naar de ander aangeeft. Het probleem gaat op zoek naar een label per boog die de overdracht aangeeft zodat de overdracht van de \emph{source} naar de \emph{sink} maximaal is. Het \prbm{Maximum Flow Problem} is een typisch deelprobleem van \prbm{Lineaire Optimalisatie}.
 
 \subsection{\prbm{Minimum Spanning Tree Problem}}
+\prblab{Minimum Spanning Tree Problem}
 
-\subsection{\prbm{Kwadratische Optimalisatie Probleem}}
+Het \prbm{Minimum Spanning Tree Problem} beschouwt een samenhangende graaf. De optimale oplossing is een boom die alle knopen van de originele graaf bevat maar een minimale som aan bogen. Dit probleem ligt in \comp{P} en kan worden opgelost met een \emph{gretig algoritme}. Een concrete implementatie is bijvoorbeeld \algo{Kruskal's Algoritme}\cite{citeulike:4031585}.
 
 \subsection{\prbm{Travelling Salesman Problem (TSP)}}
+\prblab{Travelling Salesman Problem (TSP)}
+
+In het \prbm{Travelling Salesman Problem} beschouwen we een set van $n$ knopen. Tussen elke twee knopen $i$ en $j$ beschouwen we een kostprijs $\funm{cost}{\vec{x}_i,\vec{x}_{i+1}}$. Men gaat op zoek naar een permutatie zodat alle knopen \'e\'enmaal bezocht en de som van de kostprijs van elke twee opeenvolgende knopen minimaal is.
 
 \begin{equation}
 \guards{
 \ConfigSet=\accl{1,2,\ldots,n}^n\\
-\fun{\evalfun}{\vec{x}}=\displaystyle\sum_{i=1}^{n-1}\funm{cost}{\vec{x}_i,\vec{x}_{i+1}}\\
+\fun{\evalfun}{\vec{x}}=\funm{cost}{\vec{x}_{n},\vec{x}_{1}}+\displaystyle\sum_{i=1}^{n-1}\funm{cost}{\vec{x}_i,\vec{x}_{i+1}}\\
 \fun{\hcfun}{\vec{x}}=\forall i,j: i\neq j\rightarrow \vec{x}_i\neq\vec{x}_j
 }
 \end{equation}
 
-\subsection{\prbm{Integer Programming}}
+\subsection{\prbm{Integer Programming (IP)}}
+\prblab{Integer Programming (IP)}
+
+\prbm{Integer Programming} is een variant van \prbm{Linear Programming} maar met de extra beperking dat alle variabelen integers zijn. Een interessant aspect is dat \prbm{Integer Programming} een \comp{NP-hard} probleem is terwijl \prbm{Linear Programming} zich in \comp{P} bevindt. In het geval van \prbm{Linear Programming} zijn afrondingsfouten immers toegelaten terwijl in het geval van \prbm{Integer Programming} we uitsluitend integers beschouwen.
 
 \begin{equation}
 \guards{
@@ -40,20 +68,55 @@ Dit probleem is ook bekend onder de namen \prbm{Lineair Programmeren}, \emph{Lin
 }
 \end{equation}
 
-\subsection{\prbm{Maximal Satisfyiability Problem (Max-Sat)}}
+\subsection{\prbm{Maximum Satisfiability Problem (Max-Sat)}}
+\prblab{Maximum Satisfiability Problem (Max-Sat)}
+\prblab{Max-Sat}
+
+Het \prbm{Max-Sat} beschouwt een set Booleaanse expressies $c_i$. Deze expressies doen een uitspraak over een vector van Booleaanse waarden $\vec{x}$. Het probleem gaat op zoek naar een configuratie waarbij een maximaal aantal expressies waar zijn:
 
 \begin{equation}
 \guards{
 \ConfigSet=\BoolSet^n\\
-\fun{\evalfun}{\vec{x}}=\displaystyle\sum_{i=1}^{n}\krdelta{\fun{c_i}{\vec{x}}}\\
+\fun{\evalfun}{\vec{x}}=\displaystyle\sum_{i=1}^{n}1-\krdelta{\fun{c_i}{\vec{x}}}\\
 \fun{\hcfun}{\vec{x}}=\true
 }
 \end{equation}
 
-\subsection{\prbm{Bin Packing Problem}}
+\subsection{\prbm{Maximum 3-Satisfiability Problem (Max-3Sat)}}
+\prblab{Maximum 3-Satisfiability Problem (Max-3Sat)}
+\prblab{Max-Sat}
+\prbm{Max-3Sat} is een speciaal geval van \prbm{Max-Sat}. Men zet een extra beperking op de expressies: enkel disjuncties van drie atomen zijn toegelaten. \prbm{Max-3Sat} behoudt dezelfde expressiviteit als \prbm{Max-Sat}: door het invoeren van extra variabelen en expressies kan elk \prbm{Max-Sat} probleem worden omgezet in een \prbm{Max-3Sat} probleem. \prbm{Max-3Sat} is interessant omdat het tot een meer uniforme voorstelling leidt wat fundamenteler onderzoek mogelijk maakt.
 
-\subsection{\prbm{Personnel Scheduling}}
+\subsection{\prbm{Bin Packing Problem}}
+\prblab{Bin Packing Problem}
+
+Het \prbm{Bin Packing Problem} krijgt als invoer een reeks getallen. Deze getallen moeten georganiseerd in groepen (\emph{bins}) zodat de som van de getallen in een \emph{bin} kleiner of gelijk is aan 0. Het is de bedoeling een configuratie te vinden zodat het aantal gebruikte \emph{bins} minimaal is.
+\begin{equation}
+\guards{
+\ConfigSet=\BoolSet^{n\times n}\\
+\fun{\evalfun}{X}=\displaystyle\max\accl{j|\exists i:X_{i,j}}\\
+\fun{\hcfun}{X}=\forall i,j:X_{i,j}\rightarrow \neg\exists k:j\neq k\wedge X_{i,k}}
+\end{equation}
 
 \subsection{\prbm{Flow Shop Problem}}
+\prblab{Flow Shop Problem}
 
-\subsection{\prbm{Vechicle Routing Problem (VRP)}}
+In een \prbm{Flow Shop Problem} stellen we een aantal machines en een aantal taken die moeten worden uitgevoerd. Elke taak bestaat uit een aantal handelingen. Een handeling gebeurt op een specifieke machine en heeft een specifieke duur. Een machine kan maar \'e\'en handeling tegelijk verwerken en de handelingen worden atomair uitgevoerd. Men kan echter in een taak vrij de volgorde van de handelingen kiezen. Het is de bedoeling een planning op te stellen zodat het moment waarop de laatste handeling uitgevoerd is, zo dicht mogelijk bij het moment waarop de eerste handeling begint ligt.
+
+\subsection{\prbm{Personnel Scheduling}}
+\prblab{Personnel Scheduling}
+
+\prbm{Personnel Scheduling} is een abstract probleem dat veel varianten kent. In het algemeen is er een set van taken die moeten vervult worden en een set personen die aan deze taken kunnen worden toegekend. Het is de bedoeling om de taken op zo'n manier toe te kennen dat aan alle toegekende beperkingen wordt voldaan. Dit beperken zijn onder meer:
+\begin{itemize}
+ \item personen kunnen slechts \'e\'en taak tegelijk uitvoeren;
+ \item de taak wordt op een bepaald tijdstip uitgevoerd;
+ \item enkel bepaalde personen kunnen de taak uitvoeren;
+ \item personen zijn slechts op bepaalde tijdstippen beschikbaar;
+ \item ...
+\end{itemize}
+Meer details en indelingen zijn onder meer te vinden in \cite{Glover:1986:GES:15310.15313,pdcClass}.
+
+\subsection{\prbm{Vehicle Routing Problem (VRP)}}
+\prblab{Vehicle Routing Problem (VRP)}
+
+Het \prbm{Vehicle Routing Problem (VRP)} is een abstract probleem een set taken op verschillende plaatsen dienen worden uitgevoerd. In de praktijk komt dit meestal neer op het laden en lossen van goederen. Het is de bedoeling een schema op te stellen zodat de transportkosten geminimaliseerd wordt. Anderzijds vormen de taken beperkingen (het tijdstip waarop ze moeten zijn uitgevoerd; taken die vooraf moeten zijn uitgevoerd). Het probleem is sterk gerelateerd met het \prbm{Travelling Salesman Problem (TSP)}. Meestal laat men toe dat er meerdere voertuigen worden ingezet (om de tijdsbeperkingen te halen en kosten verder te minimaliseren).
