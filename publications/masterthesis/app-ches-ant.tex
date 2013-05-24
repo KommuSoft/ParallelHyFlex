@@ -1,10 +1,12 @@
 \section{\emph{Ant-Q} (\#20)}
-\label{sss:ant-q}
+\seclab{ant-q}
 \subsection{Implementatie}
-\emph{Ant-Q}\cite{chesc-ant-q,sis/ant-q} combineert ``\emph{ant-computing}''\cite{Michael:2009:AC:1596832.1596835} met ``\emph{Q-learning}''\cite{citeulike:5925674}. Dit doet men door een graaf te beschouwen waar de metaheuristieken de knopen voorstellen. De bogen bevatten een niet genormaliseerde kans om deze boog te nemen. Vervolgens voert men op een populatie oplossingen metaheuristieken uit door van knoop naar knoop te bewegen. De volgende knoop wordt gekozen op basis van een kansverdeling volgens de bogen die verbonden zijn met de oorspronkelijke knoop. Nadat de heuristiek is toegepast, wordt de kansverdeling van alle bogen die de oplossing tot dusver heeft gevolgd aangepast. De oplossing die op dat moment de beste is beloont alle bogen die hij gepasseerd heeft. Door de waarde van de bogen aan te passen zullen andere oplossingen meer geneigd zijn om een gelijkaardig pad te kiezen.
+\emph{Ant-Q}\cite{chesc-ant-q,sis/ant-q} combineert ``\emph{ant-computing}''\cite{Michael:2009:AC:1596832.1596835} met ``\emph{Q-learning}''\cite{citeulike:5925674}. Het algoritme beschouwt een graaf waar de knopen de \abhn{} voorstellen. De bogen bevatten een niet genormaliseerde kans om deze boog te nemen.
+\paragraph{}
+Elke \emph{mier} houdt een oplossing bij loopt van knoop naar knoop op basis van de kansen van de respectievelijke bogen. Wanneer een mier in een knoop aankomt wordt de overeenkomstige \abh{} op de oplossing toegepast. Nadat alle \emph{mieren} een stap hebben gezet worden de gewichten bogen aangepast. Het volledige pad van de \emph{mier} met de tot dan toe beste oplossing wordt op beloond door de respectievelijke waardes te verhogen. Daar de waarde van deze bogen wordt aangepast zullen \emph{mieren} meer geneigd zijn om een gelijkaardig pad te kiezen.
 \subsection{Kritiek}
 \begin{itemize}
- \item Het volledige pad van de winnende oplossing krijgt een bonus (ook bogen die hier helemaal niet te hebben bijgedragen)
+ \item Het volledige pad van de winnende oplossing krijgt een bonus, ook bogen die hier helemaal niet toe hebben bijgedragen.
  \item Wanneer de beste oplossing lange tijd hetzelfde is, krijgen de relevante bogen een grote bonus, hierdoor zit er na verloop van tijd nog weinig creativiteit in het systeem.
- \item Het type metaheuristiek speelt geen rol in het algoritme. Hierdoor is er een grote kans dat \abls{} heuristieken na verloop van tijd vaak worden toegepast. Dit leidt bovendien tot een stabiel systeem: \abls{} heuristieken zijn immers idempotent waardoor de beste oplossing dezelfde zal blijven.
+ \item Het type \abh{} speelt geen rol in het algoritme. Indien \abls{} \abhn{} tot sterke oplossingen leiden, zullen deze vaak worden toegepast. Vermits deze heuristieken echter idempotent zijn, leidt dit tot ineffici\"ent gebruik van de beschikbare tijd.
 \end{itemize}

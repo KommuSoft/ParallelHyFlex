@@ -1,0 +1,940 @@
+\batchmode
+\documentclass[master=cws,masteroption=ai]{kulemt}
+\RequirePackage{ifthen}
+
+%
+\providecommand{\abseq}[1][s]{#1equentieel}%
+\providecommand{\abseqe}[1][s]{#1equenti\"ele}%
+\providecommand{\abpar}[1][p]{#1arallel}%
+\providecommand{\abpare}[1][p]{#1arallelle}%
+\providecommand{\abh}[1][h]{#1euristiek}%
+\providecommand{\abhn}[1][h]{#1euristieken}%
+\providecommand{\abmh}[1][m]{#1etaheuristiek}%
+\providecommand{\abmhn}[1][m]{#1etaheuristieken}%
+\providecommand{\abhh}[1][h]{#1yperheuristiek}%
+\providecommand{\abhhn}[1][h]{#1yperheuristieken}%
+\providecommand{\abllh}[1][l]{#1ow-level heuristiek}%
+\providecommand{\abllhn}[1][l]{#1ow-level heuristieken}%
+\providecommand{\abrr}[1][r]{#1uin-recreate}%
+\providecommand{\abls}[1][l]{#1ocal search}%
+\providecommand{\abmt}[1][m]{#1utation}%
+\providecommand{\abco}[1][c]{#1rossover}%
+\providecommand{\abeff}[1][e]{#1ffici\"ent}%
+\providecommand{\abeffe}[1][e]{#1ffici\"ente}%
+\providecommand{\abieff}[1][i]{#1neffici\"ent}%
+\providecommand{\abieffe}[1][i]{#1neffici\"ente}%
+\providecommand{\abhf}{\emph{HyFlex}}%
+\providecommand{\abjava}{\emph{Java}}%
+\providecommand{\abchesc}{\emph{CHeSC}}%
+\providecommand{\abchescy}{\emph{CHeSC2011}}%
+\providecommand{\abpt}[1][p]{#1erturbatie}%
+\providecommand{\abpts}[1][p]{#1erturbaties}%
+\providecommand{\abpte}{perturberende}%
+\providecommand{\abalg}[1][a]{#1lgoritme}%
+\providecommand{\absu}[1][s]{\emph{#1peed-up}}%
+\providecommand{\absus}[1][s]{\emph{#1peed-ups}}%
+\providecommand{\abslsu}[1][s]{\emph{#1uperlineaire speed-up}}%
+\providecommand{\ablsu}[1][l]{\emph{#11ineaire speed-up}} 
+\setup{title={Parallelle Hyperheuristieken},
+  author={Willem~Van~Onsem},
+  promotor={Prof.\,dr.\ Bart~Demoen},
+  assessor={},%Ir.\,W. Eetveel\and W. Eetrest
+  assistant={}}%Ir.\ A.~Assistent \and D.~Vriend}
+\setup{filingcard,
+  translatedtitle={Parallel Hyper-heuristics},
+  udc=681.3,
+  shortabstract={
+  Hyperheuristieken zijn een familie van algoritmen die een optimalisatieprobleem benaderend oplossen met behulp van Monte-Carlo simulaties. Op basis van een set transitiefuncties manipuleert het algoritme op een probleemonafhankelijke manier een oplossing tot deze van acceptabele kwaliteit is.\\
+  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteund de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat teveel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Een concrete hyperheuristiek is \emph{AdapHH} van Mustafa M\i{}s\i{}r. In dit werk wordt een parallelle variant, \emph{ParAdapHH}, uitgewerkt om de effectiviteit van het systeem te testen. Op basis van \prbm{Max-3Sat} en \prbm{Finite Domain Constraint Optimisation} wordt onderzocht wat de effectiviteit is van de verschillende componenten in \emph{ParHyFlex}.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages,amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes}
+\usepackage[algochapter,ruled,vlined]{algorithm2e}
+\usepackage[all]{xy}
+
+
+
+\setlength{\parskip}{1.3ex plus 0.2ex minus 0.2ex} 
+
+\setlength{\parindent}{0pt} 
+\setcounter{tocdepth}{2}
+
+
+\SetKwInput{KwData}{Data}
+
+
+\SetAlgorithmName{Algoritme}{willemvanonsem}{Lijst van algoritmes}
+
+
+\usetikzlibrary{shapes,fit,calc}
+
+%
+\providecommand{\baselab}[2]{\label{#1:#2}}%
+\providecommand{\baseref}[3]{\textsc{\nohyphens{#3}~\textup{\ref{#1:#2}}}}%
+\providecommand{\baserefq}[3]{\textsc{\textup{\ref{#1:#2}}}} 
+
+%
+\providecommand{\deflab}[1]{\label{def:#1}}%
+\providecommand{\defref}[1]{\textsc{\nohyphens{Definitie}~\textup{\ref{def:#1}}}}%
+\providecommand{\imglab}[1]{\label{fig:#1}}%
+\providecommand{\imgref}[1]{\textsc{\nohyphens{Figuur}~\textup{\ref{fig:#1}}}}%
+\providecommand{\tbllab}[1]{\label{tbl:#1}}%
+\providecommand{\tblref}[1]{\textsc{\nohyphens{Tabel}~\textup{\ref{tbl:#1}}}}%
+\providecommand{\alglab}[1]{\label{alg:#1}}%
+\providecommand{\algref}[1]{\textsc{\nohyphens{Algoritme}~\textup{\ref{alg:#1}}}}%
+\providecommand{\eqnlab}[1]{\label{eqn:#1}}%
+\providecommand{\eqnref}[1]{\textsc{Vergelijking~(\ref{eqn:#1})}}%
+\providecommand{\thelab}[1]{\label{the:#1}}%
+\providecommand{\theref}[1]{\textsc{\nohyphens{Theorema}~\textup{\ref{the:#1}}}}%
+\providecommand{\chplab}[1]{\label{chp:#1}}%
+\providecommand{\chpref}[1]{\textsc{\nohyphens{Hoofdstuk}~\textup{\ref{chp:#1}}}}%
+\providecommand{\applab}[1]{\label{app:#1}}%
+\providecommand{\appref}[1]{\textsc{\nohyphens{Appendix}~\textup{\ref{app:#1}}}}%
+\providecommand{\seclab}[1]{\label{sec:#1}}%
+\providecommand{\secref}[1]{\textsc{\nohyphens{Sectie}~\textup{\ref{sec:#1}}}}%
+\providecommand{\secrefq}[1]{\textsc{\textup{\ref{sec:#1}}}}%
+\providecommand{\ssclab}[1]{\label{ssc:#1}}%
+\providecommand{\sscref}[1]{\textsc{\nohyphens{Subsectie}~\textup{\ref{ssc:#1}}}}%
+\providecommand{\ssslab}[1]{\label{sss:#1}}%
+\providecommand{\sssref}[1]{\textsc{\nohyphens{Subsubsectie}~\textup{\ref{sss:#1}}}}%
+\providecommand{\prblab}[1]{\label{prb:#1}} 
+
+
+
+\newtheorem{defnition}{Definitie} 
+\numberwithin{defnition}{chapter} 
+
+\newtheorem{theorem}{Theorema} 
+%
+\providecommand{\listdefinitionname}{Lijst van definities} 
+\newlistof{X}{eX}{Lijst van definities}
+
+%
+\newenvironment{definition}[1][]{
+  \addcontentsline{eX}{figure}{\protect\numberline{\thechapter}#1}
+\begin{theorem_type}[defnition][defnition][][][][]
+[#1]}
+{\end{theorem_type}
+} 
+
+
+\makeatletter
+\preto\chapter{\addtocontents{def}{\protect\addvspace{10\p@}}}%
+\makeatother
+
+%
+\providecommand{\mathbftxt}[1]{\ensuremath{\mbox{\textbf{#1}}}} 
+
+%
+\providecommand{\brak}[1]{\ensuremath{\left(#1\right)}}%
+\providecommand{\fbrk}[1]{\ensuremath{\left[#1\right]}}%
+\providecommand{\tupl}[1]{\ensuremath{\left\langle #1\right\rangle}}%
+\providecommand{\accl}[1]{\ensuremath{\left\{ #1\right\}}}%
+\providecommand{\abs}[1]{\ensuremath{\left| #1\right|}}%
+\providecommand{\dabs}[2][]{\ensuremath{\left\| #2\right\|_{#1}}}%
+\providecommand{\ceil}[1]{\ensuremath{\left\lceil #1\right\rceil}}%
+\providecommand{\floor}[1]{\ensuremath{\left\lfloor #1\right\rfloor}}%
+\providecommand{\transpose}[1]{\ensuremath{{#1}^{\top}}} 
+
+%
+\providecommand{\conditional}[2]{\begin{array}{cc}#1&\mbox{(#2)}\end{array}}%
+\providecommand{\guards}[1]{\left\{\begin{array}{ll}#1\end{array}\right.} 
+
+%
+\providecommand{\fun}[2]{\ensuremath{#1\ensuremath{\left(#2\right)}}}%
+\providecommand{\funf}[2]{\ensuremath{#1\ensuremath{\left[#2\right]}}}%
+\providecommand{\funm}[2]{\ensuremath{\mbox{#1}\ensuremath{\left(#2\right)}}}%
+\providecommand{\funsig}[3]{#1:#2\rightarrow #3}%
+\providecommand{\funsigimp}[5]{#1:#2\rightarrow #3:#4\mapsto #5} 
+
+%
+\providecommand{\bigoh}[1]{\ensuremath{\mathcal{O}\ensuremath{\left(#1\right)}}} 
+
+%
+\providecommand{\xstar}{\ensuremath{x^{\star}}}%
+\providecommand{\xdot}{\ensuremath{x^{\circ}}}%
+\providecommand{\calXop}{\mathcal{X}^{\star}} 
+
+%
+\providecommand{\argmin}{\ensuremath{\mbox{argmin}}}%
+\providecommand{\mean}[2][]{\ensuremath{\mathbb{E}_{#1}\ensuremath{\left[#2\right]}}}%
+\providecommand{\krdelta}[1]{\ensuremath{\delta\ensuremath{\left[#1\right]}}}%
+\providecommand{\Prob}[1]{\ensuremath{\Pr\ensuremath{\left[#1\right]}}} 
+
+%
+\providecommand{\comp}[1]{\textsc{\mbox{#1}}}%
+\providecommand{\algo}[1]{\nohyphens{\textsc{#1}}}%
+\providecommand{\auth}[2][]{\emph{\nohyphens{#2}}\ifthenelse{\equal{#1}{}}{}{\cite{#1}}}%
+\providecommand{\prob}[1]{\textup{\textsc{#1}}}%
+\providecommand{\prbm}[1]{\hyperref[prb:#1]{\textup{\textsc{#1}}}}%
+\providecommand{\work}[1]{``\emph{#1}''} 
+
+%
+\providecommand{\AAA}{\mathbb{A}}%
+\providecommand{\BBB}{\mathbb{B}}%
+\providecommand{\CCC}{\mathbb{C}}%
+\providecommand{\DDD}{\mathbb{D}}%
+\providecommand{\EEE}{\mathbb{E}}%
+\providecommand{\FFF}{\mathbb{F}}%
+\providecommand{\GGG}{\mathbb{G}}%
+\providecommand{\HHH}{\mathbb{H}}%
+\providecommand{\III}{\mathbb{I}}%
+\providecommand{\JJJ}{\mathbb{J}}%
+\providecommand{\KKK}{\mathbb{K}}%
+\providecommand{\LLL}{\mathbb{L}}%
+\providecommand{\MMM}{\mathbb{M}}%
+\providecommand{\NNN}{\mathbb{N}}%
+\providecommand{\OOO}{\mathbb{O}}%
+\providecommand{\PPP}{\mathbb{P}}%
+\providecommand{\QQQ}{\mathbb{Q}}%
+\providecommand{\RRR}{\mathbb{R}}%
+\providecommand{\SSS}{\mathbb{S}}%
+\providecommand{\TTT}{\mathbb{T}}%
+\providecommand{\UUU}{\mathbb{U}}%
+\providecommand{\VVV}{\mathbb{V}}%
+\providecommand{\WWW}{\mathbb{W}}%
+\providecommand{\XXX}{\mathbb{X}}%
+\providecommand{\YYY}{\mathbb{Y}}%
+\providecommand{\ZZZ}{\mathbb{Z}} 
+
+%
+\providecommand{\zeromatrix}[1][]{\boldsymbol{0}_{#1}}%
+\providecommand{\identitymatrix}[1][]{\boldsymbol{I}_{#1}}%
+\providecommand{\onematrix}[1][]{\boldsymbol{1}_{#1}} 
+
+%
+\providecommand{\calA}{\mathcal{A}}%
+\providecommand{\calB}{\mathcal{B}}%
+\providecommand{\calC}{\mathcal{C}}%
+\providecommand{\calD}{\mathcal{D}}%
+\providecommand{\calE}{\mathcal{E}}%
+\providecommand{\calF}{\mathcal{F}}%
+\providecommand{\calG}{\mathcal{G}}%
+\providecommand{\calH}{\mathcal{H}}%
+\providecommand{\calI}{\mathcal{I}}%
+\providecommand{\calJ}{\mathcal{J}}%
+\providecommand{\calK}{\mathcal{K}}%
+\providecommand{\calL}{\mathcal{L}}%
+\providecommand{\calM}{\mathcal{M}}%
+\providecommand{\calN}{\mathcal{N}}%
+\providecommand{\calO}{\mathcal{O}}%
+\providecommand{\calP}{\mathcal{P}}%
+\providecommand{\calQ}{\mathcal{Q}}%
+\providecommand{\calR}{\mathcal{R}}%
+\providecommand{\calS}{\mathcal{S}}%
+\providecommand{\calT}{\mathcal{T}}%
+\providecommand{\calU}{\mathcal{U}}%
+\providecommand{\calV}{\mathcal{V}}%
+\providecommand{\calW}{\mathcal{W}}%
+\providecommand{\calX}{\mathcal{X}}%
+\providecommand{\calY}{\mathcal{Y}}%
+\providecommand{\calZ}{\mathcal{Z}} 
+
+%
+\providecommand{\BoolSet}{\mathbb{B}}%
+\providecommand{\NatSet}[1][]{\ifthenelse{\equal{#1}{}}{\mathbb{N}}{\ensuremath{\mathbb{N}\ensuremath{\left[#1\right]}}}}%
+\providecommand{\RealSet}{\mathbb{R}}%
+\providecommand{\QbitSet}[1]{\ensuremath{\mathbb{Q}\ensuremath{\left[#1\right]}}}%
+\providecommand{\OpProblem}{\Pi}%
+\providecommand{\ConfigSet}{\mathcal{X}}%
+\providecommand{\ConfigValSet}{\mathcal{X}'}%
+\providecommand{\ConfigOpSet}{\mathcal{X}^{\star}}%
+\providecommand{\sol}{x}%
+\providecommand{\bestSol}{x^{\star}}%
+\providecommand{\goodSol}{x^{\circ}}%
+\providecommand{\SolSet}{\mathcal{S}}%
+\providecommand{\PopSet}{\mathcal{P}}%
+\providecommand{\HypSet}{\mathcal{H}}%
+\providecommand{\TranSet}{\mathcal{T}}%
+\providecommand{\hcfun}{c}%
+\providecommand{\evalfun}{f}%
+\providecommand{\evalfuna}{f'}%
+\providecommand{\hittime}{\theta}%
+\providecommand{\phittime}{\Theta}%
+\providecommand{\neighbr}{\mathcal{N}}%
+\providecommand{\nvar}{n}%
+\providecommand{\VarDom}{A}%
+\providecommand{\PopChain}{\mathfrak{P}}%
+\providecommand{\evl}[1][]{\ensuremath{\vec{\mu}_{#1}}}%left eigenvector%
+\providecommand{\evr}[1][]{\ensuremath{\vec{\nu}_{#1}}}%right eigenvector%
+\providecommand{\ev}[1][]{\ensuremath{\lambda_{#1}}}%right eigenvalue%
+\providecommand{\isdefinedas}{\ensuremath{:=}}%right eigenvalue%
+\providecommand{\smbox}[1]{\ensuremath{\mbox{\small{#1}}}}%right eigenvalue%
+\providecommand{\fitnessval}{\ensuremath{v}}%
+\providecommand{\ntarpop}{\ensuremath{g}}%
+\providecommand{\npop}{\ensuremath{N}}%
+\providecommand{\transmat}{\ensuremath{P}}%
+\providecommand{\bridgemat}{\ensuremath{B}}%
+\providecommand{\removmat}{\ensuremath{\hat{P}}}%
+\providecommand{\probdistmeta}[1]{\ensuremath{\vec{\alpha}_{#1}}}%
+\providecommand{\probdistgoalmeta}[1]{\ensuremath{\vec{\alpha}^G_{#1}}}%
+\providecommand{\probdistnormmeta}[1]{\ensuremath{\vec{\hat{\alpha}}_{#1}}}%
+\providecommand{\arbitraryval}{\ensuremath{m}}%
+\providecommand{\arbitraryvec}{\ensuremath{\vec{x}}}%
+\providecommand{\metapa}{\ensuremath{\sigma}}%
+\providecommand{\metapb}{\ensuremath{\lambda}}%
+\providecommand{\bitvar}{\ensuremath{L}} 
+
+
+\SetKw{true}{\ensuremath{\mbox{\textbf{true}}}}
+\SetKw{fals}{\ensuremath{\mbox{\textbf{false}}}}
+\SetKw{nult}{\ensuremath{\mbox{\textbf{null}}}}
+
+
+\SetKwBlock{ParFor}{parfor}{end}
+\SetKwBlock{WhnRcv}{When receiving}{}
+\SetKwBlock{myalg}{Algorithm}{end}
+\SetKwBlock{myproc}{Procedure}{end}
+
+
+\SetKwFunction{pinit}{Initialiseer}
+\SetKwFunction{pgata}{GatherAll}
+\SetKwFunction{predy}{Gereed}
+\SetKwFunction{prest}{Reset}
+\SetKwFunction{pzedt}{ZendData}
+\SetKwFunction{psend}{send}
+\SetKwFunction{pisnd}{isend}
+\SetKwFunction{precv}{receive}
+\SetKwFunction{parry}{array}
+
+
+\SetKwData{dres}{resultaat}
+\SetKwData{ddim}{dimensies}
+\SetKwData{dbas}{basis}
+\SetKwData{didq}{id}
+\SetKwData{dsnd}{zender}
+\SetKwData{drcv}{ontvanger}
+\SetKwData{dmsg}{bericht}
+\SetKwData{dodt}{eigenData}
+\SetKwData{dprt}{partner}
+
+%
+\providecommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{#1}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}} 
+
+
+\selectcolormodel{gray}%
+\providecommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\begin{center}\def \sc{#1}%
+\input{tikzpictures/#2}\caption{#4}\label{fig:#3}\end{center}\end{figure}}%
+\providecommand{\importalgo}[3]{\begin{algorithm}[hbt]%
+\input{algorithms/#1}\caption{#2}\label{alg:#3}\end{algorithm}} 
+
+%
+\providecommand{\drawmem}[3]{
+\node[draw,rectangle,fill=gray!20,minimum width=\sc*0.5*#2 cm, minimum height=\sc*0.5cm] (#1) at (0,0.5) {};
+\foreach\x in {2,...,#2} {
+  \draw (0.5*\x-0.25*#2-0.5,0.25) -- ++(0,0.5);
+}
+\foreach\x in {#3,...,#2} {
+  \draw (0.5*\x-0.25*#2-0.5,0.25) -- ++(0.5,0.5);
+}
+\foreach\x in {1,...,#2} {
+  \node[minimum height=\sc*0.5 cm,minimum width=\sc*0.5 cm] (#1\x) at (0.5*\x-0.25*#2-0.25,0.5) {$s_{\x}$};
+}
+\draw (#1.north) node[anchor=south] {\small{Geheugen}};
+} 
+
+
+\tikzset{hypothesis/.style={draw=black,regular polygon,regular polygon sides=3,scale=0.7,fill=gray,inner sep=0 pt},solution/.style={draw=black,circle,scale=0.7,inner sep=0 pt},outstream/.style={dashed},instream/.style={dotted},llh/.style={circle,fill=black,thick,draw=gray}}
+
+%
+\providecommand{\ubridge}[4][1]{\draw[#2] (#3) .. controls ($(#3)+(0,-#1)$) and ($(#4)+(0,-#1)$) .. (#4);}%
+\providecommand{\nbridge}[4][1]{\draw[#2] (#3) .. controls ($(#3)+(0,#1)$) and ($(#4)+(0,#1)$) .. (#4);}%
+\providecommand{\nubridge}[4][1]{\draw[#2] (#3) .. controls ($(#3)+(0,#1)$) and ($(#4)-(0,#1)$) .. (#4);}%
+\providecommand{\unbridge}[4][1]{\draw[#2] (#3) .. controls ($(#3)+(0,-#1)$) and ($(#4)-(0,-#1)$) .. (#4);} 
+
+%
+\providecommand{\ubridgearrow}[3][1]{\draw[->] (#2) .. controls ($(#2)+(0,-#1)$) and ($(#3)+(0,-#1)$) .. (#3);}%
+\providecommand{\nbridgearrow}[3][1]{\draw[->] (#2) .. controls ($(#2)+(0,#1)$) and ($(#3)+(0,#1)$) .. (#3);}%
+\providecommand{\unbridgearrow}[3][1]{\draw[->] (#2) .. controls ($(#2)+(0,-#1)$) and ($(#3)-(0,-#1)$) .. (#3);}%
+\providecommand{\nubridgearrow}[3][1]{\draw[->] (#2) .. controls ($(#2)+(0,#1)$) and ($(#3)-(0,#1)$) .. (#3);} 
+
+%
+\providecommand{\defrect}[5][]{\node[rectangle,draw=black,minimum width=#4, minimum height=#5,#1] (#2) at (#3) {};} 
+
+%
+\providecommand{\drawcube}[2]{
+\coordinate (A) at (0,0,0);
+\coordinate (B) at (0,0,#1);
+\coordinate (C) at (0,#1,0);
+\coordinate (D) at (0,#1,#1);
+\coordinate (E) at (#1,0,0);
+\coordinate (F) at (#1,0,#1);
+\coordinate (G) at (#1,#1,0);
+\coordinate (H) at (#1,#1,#1);
+\foreach \x/\t in {#2} {
+  \fill (\x) circle (0.1 cm) node[anchor=south east]{\t};
+}
+\foreach \x/\y in {B/D,B/F,C/D,C/G,D/H,E/F,E/G,F/H,G/H} {
+  \draw (\x) -- (\y);
+}
+\draw[dashed] (B) -- (A);
+\draw (C) -- (C |- D);
+\draw[dashed] (C |- D) -- (A);
+\draw (E) -- (E -| F);
+  \draw[dashed] (E -| F) -- (A);
+} 
+
+%
+\providecommand{\edgeinteraction}[3][0.25,0]{
+\draw[<->] ($0.85*(#2)+0.15*(#3)+(#1)$) -- ($0.15*(#2)+0.85*(#3)+(#1)$);
+} 
+
+
+\setup{font=lm}
+
+
+\usepackage[pdfusetitle,colorlinks,plainpages=false]{hyperref}
+
+
+
+
+\usepackage[dvips]{color}
+
+
+\pagecolor[gray]{.7}
+
+\usepackage[latin1]{inputenc}
+
+
+
+\makeatletter
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/masterproef.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/inleiding.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/hfdst-1.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/hfdst-2.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/hfdst-3.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/hfdst-4.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/hfdst-5.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/besluit.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/app-ches.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/app-comm.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/app-lege.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/app-arti.aux
+\makeatother
+}
+\AtBeginDocument{\makeatletter
+\input /home/kommusoft/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/app-post.aux
+\makeatother
+}
+
+\makeatletter
+\count@=\the\catcode`\_ \catcode`\_=8 
+\newenvironment{tex2html_wrap}{}{}%
+\catcode`\<=12\catcode`\_=\count@
+\newcommand{\providedcommand}[1]{\expandafter\providecommand\csname #1\endcsname}%
+\newcommand{\renewedcommand}[1]{\expandafter\providecommand\csname #1\endcsname{}%
+  \expandafter\renewcommand\csname #1\endcsname}%
+\newcommand{\newedenvironment}[1]{\newenvironment{#1}{}{}\renewenvironment{#1}}%
+\let\newedcommand\renewedcommand
+\let\renewedenvironment\newedenvironment
+\makeatother
+\let\mathon=$
+\let\mathoff=$
+\ifx\AtBeginDocument\undefined \newcommand{\AtBeginDocument}[1]{}\fi
+\newbox\sizebox
+\setlength{\hoffset}{0pt}\setlength{\voffset}{0pt}
+\addtolength{\textheight}{\footskip}\setlength{\footskip}{0pt}
+\addtolength{\textheight}{\topmargin}\setlength{\topmargin}{0pt}
+\addtolength{\textheight}{\headheight}\setlength{\headheight}{0pt}
+\addtolength{\textheight}{\headsep}\setlength{\headsep}{0pt}
+\setlength{\textwidth}{349pt}
+\newwrite\lthtmlwrite
+\makeatletter
+\let\realnormalsize=\normalsize
+\global\topskip=2sp
+\def\preveqno{}\let\real@float=\@float \let\realend@float=\end@float
+\def\@float{\let\@savefreelist\@freelist\real@float}
+\def\liih@math{\ifmmode$\else\bad@math\fi}
+\def\end@float{\realend@float\global\let\@freelist\@savefreelist}
+\let\real@dbflt=\@dbflt \let\end@dblfloat=\end@float
+\let\@largefloatcheck=\relax
+\let\if@boxedmulticols=\iftrue
+\def\@dbflt{\let\@savefreelist\@freelist\real@dbflt}
+\def\adjustnormalsize{\def\normalsize{\mathsurround=0pt \realnormalsize
+ \parindent=0pt\abovedisplayskip=0pt\belowdisplayskip=0pt}%
+ \def\phantompar{\csname par\endcsname}\normalsize}%
+\def\lthtmltypeout#1{{\let\protect\string \immediate\write\lthtmlwrite{#1}}}%
+\newcommand\lthtmlhboxmathA{\adjustnormalsize\setbox\sizebox=\hbox\bgroup\kern.05em }%
+\newcommand\lthtmlhboxmathB{\adjustnormalsize\setbox\sizebox=\hbox to\hsize\bgroup\hfill }%
+\newcommand\lthtmlvboxmathA{\adjustnormalsize\setbox\sizebox=\vbox\bgroup %
+ \let\ifinner=\iffalse \let\)\liih@math }%
+\newcommand\lthtmlboxmathZ{\@next\next\@currlist{}{\def\next{\voidb@x}}%
+ \expandafter\box\next\egroup}%
+\newcommand\lthtmlmathtype[1]{\gdef\lthtmlmathenv{#1}}%
+\newcommand\lthtmllogmath{\dimen0\ht\sizebox \advance\dimen0\dp\sizebox
+  \ifdim\dimen0>.95\vsize
+   \lthtmltypeout{%
+*** image for \lthtmlmathenv\space is too tall at \the\dimen0, reducing to .95 vsize ***}%
+   \ht\sizebox.95\vsize \dp\sizebox\z@ \fi
+  \lthtmltypeout{l2hSize %
+:\lthtmlmathenv:\the\ht\sizebox::\the\dp\sizebox::\the\wd\sizebox.\preveqno}}%
+\newcommand\lthtmlfigureA[1]{\let\@savefreelist\@freelist
+       \lthtmlmathtype{#1}\lthtmlvboxmathA}%
+\newcommand\lthtmlpictureA{\bgroup\catcode`\_=8 \lthtmlpictureB}%
+\newcommand\lthtmlpictureB[1]{\lthtmlmathtype{#1}\egroup
+       \let\@savefreelist\@freelist \lthtmlhboxmathB}%
+\newcommand\lthtmlpictureZ[1]{\hfill\lthtmlfigureZ}%
+\newcommand\lthtmlfigureZ{\lthtmlboxmathZ\lthtmllogmath\copy\sizebox
+       \global\let\@freelist\@savefreelist}%
+\newcommand\lthtmldisplayA{\bgroup\catcode`\_=8 \lthtmldisplayAi}%
+\newcommand\lthtmldisplayAi[1]{\lthtmlmathtype{#1}\egroup\lthtmlvboxmathA}%
+\newcommand\lthtmldisplayB[1]{\edef\preveqno{(\theequation)}%
+  \lthtmldisplayA{#1}\let\@eqnnum\relax}%
+\newcommand\lthtmldisplayZ{\lthtmlboxmathZ\lthtmllogmath\lthtmlsetmath}%
+\newcommand\lthtmlinlinemathA{\bgroup\catcode`\_=8 \lthtmlinlinemathB}
+\newcommand\lthtmlinlinemathB[1]{\lthtmlmathtype{#1}\egroup\lthtmlhboxmathA
+  \vrule height1.5ex width0pt }%
+\newcommand\lthtmlinlineA{\bgroup\catcode`\_=8 \lthtmlinlineB}%
+\newcommand\lthtmlinlineB[1]{\lthtmlmathtype{#1}\egroup\lthtmlhboxmathA}%
+\newcommand\lthtmlinlineZ{\egroup\expandafter\ifdim\dp\sizebox>0pt %
+  \expandafter\centerinlinemath\fi\lthtmllogmath\lthtmlsetinline}
+\newcommand\lthtmlinlinemathZ{\egroup\expandafter\ifdim\dp\sizebox>0pt %
+  \expandafter\centerinlinemath\fi\lthtmllogmath\lthtmlsetmath}
+\newcommand\lthtmlindisplaymathZ{\egroup %
+  \centerinlinemath\lthtmllogmath\lthtmlsetmath}
+\def\lthtmlsetinline{\hbox{\vrule width.1em \vtop{\vbox{%
+  \kern.1em\copy\sizebox}\ifdim\dp\sizebox>0pt\kern.1em\else\kern.3pt\fi
+  \ifdim\hsize>\wd\sizebox \hrule depth1pt\fi}}}
+\def\lthtmlsetmath{\hbox{\vrule width.1em\kern-.05em\vtop{\vbox{%
+  \kern.1em\kern0.8 pt\hbox{\hglue.17em\copy\sizebox\hglue0.8 pt}}\kern.3pt%
+  \ifdim\dp\sizebox>0pt\kern.1em\fi \kern0.8 pt%
+  \ifdim\hsize>\wd\sizebox \hrule depth1pt\fi}}}
+\def\centerinlinemath{%
+  \dimen1=\ifdim\ht\sizebox<\dp\sizebox \dp\sizebox\else\ht\sizebox\fi
+  \advance\dimen1by.5pt \vrule width0pt height\dimen1 depth\dimen1 
+ \dp\sizebox=\dimen1\ht\sizebox=\dimen1\relax}
+
+\def\lthtmlcheckvsize{\ifdim\ht\sizebox<\vsize 
+  \ifdim\wd\sizebox<\hsize\expandafter\hfill\fi \expandafter\vfill
+  \else\expandafter\vss\fi}%
+\providecommand{\selectlanguage}[1]{}%
+\makeatletter \tracingstats = 1 
+\providecommand{\Beta}{\textrm{B}}
+\providecommand{\Mu}{\textrm{M}}
+\providecommand{\Kappa}{\textrm{K}}
+\providecommand{\Rho}{\textrm{R}}
+\providecommand{\Epsilon}{\textrm{E}}
+\providecommand{\Chi}{\textrm{X}}
+\providecommand{\Iota}{\textrm{J}}
+\providecommand{\omicron}{\textrm{o}}
+\providecommand{\Zeta}{\textrm{Z}}
+\providecommand{\Eta}{\textrm{H}}
+\providecommand{\Omicron}{\textrm{O}}
+\providecommand{\Nu}{\textrm{N}}
+\providecommand{\Tau}{\textrm{T}}
+\providecommand{\Alpha}{\textrm{A}}
+
+
+\begin{document}
+\pagestyle{empty}\thispagestyle{empty}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength hsize=\the\hsize}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength vsize=\the\vsize}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength hoffset=\the\hoffset}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength voffset=\the\voffset}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength topmargin=\the\topmargin}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength topskip=\the\topskip}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength headheight=\the\headheight}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength headsep=\the\headsep}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength parskip=\the\parskip}\lthtmltypeout{}%
+\lthtmltypeout{latex2htmlLength oddsidemargin=\the\oddsidemargin}\lthtmltypeout{}%
+\makeatletter
+\if@twoside\lthtmltypeout{latex2htmlLength evensidemargin=\the\evensidemargin}%
+\else\lthtmltypeout{latex2htmlLength evensidemargin=\the\oddsidemargin}\fi%
+\lthtmltypeout{}%
+\makeatother
+\setcounter{page}{1}
+\onecolumn
+
+% !!! IMAGES START HERE !!!
+
+\setcounter{tocdepth}{2}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\begingroup \endgroup
+\begingroup \endgroup
+\stepcounter{chapter}
+
+\renewcommand{\arraystretch}{1.1}
+
+\renewcommand{\arraystretch}{1.1}
+\stepcounter{chapter}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlfigureA{algorithm3747}%
+\begin{algorithm}
+% latex2html id marker 3747
+[hbt]\input{algorithms/metaheuristicgeneral}\caption{Hoog niveau beschrijving van een metaheuristiek\cite{DBLP:journals/jc/ShonkwilerV94}.}
+\end{algorithm}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline20346}%
+$ x_4'$%
+\lthtmlinlinemathZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\appendix
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+{\newpage\clearpage
+\lthtmlfigureA{algorithm8351}%
+\begin{algorithm}
+% latex2html id marker 8351
+[hbt]\input{algorithms/syncga}\caption{GatherAll\cite{books/bc/KumarGGK94}.}
+\end{algorithm}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{paragraph}
+\stepcounter{subsection}
+{\newpage\clearpage
+\lthtmlfigureA{algorithm8364}%
+\begin{algorithm}
+% latex2html id marker 8364
+[hbt]\input{algorithms/asyncga}\caption{Asynchrone GatherAll.}
+\end{algorithm}%
+\lthtmlfigureZ
+\lthtmlcheckvsize\clearpage}
+
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{chapter}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{chapter}
+\stepcounter{chapter}
+
+\end{document}

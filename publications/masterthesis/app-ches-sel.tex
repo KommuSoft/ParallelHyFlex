@@ -1,10 +1,13 @@
 \section{\emph{SelfSearch} (\#18)}
-\label{sss:selfsearch}
+\seclab{selfsearch}
+
 \subsection{Implementatie}
-\emph{SelfSearch}\cite{chesc-selfsearch} werkt met een populatie van oplossingen. Tijdens elke iteratie kiest men een \abllh{} die men vervolgens op alle oplossingen toepast. Hierdoor verdubbelt de populatiegrootte. Om terug op de originele populatiegrootte uit te komen selecteert men de beste unieke oplossingen. De keuze van de heuristiek gebeurt probabilistisch en op basis van twee strategie\"en: exploratie en exploitatie. Bij de exploratie krijgen heuristieken die een resultaat opleveren die verschilt van het origineel meer gewicht. Bij de exploitatie vooral heuristieken die in het verleden tot verbetering leidden.
+\emph{SelfSearch}\cite{chesc-selfsearch} maakt gebruik van een met een populatie van oplossingen. Tijdens elke iteratie kiest het algoritme een \abllh{} die vervolgens op alle oplossingen wordt toepast. Hierdoor verdubbelt de populatiegrootte. Om terug op de originele populatiegrootte uit te komen selecteert men de beste unieke oplossingen.
+\paragraph{}
+De keuze van de heuristiek gebeurt probabilistisch en op basis van twee strategie\"en: exploratie en exploitatie. Bij de exploratie krijgen heuristieken die een resultaat opleveren die verschilt van het origineel meer gewicht. Bij de exploitatie vooral heuristieken die in het verleden tot verbetering leidden.
 \subsection{Kritiek}
 \begin{itemize}
- \item Heeft de neiging in een lokaal optimum vast te raken: indien de populatie in een lokaal optimum zit, kan geen enkele mutatie die een tijdelijk slechtere oplossing levert de populatie terug uit dit lokaal optimum halen. De kans dat een volledige populatie in een lokaal optimum zit is uiteraard klein, maar desalniettemin kan dit algoritme resulteren in het toepassen van veel zinloze \abllh{}.
- \item Metaheuristieken die in het begin slecht presteren hebben meestal weinig kans op herintroductie: vermits ze na de initi\"ele fase minder gekozen worden, kunnen frequenter gekozen heuristieken een buffer van probabilistisch gewicht opbouwen.
+\item Indien de populatie in een lokaal optimum zit, kan geen enkele mutatie die een tijdelijk slechtere oplossing levert, de populatie terug uit dit lokaal optimum halen: de gegenereerde oplossing zal immers consistent geweigerd worden. De kans dat een volledige populatie in een lokaal optimum zit is uiteraard klein, toch promoot dit algoritme het toepassen van \abhn{} die de populatie niet significant verbeteren.
+ \item \abhn{} die in het begin slecht presteren hebben meestal weinig kans op herintroductie: vermits ze na de initi\"ele fase minder gekozen worden, kunnen frequenter gekozen heuristieken een buffer van probabilistisch gewicht opbouwen.
  \item Er is slecht \'e\'en migratie van de exploitatie-fase naar de exploratie-fase. Indien deze fase op een fout moment gekozen wordt, is er geen weg terug.
 \end{itemize}

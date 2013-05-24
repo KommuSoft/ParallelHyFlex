@@ -1,7 +1,8 @@
 \section{\emph{GISS: Generic Iterative Simulated Annealing Search} (\#17)}
-\label{sss:giss}
+\seclab{giss}
 \subsection{Implementatie}
-\emph{GISS}\cite{chesc-giss} gebruikt \emph{Simulated Annealing}\cite{citeulike:1612433} als hyperheuristiek: bij elke iteratie kiest men uniform een beschikbare metaheuristiek die men toepast op het probleem. Vervolgens accepteert men deze oplossing volgens de procedure van simuated annealing. Crossover metaheuristieken worden toegepast op de laatste en voorlaatste oplossing. Indien er lange tijd geen verbetering zichtbaar is, wordt het systeem herstart vanaf een toevalsoplossing.
+\emph{GISS}\cite{chesc-giss} maakt gebruik van \emph{Simulated Annealing}\cite{citeulike:1612433} als basisprincipe: bij elke iteratie kiest men uniform een beschikbare metaheuristiek die men toepast op het probleem. Vervolgens accepteert men deze oplossing volgens het principe van \emph{simuated annealing}. Crossover metaheuristieken worden toegepast op de laatste en voorlaatste oplossing. Indien er lange tijd geen verbetering zichtbaar is, wordt het systeem herstart vanaf een toevallige oplossing.
+
 \subsection{Kritiek}
 \begin{itemize}
  \item Uniforme selectie van \abllhn{} is waarschijnlijk niet interessant. Sommige \abllhn{} zijn immers nagenoeg overal beter dan anderen.

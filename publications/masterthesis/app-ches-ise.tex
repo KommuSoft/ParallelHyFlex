@@ -1,9 +1,11 @@
 \section{\emph{ISEA: Iterated Search by Evolutionary Algorithm} (\#8)}
-\label{sss:isea}
+\seclab{isea}
+
 \subsection{Implementatie}
-\emph{Iterated Search by Evolutionary Algorithm}\cite{chesc-isea} is een algoritme die gebaseerd is op het eerder gepubliceerde \emph{POEMS}\cite{eurogp06:KubalikFaigl}. Hierbij verdeelt men de tijd op in een sequentie van ``\emph{epochs}''. In zo'n \emph{epoch} voert men een evolutief algoritme uit op prototypes. Een prototype is een sequentie van een variabel aantal metaheuristieken. Bij elk van deze metaheuristieken zijn ook de parameters reeds vastgezet. Tijdens een epoch wordt in een vast aantal iteraties een populatie van prototypes door een genetisch algoritme geoptimaliseerd. Nadien wordt het beste resultaat die met deze prototypes bereikt werd als nieuwe actieve oplossing gebruikt in de volgende epoch. 
+\emph{Iterated Search by Evolutionary Algorithm}\cite{chesc-isea} is een algoritme die gebaseerd is op het eerder gepubliceerde \emph{POEMS}\cite{eurogp06:KubalikFaigl}. Men verdeelt de rekentijd in een opeenvolging van \emph{epochs}. In een \emph{epoch} voert men een evolutief algoritme uit op \emph{prototypes}. Een \emph{prototype} is een sequentie van een variabel aantal \abhn{}. Bij elk van deze \abhn{} zijn ook de parameters reeds vastgezet. Tijdens een \emph{epoch} wordt in een vast aantal iteraties een populatie van prototypes door een genetisch algoritme geoptimaliseerd. Nadien wordt het beste resultaat die met deze prototypes bereikt werd als nieuwe actieve oplossing gebruikt in de volgende \emph{epoch}. 
+
 \subsection{Kritiek}
 \begin{itemize}
  \item Redundante aspecten in een sequentie worden niet noodzakelijk ge\"elimineerd: het algoritme is niet effici\"ent met tijdsgebruik.
- \item Na een epoch wordt de opgedane ervaring genegeerd. We verwachtten dat processortijd verloren zal gaan aan het opnieuw leren onderscheiden van goede en slechte prototypes.
+ \item Na een \emph{epoch} wordt de opgedane ervaring genegeerd. We verwachtten dat veel rekentijd verloren zal gaan aan het opnieuw leren onderscheiden van goede en slechte prototypes.
 \end{itemize}

@@ -1,4 +1,4 @@
-\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes}
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes,rotating}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
 %\usepackage[showframe]{geometry}
 \usepackage[all]{xy}
@@ -15,6 +15,9 @@
 
 \newcommand{\baselab}[2]{\label{#1:#2}}
 \newcommand{\baseref}[3]{\textsc{\nohyphens{#3}~\textup{\ref{#1:#2}}}}
+\newcommand{\baserefq}[3]{\textsc{\textup{\ref{#1:#2}}}}
+
+\newcommand{\rot}[1]{\begin{sideways}#1\end{sideways}}
 
 \newcommand{\deflab}[1]{\baselab{def}{#1}}
 \newcommand{\defref}[1]{\baseref{def}{#1}{Definitie}}
@@ -34,6 +37,7 @@
 \newcommand{\appref}[1]{\baseref{app}{#1}{Appendix}}
 \newcommand{\seclab}[1]{\baselab{sec}{#1}}
 \newcommand{\secref}[1]{\baseref{sec}{#1}{Sectie}}
+\newcommand{\secrefq}[1]{\baserefq{sec}{#1}{Sectie}}
 \newcommand{\ssclab}[1]{\baselab{ssc}{#1}}
 \newcommand{\sscref}[1]{\baseref{ssc}{#1}{Subsectie}}
 \newcommand{\ssslab}[1]{\baselab{sss}{#1}}

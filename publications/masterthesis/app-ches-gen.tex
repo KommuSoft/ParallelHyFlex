@@ -1,11 +1,13 @@
 \section{\emph{GenHive: Genetic Hive Hyperheuristic} (\#12)}
-\label{sss:genhive}
+\seclab{genhive}
+
 \subsection{Implementatie}
-\emph{GenHive}\cite{chesc-genhive} is een hyperheuristiek die werkt op basis van een genetisch algoritme. Een individu in dit genetische algoritme is een sequentie van metaheuristieken die op het probleem worden toegepast. Enkele van deze individuen zijn actief: ze worden toegekend aan een oplossing in de zoekruimte en worden er bij een iteratie op toegepast. Nadien worden de resultaten beoordeelt. De beste strategie\"en blijven actief. De overige worden passieve individuen. Men dient echter aan elke oplossing een strategie toekennen. Hiertoe worden individuen die in de vorige iteratie passief waren gerecombineerd met de beste individuen en worden deze geactiveerd.
+\emph{GenHive}\cite{chesc-genhive} werkt met behulp van een genetisch algoritme. Een \emph{individu} is in dit genetische algoritme een sequentie van heuristieken die op \'e\'en voor \'e\'en op een oplossing worden toegepast. Enkele van deze \emph{individuen} zijn actief: ze worden toegekend aan een oplossing in de zoekruimte en worden er bij een iteratie op toegepast. Nadien worden de resultaten beoordeelt. De beste \emph{individuen} blijven actief, de overige worden passieve individuen. De oplossingen die niet meer gebonden zijn aan een \abh{} krijgen een nieuw \emph{individu} toegekend. Deze individuen worden gecre\"eerd door de beste \emph{individuen} te kruisen met passieve \emph{individuen}. Een deel van de \emph{individuen} verdwijnt ook na iedere iteratie.
+
 \subsection{Kritiek}
 \begin{itemize}
- \item Algoritme bevat veel parameters: populatiegrootte, aantal individuen actief, aantal individuen die na de iteratie behouden blijft,... Het vinden van een correcte configuratie is niet triviaal.
- \item De beste individuen blijven aan dezelfde oplossingen gelinkt, terwijl men deze zou kunnen gebruiken om andere oplossingen ook significant te verbeteren. Bovendien verwachten we dat een strategie de tweede maal minder effectief zal zijn.
- \item Redundante aspecten in een oplossing (een sequentie oproepen die nooit een beter resultaat kunnen genereren) wordt niet ge\"elimineerd: hierdoor is men niet effici\"ent met tijdsgebruik.
+ \item Het algoritme bevat veel parameters: populatiegrootte, aantal individuen actief, aantal individuen die na de iteratie behouden blijft,... Het vinden van een correcte configuratie is niet triviaal.
+ \item De beste \emph{individuen} blijven aan dezelfde oplossingen gelinkt. Door deze \emph{individuen} ook op andere oplossingen toe te passen, verwachten we dat deze ook sterk zullen verbeteren. Een sequentie een tweede maal toepassen op een oplossing zal meestal minder gunstige effecten geven.
+ \item Deelsequenties in \emph{individu} die ineffici\"ent werken worden niet ge\"elimineerd.
  \item Het is ineffici\"ent om altijd alle oplossingen verder te ontwikkelen in een iteratie.
 \end{itemize}

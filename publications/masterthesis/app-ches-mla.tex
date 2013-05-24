@@ -1,7 +1,18 @@
 \section{\emph{ML: Mathieu Larose} (\#3)}
-\label{sss:ml}
+\seclab{ml}
+
 \subsection{Implementatie}
-\emph{ML}\cite{chesc-ml} is gebaseerd op de \abmh{} ``\emph{Coalition Based Metaheuristic (CBM)}''\cite{chesc-ml2}. In het \emph{CBM} algoritme, worden verschillende \emph{agent}en gegroepeerd in een ``\emph{coalition}''. Agenten die tot dezelfde \emph{coalition} behoren, zullen vervolgens parallel de zoekruimte onderzoeken en onderweg ervaring uitwisselen over welke metaheuristieken moeten worden geselecteerd. Dit leerproces gebeurt aan de hand van ``\emph{reinforcement learning}''\cite{rlaiacaml}. Elke agent werkt verder met een ``\emph{Diversification-Intensification cycle}''. In de diversificatie stap passen we een \abmt{} of \abrr{} \abllh{} toe. In de intensificatie cyclus passen we meerdere \abls{} heuristieken toe totdat geen enkele \abls{} \abh{} de oplossing nog verder kan verbeteren. Daarna wordt beslist of de gevonden oplossing de nieuwe actieve oplossing van de agent wordt. Het \emph{reinforcement learning} component probeert om een zo goed mogelijke zoekstrategie te ontwikkelen voor iedere agent. Hiertoe dienen we toestanden op te stellen (we proberen immers een \abh{} te kiezen in een bepaalde toestand). Als toestand worden voorwaarden gebruikt over welke \abllhn{} al zijn toegepast. Vervolgens probeert het leeralgoritme een matrix op te stellen die met behulp van gewichten bepaalt in welke situatie welke \abh{} waarschijnlijk het voordeligste is. De keuze van de \abh{} wordt dan uiteindelijk gemaakt via een ``\emph{roulettewheel}''-procedure\cite{DBLP:journals/corr/abs-1109-3627} op basis van de toestand waarin we ons op een gegeven moment bevinden. Naast het leren op basis van eigen ervaring wordt ook ervaring opgedaan door de matrices van andere agenten. Hiervoor wordt aan \emph{mimetism learning}\cite{655072} gedaan: een agent probeert de matrix van een andere agent te imiteren door een lineaire interpolatie tussen de eigen matrix en de vreemde matrix te nemen. De matrix wordt aan de andere agenten doorgegeven indien de agent een nieuw globaal optimum bereikt.
+\emph{ML}\cite{chesc-ml} is gebaseerd op de \emph{Coalition Based Metaheuristic (CBM)}-\abmh{}\cite{chesc-ml2}. In het \emph{CBM} algoritme, worden verschillende \emph{agenten} gegroepeerd in een \emph{coalition}. Agenten die tot dezelfde \emph{coalition} behoren, zullen vervolgens parallel de zoekruimte onderzoeken en onderweg ervaring uitwisselen over welke \abhn{} moeten worden geselecteerd. Dit leerproces gebeurt aan de hand van \emph{reinforcement learning}\cite{rlaiacaml}.
+
+\paragraph{}
+Elke agent werkt verder met een \emph{Diversification-Intensification cycle}. In de diversificatie stap passen we een \abmt{} of \abrr{} \abllh{} toe. In de intensificatie cyclus past het algoritme meerdere \abls{} heuristieken toe totdat geen enkele \abls{} \abh{} de oplossing nog verder kan verbeteren. Daarna wordt beslist of de gevonden oplossing de nieuwe actieve oplossing van de agent wordt.
+
+\paragraph{}
+Het \emph{reinforcement learning} component probeert om een zo goed mogelijke zoekstrategie te ontwikkelen voor iedere agent. Als toestand worden de set van \abllhn{} gebruikt die al zijn toegepast. Het leeralgoritme probeert een matrix op te stellen die met behulp van gewichten bepaalt in welke toestand welke \abh{} waarschijnlijk het voordeligste is. De keuze van de \abh{} wordt dan uiteindelijk gemaakt via een ``\emph{roulettewheel}''-procedure\cite{DBLP:journals/corr/abs-1109-3627} op basis van de toestand waarin we ons op een gegeven moment bevinden.
+
+\paragraph{}
+De agenten wisselen ook ervaring uit aan de hand van \emph{mimetism learning}\cite{655072}: een agent probeert de matrix van een andere agent te imiteren door een lineaire interpolatie tussen de eigen matrix en de vreemde matrix te nemen. Zo'n matrix wordt aan de andere agenten meegedeeld indien de agent een nieuw globaal optimum bereikt.
+
 \subsection{Kritiek}
 \begin{itemize}
  \item \emph{Reinforcement learning} introduceert nieuwe parameters, die natuurlijk intelligent moeten gekozen worden. Voor dit probleem wordt geen oplossing aangereikt.
