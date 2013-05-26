@@ -14,21 +14,16 @@ No implementation found for style `rotating'
 No implementation found for style `algorithm2e'
 No implementation found for style `hyperref'
 
-? brace missing for \
-
-Substitution of arg to newlabelxx delayed.
-
-redefining command \ 
-
-? brace missing for \oldcontentsline
-
-? brace missing for \oldnewlabel
+The masterproef.aux file was not found, so sections will not be numbered 
+and cross-references will be shown as icons.
 couldn't convert character inodot into available encodings
 {eqnarray} does not have 3 columns, inserting blank cell
 
+No number for "Schematischevoorstellingvaneenhyperheuristiek.[]"
+
 No number for "Schematischevoorstellingvan<SPANCLASS="textbf">HyFlex</SPAN>."
 
-No number for "Deelnemersvande<SPANCLASS="textbf">CHeSC2011</SPAN>competitie[51]."
+No number for "Deelnemersvande<SPANCLASS="textbf">CHeSC2011</SPAN>competitie[]."
 
 No number for "Structuurvan<SPANCLASS="textbf">ParHyFlex</SPAN>."
 
@@ -42,9 +37,244 @@ No number for "Gebruiktetechnologiebij<SPANCLASS="textbf">CHeSC</SPAN>."
 
 No number for "Werkingvaneen<TT>GatherAll</TT>operatieopeen<SPANCLASS="textbf">HyperCube</SPAN>."
 
-masterproef.tex is newer than masterproef.bbl: Please rerun latex and bibtex.
-couldn't convert character nacute into available encodings
+No number for "Legendebijdeverschillendeafbeeldingen."
 
- ...set $ACCENT_IMAGES  to get an image 
-couldn't convert character cacute into available encodings
-couldn't convert character Ccaron into available encodings
+No number for "Postermetbetrekkingtotdezemasterthesis"
+
+The bibliography file was not found.
+
+no reference for citation: Burke03hyper-heuristics:an
+
+no reference for citation: chesc-results
+
+no reference for citation: 4785860
+
+no reference for citation: nomoore
+
+no reference for citation: books_bc_KumarGGK94
+
+no reference for citation: Korthikanti:2009:APA:1678990.1679696
+
+no reference for citation: parenergy
+
+no reference for citation: journals_pc_HawickCJ03
+
+no reference for citation: Gaspero_amultiagent
+
+no reference for citation: Alba2005book
+
+no reference for citation: journals_pc_FaberLW86
+
+no reference for citation: cacheEffect
+
+no reference for citation: superlineairspeedup
+
+no reference for citation: journals_pc_Janssen87
+
+no reference for citation: journals_pc_Parkinson86
+
+no reference for citation: Amdahl:1967:VSP:1465482.1465560
+
+no reference for citation: Gustafson:1988:RAL:42411.42415
+
+no reference for citation: books_daglib_0066939
+
+no reference for citation: books_daglib_0015079
+
+no reference for citation: mpi10
+
+no reference for citation: Gelernter85
+
+no reference for citation: javaspaces
+
+no reference for citation: linearProgrammingInP
+
+no reference for citation: Kozlov1980223
+
+no reference for citation: qpInNP
+
+no reference for citation: klee:1972
+
+no reference for citation: journals_cor_Glover86
+
+no reference for citation: lsAndMh
+
+no reference for citation: Glover2003
+
+no reference for citation: gendreau2010handbook
+
+no reference for citation: blum2003metaheuristics
+
+no reference for citation: osman:1996
+
+no reference for citation: holland1992adaption-in-nat
+
+no reference for citation: goldberg89
+
+no reference for citation: melanie_mitchell_book
+
+no reference for citation: Metropolis1953
+
+no reference for citation: citeulike:1612433
+
+no reference for citation: Cerny1985Thermodynamical
+
+no reference for citation: stuetzle:1999
+
+no reference for citation: journals_eor_HansenM01
+
+no reference for citation: DBLP:journals_informs_Glover89
+
+no reference for citation: citeulike:2634743
+
+no reference for citation: Glover:TabuSearch
+
+no reference for citation: dmathematicsforbioinformatics
+
+no reference for citation: DBLP:journals_jc_ShonkwilerV94
+
+no reference for citation: Kalnis02viewselection
+
+no reference for citation: Whitley98theisland
+
+no reference for citation: parallelgeneticalgorithms
+
+no reference for citation: conf_glvlsi_HaldarNCB00
+
+no reference for citation: crainicAndToulouse
+
+no reference for citation: Souto2004
+
+no reference for citation: Randall2002
+
+no reference for citation: Delisle2001
+
+no reference for citation: Catalano:2001:PRH:761889.761897
+
+no reference for citation: conf_fpt_GuntschMSDESS02
+
+no reference for citation: journals_gpem_Martin01
+
+no reference for citation: Kendall01ahyperheuristic
+
+no reference for citation: Burke_aclassification
+
+no reference for citation: DBLP:conf_ppsn_MisirVCB12
+
+no reference for citation: conf_gecco_LeonMS08
+
+no reference for citation: conf_pdp_SeguraSL12
+
+no reference for citation: Rattadilok04adistributed
+
+no reference for citation: Luna08usinga
+
+no reference for citation: Burke2009g
+
+no reference for citation: Bleuler03pisa-
+
+no reference for citation: Burke:2011:CHS:2177360.2177415
+
+no reference for citation: chesc-adaphh
+
+no reference for citation: chesc-adaphh2
+
+no reference for citation: 348072
+
+no reference for citation: chesc-vns-tw
+
+no reference for citation: chesc-ml
+
+no reference for citation: chesc-ml2
+
+no reference for citation: chesc-phunter
+
+no reference for citation: chesc-eph
+
+no reference for citation: chesc-isea
+
+no reference for citation: chesc-ksats-hh
+
+no reference for citation: chesc-haea
+
+no reference for citation: Gomez04selfadaptation
+
+no reference for citation: chesc-aco-hh
+
+no reference for citation: chesc-genhive
+
+no reference for citation: chesc-dynils
+
+no reference for citation: journals_orsnz_ksosils
+
+no reference for citation: chesc-aveg-nep
+
+no reference for citation: chesc-giss
+
+no reference for citation: chesc-selfsearch
+
+no reference for citation: chesc-mchh-s
+
+no reference for citation: conf_gecco_McClymontK11
+
+no reference for citation: chesc-ant-q
+
+no reference for citation: sis_ant-q
+
+no reference for citation: citeulike:175026
+
+no reference for citation: citeulike:748130
+
+no reference for citation: RePEc:cla:levarc:481
+
+no reference for citation: Selman96generatinghard
+
+no reference for citation: Nudelman_understandingrandom
+
+no reference for citation: Roy:2013:ECM:2422436.2422470
+
+no reference for citation: conf_icpp_KorthikantiAG11
+
+no reference for citation: Michael:2009:AC:1596832.1596835
+
+no reference for citation: citeulike:5925674
+
+no reference for citation: rlaiacaml
+
+no reference for citation: Taylor2003a
+
+no reference for citation: Lourenco02iteratedlocal
+
+no reference for citation: hom_aco
+
+no reference for citation: eurogp06:KubalikFaigl
+
+no reference for citation: hom_vns
+
+no reference for citation: Miller95geneticalgorithms
+
+no reference for citation: DBLP:journals_corr_abs-1109-3627
+
+no reference for citation: 655072
+
+no reference for citation: dshp
+
+no reference for citation: journals_tjs_TaboadaTD12
+
+no reference for citation: citeulike:4031585
+
+no reference for citation: Glover:1986:GES:15310.15313
+
+no reference for citation: pdcClass
+
+no reference for citation: mpi13
+
+no reference for citation: conf_europar_GeistGHLLSSS96
+
+no reference for citation: mpi20
+
+no reference for citation: mpi21
+
+no reference for citation: mpi22
+
+no reference for citation: mpi30

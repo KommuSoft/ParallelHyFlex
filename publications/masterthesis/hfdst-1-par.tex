@@ -1,6 +1,6 @@
 \section{Parallelle algoritmes}
 
-\subsubsection{Motivatie}
+\subsubsection{Motivering}
 
 De ``Wet van Moore''\cite{4785860} stelt dat het aantal transistors verdubbelt elke achttien maanden. De klokfrequentie stagneert echter. \cite{nomoore} verklaart dit door te stellen de gemiddelde afstand van een geleider slechts met $1/\sqrt{2}$ afneemt, vermits het kloksignaal beperkt is tot de overdrachtssnelheid van een geleider, leidt men hieruit af dat de kloksnelheid niet evenredig verhoogt. Het gevolg van deze evolutie is dat complexe problemen enkel uitgerekend kunnen worden indien men voldoende rekentijd beschikbaar stelt.
 \paragraph{}
@@ -10,7 +10,7 @@ Een reactie is de introductie van het ``\emph{parallel rekenen}'' ofwel ``\emph{
 Door met verschillende processoren te werken hoopt men de rekentijd drastisch naar beneden te kunnen halen. Dit is echter niet de enige motivatie: doorgaans verbruiken zogenaamde \emph{multi-core} processoren - processoren waarbij verschillende \emph{kernen} op dezelfde machine aanwezig zijn - ook minder energie. Dit komt bijvoorbeeld omdat andere hardware zoals het moederbord slechts \'e\'enmaal voorkomen in de configuratie. Men kan dus ook beogen de aanwezige hardware effici\"enter te gebruiken.\cite{Korthikanti:2009:APA:1678990.1679696,parenergy}
 
 \paragraph{}
-Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: geografische simulaties houden variabelen bij voor heel wat locaties op de aarde. Deze variabelen leiden tot het gebruiken van grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost.\cite{journals/pc/HawickCJ03}
+Sommige problemen kunnen bovendien enkel opgelost worden met parallelle algoritmen: geografische simulaties houden variabelen bij voor een groot aantal locaties op aarde. Deze variabelen leiden tot het gebruiken van grote hoeveelheden geheugen, meestal kan men niet al de data in het geheugen van \'e\'en machine opslaan. Door elke machine een deel van de data te laten opslaan en manipuleren kan dit probleem worden opgelost.\cite{journals/pc/HawickCJ03}
 
 \paragraph{}
 Parallelle algoritmes worden ook ingeschakeld wanneer de data gevoelig is en niet zomaar kan worden uitgewisseld: indien verschillende bedrijven een globale planning willen opstellen, maar geen details over de interne werking openbaar wensen te maken, kunnen parallelle algoritmes een oplossing bieden\cite{Gaspero_amultiagent}.
@@ -20,11 +20,11 @@ Parallelle algoritmes worden ook ingeschakeld wanneer de data gevoelig is en nie
 De prestaties van een parallel algoritme worden meestal gemeten op basis van \emph{speed-up}: de mate waarin we virtueel de kloksnelheid kunnen opdrijven. We defini\"eren eerst enkele concepten waarna we kort een taxonomie hieromtrent toelichten.
 
 \begin{definition}[Wall time, Speed-up, Effici\"entie\cite{books/bc/KumarGGK94,Alba2005book}]
-We defini\"eren de \emph{wall time} $T$ als de tijd tussen de start van het algoritme en het moment waarop het algoritme stopt. De \emph{wall time} maakt abstractie van het aantal processoren. De \emph{speed-up} is de verhouding tussen de \emph{wall-time} bij \'e\'en processor $T_1$ en de \emph{wall-time} bij $p$ processoren $T_p$:
+We defini\"eren de \emph{wall time} $T$ als de tijd tussen de start van het algoritme en het moment waarop het algoritme stopt. De \emph{wall time} maakt abstractie van het aantal processoren. De \emph{speed-up} is de verhouding tussen de \emph{wall time} bij \'e\'en processor $T_1$ en de \emph{wall time} bij $p$ processoren $T_p$:
 \begin{equation}
 \funm{speed-up}{p}=\displaystyle\frac{T_1}{T_p}
 \end{equation}
-Indien de algoritmen stochastisch van aard zijn, wordt de verhoudingen tussen de gemiddelde \emph{wall-time} gebruikt.
+Indien de algoritmen stochastisch van aard zijn, wordt de verhoudingen tussen de gemiddelde \emph{wall time} gebruikt.
 Wanneer we de \emph{speed-up} delen door het aantal processoren $p$ spreken we over de \emph{effici\"entie}:
 \begin{equation}
 \funm{effici\"entie}{p}=\funm{speed-up}{p}/p
@@ -65,8 +65,8 @@ Indien de \emph{agents} op verschillende machines draaien, werken ze meestal vol
 
 \subsubsection{Shared-Adress-Space}
 
-In het geval van \emph{Shared-Adress-Space} beschouwd men een geheugen die toegankelijk is voor alle processoren. Elke processor kan data bijgevolg deze data uitlezen en manipuleren. Bij voorkeur zal betekent dit dat we \'e\'en machine beschouwen met \'e\'en fysisch geheugen en verschillende processoren. Wanneer er sprake is van meerdere processoren wordt het gedeelde geheugen ge\"emuleerd door de data over een netwerk te sturen. Om te voorkomen dat men voor rekenintensieve taken teveel data over het netwerk stuurt zal men meestal een onderscheid maken tussen het lokaal en vreemd geheugen.\cite{books/bc/KumarGGK94}
+In het geval van \emph{Shared-Adress-Space} beschouwd men een geheugen die toegankelijk is voor alle processoren. Elke processor kan data bijgevolg deze data uitlezen en manipuleren. Bij voorkeur zal betekent dit dat we \'e\'en machine beschouwen met \'e\'en fysisch geheugen en verschillende processoren. Wanneer er sprake is van meerdere processoren wordt het gedeelde geheugen ge\"emuleerd door de data over een netwerk te sturen. Om te voorkomen dat men voor rekenintensieve taken te veel data over het netwerk stuurt, zal men meestal een onderscheid maken tussen het lokaal en vreemd geheugen.\cite{books/bc/KumarGGK94}
 
 \paragraph{}
-\emph{Tuple Space} is een vorm van \emph{Shard-Adress-Space} met een globaal geheugen: de \emph{tuple space}. Elke agent kan tuples toevoegen in de tuple space en een query op de ruimte uitvoeren. Door tuples toe te voegen die dan door andere agenten worden verwerkt ontstaat er een communicatieprincipe. Een \emph{tuple space} verschilt echter van een \emph{message passing interface} omdat men meer abstractie maakt van de bestemming van een boodschap. Bekende implementaties van een \emph{Tuple Space} zijn \emph{Linda} en \emph{JavaSpaces}\cite{books/bc/KumarGGK94,books/daglib/0066939,books/daglib/0015079,Gelernter85,javaspaces}.
+\emph{Tuple Space} is een vorm van \emph{Shared-Adress-Space} met een globaal geheugen: de \emph{tuple space}. Elke agent kan tuples toevoegen in de tuple space en een query op de ruimte uitvoeren. Door tuples toe te voegen die dan door andere agenten worden verwerkt ontstaat er een communicatieprincipe. Een \emph{tuple space} verschilt echter van een \emph{message passing interface} omdat men meer abstractie maakt van de bestemming van een boodschap. Bekende implementaties van een \emph{Tuple Space} zijn \emph{Linda} en \emph{JavaSpaces}\cite{books/bc/KumarGGK94,books/daglib/0066939,books/daglib/0015079,Gelernter85,javaspaces}.
 
