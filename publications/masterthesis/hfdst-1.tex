@@ -31,7 +31,7 @@ De meeste metaheuristieken omvatten verschillende bronnen om het algoritme paral
 Hyperheuristieken proberen een oplossingsmethode aan te reiken die minder afhankelijk is van een concreet probleem. Dit doet men door een algoritme een keuze te laten maken uit een set transitiefuncties een gaandeweg de sterktes en zwaktes van de concrete transitiefuncties te laten kennen.
 
 \paragraph{}
-Er bestaan reeds implementaties van parallelle hyperheuristieken. Deze algoritmen werken meestal in een \emph{master-slave} verhouding waar de \emph{master} zich voornamelijk bezighoudt met de selectie van de heuristieken en het \emph{slave}-gedeelte de heuristieken uitvoert. Soms is er sprake van meerdere \emph{master}-componenten die informatie met elkaar uitwisselen.
+Er bestaan reeds implementaties van parallelle hyperheuristieken. Deze algoritmen werken meestal in een \emph{master-slave} verhouding waar de \emph{master} de heuristieken selecteert en de \emph{slaves} deze heuristieken uitvoeren. Soms is er sprake van meerdere \emph{master}-componenten die informatie met elkaar uitwisselen.
 
 \paragraph{}
 Een andere techniek die gebruikt wordt is \emph{multiobjectivisation}: het opsplitsen van de evaluatiefunctie in verschillende functies zodat elke processor een aangepast optimalisatieprobleem uitvoert.

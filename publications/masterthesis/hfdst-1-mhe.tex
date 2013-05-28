@@ -26,7 +26,7 @@ Op basis van deze definitie kunnen we ook een algoritme op hoog niveau opstellen
 
 \importalgo{metaheuristicgeneral}{Hoog niveau beschrijving van een metaheuristiek\cite{DBLP:journals/jc/ShonkwilerV94}.}{metaheuristicGeneral}
 
-De aanwezigheid van toevalsgetallen is kenmerkend aan een metaheuristiek: typisch vereist elke overgangsfunctie \'e\'en of meer toevalsgetallen als invoer. Deze toeval-parameters introduceren het concept van een \emph{omgeving} ofwel ``\emph{neighborhood}'' van een oplossing-set volgens een overgangsfunctie:
+De aanwezigheid van toevalsgetallen is kenmerkend aan een metaheuristiek: typisch vereist elke overgangsfunctie \'e\'en of meer toevalsgetallen als invoer. Deze toevalsfactoren introduceren het concept van een \emph{omgeving} ofwel ``\emph{neighborhood}'' van een oplossing-set volgens een overgangsfunctie:
 
 \begin{definition}[Omgeving van een oplossing-set volgens een overgangsfunctie\cite{Alba2005book}]
 De \emph{omgeving} van een \emph{oplossing-set} volgens een \emph{overgangsfunctie} is de verzameling van alle oplossingen die we kunnen genereren door de overgangsfunctie toe te passen op deze oplossing-set, ongeacht de waarde van de toevalsfactoren. De omgeving van een functie $h_i$ kunnen we dus formeel uitdrukken als volgt:
@@ -46,7 +46,7 @@ Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabel
 
 \subsubsection{Genetische Algoritmes}
 
-\emph{Genetische algoritmen} ofwel ``\emph{Genetic Algorithms (GA)}'' zijn de eerste familie van metaheuristieken en werken op basis van een populatie: een set van oplossingen. Uit deze populatie worden twee of meer oplossingen geselecteerd, meestal op basis de fitness-waarde van deze oplossingen. Vervolgens past men een \emph{recombinatie}-operator ofwel \emph{crossover} toe: een overgangsfunctie die de geselecteerde oplossingen omzet in een nieuwe oplossingen die bepaalde eigenschappen met zijn ``\emph{ouders}'' deelt. Meestal volgt hierna een \emph{mutatie}-fase: men zal de oplossing minimaal aanpassen door middel van een andere overgangsfunctie. Onder bepaalde voorwaarden wordt de gegenereerde oplossing dan in de populatie ge\"injecteerd. Om de populatie binnen de perken te houden houdt dit meestal in dat na verloop van tijd minder kwalitatieve oplossingen uit de populatie worden verwijdert.\cite{holland1992adaption-in-nat,goldberg89,melanie_mitchell_book}
+\emph{Genetische algoritmen} ofwel ``\emph{Genetic Algorithms (GA)}'' zijn de eerste familie van metaheuristieken en werken op basis van een populatie: een set van oplossingen. Uit deze populatie worden twee of meer oplossingen geselecteerd, meestal op basis de fitness-waarde van deze oplossingen. Vervolgens past men een \emph{recombinatie} operator ofwel \emph{crossover} toe: een overgangsfunctie die de geselecteerde oplossingen omzet in een nieuwe oplossingen die bepaalde eigenschappen met zijn ``\emph{ouders}'' deelt. Meestal volgt hierna een \emph{mutatie}-fase: men zal de oplossing minimaal aanpassen door middel van een andere overgangsfunctie. Onder bepaalde voorwaarden wordt de gegenereerde oplossing dan in de populatie ge\"injecteerd. Om de populatie binnen de perken te houden houdt dit meestal in dat na verloop van tijd minder kwalitatieve oplossingen uit de populatie worden verwijdert.\cite{holland1992adaption-in-nat,goldberg89,melanie_mitchell_book}
 
 \subsubsection{Simulated Annealing}
 
@@ -56,15 +56,15 @@ Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabel
 \fun{p}{\mbox{accept $s_1\rightarrow s_2$}}=\fun{\min}{1,e^{\brak{\fun{\evalfun}{s_2}-\fun{\evalfun}{s_1}}/T}}
 \end{equation}
 
-Deze formule is beter bekend als de \emph{Boltzmann-verdeling} ofwel \emph{Gibbs verdeling}\cite{}. Indien de nieuwe oplossing beter is dan de oude oplossing, we altijd accepteren, in het andere geval accepteren we met een kans die kleiner wordt naarmate het verschil in fitness-waarde groeit. In de formule staat ook een parameter $T$ ofwel \emph{temperatuur}. De temperatuur bepaalt hoe sterk de kans daalt naarmate de kloof groeit. Het is een variabele die initieel op een positief getal wordt gezet en gedurende het zoekproces langzaam naar $0$ zakt. Dit betekent dat we in het begin sterk geneigd zijn om een slechtere oplossing te accepteren. Op het einde accepteren we bijna uitsluitend oplossing die beter zijn dan hun ouder.\cite{citeulike:1612433,Cerny1985Thermodynamical}
+Deze formule is beter bekend als de \emph{Boltzmann-verdeling} ofwel \emph{Gibbs-verdeling}\cite{}. Indien de nieuwe oplossing beter is dan de oude oplossing, we altijd accepteren, in het andere geval accepteren we met een kans die kleiner wordt naarmate het verschil in fitness-waarde groeit. In de formule staat ook een parameter $T$ ofwel \emph{temperatuur}. De temperatuur bepaalt hoe sterk de kans daalt naarmate de kloof groeit. Het is een variabele die initieel op een positief getal wordt gezet en gedurende het zoekproces langzaam naar $0$ zakt. Dit betekent dat we in het begin sterk geneigd zijn om een slechtere oplossing te accepteren. Op het einde accepteren we bijna uitsluitend oplossing die beter zijn dan hun ouder.\cite{citeulike:1612433,Cerny1985Thermodynamical}
 
 \subsubsection{Iterated Local Search}
 
-In de vorige sectie bespraken we \emph{Local Search}. \emph{Local Search} optimaliseert een oplossing door telkens in de omgeving van de actieve oplossing op zoek te gaan naar een betere oplossing. Deze methode leidt op termijn altijd tot een lokaal optimum. \emph{Iterated Local Search (ILS)} probeert een globaal optimum te bereiken met behulp van een zoekproces dat afwisselt tussen twee fases: in de \emph{local search}-fase optimaliseert het programma de oplossing tot het in een lokaal optimum terecht komt; in de \emph{perturbatie}-fase voert men een overgangsfunctie uit die met een zekere kans in staat moet zijn om een oplossing te genereren die uit het lokale optimum ontsnapt.\cite{stuetzle:1999,Glover2003}
+In de vorige sectie bespraken we \emph{Local Search}. \emph{Local Search} optimaliseert een oplossing door telkens in de omgeving van de actieve oplossing op zoek te gaan naar een betere oplossing. Deze methode leidt op termijn altijd tot een lokaal optimum. \emph{Iterated Local Search (ILS)} probeert een globaal optimum te bereiken met behulp van een zoekproces dat afwisselt tussen twee fases: in de \emph{local search} fase optimaliseert het programma de oplossing tot het in een lokaal optimum terecht komt; in de \emph{perturbatie} fase voert men een overgangsfunctie uit die met een zekere kans in staat moet zijn om een oplossing te genereren die uit het lokale optimum ontsnapt.\cite{stuetzle:1999,Glover2003}
 
-\subsubsection{Variable Neighbourhood Search}
+\subsubsection{Variable Neighborhood Search}
 
-\emph{Variable Neighbourhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighbourhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake}-fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we lange tijd geen verbetering vaststellen veranderen we van definitie voor omgeving.\cite{journals/eor/HansenM01}
+\emph{Variable Neighborhood Search (VNS)} is een metaheuristiek die verder bouwt op \emph{Iterated Local Search}. In het geval van \emph{Variable Neighborhood Search} is er echter sprake van verschillende definities voor een omgeving $\neighbr_i$ in een iteratie zullen in de \emph{shake} fase migreren naar een random oplossing in de omgeving $\neighbr_i$ en vervolgens passen we \emph{local search} toe op basis van deze omgeving. In het geval we lange tijd geen verbetering vaststellen veranderen we van definitie voor omgeving.\cite{journals/eor/HansenM01}
 
 \subsubsection{Tabu Search}
 In het geval van \emph{Tabu Search} bestaat de omgeving uit de unie van een reeks deelomgevingen. Onder bepaalde voorwaarden kan men beslissen een deel van de omgeving of oplossingsruimte tijdelijk ontoegankelijk te verklaren: de acties of locaties worden dan tijdelijk in een ``\emph{Tabu List (TL)}'' ondergebracht. Dit kan bijvoorbeeld nuttig zijn om eerdere acties niet plots ongedaan te maken. Na en bepaald aantal iteraties worden de acties terug uit de \emph{Tabu List} gehaald en kan men deze wel terug uitvoeren.\cite{journals/cor/Glover86,DBLP:journals/informs/Glover89,citeulike:2634743,Glover:TabuSearch}
@@ -86,17 +86,17 @@ Wanneer we geen details kennen in verband met de vorm van de evaluatiefunctie $\
 
 \subsubsection{Verwachtte tijd van een sequentieel proces}
 
-Onderzoek naar de raaktijd is gepubliceerd in \cite{DBLP:journals/jc/ShonkwilerV94}. Men modelleert in deze publicatie een metaheuristiek aan de hand van een \emph{Markov-model}: een algoritme dat zich op elk moment in een toestand bevindt en de volgende toestand probabilistisch kiest, uitsluitend op basis van de vorige toestand. Een toestand wordt voorgesteld met slechts een eindig aantal bits, bijgevolg kan dus niet de volledige geschiedenis die het algoritme heeft doorlopen in de toestand worden opgeslagen.
+Onderzoek naar de raaktijd is gepubliceerd in \cite{DBLP:journals/jc/ShonkwilerV94}. Men modelleert in deze publicatie een metaheuristiek aan de hand van een \emph{Markovketen}: een algoritme dat zich op elk moment in een toestand bevindt en de volgende toestand probabilistisch kiest, uitsluitend op basis van de vorige toestand. Een toestand wordt voorgesteld met slechts een eindig aantal bits, bijgevolg kan dus niet de volledige geschiedenis die het algoritme heeft doorlopen in de toestand worden opgeslagen.
 
 Toegepast op het geval van een metaheuristiek zal de toestand de populatie $\PopSet_i$ op dat moment voorstellen. Verder stelt men dat de populatie een vast aantal oplossing bevat. Deze voorwaarde beperkt het model niet omdat in elk algoritme de grootte van de populatie beperkt is tegenover de geheugencapaciteit van de machine en we op momenten dat er minder individuen in de populatie zitten, de lege plaatsen kunnen opvullen met zogenaamde \emph{dummy-oplossingen}.
 \paragraph{}
-Elke iteratie zal het algoritme een nieuwe toestand kiezen. Dit gebeurt volgen bepaalde overgangskansen $\fun{p}{t,i,j}$: de kans om van een populatie $\PopSet_i$ naar een populatie $\PopSet_j$ te gaan op tijdstip $t$. Indien de waarde van $\fun{p}{i,j,t}$ constant blijft over de tijd $t$ dan spreken we over een \emph{stationair} proces (dit is typisch voor bijvoorbeeld een genetisch algoritme), indien de kansen in de tijd veranderen beschouwen we een \emph{niet-stationair} proces. We zullen enkel het \emph{stationaire} geval beschouwen.
+Elke iteratie zal het algoritme een nieuwe toestand kiezen. Dit gebeurt volgen bepaalde overgangskansen $\fun{p}{t,i,j}$: de kans om van een populatie $\PopSet_i$ naar een populatie $\PopSet_j$ te gaan op tijdstip $t$. Indien de waarde van $\fun{p}{i,j,t}$ constant blijft over de tijd $t$ dan spreken we over een \emph{stationair} proces (dit is typisch voor bijvoorbeeld een genetisch algoritme), indien de kansen in de tijd veranderen beschouwen we een \emph{niet stationair} proces. We zullen enkel het \emph{stationaire} geval beschouwen.
 
 \paragraph{}
-Een concrete uitvoer van een metaheuristiek genereert dus een Markov-keten: een lijst aan toestanden (populaties) waarbij het $i$-de elementen in de lijst de populatie op tijdstip $i$ voorstelt. We kunnen de raaktijd van een Markov-keten vervolgens defini\"eren als het tijdstip waarop we in een populatie terecht waar het globaal optimum deel van uitmaakt:
+Een concrete uitvoer van een metaheuristiek genereert dus een Markovketen: een lijst aan toestanden (populaties) waarbij het $i$-de elementen in de lijst de populatie op tijdstip $i$ voorstelt. We kunnen de raaktijd van een Markovketen vervolgens defini\"eren als het tijdstip waarop we in een populatie terecht waar het globaal optimum deel van uitmaakt:
 
 \begin{definition}[Raaktijd $\hittime$]
-De \emph{raaktijd} $\hittime$ van een Markov-keten $\PopChain$ die bestaat uit populaties $\PopSet_t$ is gedefinieerd als volgt:
+De \emph{raaktijd} $\hittime$ van een Markovketen $\PopChain$ die bestaat uit populaties $\PopSet_t$ is gedefinieerd als volgt:
 \begin{equation}
 \fun{\hittime}{\PopChain}=\min\accl{t|\PopSet_t\in\PopChain\wedge\ConfigOpSet\cap \PopSet_t\neq\emptyset}
 \end{equation}
@@ -110,7 +110,7 @@ We kunnen deze definitie ook uitbreiden naar de raaktijd voor een zekere \emph{f
 We zullen stellen dat we op zoek zijn naar een populatie met een oplossing met een fitness-waarde die kleiner is dan~\fitnessval. Op basis van dit criterium kunnen we populaties indelen in \emph{doel-populaties}, waar dergelijke oplossingen in voorkomen, en \emph{normale populaties}. We stellen dat er in totaal $\npop$~\emph{populaties} door het algoritme kunnen worden gegenereerd waarvan $\ntarpop$~\emph{doel-populaties}. We geven vervolgens elk van de populaties een index waarbij we de \emph{doel-populaties} eerst nummeren: $\PopSet_1,\PopSet_2,\ldots,\PopSet_{\ntarpop}$ zijn \emph{doel-populaties}, $\PopSet_{\ntarpop+1},\PopSet_{\ntarpop+2},\ldots,\PopSet_{\npop}$ \emph{normale populaties}. We kunnen nu een kansvector \probdistmeta{t} opstellen voor een gegeven tijdstip waarbij een element in \probdistmeta{t} de kans voorstelt dat het algoritme zich op dat moment in de overeenkomstige toestand (populatie) bevindt. Door de transitiekansen te herschrijven in de vorm van een transitiematrix $\transmat$ kunnen we door \probdistmeta{t} met deze matrix te vermenigvuldigen de kansverdeling voor de volgende iteratie uitrekenen.
 
 \paragraph{}
-Het ordenen van de populaties in een \emph{doel-populatie} gedeelte en een \emph{normaal} gedeelte laat toe dat we de transitiematrix $\transmat$ opdelen in $4$~submatrices:
+Het ordenen van de populaties in een \emph{doel-populatie} gedeelte en een \emph{normaal} gedeelte laat toe dat we de transitiematrix $\transmat$ opdelen in $4$~deelmatrices:
 \begin{equation}
 \transmat=\brak{\begin{array}{cc}
 J&H\\
@@ -124,7 +124,7 @@ Net als bij de transitiematrix $\transmat$ kunnen we de probabiliteitsvector $\p
 \probdistmeta{t}=\brak{\probdistgoalmeta{t}\ |\ \probdistnormmeta{t}}=\probdistmeta{t-1}\cdot\transmat=\brak{\probdistgoalmeta{t-1}+\bridgemat\cdot\probdistnormmeta{t-1}\ |\ \probdistnormmeta{t-1}\cdot\removmat}
 \eqnlab{oneStepTransition}
 \end{equation}
-We zijn vooral ge\"interesseerd in de fractie van Markov-ketens die in stap $t$ naar een \emph{doel-populatie} migreren ofwel de kans dat we stap $t$ een gewenste oplossing bereiken:
+We zijn vooral ge\"interesseerd in de fractie van Markovketens die in stap $t$ naar een \emph{doel-populatie} migreren ofwel de kans dat we stap $t$ een gewenste oplossing bereiken:
 \begin{equation}
 \Prob{\hittime=t}=\displaystyle\sum_{i=\ntarpop+1}^{N}\brak{\probdistmeta{t-1,i}\cdot\displaystyle\sum_{j=1}^{\ntarpop}\fun{p}{t,i,j}}=\dabs[1]{\probdistnormmeta{t-1}\cdot \bridgemat}
 \eqnlab{exhaust}
@@ -151,7 +151,7 @@ We kunnen een eigenvector benaderen door een $\onematrix$-vector een groot aanta
 \end{array}
 \eqnlab{longTermAlpha}
 \end{equation}
-Wanneer we voor $\arbitraryvec$ de begindistributie $\probdistnormmeta{0}$ nemen, kunnen we het dot-product tussen $\probdistnormmeta{0}$ en $\evr[1,\removmat]$ defini\"eren als $\metapa$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die een benaderende waarde voor de gemiddelde raaktijd oplevert:
+Wanneer we voor $\arbitraryvec$ de begindistributie $\probdistnormmeta{0}$ nemen, kunnen we het inwendig product tussen $\probdistnormmeta{0}$ en $\evr[1,\removmat]$ defini\"eren als $\metapa$. We kunnen vervolgens \eqnref{meanHit} en \eqnref{longTermAlpha} samennemen in een nieuwe vergelijking die een benaderende waarde voor de gemiddelde raaktijd oplevert:
 \begin{equation}
 \mean{\hittime}\approx 1+\dabs[1]{\probdistnormmeta{0}}+\metapa\cdot\brak{\displaystyle\sum_{i=1}^{\infty}\ev[1,\removmat]^i}=1+\dabs[1]{\probdistnormmeta{0}}+\displaystyle\frac{\metapa\cdot \ev[1,\removmat]}{1-\ev[1,\removmat]}
 \end{equation}
@@ -163,10 +163,10 @@ Net zoals we de termen van dit gemiddelde benadert hebben aan de hand van \eqnre
 
 \subsubsection{Onafhankelijke parallelle Monte-Carlo simulaties}
 
-\cite{DBLP:journals/jc/ShonkwilerV94} beschouwt ook een logische stap tot parallellisatie: $p$ processoren draaien elk onafhankelijk van elkaar een metaheuristiek, op het moment dat \'e\'en van de processoren in een \emph{doel-populatie} terechtkomt stoppen alle processoren en wordt de beste oplossing gerapporteerd. We kunnen dit fenomeen modelleren met behulp van een Markov-keten waarbij elke knoop van de keten een $p$-tuple voorstelt met de populaties van de verschillende processoren in de tijdstap. Vervolgens defini\"eren we \emph{parallelle raaktijd} $\phittime$ als volgt:
+\cite{DBLP:journals/jc/ShonkwilerV94} beschouwt ook een logische stap tot parallellisatie: $p$ processoren draaien elk onafhankelijk van elkaar een metaheuristiek, op het moment dat \'e\'en van de processoren in een \emph{doel-populatie} terechtkomt stoppen alle processoren en wordt de beste oplossing gerapporteerd. We kunnen dit fenomeen modelleren met behulp van een Markovketen waarbij elke knoop van de keten een $p$-tuple voorstelt met de populaties van de verschillende processoren in de tijdstap. Vervolgens defini\"eren we \emph{parallelle raaktijd} $\phittime$ als volgt:
 
 \begin{definition}[Parallelle raaktijd $\phittime$]
-We defini\"eren de parallelle raaktijd $\phittime$ van een Markov-keten $\PopChain$ die bestaat uit $p$-tuples van populaties $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ als:
+We defini\"eren de parallelle raaktijd $\phittime$ van een Markovketen $\PopChain$ die bestaat uit $p$-tuples van populaties $\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}$ als:
 \begin{equation}
 \fun{\phittime}{\PopChain}=\min\accl{t|\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}\in\PopChain\wedge\exists i:\ConfigOpSet\cap \PopSet_{t,i}\neq\emptyset}
 \end{equation}
@@ -175,7 +175,7 @@ We kunnen deze definitie ook uitbreiden naar de raaktijd voor een zekere fitness
 \fun{\phittime}{\PopChain,\fitnessval}=\min\accl{t|\tupl{\PopSet_{t,1},\PopSet_{t,2},\ldots,\PopSet_{t,p}}\in\PopChain\wedge\exists i\exists \sol\in\PopSet_{t,i}:\fun{\evalfun}{\sol}\leq \fitnessval}
 \end{equation}
 \end{definition}
-Vermits de verschillende processoren een onafhankelijk en equivalent proces uitvoeren, kunnen we gebruik maken van het theorema van de onafhankelijke kansen met de onafhankelijke EN-regel:
+Vermits de verschillende processoren een onafhankelijk en equivalent proces uitvoeren, kunnen we gebruik maken van het theorema van de onafhankelijke kansen met de \emph{onafhankelijke EN}-regel:
 \begin{equation}
 \begin{aligned}
 \Prob{\phittime\geq t}&=\Prob{\hittime_1\geq t\wedge\hittime_2\geq t\wedge\ldots\wedge\hittime_p\geq t}\\
@@ -217,7 +217,7 @@ Ook de rechtse eigenvector $\evr[1,\removmat]$ heeft een betekenis. We kunnen de
 is genormaliseerde rechtse eigenvector een probabiliteitsvector die aangeeft in welke mate een populaties bijdragen tot het behoud in een \emph{normale populaties}. Wanneer we dus de $i$-de gewone populatie beschouwen en het $i$-de element van $\evr[1,\removmat]$ is klein, is er een grote kans dat we in een doel-toestand terecht zullen komen.
 
 \paragraph{}
-De interpretatie van de rechtse eigenvector vormt de basis voor de interpretatie van $\metapa$. Vermits $\metapa$ het dot-product is tussen de probabiliteitsvector $\probdistnormmeta{0}$ en $\evr[1,\removmat]$. Dit dot-product is proportioneel met de cosinus van de hoek tussen beide vectoren:
+De interpretatie van de rechtse eigenvector vormt de basis voor de interpretatie van $\metapa$. Vermits $\metapa$ het inwendig product is tussen de probabiliteitsvector $\probdistnormmeta{0}$ en $\evr[1,\removmat]$. Dit inwendig product is proportioneel met de cosinus van de hoek tussen beide vectoren:
 \begin{equation}
 \fun{\cos}{\probdistnormmeta{0},\evr[1,\removmat]}=\displaystyle\frac{\probdistnormmeta{0}^T\cdot\evr[1,\removmat]}{\dabs{\probdistnormmeta{0}}\cdot\dabs{\evr[1,\removmat]}}=\displaystyle\frac{\metapa}{\dabs{\probdistnormmeta{0}}\cdot\dabs{\evr[1,\removmat]}}
 \end{equation}
@@ -245,12 +245,12 @@ Vermits $0\leq\metapb<1$ en $0<\metapa$, kunnen we met behulp van \eqnref{speedu
 \paragraph{}
 De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties op. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\metapa$ klein indien de beginverdeling $\probdistnormmeta{0}$ klein is of sterk afwijkt van $\evr[1,\removmat]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\metapa<\metapb$, de metaheuristiek slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P}, of problemen met slecht ge\"implementeerde metaheuristieken.
 
-\subsubsection{A flaw in the plan: anomalie\"en in het model}
-
+\subsubsection{Anomalie\"en in het model}
+f
 Het voorgestelde model vertoond verder nog enkele anomalie\"en. Hieronder geven we een bondig overzicht.
 
 \paragraph{}
-We hebben een stationair Markov-systeem gemodelleerd. Metaheuristieken hebben eerder een dynamisch karakter: op basis van kennis uit het verleden, veranderen de transitiematrices per tijdstap. In het geval van bijvoorbeeld \emph{Simulated Annealing} gebeurt dit volgens een vast patroon en kunnen we sommige effecten modelleren\cite{}. Meestal echter veranderen de kansen op basis van de bezochte populaties. In dat geval is het minder evident om een model op te stellen.
+We hebben het proces als een stationaire Markovketen gemodelleerd. Metaheuristieken hebben eerder een dynamisch karakter: op basis van kennis uit het verleden, veranderen de transitiematrices per tijdstap. In het geval van bijvoorbeeld \emph{Simulated Annealing} gebeurt dit volgens een vast patroon en kunnen we sommige effecten modelleren\cite{}. Meestal echter veranderen de kansen op basis van de bezochte populaties. In dat geval is het minder evident om een model op te stellen.
 
 \paragraph{}
 In het model vraagt het genereren van een populatie dezelfde hoeveelheid tijd als een transitie. In de praktijk verwachten we dat in heel wat gevallen de tweede stap sneller zal verlopen (omdat de configuraties en populaties maar gedeeltelijk aangepast zullen worden). Dit is ook een aspect die pleit voor metaheuristieken: we besparen tijd door de transities sneller uit te voeren dan het genereren van nieuwe configuraties.
@@ -297,18 +297,18 @@ Onder \emph{Local Search Metaheuristics} verstaan we metaheuristieken die slecht
 \begin{enumerate}
  \item \emph{Parallel multistart}: de processoren starten met een verschillende initi\"ele populatie en werken min of meer onafhankelijk. Dit is het parallellisatie-paradigma die we in de modellering hebben beschouwd.
  \item \emph{Parallel moves}: er is sprake van \'e\'en gedistribueerde actieve oplossing. Elke processor berekend vervolgens een kandidaat die als volgende actieve oplossing wordt voorgedragen. Uit deze verzameling van oplossingen wordt dan een nieuwe gedistribueerde actieve oplossing gekozen. In het geval we een \emph{Local Search} stap uitvoeren kunnen we bijvoorbeeld ook elke processor een deel van de volledige omgeving laten afzoeken.
- \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. In het geval van \emph{move acceleration} wordt de oplossing opgedeeld in min of meer onafhankelijk delen. Elke processor past een deel van de configuratie aan en rekent de verandering van de fitness-waarde met betrekking tot dit deel uit. Meestal is nog een postprocessing-fase vereist om de uiteindelijke fitness-waarde te berekenen. In sommige modellen laat men fouten toe in de evaluatiefunctie en berekent men de fitness-waarde maar sporadisch correct.
+ \item \emph{Move acceleration}: een migratie kan er soms uit bestaan dat een significant deel van de oplossing verandert. Bovendien kan de evaluatiefunctie zelf ook moeilijk uit te rekenen zijn. In het geval van \emph{move acceleration} wordt de oplossing opgedeeld in min of meer onafhankelijk delen. Elke processor past een deel van de configuratie aan en rekent de verandering van de fitness-waarde met betrekking tot dit deel uit. Meestal is nog een \emph{post-processing} fase vereist om de uiteindelijke fitness-waarde te berekenen. In sommige modellen laat men fouten toe in de evaluatiefunctie en berekent men de fitness-waarde maar sporadisch correct.
 \end{enumerate}
 
 \paragraph{}
 In het geval van \emph{Evolutionary Algorithms} wordt er gerekend met een populatie van oplossingen. Er worden twee vormen van parallellisme voorgesteld:
 \begin{enumerate}
- \item \emph{Parallel population}: men kan ook voor elke processor en onafhankelijke populatie beschouwen waarop een evolutionair algoritme werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men subpopulaties beschouwd een \emph{Island Model}\cite{Whitley98theisland,parallelgeneticalgorithms}.
+ \item \emph{Parallel population}: men kan ook voor elke processor en onafhankelijke populatie beschouwen waarop een evolutionair algoritme werkt. Meestal gaat dit enigszins gepaard met kruisbestuiving: het uitwisselen van sterke oplossingen. Meestal noemt een genetisch algoritme waarbij men deelpopulaties beschouwd een \emph{Island Model}\cite{Whitley98theisland,parallelgeneticalgorithms}.
  \item \emph{Parallel computation}: Operaties zoals het berekenen van de fitness-waarde moeten op alle oplossingen in de populatie worden berekend. Vermits oplossingen onafhankelijke entiteiten zijn, kan men het berekenen van deze waarden inherent parallelliseren.
 \end{enumerate}
 
 \paragraph{}
-In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke \absus{}: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve \absu{} door het grote aantal synchronisatiestappen.
+In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke \absu{}: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve \absu{} door het grote aantal synchronisatiestappen.
 
 \paragraph{}
 Andere bronnen spelen dan weer vooral bij een lagere granulariteit: het is bijvoorbeeld mogelijk dat na verloop van tijd twee populaties in een parallel evolutionair algoritme convergeren. De resultaten uit twee gelijkaardige populaties zijn meestal ook gelijkaardig, waardoor er dus weinig winst geboekt wordt met het uitvoeren van het algoritme op verschillende processoren.
@@ -330,4 +330,4 @@ Empirische resultaten tonen dat de empirische \absu{} sterk kan vari\"eren naarg
 Omdat we meestal de exacte oplossing niet kennen is de \absu{} moeilijk te verifi\"eren: een parallel algoritme kan snel sterke oplossingen genereren, maar zal misschien niet significant sneller de echte oplossing vinden. Bovendien zal men meestal de uitvoer stopzetten alvorens een metaheuristiek de oplossing heeft gevonden. \cite{crainicAndToulouse} stelt daarom drie andere metrieken voor: kwalitatief sterkere oplossingen gedurende een significant deel van het zoekproces, robuustere systemen die meer garantie bieden op een sterke oplossing, of een algoritme die de algemene tijdscomplexiteit naar omlaag haalt.
 
 \subsubsection{Parallellisatie met behulp van aangepast hardware}
-Het boek besteed ook aandacht aan hardware-parallellisatie: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/glvlsi/HaldarNCB00,conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.
+Het boek besteed ook aandacht aan parallellisatie met behulp van hardware: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/glvlsi/HaldarNCB00,conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.
