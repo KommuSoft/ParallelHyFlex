@@ -101,3 +101,5 @@ ParallelHyFlex/build/*
 
 #data
 *.dat
+*.gp
+*.txt

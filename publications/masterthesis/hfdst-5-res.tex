@@ -1,3 +1,19 @@
 \section{Resultaten}
 
+\subsection{Makkelijke problemen}
+
+In de testset werken we met een set SAT problemen die makkelijk op te lossen zijn. Het voordeel is dat deze problemen doorgaans allemaal opgelost kunnen worden in een redelijke tijd en dus een inzicht kunnen bieden in welke termijn moeilijkere problemen kunnen worden opgelost. Hiervoor werden \prbm{Sat}-problemen gegenereerd met 42.6~\emph{expressies} per \emph{variabele}.
+
+\subsection{Evolutie van oplossingen volgens het aantal processoren}
+
+\showgraph[width=\textwidth]{smallp}{De evolutie van oplossing bij makkelijke problemen}{psmall}
+
+\imgref{psmall} toont hoe verschillende simulaties gemiddeld evolueren in de tijd volgens het aantal processoren waarmee we het probleem oplossen. Op de figuur zien we dat naarmate het aantal processoren stijgt, de oplossingen op lange termijn sneller gevonden wordt. De tijd alvorens de verbetering wordt ingezet neemt echter ook toe met het aantal processoren. Dit is waarschijnlijk te wijten aan het dat bij een groter aantal processoren, er meer administratieve taken komen kijken. Wat ook opvalt is dat de evolutie met $2$~processoren nagenoeg dezelfde is als de evolutie bij $3$~processoren. Ook dit is waarschijnlijk te wijten aan de zaken in verband met communicatie: de kosten bij groepscommunicatie zijn ongeveer dezelfde bij $3$ of $4$~processoren. In het geval van $4$~processoren wordt er echter informatie over een grotere hoeveelheid data uitgewisseld.
+
+\section{Moeilijke problemen}
+
+\showgraph[width=\textwidth]{smallp}{De evolutie van oplossing bij moeilijke problemen}{plarge}
+
+Bij de moeilijke gevallen hebben we een probleemset gegenereerd met 4.26 expressies per variabele. In deze context vereist het vinden van de exacte oplossing meestal veel rekentijd. 
+
 \todo{afwerken}

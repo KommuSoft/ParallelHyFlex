@@ -1,0 +1,29 @@
+\section{Test-set}
+
+De beschreven systemen in \chpref{parhyf} en \chpref{paradaphh} introduceren heel wat parameters. In de testen hebben volgende parameters laten vari\"eren:
+\begin{enumerate}
+ \item De grootte van het probleem: 1000, 10'000 en 100'000 variabelen;
+ \item De moeilijkheid van het probleem: een expressie-variabele ratio van 4.26 of 42.6;
+ \item De lokale invloed in de \emph{learning automaton} (in het \emph{relay hybridisation} gedeelte): $0.05,0.10,\ldots1.00$;
+ \item De invloed van de globale waarden in de \emph{heuristic records} (in het \emph{ADHS} gedeelte): $0.05,0.10,\ldots1.00$;
+ \item De grootte van de \emph{ervaring-set}: $1,2,\ldots,20$;
+ \item Het aantal historische fitness-waardes in het \emph{AILLA}-gedeelte: $1,2,\ldots,20$
+ \item Het aantal historische fitness-waardes in het \emph{AILLA}-gedeelte die op de lokale processor moeten gegenereerd zijn: $1,2,\ldots,20$; en
+ \item Het aantal beperkingen in de \emph{zoekruimte}: $1,2,\ldots,20$; en
+ \item Het aantal processoren: $1,2,3,4$.
+\end{enumerate}
+
+Het overlopen van alle configuraties die men met deze parameters kan genereren is niet haalbaar. Zeker omdat er verschillende probleemgevallen moeten worden getest alvorens men besluiten uit de resultaten kan trekken. Voor elke combinatie van het aantal variabelen en expressies werd hiervoor een set van 25~instanties samengesteld. Om vervolgens conclusies te kunnen trekken uit de invloeden van de verschillende parameters, werd telkens toevallige configuraties gekozen. Omdat we vooral ge\"interesseerd zijn in de \absu{}, wordt een configuratie toegepast op allen processor-configuraties, hierdoor hopen we tot objectievere resultaten te komen.
+
+Deze configuratie werd vervolgens toegepast op 25~instanties. Deze techniek laat toe dat we de resultaten kunnen marginaliseren naar \'e\'en of meerdere variabelen onder de \emph{naive Bayes}-assumptie: er zijn geen afhankelijkheden tussen de verschillende vormen van data. In de realiteit verwachten we deze afhankelijkheden wel. Zolang de afhankelijkheden echter beperkt blijven\footnote{We verwachten bijvoorbeeld weinig invloed tussen parameters die geen betrekking hebben op hetzelfde component.}, kan men echter voorzichtige conclusies trekken. Bovendien wordt de bovenstaande techniek vaak toegepast om met succes problemen zoals bijvoorbeeld integratie op te lossen.
+
+\paragraph{}
+In totaal werden $18'300$~simulaties gedraaid: $13'200$ op de makkelijke gevallen en 5'100 op de moeilijke gevallen. Deze simulaties werden gedraaid op machines met een \emph{Intel i5 2400} processor ($4\times3.10~\mbox{GHz}$, $6~\mbox{MiB}$ cache) met $3.7~\mbox{GiB}$ geheugen onder het \emph{Linux/Ubuntu 12.04 LTS} besturingssysteem.
+
+\paragraph{}
+Wanneer we een simulatie draaien in \emph{ParHyFlex} wordt op de lokale machine een logbestand\footnote{Omdat de totale grootte van de logbestanden opliep tot meer dan 20~\mbox{TiB} werd deze niet ter beschikking gesteld.} aangemaakt waar de verschillende deelcomponenten regelmatig hun toestand in noteren. Bij elke gebeurtenis wordt tevens de tijd genoteerd. Met behulp van een serie een reeks programma's geschreven in \emph{Perl} en \emph{Bourne Shell}\footnote{Deze programma's kunnen worden afgehaald op \url{http://goo.gl/3YNnp}, samen met de rest van het \emph{ParHyFlex}-systeem.} wordt de relevante informatie uit deze logboeken gehaald en wordt, in het geval het programma op meerdere processoren draait, de simulatie in \'e\'en bestand beschreven. Een simulatie gaat altijd gepaard met een initialisatie waarbij de verschillende processoren elkaar eerst contacteren. Bij meerdere processoren kan deze tijd makkelijk oplopen tot een halve seconde. Deze fase wordt uit de simulaties weggefilterd: een simulatie begint op het moment dat een eerste oplossing in het geheugen wordt geladen. De overige reeks programma's marginaliseert de simulaties: de logboeken van verschillende simulaties worden naast elkaar gelegd en per tijdstap wordt het gemiddelde, minimum, maximum, mediaan en standaardafwijking bepaald van de op dat moment beste oplossingen.
+
+\paragraph{}
+In plaats van de parameter van een bepaald component op 0 te zetten kan men er natuurlijk ook voor opteren op het component uit te schakelen.
+
+%Wanneer componenten worden uitgeschakeld wordt de vrijgekomen rekenkracht besteed aan het verder ontwikkelen van de oplossingen. Door het uitschakelen van componenten is het bijgevolg niet mogelijk op een objectieve manier te oordelen over de invloeden van bepaalde parameters. Daarnaast is \emph{ParHyFlex} een systeem die voornamelijk ontwikkeld is voor het voeren van onderzoek. Het implementeren van componenten op een zeer abstract niveau impliceert echter \emph{overhead}. De meeste componenten zullen dan ook meer rekenkracht aanwenden dan strikt noodzakelijk is voor het vervullen van hun taken. Hierdoor kan men ook stellen dat de rekenkracht die we besparen met het uitschakelen van een component waarschijnlijk een overschatting is tegenover de potenti\"ele winst bij een praktische implementatie.

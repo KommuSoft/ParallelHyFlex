@@ -1,4 +1,4 @@
-\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes,rotating}
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages, amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes,rotating,graphicx}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
 %\usepackage[showframe]{geometry}
 \usepackage[all]{xy}
@@ -13,8 +13,17 @@
 
 \usetikzlibrary{shapes,fit,calc}
 
+\newcounter{tmpC}
+
 \newcommand{\baselab}[2]{\label{#1:#2}}
 \newcommand{\baseref}[3]{\textsc{\nohyphens{#3}~\textup{\ref{#1:#2}}}}
+\newcommand{\baserefs}[3]{
+  \setcounter{tmpC}{0}
+  \foreach \x in {#2} {\addtocounter{tmpC}{1}}
+  \textsc{\nohyphens{#3}
+	\foreach \x in {#2} {\addtocounter{tmpC}{-1}\ifthenelse{\value{tmpC} > 0}{\textup{\ref{#1:\x}},}{en \textup{\ref{#1:\x}}}}
+  }~
+}
 \newcommand{\baserefq}[3]{\textsc{\textup{\ref{#1:#2}}}}
 
 \newcommand{\rot}[1]{\begin{sideways}#1\end{sideways}}
@@ -23,8 +32,11 @@
 \newcommand{\defref}[1]{\baseref{def}{#1}{Definitie}}
 \newcommand{\imglab}[1]{\baselab{fig}{#1}}
 \newcommand{\imgref}[1]{\baseref{fig}{#1}{Figuur}}
+\newcommand{\sfglab}[1]{\baselab{sfg}{#1}}
+\newcommand{\sfgref}[1]{\baseref{sfg}{#1}{Deelfiguur}}
 \newcommand{\tbllab}[1]{\baselab{tbl}{#1}}
 \newcommand{\tblref}[1]{\baseref{tbl}{#1}{Tabel}}
+\newcommand{\tblrefs}[1]{\baserefs{tbl}{#1}{Tabellen}}
 \newcommand{\alglab}[1]{\baselab{alg}{#1}}
 \newcommand{\algref}[1]{\baseref{alg}{#1}{Algoritme}}
 \newcommand{\eqnlab}[1]{\baselab{eqn}{#1}}
@@ -234,6 +246,31 @@
 \selectcolormodel{gray}
 \newcommand{\importtikz}[4][1.00]{\begin{figure}[hbt]\begin{center}\def\sc{#1}\input{tikzpictures/#2}\caption{#4}\imglab{#3}\end{center}\end{figure}}
 \newcommand{\importalgo}[3]{\begin{algorithm}[hbt]\input{algorithms/#1}\caption{#2}\alglab{#3}\end{algorithm}}
+\newcommand{\importgraphsub}[3]{
+  \foreach \f/\o/\t/\l in {#1} {
+	\subfigures[\t] {
+	  \sfglab{\l}
+	  \includegraphics[\o]{grafieken/\f}
+	}
+  }
+}
+
+\newcommand{\showgraph}[4][]{
+ \begin{figure}[hbt]
+  \centering
+  \includegraphics[#1]{grafieken/#2.pdf}
+  \caption{#3}
+  \imglab{#4}
+ \end{figure}
+}
+
+\newcommand{\inputresult}[2]{
+ \begin{table}[hbt]
+ \input{tables/data-#1.tex}
+ \caption{#2}
+ \tbllab{#1}
+ \end{table}
+}
 
 \newcommand{\drawmem}[3]{
 \node[draw,rectangle,fill=gray!20,minimum width=\sc*0.5*#2 cm, minimum height=\sc*0.5cm] (#1) at (0,0.5) {};

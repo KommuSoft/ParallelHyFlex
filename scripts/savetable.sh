@@ -1,0 +1,2 @@
+cd ~/Projects/parallelhyflex/ParallelHyFlex/data/$1/f$2
+perl ~/Projects/parallelhyflex/ParallelHyFlex/scripts/modtable.pl 500 < summary-$3.txt | perl ~/Projects/parallelhyflex/ParallelHyFlex/scripts/calcstats.pl "1" 2> /dev/null | perl ~/Projects/parallelhyflex/ParallelHyFlex/scripts/removecols.pl "1,9,10" | perl ~/Projects/parallelhyflex/ParallelHyFlex/scripts/totextable.pl > ~/Projects/parallelhyflex/ParallelHyFlex/publications/masterthesis/tables/data-$4.tex
