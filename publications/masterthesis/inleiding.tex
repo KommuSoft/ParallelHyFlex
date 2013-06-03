@@ -2,17 +2,17 @@
 \chplab{inleiding}
 \chapterquote{If a man will begin with certainties, he shall end in doubts; but if he will be content to begin with doubts, he shall end in certainties.}{Francis Bacon}
 
-Optimalisatie is een belangrijk onderwerp in de artifici\"ele intelligentie. Bij de meeste algemene problemen in de artifici\"ele intelligentie, komen dan ook vormen van optimalisatie kijken. Het bepalen van de optimale parameters, het kortste pad of de kleinste correcte beslissingsboom zijn enkele voorbeelden.
+Optimalisatie is een belangrijk onderwerp in de artifici\"ele intelligentie. Bij de meeste algemene problemen in de artifici\"ele intelligentie komen dan ook vormen van optimalisatie kijken. Het bepalen van de optimale parameters, het kortste pad of de kleinste correcte beslissingsboom zijn enkele voorbeelden.
 
 \paragraph{}
-Hoewel elke tak in de artifici\"ele intelligentie met deze problemen wordt geconfronteerd, bestaat er een specifieke tak die zich focust op deze problemen: ``Operationeel Onderzoek'' ofwel ``Operational Research''. De problemen die men tracht op te lossen zijn doorgaans moeilijk van aard: er is sprake van een groot aantal potenti\"ele oplossingen, het evalueren van een mogelijke oplossing is geen sinecure en de regels aan die een oplossing moet voldoen zijn vrij complex.
+Hoewel elke tak in de artifici\"ele intelligentie met deze problemen wordt geconfronteerd, bestaat er een specifieke tak die zich focust op deze problemen: ``Operationeel Onderzoek'' ofwel ``Operational Research''. De problemen die men tracht op te lossen zijn doorgaans moeilijk van aard: er is sprake van een groot aantal potenti\"ele oplossingen, het evalueren van een mogelijke oplossing is geen sinecure en de regels waar een oplossing aan moet voldoen zijn vrij complex.
 
 \section{Operationeel Onderzoek}
 
-Operationeel onderzoek probeert doorgaans optimalisatieproblemen op te lossen in een zeer concrete en praktische setting. Belangrijke voorbeelden zijn bijvoorbeeld het genereren van productieplanningen, het optimaliseren van winstmarges, ... Omdat de zoekruimte dermate groot is, is het vinden van de exacte oplossing meestal niet mogelijk, men stelt zich in de meeste gevallen dan ook tevreden met een benaderende oplossing.
+Operationeel onderzoek probeert doorgaans optimalisatieproblemen op te lossen in een zeer concrete en praktische context. Belangrijke voorbeelden zijn bijvoorbeeld het genereren van productieplanningen, het optimaliseren van winstmarges, ... Omdat de zoekruimte dermate groot is, is het vinden van de exacte oplossing meestal niet mogelijk. In de meeste gevallen stelt men zich dan ook tevreden met een benaderende oplossing.
 
 \paragraph{}
-De laatste jaren is er een trend naar telkens meer ge\"integreerde systemen: algoritmen die onafhankelijk van het concrete probleem toch een oplossing kunnen uitrekenen. Deze evolutie is vooral te wijten aan de kost die de ontwikkeling van benaderingsalgoritmen met zich meebrengen. Omdat ontwikkelingskosten meestal hoger liggen dan de kosten ten gevolge door rekentijd is het financieel interessant om te investeren in systemen die met een minimale inspanning kunnen worden ontwikkeld. Belangrijk hierbij is de bouw van componenten, die men kan hergebruiken voor het effectief oplossen van andere problemen. Een belangrijke groep van dit soort systemen zijn \emph{Hyperheuristieken}.
+De laatste jaren is er een trend naar telkens meer ge\"integreerde systemen: algoritmen die onafhankelijk van het concrete probleem toch een oplossing kunnen uitrekenen. Deze evolutie is vooral te wijten aan de kost die de ontwikkeling van benaderingsalgoritmen met zich meebrengen. Omdat ontwikkelingskosten meestal hoger liggen dan de kosten ten gevolge door rekentijd is het financieel interessant om te investeren in systemen die met een minimale inspanning kunnen worden ontwikkeld. Een belangrijk aspect bij de bouw van deze componenten is dat men deze kan hergebruiken voor het effectief oplossen van andere problemen. Een familie van algoritmen die hiervoor zijn ontworpen zijn de zogenaamde \emph{hyperheuristieken}.
 
 \section{Parallelle algoritmen}
 
@@ -26,11 +26,11 @@ Parallelle algoritmen worden meestal ingezet wanneer de rekenkracht van \'e\'en 
 In deze masterthesis onderzoeken we of het mogelijk is om de prestaties van hyperheuristieken te verbeteren door deze parallel of verschillende processoren te laten draaien. Een belangrijk deel in deze onderzoeksvraag is welke componenten hiertoe kunnen bijdragen.
 
 \paragraph{}
-Vermits hyperheuristieken probleemonafhankelijk werken, moeten ze door middel van ervaring leren hoe men het probleem kan oplossen. Door verschillende processen ervaring met elkaar te laten uitwisselen, kan de tijd waarin men voornamelijk rekenkracht investeert in het opdoen van ervaring mogelijk worden verkort. Dit kan echter ook averechts werken: wanneer men te snel in een exploitatiefase komt, is het mogelijk dat men uitspraken doet op basis van een te kleine hoeveelheid ervaring. Bovendien kan men de kennis die \'e\'en processor heeft opgedaan niet altijd zomaar overdragen naar de andere processoren.
+Vermits hyperheuristieken probleemonafhankelijk werken, moeten deze algoritmen door middel van ervaring leren hoe men het probleem kan oplossen. Door verschillende processen ervaring met elkaar te laten uitwisselen, kan de tijd waarin men voornamelijk rekenkracht investeert in het opdoen van ervaring mogelijk worden verkort. Dit kan echter ook averechts werken: wanneer men te snel in een exploitatiefase komt, is het mogelijk dat men uitspraken doet op basis van een te kleine hoeveelheid ervaring. Bovendien is de kennis die \'e\'en processor heeft opgedaan niet zomaar overdraagbaar naar de andere processoren.
 
 \section{Gevolgde methodiek}
 
-In een eerste fase werd de beschikbare literatuur geraadpleegd. Er is veel literatuur te vinden rond het parallelliseren van metaheuristieken. Parallelle hyperheuristieken en hyperheuristieken in het algemeen zijn echter een vrij nieuw domein. Er bestaan dan ook slechts enkele concrete implementaties en weinig onderzoeken in verband die het effect van de verschillende paradigma testen. De belangrijkste werken worden dan ook vermeld in \sscref{defparhyhe}.
+In een eerste fase werd de beschikbare literatuur geraadpleegd. Literatuur in verband met metaheuristieken en meer specifiek parallelle hyperheuristieken is vrij courant. Parallelle hyperheuristieken en hyperheuristieken in het algemeen zijn echter een vrij nieuw domein. Er bestaan dan ook slechts enkele concrete implementaties en weinig onderzoeken die het effect van de verschillende paradigma's testen. De belangrijkste werken worden vermeld in \sscref{defparhyhe}.
 
 \paragraph{}
 Om meer inzicht te verwerven in de structuur van hyperheuristieken werden 16 verschillende implementaties onderzocht. De resultaten van dit onderzoek worden gerapporteerd in \chpref{chesc} en \appref{chesc}. Op basis van deze studie werden er enkele hypotheses naar voren geschoven die mogelijk verklaren waarom sommige hyperheuristieken beter werken dan anderen.
@@ -45,7 +45,10 @@ Om de invloed van de verschillende componenten te testen, werden twee problemen 
 Enkele activiteiten met betrekking tot deze thesis werden niet opgenomen in dit werk. Dit komt omdat deze activiteiten een te kleine relevante bijdrage leverden. Het gaat hier in de eerste plaats om de implementatie van een systeem die het implementeren van een hyperheuristiek op een gestructureerde manier toelaat. Een programmeur kan door verschillende modulaire componenten samen te nemen een eigen hyperheuristiek bouwen. De bedoeling van dit systeem is om op termijn meer inzicht te verwerven in de invloed van sommige componenten op de prestaties van een hyperheuristiek.
 
 \paragraph{}
-Daarnaast werd een visualisatiesysteem genaamd \emph{ParVis} ge\"implementeerd. Dit systeem toont de toestand waarin de verschillende processoren zich bevinden samen met de berichten die onderling verstuurd worden. De bedoeling van dit softwarepakket is om de werking van een parallel algoritme beter te kunnen begrijpen. De broncode van dit softwaresysteem is te downloaden op \url{http://goo.gl/YPuMr}. Het softwarepakket omvat ook een voorbeeld die de werking van een parallel \algo{Sum-Product}-algoritme en een \emph{asynchrone GatherAll}\footnote{Zie \secref{mpimod}.} illustreert.
+Daarnaast werd het visualisatiesysteem \emph{ParVis} ge\"implementeerd. Dit systeem toont de toestand waarin de verschillende processoren zich bevinden samen met de berichten die onderling verstuurd worden. De bedoeling van dit softwarepakket is om de werking van een parallel algoritme beter te kunnen begrijpen. De broncode van dit softwaresysteem is te downloaden op \url{http://goo.gl/YPuMr}. Het softwarepakket omvat ook een voorbeeld die de werking van een parallel \algo{Sum-Product}-algoritme en een \emph{asynchrone GatherAll}\footnote{Zie \secref{mpimod}.} illustreert.
+
+\paragraph{}
+Tot slot werd ook een component ge\"implementeerd genaamd \emph{FDCOP}. \emph{FDCOP} staat voor \emph{Finite Domain Constraint Optimization Problem} en is een systeem waarbij de gebruiker een optimalisatieprobleem in een \emph{logische programmeertaal} specificeert: een set variabelen krijgen een eindig domein toegewezen samen met beperkingen tussen de variabelen een optimalisatiefunctie. Vervolgens probeert het systeem met behulp van \emph{ParHyFlex} het probleem op te lossen. Dit principe is reeds ge\"implementeerd in \emph{ECLiPSe} waar men met behulp van een \emph{branch-and-bound} algoritme een oplossing uitrekent. In het geval van \emph{FDCOP} probeert het systeem slechts een benaderende oplossing voor te stellen, maar in een aanvaardbare rekentijd. \emph{FDCOP} is een onderdeel van \emph{ParHyFlex} en kan eveneens gedownload worden vanuit dezelfde \emph{repository}. Op dit moment kan het systeem al kleine optimalisatieproblemen oplossen die hoofdzakelijk in \comp{P} liggen. Het is de bedoeling om termijn grotere en complexere problemen te kunnen oplossen.
 
 
 \section{Structuur}
@@ -61,7 +64,7 @@ We bespreken het \emph{ParHyFlex}-systeem in \chpref{parhyf}. Dit systeem onders
 In \chpref{paradaphh} werken we een concrete hyperheuristiek uit. \emph{ParAdapHH} is een parallelle variant van \emph{AdapHH}, de winnaar van de competitie die we in \chpref{chesc} hebben bestudeerd. We bespreken de werking van \emph{AdapHH}, maken een analyse over de verschillende bronnen van parallellisatie samen met de uiteindelijke implementatie.
 
 \paragraph{}
-In \chpref{resul} testen we het systeem met behulp van twee problemen: \prbm{Max-3Sat} en het \prbm{Finite Domain Constraint Optimization Problem}. Er worden verschillende testresultaten voorgesteld die de invloed van bepaalde componenten en parameters onderzoeken.
+In \chpref{resul} testen we het systeem door het oplossen van \prbm{MAX-3SAT} problemen. De invloed van de verschillende componenten op de resultaten worden onderzocht. Tot slot worden enkele hypotheses naar voren geschoven om deze resultaten te verklaren.
 
 
 

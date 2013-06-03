@@ -1,14 +1,16 @@
-$ep = $ARGV[0];
-$orig = 4.26*(10**($ep));
-$val = 25;
+$orig = $ARGV[0];
+@vals = split(/,/,$ARGV[1]);
 $line = <STDIN>;
-while($val >= 0 && defined $line) {
+$j = 0;
+print "$vals\t$orig\n";
+while($j <= $#vals && defined $line) {
 	#var	n	min	max	median	mean	stdev	q1	q3	-95%	+95%
 	#0	50	33	75	53	51.44	8.61456	46	58	34.5555	68.3245
 	if($line =~ /^([0-9]+)\t(-?[0-9]+(\.[0-9]*)?)\t(-?[0-9]+(\.[0-9]*)?)\t(-?[0-9]+(\.[0-9]*)?)\t(-?[0-9]+(\.[0-9]*)?)\t(-?[0-9]+(\.[0-9]*)?)/) {
-		while($val >= 0 && $6 <= $val*$orig/1000) {
+		while($j <= $#vals && $6 <= $vals[$j]*$orig/10000) {
+			$val = $vals[$j];
 			print "$val\t$1\n";
-			$val--;
+			$j++;
 		}
 	}
 	$line = <STDIN>;

@@ -7,7 +7,7 @@ De studie situeert zich rond de hyperheuristieken die ge\"implementeerd werden i
 In 2009 publiceren \auth[Burke2009g]{Burke et al.} een paper waarin ze \emph{Hyper-heuristics Flexible framework \abhf{}} voorstellen. \abhf{} is een klassenbibliotheek geschreven in \abjava{}. Het laat toe dat de gebruiker hyperheuristieken implementeert waardoor de prestaties uniform getest kunnen worden.
 
 \paragraph{}
-Een alternatief voor \abhf{} was het \emph{Platform and Programming Language Independent Interface for Search Algorithms (PISA)}-systeem\cite{Bleuler03pisa-}. \emph{PISA} werd ontwikkeld in 2003 en is een tekstgebaseerd softwaresysteem. Het richt zich vooral op evolutionaire hyperheuristieken en \emph{multi-objective} problemen: problemen waarbij er sprake is van verschillende evaluatiefuncties en men dus niet eenduidig kan beslissen dan \'e\'en oplossing inderdaad beter is dan een andere. Er werd voor \emph{HyFlex} geopteerd omdat dit systeem meer functionaliteit aanbied en er verschillende implementaties in \emph{HyFlex} beschikbaar zijn gesteld.
+Een alternatief voor \abhf{} was het \emph{Platform and Programming Language Independent Interface for Search Algorithms (PISA)}-systeem\cite{Bleuler03pisa-}. \emph{PISA} werd ontwikkeld in 2003 en is een tekstgebaseerd\footnote{Een \emph{server} communiceert over een (virtuele) netwerkverbinding met de \emph{client}. De communicatie verloopt via leesbare tekst.} softwaresysteem. Het richt zich vooral op evolutionaire hyperheuristieken en \emph{multi-objective} problemen: problemen waarbij er sprake is van verschillende evaluatiefuncties en men dus niet eenduidig kan beslissen dan \'e\'en oplossing inderdaad beter is dan een andere. Er werd voor \emph{HyFlex} geopteerd omdat dit systeem meer functionaliteit aanbied en er verschillende implementaties in \emph{HyFlex} beschikbaar zijn gesteld.
 
 \paragraph{}
 \abhf{} werkt op basis van geheugen: een lijst waarin tussentijdse oplossingen worden opgeslagen en uitgelezen. Het systeem biedt vervolgens de mogelijkheid om een \abllh{} met een specifieke index toe te passen op de oplossing op een specifieke plaats in het geheugen. Het resultaat wordt dan op een specifieke plaats in geheugen opgeslagen. Hyperheuristieken kunnen ook de objectiviteitswaarde van een bepaalde oplossing in het geheugen opvragen en vragen of twee oplossingen in het geheugen equivalent zijn. Een afstandsmetriek tussen twee verschillende oplossingen is niet beschikbaar.
@@ -15,10 +15,10 @@ Een alternatief voor \abhf{} was het \emph{Platform and Programming Language Ind
 \paragraph{}
 De hyperheuristiek kent enkele details in verband met de onderliggende heuristiek: men deelt ze op in vier categorie\"en en de hyperheuristiek kan de categorie inspecteren. Deze categorie\"en zijn:
 \begin{itemize}
- \item \emph{\abmt{}}: hierbij wordt de oplossing op een toevallig manier aangepast. Dit soort heuristieken heeft geen componenten die inschatten of de verandering onmiddellijk of op termijn tot betere resultaten zal leiden.
- \item \emph{\abco{}}: dit zijn de enige heuristieken die twee oplossingen recombineren in een nieuwe oplossing. Het is uiteraard de bedoeling dat de nieuwe oplossing karakteristieken gemeen heeft met beide ``ouders''.
- \item \emph{\abrr{}}: deze heuristieken breken een deel van de oplossing af, om ze dan vervolgens met behulp van bijvoorbeeld een gretig algoritme terug op te bouwen.
- \item \emph{\abls{}}: dit is een familie van algoritmen die herhaaldelijk mutaties uitvoeren indien deze mutaties ook per stap winst opleveren. Indien geen enkele mutatie meer tot een beter resultaat leidt stopt het algoritme.
+ \item \emph{\abmt[M]{}}: hierbij wordt de oplossing op een toevallig manier aangepast. Dit soort heuristieken heeft geen componenten die inschatten of de verandering onmiddellijk of op termijn tot betere resultaten zal leiden.
+ \item \emph{\abco[C]{}}: dit zijn de enige heuristieken die twee oplossingen recombineren in een nieuwe oplossing. Het is uiteraard de bedoeling dat de nieuwe oplossing karakteristieken gemeen heeft met beide ``ouders''.
+ \item \emph{\abrr[R]{}}: deze heuristieken breken een deel van de oplossing af, om ze dan vervolgens met behulp van bijvoorbeeld een gretig algoritme terug op te bouwen.
+ \item \emph{\abls[L]{}}: dit is een familie van algoritmen die herhaaldelijk mutaties uitvoeren indien deze mutaties ook per stap winst opleveren. Indien geen enkele mutatie meer tot een beter resultaat leidt stopt het algoritme.
 \end{itemize}
 \abllhn[L]{} die tot de types \emph{\abmt{}}, \emph{\abco{}} en \emph{\abrr{}} behoren worden ook wel \emph{\abpts{}} genoemd. Het softwaresysteem houdt ook de mogelijkheid open om een \abllh{} te classificeren onder ``other'', maar voor zover bekend zijn er nog geen heuristieken in \abhf{} geschreven die onder deze categorie vallen.
 
@@ -26,7 +26,7 @@ De hyperheuristiek kent enkele details in verband met de onderliggende heuristie
 Het verschil tussen \abrr{} en \abls{} is soms onduidelijk. In beide gevallen verwachten we dat de oplossing sterker is dan de originele oplossing (\abrr{} zou in het slechtste geval immers de oorspronkelijk oplossing kunnen reconstrueren\footnote{Dit wordt niet altijd gedaan. Vermits men meestal met een \emph{gretig algoritme} werkt is het mogelijk dat de resulterende oplossing minder kwalitatief is.}). Een verschil die men doorgaans maakt is dat \abls{} een operator is die \emph{idempotent} is: meermaals de operator toepassen zal geen nieuw resultaat opleveren.
 
 \paragraph{}
-Sommige \abllhn{} zijn ook afhankelijk van een parameter. Deze parameters zijn re\"ele getallen tussen 0 en 1 en kunnen het gedrag van de \abllh{} be\"invloeden. \abhf{} definieert twee verschillende parameters:
+Sommige \abllhn{} zijn ook afhankelijk van een parameter. Deze parameters zijn re\"ele getallen tussen 0.0 en 1.0 en kunnen het gedrag van de \abllh{} be\"invloeden. \abhf{} definieert twee verschillende parameters:
 \begin{itemize}
  \item \emph{Depth of Search}: deze parameter bepaalt in welke mate men een omgeving zal afzoeken in het geval van \abrr{} en \abls{}.
  \item \emph{Intensity of Mutation}: deze parameter bepaalt in welke mate een nieuwe oplossing kan afwijken van het origineel na het toepassen van een \abmt{}.
@@ -40,7 +40,7 @@ Sommige \abllhn{} zijn ook afhankelijk van een parameter. Deze parameters zijn r
 
 \subsection{\abchescy{}}
 
-Om meer aandacht te vestigen op \abhf{} werd in 2011 een wedstrijd georganiseerd door de universiteit van Nottingham: de ``\emph{Cross-domain Heuristic Search Challenge (\abchescy)}''\cite{Burke:2011:CHS:2177360.2177415}. De ingestuurde programma's krijgen een set van verschillende problemen en worden gequoteerd op basis van de kwaliteit van de oplossingen die ze na 10 minuten uitvoer afleveren. De wedstrijd omvatte problemen uit zes verschillende domeinen: \prbm{Maximal Satisfiability (Max-Sat)}, \prbm{Bin Packing}, \prbm{Personnel Scheduling}, \prbm{Flow Shop}, \prbm{Travelling Salesman Problem (TSP)} en het \prbm{Vehicle Routing Problem (VRP)}.
+Om meer aandacht te vestigen op \abhf{} werd in 2011 een wedstrijd georganiseerd door de universiteit van Nottingham: de ``\emph{Cross-domain Heuristic Search Challenge (\abchescy)}''\cite{Burke:2011:CHS:2177360.2177415}. De ingestuurde programma's krijgen een set van verschillende problemen en worden gequoteerd op basis van de kwaliteit van de oplossingen die ze na 10 minuten uitvoer afleveren. De wedstrijd omvatte problemen uit zes verschillende domeinen: \prbm{Maximum Satisfiability (MAX-SAT)}, \prbm{Bin Packing}, \prbm{Personnel Scheduling}, \prbm{Flow Shop}, \prbm{Travelling Salesman Problem (TSP)} en het \prbm{Vehicle Routing Problem (VRP)}.
 
 \paragraph{}
 In totaal telde de competitie 20 teams. We hebben met onze studie de zestien implementaties die gedocumenteerd werden bestudeerd. \tblref{chescParticipants} bevat een lijst met de verschillende implementaties en geeft aan welke systemen in de studie opgenomen werden.
@@ -48,7 +48,7 @@ In totaal telde de competitie 20 teams. We hebben met onze studie de zestien imp
 \begin{table}[hbt]
   \centering
   \begin{tabular}{rllrcr} \toprule
-    \#&Naam&Auteur/Team&Score&Bestudeerd&Appendix\\\midrule
+    \#&Naam&Auteur/Team&Score&In studie&Appendix\\\midrule
     1&	\emph{AdapHH}\cite{chesc-adaphh,chesc-adaphh2,348072}	&	Mustafa M\i{}s\i{}r&	181.00&	$\checkmark$&\secrefq{adaphh}\\
     2&	\emph{VNS-TW}\cite{chesc-vns-tw}&				Mathieu Larose&		134.00&	$\checkmark$&\secrefq{vns-tw}\\
     3&	\emph{ML}\cite{chesc-ml,chesc-ml2}&				Mustafa M\i{}s\i{}r&	131.50&	$\checkmark$&\secrefq{ml}\\

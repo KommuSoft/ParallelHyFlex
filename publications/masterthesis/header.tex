@@ -272,6 +272,15 @@
  \end{table}
 }
 
+\newcommand{\inputtable}[2]{
+ \begin{table}[hbt]
+ \centering
+ \input{tables/#1.tex}
+ \caption{#2}
+ \tbllab{#1}
+ \end{table}
+}
+
 \newcommand{\drawmem}[3]{
 \node[draw,rectangle,fill=gray!20,minimum width=\sc*0.5*#2 cm, minimum height=\sc*0.5cm] (#1) at (0,0.5) {};
 \foreach\x in {2,...,#2} {

@@ -3,7 +3,7 @@
 \setup{title={Parallelle Hyperheuristieken},
   author={Willem~Van~Onsem},
   promotor={Prof.\,dr.\ Bart~Demoen},
-  assessor={Prof.\,dr.\,ir.\, Maurice~Bruynooghe\and Ir.\ Marko van Dooren},%Ir.\,W. Eetveel\and W. Eetrest
+  assessor={Prof.\,dr.\,ir.\, Maurice~Bruynooghe\and Dr.\,ir.\ Marko van Dooren},%Ir.\,W. Eetveel\and W. Eetrest
   assistant={Prof.\,dr.\ Bart~Demoen}}%Ir.\ A.~Assistent \and D.~Vriend}
 % De volgende \setup mag verwijderd worden als geen fiche gewenst is.
 \setup{filingcard,
@@ -11,7 +11,7 @@
   udc=681.3,
   shortabstract={
   Hyperheuristieken zijn een familie van algoritmen die een optimalisatieprobleem benaderend oplossen met behulp van Monte-Carlo simulaties. Op basis van een set transitiefuncties manipuleert het algoritme op een probleemonafhankelijke manier een oplossing tot deze van acceptabele kwaliteit is.\\
-  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteund de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat te veel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Een concrete hyperheuristiek is \emph{AdapHH} van Mustafa M\i{}s\i{}r. In dit werk wordt een parallelle variant, \emph{ParAdapHH}, uitgewerkt om de effectiviteit van het systeem te testen. Op basis van \prbm{Max-3Sat} en \prbm{Finite Domain Constraint Optimisation} wordt onderzocht wat de effectiviteit is van de verschillende componenten in \emph{ParHyFlex}.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf
+  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteund de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat te veel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Verder stellen we in dit werk ook \emph{ParAdapHH} voor, een parallelle variant van \emph{AdapHH}: een hyperheuristiek ontwikkeld door Mustafa M\i{}s\i{}r. De effectiviteit van het systeem en de verschillende deelcomponenten wordt vervolgens getest aan de hand van \prbm{Max-3Sat}-problemen.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf%en \prbm{Finite Domain Constraint Optimisation}
 \input{header}
 % Verwijder de "%" op de volgende lijn als je de kaft wil afdrukken
 %\setup{coverpageonly}
@@ -41,16 +41,16 @@
 \begin{document}
 
 \begin{preface}
-% \chapterquote{Begegnet uns jemand, der uns Dank schuldig ist, gleich f\"alt uns ein. Wie oft k\"onnen wir jemand begegnen, dem wir Dank schuldig sind, ohne daran zu denken.}{Johann Wolfgang von Goethe}
-%   Bij deze wenst de auteur van dit werk iedereen te bedanken die dit jaar aan hem gedacht heeft of op enige manier -- rechtstreeks of onrechtstreeks -- heeft bijgedragen tot deze thesis.
-%   \paragraph{}
-%   In de eerste plaats gaat deze dank naar de promotor, prof. Demoen, de .
-%   \paragraph{}
+\chapterquote{Begegnet uns jemand, der uns Dank schuldig ist, gleich f\"alt uns ein. Wie oft k\"onnen wir jemand begegnen, dem wir Dank schuldig sind, ohne daran zu denken.}{Johann Wolfgang von Goethe}
+  Bij deze wenst de auteur van dit werk iedereen te bedanken die dit jaar aan hem gedacht heeft, of op enige manier -- rechtstreeks of onrechtstreeks -- heeft bijgedragen tot deze thesis.
+  \paragraph{}
+  In de eerste plaats gaat deze dank naar prof.~Demoen, de promotor van deze thesis. Doorheen het jaar werden dankzij prof.~Demoen verschillende relevante papers, lezingen en conferenties onder de aandacht gebracht. Hopelijk hebben ze dit werk dan ook positief be\"invloed.
+%  \paragraph{}
 %   Ook de familieleden heeft de auteur gesteund. Dit uit zich in het ondersteunen van wetenschappelijk interesse en het sponsoren van deze masteropleiding. Bovendien hebben ze er de auteur aan herinnert dat een mens van tijd tot tijd ook nog moet slapen en eten.
-%   \paragraph{}
-%   De auteur wenst enkele vrienden speciaal te bedanken voor mentale steun en interessante conversaties tijdens het academiejaar (in alfabetische volgorde): \nohyphens{Frederik Lavigne, Ingmar Dasseville, Jeroen Vaelen, Karel Moens, Katie Pauwelyn, Nicolas Callens, Ruben Crevits, Ruben Lapauw en Tom Lebacq}.
-%   \paragraph{}
-%   Tot slot zijn er de studenten computerwetenschappen die (hopelijk) in 2014 zullen afstuderen. Omdat het schrijven van een masterthesis en het vervolledigen van een cursus \emph{Digitale Elektronica en Processoren} niet te combineren bleek, zal deze groep nog niet kunnen werken met een afgewerkte cursus. Desalniettemin bracht een significant deel de moed op om errata te melden waardoor de cursus deze vakantie waarschijnlijk sneller zal afgewerkt worden.
+  \paragraph{}
+  De auteur wenst enkele vrienden speciaal te bedanken voor mentale steun en interessante conversaties tijdens het academiejaar (in alfabetische volgorde): \nohyphens{Frederik Lavigne, Ingmar Dasseville, Jeroen Vaelen, Karel Moens, Katie Pauwelyn, Nicolas Callens, Ruben Crevits, Ruben Lapauw en Tom Lebacq}. Door hen werd de auteur er ook aan herinnerd af en toe nog eens te gaan eten.
+  \paragraph{}
+  Tot slot zijn er de studenten computerwetenschappen die (hopelijk) in 2014 zullen afstuderen. Omdat het schrijven van een masterthesis en het vervolledigen van een cursus \emph{Digitale Elektronica en Processoren} niet te combineren bleek, zal deze groep nog niet kunnen studeren met een afgewerkte cursus. Nochtans bracht een significant deel de moed op om errata te melden waardoor de cursus deze vakantie waarschijnlijk sneller zal afgewerkt worden.
 \end{preface}
 
 \input{abstractlist}

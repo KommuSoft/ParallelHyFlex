@@ -1,4 +1,5 @@
 \section{ADHS: Adaptive Dynamic Heuristic Set}
+\seclab{adhs-exp}
 
 \emph{ADHS} probeert een set te onderhouden van sterk presterende heuristieken. Hiervoor maakt het gebruik van een metriek die een heuristiek beoordeelt volgens de prestaties die sinds de start werden afgelegd. Prestaties in de laatste fase wegen echter zwaarder door in het besluit of een hyperheuristiek in de set blijft of enkele fases niet meer wordt gebruikt. Deze metriek ziet er als volgt uit:
 \begin{align*}
@@ -21,4 +22,4 @@ Een logische stap naar parallellisatie is het doorsturen van van de componenten 
 Het subscript $g$ duidt aan dat we de som van de gegevens van alle processoren beschouwen. De gegevens worden op geregelde tijdstippen asynchroon doorgestuurd (zie \appref{communication}) om minder bandbreedte en rekenwerk aan boekhoudkundige taken toe te wijzen.
 
 \paragraph{}
-Op basis van de evaluatie worden de heuristieken gerangschikt met een kwaliteitsindex. De heuristieken met een kwaliteitsindex die onder het gemiddelde ligt, worden uit voor een periode van $\sqrt{2\cdot n}$ uit de set verwijdert (met $n$ het aantal heuristieken). Heuristieken die tijdelijk niet meer tot de set behoren worden hebben allemaal een kwaliteitsindex van $1$. Indien een heuristiek de fase nadat deze terug in de set werd ge\"introduceerd opnieuw wordt verwijdert, neemt het aantal fases toe. Indien het aantal \emph{tabu}-fases verdubbelt is, wordt de heuristiek definitief verwijdert.
+Op basis van de evaluatie worden de heuristieken gerangschikt met een kwaliteitsindex. De heuristieken met een kwaliteitsindex die onder het gemiddelde ligt, worden uit voor een periode van $\sqrt{2\cdot n}$ uit de set verwijdert (met $n$ het aantal heuristieken). Heuristieken die tijdelijk niet meer tot de set behoren worden hebben allemaal een kwaliteitsindex van $1$. Indien een heuristiek de fase nadat deze terug in de set werd ge\"introduceerd opnieuw wordt verwijdert, neemt het aantal fases toe. Indien het aantal \emph{tabu}-fases verdubbelt is, wordt de heuristiek definitief verwijderd.

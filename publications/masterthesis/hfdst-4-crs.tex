@@ -1,3 +1,3 @@
-\section{Kruisingsheuristieken}
+\section{Kruising-heuristieken}
 
 In het geval \emph{AdapHH} een kruisingsoperator selecteert, is een tweede oplossing vereist. \emph{AdapHH} kiest deze oplossing uit een historisch beste oplossing. Dit hoeven niet noodzakelijk de laatste beste oplossingen te zijn. Telkens wanneer er immers een nieuwe beste oplossing wordt gevonden, plaatst men deze op een willekeurige plaats in een lijst. Vermits het lang kan duren voor een oude oplossing overschreven wordt kunnen we dus spreken over een diverse lijst. We kunnen dit systeem parallelliseren door het uitwisselingsmechanisme van \emph{ParHyFlex} uitbuiten: in plaats van uitsluitend te kiezen uit de lijst van lokale oplossingen, kunnen ook oplossingen die door een andere machine werden gegenereerd en doorgestuurd werden als kandidaat voor een kruising functioneren.

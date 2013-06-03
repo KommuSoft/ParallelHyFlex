@@ -1,45 +1,43 @@
-\section{Probleemset}
+\section{Probleemset: \prbm{MAX-3SAT}}
+\prblab{MAX-3SAT}
+\prblab{SAT}
+\prblab{3SAT}
 
-\subsection{\prbm{Max3-Sat}}
+\prbm{MAX-3SAT} is een algemeen gekend probleem. Het is afgeleid van \prbm{SAT} waar gegeven een set Booleaanse variabelen en een set Booleaanse expressies met uitsluitend deze variabelen, we op zoek gaan naar een configuratie waardoor alle Booleaanse expressies waar zijn. \prbm{3SAT} beperkt de expressiviteit van de expressies tot een disjunctie van drie atomen\footnote{Een atoom stelt de waarde van een variabele zelf voor, of zijn negatie}. We kunnen \prbm{3SAT} omvormen tot het optimalisatieprobleem \prbm{MAX-3SAT} door het aantal falende expressies als de fitness-waarde voor een configuratie te defini\"eren.
 
-\prbm{Max3-Sat} is een algemeen gekend probleem. Het is afgeleid van \prbm{Sat} waar gegeven een set Booleaanse variabelen en een set Booleaanse expressies met uitsluitend deze variabelen, we op zoek gaan naar een configuratie waardoor alle Booleaanse expressies waar zijn. \prbm{3Sat} beperkt de expressiviteit van de expressies tot een disjunctie van drie atomen\footnote{Een atoom stelt de waarde van een variabele zelf voor, of zijn negatie}.
+\subsection{Motivering}
 
-\paragraph{}
-We kunnen \prbm{3Sat} omvormen tot het optimalisatieprobleem \prbm{Max3-Sat} door het aantal falende expressies als de fitness-waarde voor een configuratie te defini\"eren.
-
-\subsubsection{Motivatie}
-
-\prbm{Sat} is een \comp{NP-compleet} probleem en bijgevolg kan men elk probleem in \comp{NP} omzetten naar \prbm{Sat}. Door de prestaties van \prbm{Sat} te analyseren, analyseren we dus impliciet een grote set van problemen die allemaal omgezet kunnen worden.
+\prbm{SAT} is een \comp{NP-compleet} probleem en bijgevolg kan men elk probleem in \comp{NP} omzetten naar \prbm{SAT}. Door de prestaties van \prbm{SAT} te analyseren, analyseren we dus impliciet een grote set van problemen die allemaal omgezet kunnen worden.
 
 \paragraph{}
-\prbm{Sat} is een probleem die geen directe connectie met een praktisch probleem heeft. Hierdoor zijn de heuristieken doorgaans vrij inherent. Hierdoor zijn resultaten ook minder het gevolg van de set van onderliggende heuristieken. Dit laat ons beter toe de prestaties van de parallelle hyperheuristiek te evalueren.
+\prbm{SAT} is een probleem die geen directe connectie met een praktisch probleem heeft. Hierdoor zijn de heuristieken doorgaans vrij inherent. Hierdoor zijn resultaten ook minder het gevolg van de set van onderliggende heuristieken. Dit laat ons beter toe de prestaties van de parallelle hyperheuristiek te evalueren.
 
 \paragraph{}
-In het verleden is er al veel onderzoek verricht naar \prbm{Sat}. \cite{Selman96generatinghard} stelt bijvoorbeeld dat \prbm{Sat} problemen moeilijk op te lossen zijn wanneer de verhouding van het aantal beperkingen tegenover het aantal variabelen dicht bij $4.26$ ligt. Deze wetmatigheid lijkt te gelden voor elk algoritme die \prbm{Sat} problemen oplost. \cite{Nudelman_understandingrandom} maakten bovendien een studie die andere parameters onthulde waarmee men in grote mate de verwachtte rekentijd kunnen schatten.
+In het verleden werd reeds veel onderzoek verricht naar de eigenschappen van dit probleem. \cite{Selman96generatinghard} stelt bijvoorbeeld dat \prbm{SAT} problemen moeilijk op te lossen zijn wanneer de verhouding van het aantal beperkingen tegenover het aantal variabelen dicht bij $4.26$ ligt. Deze wetmatigheid lijkt te gelden voor elk algoritme die \prbm{SAT} problemen oplost. \cite{Nudelman_understandingrandom} maakten bovendien een studie die andere parameters onthulde waarmee men in grote mate de verwachtte rekentijd kunnen schatten.
 
 \paragraph{}
-Een laatste argument die we aanhalen in verband met \prbm{Sat} is de compactheid: moderne processoren hebben een instructie-set en geheugen-structuur waardoor \prbm{Sat}-problemen compact voor te stellen zijn en snel berekend kunnen worden. Hierdoor kunnen slechte resultaten niet verklaard worden door slechte serialisatie van de data over het netwerk.
+Een laatste argument die we aanhalen in verband met \prbm{SAT} is de compactheid: moderne processoren hebben een instructie-set en geheugen-structuur waardoor \prbm{SAT}-problemen compact voor te stellen zijn en snel berekend kunnen worden. Hierdoor kunnen slechte resultaten niet verklaard worden door slechte serialisatie van de data over het netwerk.
 
-\subsubsection{Implementatie}
+\subsection{Implementatie}
 
-In deze subsubsectie beschouwen we kort de verschillende ge\"implementeerde functies (transitie-functies, afstandsmetrieken,...) in het \prbm{Sat} probleem. Een oplossing wordt voorgesteld als een bitvector: elke variabele heeft een vaste index en de $i$-de bit in de vector bepaalt de overeenkomstige waarde van de $i$-de variabele.
+In deze subsubsectie beschouwen we kort de verschillende ge\"implementeerde functies (transitie-functies, afstandsmetrieken,...) in het \prbm{SAT} probleem. Een oplossing wordt voorgesteld als een bitvector: elke variabele heeft een vaste index en de $i$-de bit in de vector bepaalt de overeenkomstige waarde van de $i$-de variabele.
 
 \begin{itemize}
  \item Initialisatie ($I$):
 \begin{description}
- \item [$I_1$] Genereert een willekeurige bitvector.
+ \item [$I_1$] Produceert een willekeurige bitvector.
 \end{description}
  \item Afstandsfuncties ($\delta$):
 \begin{description}
  \item [$\delta_1$] De Hamming-afstand tussen de twee verschillende bitvectors.
- \item [$\delta_2$] Het aantal beperkingen waaraan in juist \'e\'en van de twee oplossingen voldoet.
+ \item [$\delta_2$] Het aantal beperkingen waar juist \'e\'en van de twee oplossingen aan voldoet.
 \end{description}
  \item Mutaties (M):
 \begin{description}
  \item [$M_1$] Het omwisselen van een willekeurige Booleaanse variabele.
- \item [$M_2$] Bij een clause waaraan niet voldaan is, wordt een willekeurige betrokken variabele van waarde omgewisseld.
- \item [$M_3$] Bij een clause waaraan niet voldaan is, worden alle betrokken variabelen van waarde omgewisseld.
- \item [$M_3$] Bij een clause waaraan niet voldaan is, wordt de variabele omgewisseld die tot een oplossing met de laagste fitness-waarde leidt.
+ \item [$M_2$] Bij een expressie waaraan niet voldaan is, wordt een willekeurige betrokken variabele van waarde omgewisseld.
+ \item [$M_3$] Bij een expressie waaraan niet voldaan is, worden alle betrokken variabelen van waarde omgewisseld.
+ \item [$M_3$] Bij een expressie waaraan niet voldaan is, wordt de variabele omgewisseld die tot een oplossing met de laagste fitness-waarde leidt.
 \end{description}
  \item Local Search (LS):
 \begin{description}
@@ -49,12 +47,12 @@ In deze subsubsectie beschouwen we kort de verschillende ge\"implementeerde func
  \item Ruin-Recreate (RR):
 \begin{description}
  \item [$RR_1$] Voor een blok van 64 wordt de waarde vergeten. Met behulp van een \emph{gretig algoritme} wordt vervolgens de waarde van elke variabele opnieuw bepaald.
- \item [$RR_2$] De waarden van de variabelen die betrokken zijn bij een toevallige clause worden vergeten. Vervolgens worden de mogelijk configuraties van de clauses overlopen. De configuratie waarbij de meeste clauses voldoen wordt geselecteerd als de nieuwe oplossing.
+ \item [$RR_2$] De waarden van de variabelen die betrokken zijn bij een toevallige expressie worden vergeten. Vervolgens worden de mogelijk configuraties van de expressies overlopen. De configuratie waarbij de meeste expressies voldoen wordt geselecteerd als de nieuwe oplossing.
 \end{description}
 \item Crossover (CO):
 \begin{description}
  \item [$CO_1$] Twee configuraties worden puntgewijs gerecombineerd: op basis van de fitness-waarde van de configuraties levert een configuratie met een bepaalde kans de waarde voor een variabele.
- \item [$CO_2$] Twee configuraties worden puntgewijs gerecombineerd: het aantal clauses waaraan voldaan is waarin de variabele in kwestie betrokken is bepaald de kans welke van de twee waarden we voor de variabele gebruiken.
+ \item [$CO_2$] Twee configuraties worden puntgewijs gerecombineerd: het aantal expressies waaraan voldaan is waarin de variabele in kwestie betrokken is bepaald de kans welke van de twee waarden we voor de variabele gebruiken.
 \end{description}
 \item Objectieven (O):
 \begin{description}
@@ -63,39 +61,37 @@ In deze subsubsectie beschouwen we kort de verschillende ge\"implementeerde func
 \end{description}
 \item Hypothesegeneratoren (HG):
 \begin{description}
- \item [$HG_1$] Op basis van een oplossing wordt een clause gegenereerd waarbij alle atomen kloppen. De variabelen worden via een bepaalde kansverdeling bepaald.
- \item [$HG_2$] Op basis van twee oplossingen wordt een clause gegenereerd waarbij alle atomen kloppen voor de oplossing met de laagste fitness-waarde en niet kloppen bij de andere oplossing.
+ \item [$HG_1$] Op basis van een oplossing wordt een expressie gegenereerd waarbij alle atomen kloppen. De variabelen worden via een bepaalde kansverdeling bepaald.
+ \item [$HG_2$] Op basis van twee oplossingen wordt een expressie gegenereerd waarbij alle atomen kloppen voor de oplossing met de laagste fitness-waarde en niet kloppen bij de andere oplossing.
 \end{description}
 \end{itemize}
 
 
-\subsection{\prbm{Finite Domain Constraint Optimization Problem (FDCOP)}}
-
-\prbm{Max3Sat} is een typisch probleem bij de optimalisatie in een eindig domein. In plaats van echter voor elk typisch probleem een eigen set van heuristieken, evaluatie-functies, afstandsfuncties,... te implementeren, kunnen we ook op zoek gaan naar algemene oplossingsmethode die elk eindigdomein optimalisatieprobleem kan uitvoeren.
-
-\paragraph{}
-Als basis hiervoor gebruiken we \emph{Logische specificatie}: in een logische programmeertaal specificeert men een set variabelen, de respectievelijke domeinen, onderlinge beperkingen en een set optimalisatiefuncties. Het is de bedoeling dat door dit logische programma te analyseren men tot de nodige componenten (heuristieken, afstandsfuncties,...) komt en vervolgens het probleem in \emph{ParHyFlex} oplost.
-
-\paragraph{}
-\emph{ECLiPSe} -- een uitbreiding op \emph{Prolog} -- bevat een bibliotheek \texttt{fd} waarmee optimalisatieproblemen ook kunnen gespecificeerd worden. Deze bibliotheek gebruikt echter \emph{backtracking} om het probleem op te lossen. Momenteel kan de implementatie van het \prbm{Finite Domain Constraint Optimization Problem} in \emph{ParHyFlex} eenvoudige problemen oplossen die hoofdzakelijk in \comp{P} liggen. Het is echter de bedoeling om dit pakket verder te ontwikkelen en expressiever te maken.
-
-\subsubsection{Voorbeeld}
-
-Om het concept meer concreet te maken geven we een voorbeeld. Onderstaand programma kan bijvoorbeeld zoeken naar een optimale combinatie van een rij getallen waarbij het gemiddelde van de lopende sommen minimaal is:
-
-\begin{verbatim}
-A in {2}u{3}u{5}u{8}u{13}u{21}
-B in {2}u{3}u{5}u{8}u{13}u{21}
-C in {2}u{3}u{5}u{8}u{13}u{21}
-A #!= B
-A #!= C
-B #!= C
-minimzing A + B + C
-\end{verbatim}
-Dit probleem kan opgelost worden met behulp van een \emph{gretig algoritme} die altijd het correcte antwoord levert. Naarmate de taal echter meer expressief wordt verwachten we ook praktische problemen te kunnen oplossen.
-
-\subsubsection{Motivatie}
-
-\subsubsection{Implementatie}
-
-\todo{afwerken}
+% \subsection{\prbm{Finite Domain Constraint Optimization Problem (FDCOP)}}
+% 
+% \prbm{Max3Sat} is een typisch probleem bij de optimalisatie in een eindig domein. In plaats van echter voor elk typisch probleem een eigen set van heuristieken, evaluatie-functies, afstandsfuncties,... te implementeren, kunnen we ook op zoek gaan naar algemene oplossingsmethode die elk eindigdomein optimalisatieprobleem kan uitvoeren.
+% 
+% \paragraph{}
+% Als basis hiervoor gebruiken we \emph{Logische specificatie}: in een logische programmeertaal specificeert men een set variabelen, de respectievelijke domeinen, onderlinge beperkingen en een set optimalisatiefuncties. Het is de bedoeling dat door dit logische programma te analyseren men tot de nodige componenten (heuristieken, afstandsfuncties,...) komt en vervolgens het probleem in \emph{ParHyFlex} oplost.
+% 
+% \paragraph{}
+% \emph{ECLiPSe} -- een uitbreiding op \emph{Prolog} -- bevat een bibliotheek \texttt{fd} waarmee optimalisatieproblemen ook kunnen gespecificeerd worden. Deze bibliotheek gebruikt echter \emph{backtracking} om het probleem op te lossen. Momenteel kan de implementatie van het \prbm{Finite Domain Constraint Optimization Problem} in \emph{ParHyFlex} eenvoudige problemen oplossen die hoofdzakelijk in \comp{P} liggen. Het is echter de bedoeling om dit pakket verder te ontwikkelen en expressiever te maken.
+% 
+% \subsubsection{Voorbeeld}
+% 
+% Om het concept meer concreet te maken geven we een voorbeeld. Onderstaand programma kan bijvoorbeeld zoeken naar een optimale combinatie van een rij getallen waarbij het gemiddelde van de lopende sommen minimaal is:
+% 
+% \begin{verbatim}
+% A in {2}u{3}u{5}u{8}u{13}u{21}
+% B in {2}u{3}u{5}u{8}u{13}u{21}
+% C in {2}u{3}u{5}u{8}u{13}u{21}
+% A #!= B
+% A #!= C
+% B #!= C
+% minimzing A + B + C
+% \end{verbatim}
+% Dit probleem kan opgelost worden met behulp van een \emph{gretig algoritme} die altijd het correcte antwoord levert. Naarmate de taal echter meer expressief wordt verwachten we ook praktische problemen te kunnen oplossen.
+% 
+% \subsubsection{Motivatie}
+% 
+% \subsubsection{Implementatie}

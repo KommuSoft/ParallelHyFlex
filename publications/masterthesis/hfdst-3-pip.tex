@@ -13,7 +13,7 @@ De zoekruimte bewaken is ook een verantwoordelijkheid van \emph{ParHyFlex}. Hier
 \paragraph{}
 Het afdwingen gebeurt in een willekeurige volgorde. Beperkingen kunnen immers met elkaar interfereren: een eerste beperking kan een variabele op \'e\'en waarde zetten waarna de volgende beperkingen deze wijziging weer ongedaan maakt. Men kan dit probleem proberen op te lossen door alle permutaties uit te proberen in de hoop dat \'e\'en mutatie toch tot het correcte resultaat leidt. Dit is echter niet noodzakelijk zo, en bovendien vereist een dergelijke oplossing exponenti\"ele tijd. We nemen aan dat de beperkingen meestal minimaal met elkaar interfereren en dat een zoekruimte niet strikt moet worden bewaakt. De hierboven vernoemde strategie is niet verplicht. Men kan door een interface te implementeren een andere strategie hanteren.
 
-\subsection{Genereren van Ervaring}
+\subsection{Genereren van ervaring}
  
 Telkens wanneer \'e\'en van de processoren een nieuwe oplossing voortbrengt, kan deze oplossing -- samen met andere oplossingen -- worden omgezet in een afdwingbare beperking. Een processor kan echter niet alle beperkingen blijven bewaren: het uitwisselen van ervaring dient snel te gebeuren, we dienen een voldoende grote zoekruimte te behouden en bovendien kunnen we net een beperking genereren die het zoeken de foute kant opstuurt. Daarom maken we gebruik van een \emph{ervaring-set}, een set van vaste grootte waar gegenereerde beperkingen in worden bewaard.
 

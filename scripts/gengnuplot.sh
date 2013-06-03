@@ -3,15 +3,24 @@ echo "set ylabel \"fitness-waarde\""
 echo "set terminal pdf size 64cm,32cm"
 echo "set output 'out.pdf'"
 echo "set logscale y"
-echo "set style fill transparent solid 0.2 noborder"
+echo "set style fill transparent solid 0.1 noborder"
 echo -n "plot "
+
 k=$(ls sm-* | wc --lines)
 i=1
 for f in sm-*
 do
 	tit=$(echo $f | cut -c 12-99)
-	echo -n "\"$f\" u (\$1/1000):8:9 t \"p=$tit\" w filledcurve lw 0 lc rgb \"#ff00ff\", "
-	echo -n "\"$f\" u (\$1/1000):6 t \"p=$tit\" w linespoints lw 5 lc rgb \"#0000ff\""
+	col=$(head -n $i < ~/colors | tail -n 1)
+	echo -n "\"$f\" u (\$1/1000):8:9 t \"\" w filledcurve lw 0 lc rgb \"#$col\", "
+	i=$(($i+1))
+done
+i=1
+for f in sm-*
+do
+	tit=$(echo $f | cut -c 12-99)
+	col=$(head -n $i < ~/colors | tail -n 1)
+	echo -n "\"$f\" u (\$1/1000):6 t \"p=$tit\" w linespoints lw 5 lc rgb \"#$col\""
 	if [[ $i -lt $k ]]
 	then
 		echo -n ", "
@@ -19,6 +28,7 @@ do
 	i=$(($i+1))
 done
 echo ""
+
 echo ""
 echo "set terminal pdf size 10cm,5cm"
 echo "set output 'out10x5.pdf'"

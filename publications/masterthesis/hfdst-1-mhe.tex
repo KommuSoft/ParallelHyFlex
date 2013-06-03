@@ -1,16 +1,16 @@
 \section{Metaheuristieken}
 
-Een familie van heuristieken probeert enkele gewenste eigenschappen bij een heuristiek te combineren. Deze familie van heuristieken noemt men \emph{metaheuristieken}\cite{journals/cor/Glover86}. We bespreken eerst de gewenste heuristieken waarna we een formele definitie voorstellen.
+\emph{Metaheuristieken}\cite{journals/cor/Glover86} vormen een familie van heuristieken die proberen enkele interessante eigenschappen met betrekking tot heuristieken te combineren. We bespreken eerst over welke eigenschappen het gaat waarna we een formele definitie voorstellen.
 
 \subsection{Gewenste eigenschappen bij een heuristiek}
 
 Meestal zijn we slechts ge\"interesseerd in het gebruik van een heuristiek wanneer hier enkele garanties tegenover staan. Zo kunnen sommige heuristieken garanderen dat de fitness-waarde van hun benaderende oplossing hoogstens het dubbele is van de fitness-waarde van het globale optimum. Voor veel praktische problemen is dit echter niet mogelijk vanwege de complexiteit van het probleem. Meestal is het ook interessant dat de heuristiek aanpasbaar is.
 
 \paragraph{}
-Voor de meeste toepassingen wensen we een oplossing die binnen een gegeven tijd wordt uitgerekend. Sommige heuristieken voorzien een parameter waarmee men kan aangeven binnen welke termijn men een benaderende oplossing wenst.
+Voor de meeste toepassingen wensen we een oplossing die binnen een gegeven tijd wordt uitgerekend. Sommige heuristieken voorzien een parameter die de termijn specificeert waarbinnen men een benaderende oplossing wenst.
 
 \paragraph{}
-De meeste heuristieken worden ontwikkeld door het probleem met behulp van slechts \'e\'en strategie op te lossen. Deze strategie werkt meestal goed op een groot deel van de probleem instanties. Meestal bestaan er echter probleeminstanties waarop de gegeven strategie niet is afgesteld, wat leidt tot tegenvallende resultaten. Een sterke heuristiek probeert voor elke probleeminstantie een acceptabele oplossing te genereren.
+De meeste heuristieken worden ontwikkeld door het probleem met behulp van slechts \'e\'en strategie op te lossen. Deze strategie werkt meestal goed op een groot deel van de probleem-instanties. Meestal bestaan er echter probleeminstanties waarop de strategie niet goed is afgesteld. Dit leidt tot tegenvallende resultaten. Een sterke heuristiek probeert voor elke probleeminstantie een acceptabele oplossing te genereren.
 
 \subsection{Formele definitie}
 
@@ -36,7 +36,7 @@ De \emph{omgeving} van een \emph{oplossing-set} volgens een \emph{overgangsfunct
 \end{definition}
 
 \subsubsection{Local Search}
-Het concept van een omgeving is belangrijke omdat het meteen ook een populaire zoek\-strategie voor metaheuristieken introduceert: \emph{lokaal zoeken} ofwel ``\emph{local search (LS)}''. Deze zoekstrategie vertrekt van een gegeven oplossing en zoekt - volgens een bepaalde omgeving - alle oplossingen in de buurt af op zoek naar een betere oplossing. In het geval we zo'n oplossing vinden wordt deze oplossing de nieuwe oplossing en beginnen we vervolgens een zoektocht rond de nieuwe oplossing. Local Search komt voor in twee smaken: ``\emph{first-improvement}'' en ``\emph{best-improvement}''. In het geval van \emph{first-improvement} wordt de eerste oplossing die beter is dan de huidige oplossing de nieuwe actieve oplossing. In het geval van \emph{best-improvement} doorzoeken we de volledige omgeving en migreren we naar de beste oplossing in de omgeving.
+Het concept van een omgeving is belangrijke omdat het meteen ook een populaire zoek\-strategie voor metaheuristieken introduceert: \emph{lokaal zoeken} ofwel ``\emph{local search (LS)}''. Deze zoekstrategie vertrekt van een gegeven oplossing en zoekt - volgens een bepaalde omgeving - alle oplossingen in de buurt af op zoek naar een betere oplossing. In het geval we zo'n oplossing vinden wordt deze oplossing de nieuwe oplossing en beginnen we vervolgens een zoektocht rond de nieuwe oplossing. Local Search komt voor in twee smaken: ``\emph{first-improvement}'' en ``\emph{best-improvement}''. In het geval van \emph{first-improvement} wordt de eerste gevonden oplossing die beter is dan de huidige oplossing, de nieuwe actieve oplossing. In het geval van \emph{best-improvement} doorzoeken we de volledige omgeving, pas daarna migreren we naar de beste oplossing in de omgeving.
 \paragraph{}
 Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabele resultaten kan leiden. Een probleem vormt echter het \emph{idempotente} karakter van local search: \'e\'enmaal we local search op een oplossing hebben toegepast heeft een tweede maal local search toepassen met dezelfde omgevings-definitie geen zin: we weten immers dat er in de omgeving geen betere oplossingen gevonden zullen worden want anders was het algoritme de vorige keer niet bij deze oplossing gestopt. Omwille van deze reden kan local search zelf geen volwaardige metaheuristiek worden genoemd\cite{lsAndMh}. We verwachten immers dat als we meer tijd investeren, we op termijn altijd tot betere resultaten $\xdot$ ofwel de echte oplossing $\xstar$ zullen komen. Local search vormt echter de basis voor een groot aantal metaheuristieken die doorgaans een mechanisme implementeren om uit een lokaal optimum te kunnen ontsnappen.
 
@@ -44,7 +44,7 @@ Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabel
 
 \defref{metaheuristic} is vrij abstract. Daarom zullen we in deze sectie de belangrijkste families van metaheuristieken kort beschouwen. Referentiewerken die hier dieper op ingaan zijn \cite{Glover2003,gendreau2010handbook,blum2003metaheuristics,osman:1996}.
 
-\subsubsection{Genetische Algoritmes}
+\subsubsection{Genetische Algoritmen}
 
 \emph{Genetische algoritmen} ofwel ``\emph{Genetic Algorithms (GA)}'' zijn de eerste familie van metaheuristieken en werken op basis van een populatie: een set van oplossingen. Uit deze populatie worden twee of meer oplossingen geselecteerd, meestal op basis de fitness-waarde van deze oplossingen. Vervolgens past men een \emph{recombinatie} operator ofwel \emph{crossover} toe: een overgangsfunctie die de geselecteerde oplossingen omzet in een nieuwe oplossingen die bepaalde eigenschappen met zijn ``\emph{ouders}'' deelt. Meestal volgt hierna een \emph{mutatie}-fase: men zal de oplossing minimaal aanpassen door middel van een andere overgangsfunctie. Onder bepaalde voorwaarden wordt de gegenereerde oplossing dan in de populatie ge\"injecteerd. Om de populatie binnen de perken te houden houdt dit meestal in dat na verloop van tijd minder kwalitatieve oplossingen uit de populatie worden verwijdert.\cite{holland1992adaption-in-nat,goldberg89,melanie_mitchell_book}
 
@@ -56,7 +56,7 @@ Local Search is een krachtige optimalisatietechniek die doorgaans tot acceptabel
 \fun{p}{\mbox{accept $s_1\rightarrow s_2$}}=\fun{\min}{1,e^{\brak{\fun{\evalfun}{s_2}-\fun{\evalfun}{s_1}}/T}}
 \end{equation}
 
-Deze formule is beter bekend als de \emph{Boltzmann-verdeling} ofwel \emph{Gibbs-verdeling}\cite{}. Indien de nieuwe oplossing beter is dan de oude oplossing, we altijd accepteren, in het andere geval accepteren we met een kans die kleiner wordt naarmate het verschil in fitness-waarde groeit. In de formule staat ook een parameter $T$ ofwel \emph{temperatuur}. De temperatuur bepaalt hoe sterk de kans daalt naarmate de kloof groeit. Het is een variabele die initieel op een positief getal wordt gezet en gedurende het zoekproces langzaam naar $0$ zakt. Dit betekent dat we in het begin sterk geneigd zijn om een slechtere oplossing te accepteren. Op het einde accepteren we bijna uitsluitend oplossing die beter zijn dan hun ouder.\cite{citeulike:1612433,Cerny1985Thermodynamical}
+Deze formule is beter bekend als de \emph{Boltzmann-verdeling} ofwel \emph{Gibbs-verdeling}\cite{gibbs1902elementary}. Indien de nieuwe oplossing beter is dan de oude oplossing, we altijd accepteren, in het andere geval accepteren we met een kans die kleiner wordt naarmate het verschil in fitness-waarde groeit. In de formule staat ook een parameter $T$ ofwel \emph{temperatuur}. De temperatuur bepaalt hoe sterk de kans daalt naarmate de kloof groeit. Het is een variabele die initieel op een positief getal wordt gezet en gedurende het zoekproces langzaam naar $0$ zakt. Dit betekent dat we in het begin sterk geneigd zijn om een slechtere oplossing te accepteren. Op het einde accepteren we bijna uitsluitend oplossing die beter zijn dan hun ouder.\cite{citeulike:1612433,Cerny1985Thermodynamical}
 
 \subsubsection{Iterated Local Search}
 
@@ -77,15 +77,14 @@ Soms is $\hcfun$ een complexe functie met een weinig voorspelbaar gedrag. Een ge
 
 Elke metaheuristiek die we hierboven beschreven hebben dient telkens drie belangrijke vragen in het achterhoofd te houden\cite{DBLP:journals/jc/ShonkwilerV94}:
 \begin{enumerate}
- \item kan het globale optimum altijd gevonden worden door de metaheuristiek,
- \item hoe kunnen we identificeren dat we het globale optimum gevonden hebben, en
- \item hoe lang zal het duren alvorens we dit optimum gevonden hebben
+ \item Kan het globale optimum altijd gevonden worden door de metaheuristiek?
+ \item Hoe kunnen we identificeren dat we het globale optimum gevonden hebben?
+ \item Hoe lang zal het duren alvorens we dit optimum gevonden hebben?
 \end{enumerate}
 
-Wanneer we geen details kennen in verband met de vorm van de evaluatiefunctie $\evalfun$ spreekt het voor zich dat we enkel zeker kunnen zijn dat we een globaal optimum hebben gevonden door middel van \emph{exhaustive search}. De verwachtte tijd alvorens dit gebeurt kan echter sterk verschillen van de tijd die we dienen te besteden aan het doorzoeken van een significant deel van de zoekruimte. Berekenen wanneer we gemiddeld dit optimum zullen bereiken staat bekend als het \prbm{Hitting Time Problem}\cite{DBLP:journals/jc/ShonkwilerV94}. We zullen in de volgende subsecties een model bespreken die de gemiddelde raaktijd probeert te identificeren.
+Wanneer we geen details kennen in verband met de vorm van de evaluatiefunctie $\evalfun$ spreekt het voor zich dat we enkel zeker kunnen zijn dat we een globaal optimum hebben gevonden door middel van \emph{exhaustive search}. De verwachte tijd alvorens we deze oplossing vinden kan echter sterk verschillen van de tijd bij een exact zoekproces. Berekenen wanneer we gemiddeld dit optimum zullen bereiken staat bekend als het \prbm{Hitting Time Problem}\cite{DBLP:journals/jc/ShonkwilerV94}. We zullen in de volgende subsecties een model bespreken die de gemiddelde raaktijd probeert te identificeren.
 
-\subsubsection{Verwachtte tijd van een sequentieel proces}
-
+\subsubsection{Verwachte tijd van een sequentieel proces}
 Onderzoek naar de raaktijd is gepubliceerd in \cite{DBLP:journals/jc/ShonkwilerV94}. Men modelleert in deze publicatie een metaheuristiek aan de hand van een \emph{Markovketen}: een algoritme dat zich op elk moment in een toestand bevindt en de volgende toestand probabilistisch kiest, uitsluitend op basis van de vorige toestand. Een toestand wordt voorgesteld met slechts een eindig aantal bits, bijgevolg kan dus niet de volledige geschiedenis die het algoritme heeft doorlopen in de toestand worden opgeslagen.
 
 Toegepast op het geval van een metaheuristiek zal de toestand de populatie $\PopSet_i$ op dat moment voorstellen. Verder stelt men dat de populatie een vast aantal oplossing bevat. Deze voorwaarde beperkt het model niet omdat in elk algoritme de grootte van de populatie beperkt is tegenover de geheugencapaciteit van de machine en we op momenten dat er minder individuen in de populatie zitten, de lege plaatsen kunnen opvullen met zogenaamde \emph{dummy-oplossingen}.
@@ -214,7 +213,7 @@ Ook de rechtse eigenvector $\evr[1,\removmat]$ heeft een betekenis. We kunnen de
 \begin{equation}
 \conditional{A^t\approx\ev[A]^t\cdot\evr[A]\cdot\evl[A]^T}{$t\gg1$}
 \end{equation}
-is genormaliseerde rechtse eigenvector een probabiliteitsvector die aangeeft in welke mate een populaties bijdragen tot het behoud in een \emph{normale populaties}. Wanneer we dus de $i$-de gewone populatie beschouwen en het $i$-de element van $\evr[1,\removmat]$ is klein, is er een grote kans dat we in een doel-toestand terecht zullen komen.
+Bijgevolg is genormaliseerde rechtse eigenvector een probabiliteitsvector die aangeeft in welke mate een populaties bijdragen tot het behoud in een \emph{normale populaties}. Wanneer we dus de $i$-de gewone populatie beschouwen en het $i$-de element van $\evr[1,\removmat]$ is klein, is er een grote kans dat we in een doel-toestand terecht zullen komen.
 
 \paragraph{}
 De interpretatie van de rechtse eigenvector vormt de basis voor de interpretatie van $\metapa$. Vermits $\metapa$ het inwendig product is tussen de probabiliteitsvector $\probdistnormmeta{0}$ en $\evr[1,\removmat]$. Dit inwendig product is proportioneel met de cosinus van de hoek tussen beide vectoren:
@@ -230,7 +229,7 @@ Bijgevolg kunnen we stellen dat:
 \metapa=\displaystyle\frac{\dabs{\hat{\alpha}_0}\cdot\fun{\cos}{\probdistnormmeta{0},\evr[1,\removmat]}}{\dabs{\evl[1,\removmat]}\cdot\fun{\cos}{\evl[1,\removmat],\evr[1,\removmat]}}
 \eqnlab{sigmaMeaning}
 \end{equation}
-$\metapa$ is bijgevolg de ratio tussen de projecties van enerzijds de initi\"ele kansverdeling $\probdistnormmeta{0}$ en anderzijds de linkse eigenvector $\evl[1,\removmat]$ op de rechtse eigenvectoren $\evr[1,\removmat]$. Wanneer $\metapa$ klein is verwachten we sneller een oplossing te vinden. De factoren die hiertoe bijdragen zijn dus:
+$\metapa$ is dus de ratio tussen de projecties van enerzijds de initi\"ele kansverdeling $\probdistnormmeta{0}$ en anderzijds de linkse eigenvector $\evl[1,\removmat]$ op de rechtse eigenvectoren $\evr[1,\removmat]$. Wanneer $\metapa$ klein is verwachten we sneller een oplossing te vinden. De factoren die hiertoe bijdragen zijn dus:
 \begin{itemize}
  \item Een kleine $\dabs{\probdistnormmeta{0}}$. Vermits de som van $\probdistnormmeta{0}$ neerkomt om de kans dat onze beginpopulatie geen doelpopulatie is, streven we er naar om deze zo laag mogelijk te houden.
  \item Wanneer $\probdistnormmeta{0}$ en $\evr[1,\removmat]$ niet gelijkaardig zijn, dan zijn de populaties waar we met een grote kans in starten niet de populaties die met een grote kans naar een \emph{normale populaties} migreren in de volgende stap. Wanneer de cosinus tussen de vectoren dus klein is, verwachten we in de eerste stappen naar een \emph{doel-populatie} te migreren.
@@ -246,11 +245,10 @@ Vermits $0\leq\metapb<1$ en $0<\metapa$, kunnen we met behulp van \eqnref{speedu
 De anomalie zit dan ook waarschijnlijk in het feit dat de parallelle variant van de Monte-Carlo simulatie geen zuivere metaheuristiek is: wanneer we immers het aantal processoren opdrijven, drijven we ook het aantal initi\"ele populaties op. Zoals we uit \eqnref{sigmaMeaning} kunnen afleiden wordt $\metapa$ klein indien de beginverdeling $\probdistnormmeta{0}$ klein is of sterk afwijkt van $\evr[1,\removmat]$. In dat geval loont het dus eerder de moeite van telkens nieuwe populaties te genereren dan deze populaties te laten evolueren. We kunnen dus stellen dat in het geval $\metapa<\metapb$, de metaheuristiek slecht is opgesteld. De voorbeelden die \cite{DBLP:journals/jc/ShonkwilerV94} aanhaalt zijn dan ook problemen in \comp{P}, of problemen met slecht ge\"implementeerde metaheuristieken.
 
 \subsubsection{Anomalie\"en in het model}
-f
 Het voorgestelde model vertoond verder nog enkele anomalie\"en. Hieronder geven we een bondig overzicht.
 
 \paragraph{}
-We hebben het proces als een stationaire Markovketen gemodelleerd. Metaheuristieken hebben eerder een dynamisch karakter: op basis van kennis uit het verleden, veranderen de transitiematrices per tijdstap. In het geval van bijvoorbeeld \emph{Simulated Annealing} gebeurt dit volgens een vast patroon en kunnen we sommige effecten modelleren\cite{}. Meestal echter veranderen de kansen op basis van de bezochte populaties. In dat geval is het minder evident om een model op te stellen.
+We hebben het proces als een stationaire Markovketen gemodelleerd. Metaheuristieken hebben eerder een dynamisch karakter: op basis van kennis uit het verleden, veranderen de transitiematrices per tijdstap. In het geval van bijvoorbeeld \emph{Simulated Annealing} gebeurt dit volgens een vast patroon en kunnen we sommige effecten modelleren\cite{saspeedup}. Meestal veranderen de kansen op basis van de bezochte populaties en is het minder evident om een model op te stellen.
 
 \paragraph{}
 In het model vraagt het genereren van een populatie dezelfde hoeveelheid tijd als een transitie. In de praktijk verwachten we dat in heel wat gevallen de tweede stap sneller zal verlopen (omdat de configuraties en populaties maar gedeeltelijk aangepast zullen worden). Dit is ook een aspect die pleit voor metaheuristieken: we besparen tijd door de transities sneller uit te voeren dan het genereren van nieuwe configuraties.
@@ -263,7 +261,7 @@ De meeste metaheuristieken de voorkeur aan migratie naar sterke populaties. Hier
 
 \subsubsection{Minimale Speed-up}
 
-Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal van elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{Kalnis02viewselection}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren. Bovendien kunnen we een programma zo ontwerpen dat het uitsluitend oplossingen genereert die nog niet eerder gegenereerd werden in dit in een tijdscomplexiteit onafhankelijk van het aantal eerder gegenereerde oplossingen.
+Metaheuristieken worden ge\"implementeerd als een evoluerende populatie (mogelijk bestaat de populatie uit \'e\'en individu) met transitiefuncties. De reden is dat men verwacht dat men iets uit het verleden kan leren en goede oplossingen meestal minimaal van elkaar verschillen (dit kan beargumenteerd worden met een studie in \cite{Kalnis02viewselection}). Indien we aan deze assumptie geen geloof hechten kunnen we op een andere manier de optimale oplossing proberen te vinden\cite{DBLP:journals/jc/ShonkwilerV94}. Vermits de variabelen en de bijbehorende domeinen op voorhand gekend zijn, kan een programma een toevallige oplossing genereren. Bovendien kunnen we een programma zo ontwerpen dat het uitsluitend oplossingen voorstelt die nog niet eerder gegenereerd werden in dit in een tijdscomplexiteit onafhankelijk van het aantal eerder gegenereerde oplossingen.
 \paragraph{}
 Stel dat het domein exact \'e\'en optimale oplossing bevat, dan is de kans dat we in iteratie $t$ deze waarde vinden gelijk aan:
 \begin{equation}
@@ -290,6 +288,7 @@ De formule is verder te veralgemenen naar $g$ gewenste oplossingen maar leidt to
 
 
 \subsection{Parallelliseren van metaheuristieken in de praktijk}
+\ssclab{pmhprak}
 
 Een referentiewerk in verband met het uitvoeren van metaheuristieken op verschillende processoren in de praktijk is \work{Parallel Metaheuristics: A New Class of Algorithms} van \auth[Alba2005book]{Enrique Alba}. In het boek maakt men een onderscheid tussen \emph{Local Search Metaheuristics (LMS)} en \emph{Evolutionary Algorithms (EA)} anderzijds.
 \paragraph{}
@@ -308,26 +307,27 @@ In het geval van \emph{Evolutionary Algorithms} wordt er gerekend met een popula
 \end{enumerate}
 
 \paragraph{}
-In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke \absu{}: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een negatieve \absu{} door het grote aantal synchronisatiestappen.
+In de bovenstaande modellen tot parallellisatie zijn de bronnen geordend in stijgende granulariteit. Meestal introduceert een fijnere granulariteit echter ook problemen in verband met mogelijke \absu{}: na elke stap worden de processoren opnieuw gesynchroniseerd. Op het moment dat een processor klaar is met zijn werk dient er gewacht te worden tot ook andere processoren deze \emph{barrier} bereiken. Dit introduceert dan ook een vorm van overhead. \cite{conf/glvlsi/HaldarNCB00} rapporteert bijvoorbeeld een \absu{} die consistent onder de $1.0$ blijft. Dit wordt verklaart door het grote aantal synchronisatiestappen.
 
 \paragraph{}
 Andere bronnen spelen dan weer vooral bij een lagere granulariteit: het is bijvoorbeeld mogelijk dat na verloop van tijd twee populaties in een parallel evolutionair algoritme convergeren. De resultaten uit twee gelijkaardige populaties zijn meestal ook gelijkaardig, waardoor er dus weinig winst geboekt wordt met het uitvoeren van het algoritme op verschillende processoren.
 
 \paragraph{}
-\auth{Crainic} en \auth{Toulouse}\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemenere types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van \auth{Alba}. Men stelt in\cite{crainicAndToulouse} dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. \auth{Crainic} en \auth{Toulouse} argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in \auth{Alba} minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
+\auth{Crainic} en \auth{Toulouse}\cite{crainicAndToulouse} delen de parallellisatie van metaheuristieken op in drie algemenere types. Onder \emph{Type 1} vallen de \emph{Move acceleration}, \emph{Parallel moves} en \emph{Parallel computation} paradigma's van \auth{Alba}. Men stelt in\cite{crainicAndToulouse} dat dit type van parallellisatie uitsluitend probeert om operaties of evaluaties te versnellen. Wanneer men echter het algoritme op een sequenti\"ele processor draait met eenzelfde aantal iteraties, verwachten we dat dezelfde elementen in de oplossingsruimte werden onderzocht. \emph{Type 3} komt overeen met \emph{Parallel multistart} en \emph{Parallel population}. \auth{Crainic} en \auth{Toulouse} argumenteren hier dat al deze technieken leiden tot parallelle verkenning van dezelfde zoekruimte. \emph{Type 2} is een vorm van parallellisme die in \auth{Alba} minder aan bod komt: het opdelen van de zoekruimte. Dit gebeurt door een deel van de variabelen vaste waardes te laten aannemen, de overige variabelen worden dan geoptimaliseerd door de verschillende processoren. Meestal kiest men per processor andere variabelen. Op vaste tijdstippen zal een processor vervolgens de configuraties van de verschillende processoren samenvoegen in \'e\'en globale oplossing. Omdat dit systeem sommige delen van de configuratieruimte onbezocht kan laten, worden op geregelde tijdstippen nieuwe oplossingsruimtes aan de processoren toegekend.
 
 \paragraph{}
 \auth{Crainic} en \auth{Toulouse} maken ook een onderscheid in \emph{type 3} tussen \emph{interagerende processen} en \emph{niet-interagerende processen}. In het tweede geval wisselen de processen ook bepaalde aspecten uit in het zoekproces. Men verwacht dat met behulp van deze informatie er betere strategie\"en kunnen worden ontwikkeld die een metaheuristiek sneller naar de oplossing zullen leiden.
 
 \subsubsection{Empirische resultaten}
 
-\auth{Alba} geeft in zijn boek een uitgebreid overzicht over verschillende pogingen om metaheuristieken te parallelliseren. In een groot aantal families van metaheuristieken is \ablsu{} geen evidentie. In het geval van \emph{Ant Colony Optimisation (ACO)} bijvoorbeeld rapporteren zowel \cite{Souto2004,Randall2002,Delisle2001,Catalano:2001:PRH:761889.761897} lage effici\"entie (meestal rond de 0.40) die meestal daalt naarmate het aantal processoren toeneemt. Andere paradigma's, zoals bijvoorbeeld \emph{Tabu Search}, halen wel sterke resultaten die meestal \ablsu{} benaderen.
+\auth{Alba} geeft in zijn boek een uitgebreid overzicht over verschillende pogingen om metaheuristieken te parallelliseren. In een groot aantal families van metaheuristieken is \ablsu{} geen evidentie. In het geval van \emph{Ant Colony Optimization (ACO)} bijvoorbeeld rapporteren zowel \cite{Souto2004,Randall2002,Delisle2001,Catalano:2001:PRH:761889.761897} lage effici\"entie (meestal rond de 0.40) die meestal daalt naarmate het aantal processoren toeneemt. Andere paradigma's, zoals bijvoorbeeld \emph{Tabu Search}, halen wel sterke resultaten die meestal \ablsu{} benaderen.
 
 \subsubsection{Speed-up als een goede metriek?}
-Empirische resultaten tonen dat de empirische \absu{} sterk kan vari\"eren naargelang het paradigma van de metaheuristiek. Ook wanneer men een sterke \absu{} realiseert, ontbreken harde garanties dat dit op alle probleeminstanties het geval zal zijn. \cite{crainicAndToulouse} plaats daarom vraagtekens bij de betekenis van \absu{}.
+\ssslab{sugood}
+Empirische resultaten tonen dat de empirische \absu{} sterk kan vari\"eren naargelang het paradigma van de metaheuristiek. Ook wanneer men een sterke \absu{} realiseert, ontbreken harde garanties dat dit op alle probleeminstanties het geval zal zijn. \cite{crainicAndToulouse} plaatst daarom vraagtekens bij de betekenis van \absu{}.
 
 \paragraph{}
-Omdat we meestal de exacte oplossing niet kennen is de \absu{} moeilijk te verifi\"eren: een parallel algoritme kan snel sterke oplossingen genereren, maar zal misschien niet significant sneller de echte oplossing vinden. Bovendien zal men meestal de uitvoer stopzetten alvorens een metaheuristiek de oplossing heeft gevonden. \cite{crainicAndToulouse} stelt daarom drie andere metrieken voor: kwalitatief sterkere oplossingen gedurende een significant deel van het zoekproces, robuustere systemen die meer garantie bieden op een sterke oplossing, of een algoritme die de algemene tijdscomplexiteit naar omlaag haalt.
+Omdat we meestal de exacte oplossing niet kennen is de \absu{} moeilijk te verifi\"eren: een parallel algoritme kan snel sterke oplossingen genereren, maar zal daarom niet significant sneller de echte oplossing vinden. Bovendien zal men meestal de uitvoer stopzetten alvorens een metaheuristiek de oplossing heeft gevonden. \cite{crainicAndToulouse} stelt daarom drie andere metrieken voor: kwalitatief sterkere oplossingen gedurende een significant deel van het zoekproces, robuustere systemen die meer garantie bieden op een sterke oplossing, of een algoritme die de algemene tijdscomplexiteit naar omlaag haalt.
 
 \subsubsection{Parallellisatie met behulp van aangepast hardware}
 Het boek besteed ook aandacht aan parallellisatie met behulp van hardware: simulaties tonen aan dat een processor soms een significante hoeveelheid rekentijd besteed aan communicatie met andere processoren. Door hardware te ontwikkelen kan men de rekentijd verder beperken. Sommige metaheuristieken zijn bijvoorbeeld op een \emph{Field Programmable Gate Array (FPGA)} ge\"implementeerd\cite{conf/glvlsi/HaldarNCB00,conf/fpt/GuntschMSDESS02,journals/gpem/Martin01}.

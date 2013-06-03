@@ -1,14 +1,14 @@
 \section{Probleemafhankelijk gedeelte}
 
-In een parallelle context kan het interessant zijn om het probleemafhankelijke gedeelte meer functionaliteiten ter beschikking te laten stellen. Concreet denken we hierbij aan vier zaken: \emph{afstandmetrieken}, \emph{ervaring-generatoren}, \emph{zoekruimte beperkers} en \emph{multi-objectieven}
+In een parallelle context kan het interessant zijn om het probleemafhankelijke gedeelte meer functionaliteiten ter beschikking te laten stellen. Concreet denken we hierbij aan vier zaken: \emph{afstandmetrieken}, \emph{ervaringsgeneratoren}, \emph{beperken van de zoekruimte} en \emph{multi-objectieven}
 
-\subsection{Afstandmetrieken}
+\subsection{Afstandsmetrieken}
 \abhf{} laat problemen een functie aanbieden die twee oplossingen met elkaar kan vergelijken. Deze functie kunnen we theoretisch omvormen tot een afstandsmetriek\footnote{We stellen de afstand tussen twee dezelfde oplossingen gelijk aan 0, en tussen twee verschillende oplossingen aan een arbitraire constante groter dan 0.}, maar levert weinig informatie op. In een sequenti\"ele context kan men het aantal heuristieken die tussen een oplossing en \'e\'en van zijn voorouders liggen gebruiken om de afstand af te schatten. Dit is natuurlijk slechts een benadering. In het geval van parallelle uitvoer zullen we bovendien meestal niet over deze informatie beschikken. Daarom is het nuttig om de afstand tussen twee oplossingen te kunnen inschatten. In het geval de afstand geen triviaal gegeven is, kan men verschillende afstandsmetrieken defini\"eren.
  
-\subsection{Ervaring-generatoren}
+\subsection{Ervaringsgeneratoren}
 Elk proces draait een eigen hyperheuristiek en komt een grote hoeveelheid oplossing tegen. Uitwisselen van de sequentie kan potentieel een voordeel opleveren omdat de hyperheuristieken met meer kennis van zaken kunnen beslissen. Het doorsturen van alle oplossingen is doorgaans niet mogelijk omdat dit een te grote druk op het netwerk zet en bovendien de overige processoren te veel rekenkracht zouden investeren in het analyseren van de ontvangen berichten. Door het uitwisselen van ervaring, een compacte voorstelling van beschouwde oplossingen, zouden we dit probleem kunnen oplossen.
 
-\subsection{Zoekruimte-beperkers}
+\subsection{Beperken van de zoekruimte}
 Door oplossingen uit te wisselen lopen we de kans dat de verschillende processoren op termijn vergelijkbare populaties onderhouden. Wanneer populaties echter rond eenzelfde lokaal optimum liggen, is dit meestal nefast\cite{parallelgeneticalgorithms}. In dat geval proberen alle processoren het lokale optimum te zoeken in een eenzelfde gebied, en wordt migratie naar mogelijk betere oplossingen in een ander gebied minder evident. Het introduceren van een component die diversificatie afdwingt kan helpen te voorkomen dat we op ijle populaties stuiten.
 
 \subsection{Multi-objectieven}

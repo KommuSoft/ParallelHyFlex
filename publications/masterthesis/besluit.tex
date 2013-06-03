@@ -36,38 +36,64 @@ Om meer processoren te richten op interessante gebieden wordt een concept genaam
 \emph{ParAdapHH} is een parallelle variant van \emph{AdapHH}, een hyperheuristiek ge\"implementeerd door Mustafa M\i{}s\i{}r.
 
 \paragraph{}
-Het systeem probeert heuristieken beter te evalueren doordat elke processor de waarde van de bijbehorende metrieken doorstuurt. De samengestelde van al deze metrieken wordt vervolgens meegenomen in de evaluatie.
+Het systeem onderhoudt een set van sterke hyperheuristieken die periodiek worden ge\"evalueerd. Op basis van metingen wordt beslist of een heuristiek tijdelijk uit deze set wordt verwijdert. Deze metingen slaan op de hele uitvoeringstermijn maar meer recente metingen krijgen prioriteit. \emph{ParAdapHH} laat processoren metingen doorsturen om op basis van meer data een oordeel te vellen. Aan metingen van andere machines wordt echter minder waarde gehecht.
 
 \paragraph{}
-De \emph{learning automaton} in het systeem probeert ook te leren op basis van meer data. De verschillende gewichten van de \emph{learning automata} van de processoren worden uitgewisseld en elke \emph{learning automaton} beschouwt een interpolatie tussen de eigen gewichten en de vreemde gewichten.
+Om uit lokale optima te ontsnappen worden soms twee heuristieken na elkaar uitgevoerd. Een \emph{learning automaton} is verantwoordelijk voor de selectie van deze heuristieken. De kansenvector van deze \emph{learning automata} wordt regelmatig uitgewisseld en beslissingen worden vervolgens genomen op basis van zowel lokale als gedistribueerde data.
 
 \paragraph{}
-Om een nieuwe oplossing te accepteren wordt deze vergeleken met een lijst van historisch beste fitness-waarden. Door een gedistribueerde lijst uit te wisselen, is men in staat om sterkere convergentie naar een optimale oplossing af te dwingen. Om te voorkomen dat een hyperheuristiek te lang geen oplossing accepteert, bestaat een vast deel van de historische waarden uit fitness-waarden van oplossingen die lokaal gegenereerd werden.
+Om een nieuwe oplossing te accepteren wordt deze vergeleken met een lijst van historisch beste fitness-waarden. Door een gedistribueerde lijst uit te wisselen, is men in staat om sterkere convergentie naar een optimale oplossing af te dwingen. Een vast deel van de lijst bestaat echter uit lokaal gegenereerde data. Hiermee proberen we te voorkomen dat de lijst na verloop van tijd uitsluitend uit waardes bestaat van oplossingen die niet in de onmiddellijke omgeving van de actieve oplossing liggen.%Om te voorkomen dat een hyperheuristiek te lang geen oplossing accepteert, bestaat een vast deel van de historische waarden uit fitness-waarden van oplossingen die lokaal gegenereerd werden.
 
 \subsection{Resultaten}
+
+Wanneer we experimenten uitvoeren stellen we na verloop van tijd consistent betere resultaten vast. Naarmate we het aantal processoren opdrijven stellen we betere oplossingen vast en worden sommige problemen sneller opgelost. Deze eigenschap is voor een groot deel inherent aan parallelle Monte-Carlo simulaties.
+
+\paragraph{}
+De invloed van de componenten is niet altijd eenduidige: naarmate we parameters verhogen of verlagen stellen we geen monotone verbeteringen vast. Wat wel opvalt is dat het uitwisselen van informatie omtrent de heuristieken bijna altijd tot betere resultaten leidt, teveel waarde hechten aan deze metingen werkt echter averechts. Dit is waarschijnlijk te wijten aan het feit dat de metingen vooral relevant zijn voor een specifieke omgeving rond een populatie.
+
+\paragraph{}
+Het uitwisselen van data bij het \emph{Relay Hybridisation} component leidt meestal niet tot betere prestaties. Dit component is vooral ontwikkeld om te ontsnappen uit lokale optima. Omdat deze taak waarschijnlijk vrij specifiek is aan de situatie werkt het uitwisselen van data waarschijnlijk averechts. In het geval van kleine problemen stellen we wel betere resultaten vast. Dit is waarschijnlijk te wijten aan het feit dat er minder variatie op de omgeving mogelijk is.
+
+\paragraph{}
+Het aantal \emph{afdwingbare beperkingen} in de zoekruimte blijkt doorgaans een positief effect te hebben op de resultaten van de hyperheuristiek. Dit maakt het zoekproces immers meer divers waardoor men minder kans loopt in een lokaal optimum vast te lopen. Wanneer we het aantal echter opdrijven valt deze verbetering stil. Conflicten tussen beperkingen en de hoeveelheid rekenkracht die aan dit systeem wordt gespendeerd liggen waarschijnlijk aan de basis van deze stagnatie.
+
+\paragraph{}
+Als we de lijst van historische waardes in het \emph{AILLA}-component langer maken stellen we betere resultaten vast. Opnieuw blijkt echter dat wanneer we dit aantal blijven opdrijven, er geen significante verbeteringen meer plaatsvinden. Dit kan verklaard worden omdat het component minder gebruik maakt van de elementen ver in de lijst, maar deze langere lijsten vereisen extra rekenkracht bij het doorsturen naar andere processoren. Het verzekeren van een gedeelte dat door de lokale machine werd gegenereerd blijkt enkel bij korte lijsten een positief effect te hebben. Dit kan men verklaren omdat in lange lijsten de kans sowieso groot is dat er enkele lokale elementen aanwezig zullen zijn, en afdwingen dus weinig zin heeft.
+
+\paragraph{}
+Het aantal \emph{afdwingbare beperkingen} die we in de beraad houden heeft in het algemeen weinig invloed op de prestaties van het systeem. Alleen bij in het geval van $4$~processoren en grote problemen leek dit tot betere resultaten te leiden.
 
 \section{Potenti\"ele ontwikkelingen}
 \seclab{potentials}
 
-Vooral op het gebied van het \prbm{Finite Domain Costraint Optimization Problem (FDCOP)} zien we potentieel interessante ontwikkelingen. Er bestaan reeds verschillende pakketten die toelaten op optimalisatieproblemen in logische taal uit te drukken. We denken dan bijvoorbeeld aan \emph{ECLiPSe}. De meeste van deze bibliotheken werken met behulp van een \emph{branch-and-bound}-mechanisme.
+Een mogelijke interessant gebied voor verdere ontwikkelingen is het \prbm{Finite Domain Costraint Optimization Problem (FDCOP)} subsysteem. Het component laat toe dat de gebruiker een optimalisatieprobleem in logische taal uitdrukt. Het systeem gaat vervolgens met behulp van algemeen toepasbare transitiefuncties op zoek naar interessante oplossingen. De huidige ontwikkeling van dit component laat echter enkel toe om kleine problemen in \comp{P} op te lossen.
 
 \paragraph{}
-\emph{Branch-and-bound} garandeert dat de optimale oplossing op termijn gevonden wordt, maar kan voor de meeste complexe problemen geen sterke oplossing in aanvaardbare tijd vinden. Door hyperheuristieken in het proces te betrekken zien we enkele voordelen.
+Het oplossen van optimalisatieproblemen gesteld in een logische taal werd al succesvol ge\"implementeerd in \emph{ECLiPSe}. Dit systeem probeert met behulp van een \emph{branch-and-bound}-algoritme de exacte oplossing uit te rekenen. Omdat de meeste optimalisatieproblemen echter in \comp{NP-hard} liggen, is er weinig hoop om exacte oplossingen voor industri\"ele toepassingen uit te rekenen. Bovendien wordt een \emph{branch-and-bound}-mechanisme makkelijk bedrogen door een vrij monotoon deel van de configuraties af te zoeken.
 
 \paragraph{}
-Hyperheuristieken leveren altijd een oplossing af binnen een zekere termijn. Dit is ook mogelijk met het \emph{branch-and-bound} mechanisme. Dit laatste mechanisme zoekt in een beperkte tijd echter enkel een set van gelijkaardige oplossingen af. De kans is groot dat hyperheuristieken in deze tijd tot betere oplossingen komen omdat het zoekterrein meer divers is.
+Metaheuristieken en hyperheuristieken kunnen makkelijk op verschillende processoren worden uitgevoerd met een vrij inherent beter resultaat. Ook \emph{branch-and-bound}-algoritmes kunnen worden parallel worden uitgevoerd door elke processor bijvoorbeeld een deel van de zoekruimte te laten afzoeken. De meeste \emph{branch-and-bound} algoritmen bevatten echter systemen om het zoekproces op te drijven. We denken dan bijvoorbeeld aan \emph{clause learning} in geval van \prbm{SAT}. Deze componenten zijn minder inherent parallelliseerbaar. Door verschillende componenten in een hyperheuristiek informatie te laten uitwisselen worden er vormen van parallel leren aangeboden. Het voordeel van dit in een context van hyperheuristieken te doen is dat door het non-deterministisch  karakter, de communicatie niet zo belangrijk is en de communicatiekosten dus kunnen worden gereduceerd.
 
 \paragraph{}
-Een hyperheuristiek kan ook gebruikt worden als een vorm van \emph{preprocessing}. Door een hyperheuristiek eerst een benaderende oplossing te laten uitrekenen wordt een strenge \emph{bound} bepaald. Het aantal \emph{backtracking}-stappen in het effectieve zoekproces kan hierdoor gereduceerd worden.
+Het parallel uitvoeren van optimalisatieproblemen kan mogelijk een antwoord bieden op de vraag naar domeinspecifieke oplossingsmethodes. Door het verlies aan prestaties te compenseren met extra rekenkracht is het op termijn misschien mogelijk een domeinonafhankelijke methode aan te bieden die met een arbitraire rekentijd oplossingen van een arbitraire kwaliteit kan aanbieden.
 
-\paragraph{}
-Het parallel uitrekenen van hyperheuristieken kan resulteren in een softwarepakket die optimalisatieproblemen gespecificeerd in een logische taal kan uitrekenen. Door dit in een parallelle context uit te voeren kan men een oplossing met potentieel een arbitraire fout in een arbitraire tijd uitrekenen.
+%\paragraph{}
+%\emph{Branch-and-bound} garandeert dat de optimale oplossing op termijn gevonden wordt, maar kan voor de meeste complexe problemen geen sterke oplossing in aanvaardbare tijd vinden. Door hyperheuristieken in het proces te betrekken zien we enkele voordelen.
 
-\paragraph{}
-Omgekeerd denken we dat logisch programmeren ook een bijdrage kan leveren bij het ontwikkelen van metaheuristieken en hyperheuristieken. Door het uitdrukken van optimalisatieproblemen in logische taal, specificeert men enkel het probleem en is het de verantwoordelijkheid van het algoritme in kwestie om met zichzelf om te vormen tot een effici\"ent optimalisatiesysteem voor het specifieke probleem.
+%\paragraph{}
+%Hyperheuristieken leveren altijd een oplossing af binnen een zekere termijn. Dit is ook mogelijk met het \emph{branch-and-bound} mechanisme. Dit laatste mechanisme zoekt in een beperkte tijd echter enkel een set van gelijkaardige oplossingen af. De kans is groot dat hyperheuristieken in deze tijd tot betere oplossingen komen omdat het zoekterrein meer divers is.
 
-\paragraph{}
-Tot slot kan men in een later stadium ook een brug maken met \emph{energy complexity}\cite{Roy:2013:ECM:2422436.2422470,conf/icpp/KorthikantiAG11}: het berekenen met hoeveel processoren men het effici\"entst een kwalitatieve oplossing kan berekenen.
+%\paragraph{}
+%Een hyperheuristiek kan ook gebruikt worden als een vorm van \emph{preprocessing}. Door een hyperheuristiek eerst een benaderende oplossing te laten uitrekenen wordt een strenge \emph{bound} bepaald. Het aantal \emph{backtracking}-stappen in het effectieve zoekproces kan hierdoor gereduceerd worden.
+
+%\paragraph{}
+%Het parallel uitrekenen van hyperheuristieken kan resulteren in een softwarepakket die optimalisatieproblemen gespecificeerd in een logische taal kan uitrekenen. Door dit in een parallelle context uit te voeren kan men een oplossing met potentieel een arbitraire fout in een arbitraire tijd uitrekenen.
+
+%\paragraph{}
+%Omgekeerd denken we dat logisch programmeren ook een bijdrage kan leveren bij het ontwikkelen van metaheuristieken en hyperheuristieken. Door het uitdrukken van optimalisatieproblemen in logische taal, specificeert men enkel het probleem en is het de verantwoordelijkheid van het algoritme in kwestie om met zichzelf om te vormen tot een effici\"ent optimalisatiesysteem voor het specifieke probleem.
+
+%\paragraph{}
+%Tot slot kan men in een later stadium ook een brug maken met \emph{energy complexity}\cite{Roy:2013:ECM:2422436.2422470,conf/icpp/KorthikantiAG11}: het berekenen met hoeveel processoren men het effici\"entst een kwalitatieve oplossing kan berekenen.
 
 %%% Local Variables: 
 %%% mode: latex
