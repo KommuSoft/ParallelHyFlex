@@ -22,7 +22,7 @@ De totale tijdscomplexiteit van dit algoritme blijft minimaal \bigoh{p}: we stur
 
 \subsection{Asynchrone aspecten}
 
-De implementatie in \algref{gatherallsequential} werkt met synchrone communicatie: processen worden geblokkeerd tot een succesvolle uitwisseling. Het algoritme die we willen implementeren zal met asynchrone communicatie werken. Men kan dit implementeren door dit proces bijvoorbeeld op een aparte \emph{thread} te laten werken: een proces brengt de data onder in de context van de \emph{thread} en werkt verder. Nadien wordt regelmatig gecontroleerd over de \emph{thread} al de nodige informatie heeft verzameld.
+De implementatie in \algref{gatherallsequential} werkt met synchrone communicatie: processen worden geblokkeerd tot een succesvolle uitwisseling. Het algoritme dat we willen implementeren zal met asynchrone communicatie werken. Men kan dit implementeren door dit proces bijvoorbeeld op een aparte \emph{thread} te laten werken: een proces brengt de data onder in de context van de \emph{thread} en werkt verder. Nadien wordt regelmatig gecontroleerd over de \emph{thread} al de nodige informatie heeft verzameld.
 
 \importalgo{asyncga}{Asynchrone GatherAll.}{gatherallasync}
 

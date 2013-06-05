@@ -11,7 +11,7 @@
   udc=681.3,
   shortabstract={
   Hyperheuristieken zijn een familie van algoritmen die een optimalisatieprobleem benaderend oplossen met behulp van Monte-Carlo simulaties. Op basis van een set transitiefuncties manipuleert het algoritme op een probleemonafhankelijke manier een oplossing tot deze van acceptabele kwaliteit is.\\
-  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteund de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat te veel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Verder stellen we in dit werk ook \emph{ParAdapHH} voor, een parallelle variant van \emph{AdapHH}: een hyperheuristiek ontwikkeld door Mustafa M\i{}s\i{}r. De effectiviteit van het systeem en de verschillende deelcomponenten wordt vervolgens getest aan de hand van \prbm{Max-3Sat}-problemen.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf%en \prbm{Finite Domain Constraint Optimisation}
+  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteunt de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat te veel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Verder stellen we in dit werk ook \emph{ParAdapHH} voor, een parallelle variant van \emph{AdapHH}, een hyperheuristiek ontwikkeld door Mustafa M\i{}s\i{}r. De effectiviteit van het systeem en de verschillende deelcomponenten wordt vervolgens getest aan de hand van \prbm{MAX-3SAT}-problemen.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf%en \prbm{Finite Domain Constraint Optimisation}
 \input{header}
 % Verwijder de "%" op de volgende lijn als je de kaft wil afdrukken
 %\setup{coverpageonly}
@@ -57,8 +57,10 @@
 
 % Nu begint de eigenlijke tekst
 \mainmatter
-
+\settocdepth{subsection}
 \input{hfdst}
+
+\settocdepth{section}
 
 % Indien er bijlagen zijn:
 \appendixpage*          % indien gewenst

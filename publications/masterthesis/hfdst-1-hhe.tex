@@ -7,8 +7,6 @@ Een hyperheuristiek is een automatische methodologie voor het selecteren of gene
 \end{definition}
 De heuristieken worden ook wel \emph{low-level heuristieken} of \emph{transitiefuncties} genoemd.
 
-\importtikz{hyperheuristic}{hhschema}{Schematische voorstelling van een hyperheuristiek.\cite{Burke03hyper-heuristics:an}}
-
 \paragraph{}
 De definitie zelf maakt reeds een onderscheid tussen twee mechanismes\cite{Burke_aclassification}:
 \begin{enumerate}
@@ -17,6 +15,10 @@ De definitie zelf maakt reeds een onderscheid tussen twee mechanismes\cite{Burke
 \end{enumerate}
 
 Het selecteren of genereren van een hyperheuristiek kan op verschillende manieren gebeuren. Men maakt meestal een onderscheid tussen \emph{no-learning}, \emph{offline learning} en \emph{online learning}.
+
+\paragraph{}
+\importtikz{hyperheuristic}{hhschema}{Schematische voorstelling van een hyperheuristiek.\cite{Burke03hyper-heuristics:an}}
+\imgref{hhschema} geeft het concept van een hyperheuristiek schematisch weer. Op de figuur spreekt men van een zogenaamde \emph{domein-barri\`ere}. Informatie die deze laag kruist omvat geen informatie omtrent het concrete probleem of de concrete hyperheuristiek. In \secref{legende} worden wordt de betekenis van de verschillende componenten op de figuur geformaliseerd.
 
 \subsection{Motivering}
 Indien het gegeven probleem complex en een metaheuristiek ontwikkelen geen sinecure is, maakt men gebruik van hyperheuristieken. Meestal is dit het geval bij problemen waar de instanties vrij divers kunnen zijn, en men in het ontwerp van de metaheuristiek er niet in slaagt alle families van probleeminstanties te beschouwen.

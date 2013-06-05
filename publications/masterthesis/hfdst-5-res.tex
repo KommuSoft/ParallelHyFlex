@@ -1,36 +1,36 @@
 \section{Resultaten}
 
-\subsection{Makkelijke problemen}
+\subsection{Gemakkelijke problemen}
 
-\showgraph[width=\textwidth]{smallp}{De evolutie van oplossing bij makkelijke problemen}{smallp}
+\showgraph[width=\textwidth]{smallp}{De evolutie van oplossing bij gemakkelijke problemen.}{smallp}
 
-\imgref{smallp} toont hoe verschillende simulaties gemiddeld evolueren in de tijd met een veranderend aantal processoren. Naarmate het aantal processoren stijgt, de oplossingen op lange termijn sneller gevonden wordt. Anderzijds neemt de tijd alvorens de daling wordt ingezet toe. Dit is te wijten aan een aantal administratieve taken die komen kijken bij het rekenen met meerdere processoren\footnote{We denken bijvoorbeeld aan het voorzien van geheugen om de ontvangen oplossingen in op te slaan.}. De prestaties verschillen bovendien niet veel tussen werken met $2$ en $3$~processoren. Bij $3$~processoren is de kost van de communicatie ongeveer dezelfde als bij $4$~processoren, maar is de uitgewisselde informatie waarschijnlijk minder kwaliteitsvol\footnote{Vermits de informatie een uitspraak doet over de resultaten van slechts $3$~processoren}. Afhankelijk van de grens die we instellen, stellen we verschillende vormen van \absu{} vast. Omdat de meeste problemen immers makkelijk op te lossen zijn zullen meer processoren niet significant sneller een oplossing vinden: het verbeteren van de oplossing kan meestal aan \'e\'en processor toegeschreven worden. Als we echter de grens stellen op het oplossen van alle problemen zien echter wel dat $4$~processoren er effectief in slagen om problemen $4$~keer sneller op te lossen.
+\imgref{smallp} toont hoe verschillende simulaties gemiddeld evolueren in de tijd met een veranderend aantal processoren. Naarmate het aantal processoren stijgt, de oplossingen op lange termijn sneller gevonden wordt. Anderzijds neemt de tijd alvorens de daling wordt ingezet toe. Dit is te wijten aan een aantal administratieve taken die komen kijken bij het rekenen met meerdere processoren\footnote{We denken bijvoorbeeld aan het voorzien van geheugen om de ontvangen oplossingen in op te slaan.}. De prestaties verschillen bovendien niet veel tussen werken met $2$ en $3$~processoren. Bij $3$~processoren is de kost van de communicatie ongeveer dezelfde als bij $4$~processoren, maar is de uitgewisselde informatie waarschijnlijk minder kwaliteitsvol\footnote{Vermits de informatie een uitspraak doet over de resultaten van slechts $3$~processoren}. Afhankelijk van de grens die we instellen, stellen we verschillende vormen van \absu{} vast. Omdat de meeste problemen immers gemakkelijk op te lossen zijn zullen meer processoren niet significant sneller een oplossing vinden: het verbeteren van de oplossing kan meestal aan \'e\'en processor toegeschreven worden. Als we echter de grens stellen op het oplossen van alle problemen zien echter wel dat $4$~processoren er effectief in slagen om problemen $4$~keer sneller op te lossen.
 
-\section{Moeilijke problemen}
+\subsection{Moeilijke problemen}
 
-\subsection{De invloed van het aantal processoren}
+\subsubsection{De invloed van het aantal processoren}
 
-\showgraph[width=\textwidth]{largep}{De evolutie van oplossing bij moeilijke problemen}{largep}
+\showgraph[width=\textwidth]{largep}{De evolutie van oplossing bij moeilijke problemen.}{largep}
 
 \imgref{largep} toont de evolutie van problemen met $10'000$~variabelen met een verschillend aantal processoren. We stellen vast dat naarmate we het aantal processoren opdrijven we binnen de gegeven tijd tot betere resultaten komen. Dit effect is ook zichbaar bij het eerste en derde kwartiel: het eerste kwartiel bij $1$~processor ligt dicht bij het gemiddelde van $4$~processoren. De prestaties die slechts \'e\'en kwart van de simulaties kunnen neerzetten met \'e\'en processor, worden gemiddeld neergezet door een simulatie met $4$~processoren.
 \paragraph{}
 Wat opvalt is de typische vorm van het oplossen van een optimalisatieprobleem: in het begin boeken nagenoeg alle transitiefuncties vooruitgang hierdoor zien we de eerste seconde een daling van de fitness-waarde van $8'000$ naar $700$. In de volgende fase is het minder triviaal om de oplossing verder te verbeteren en begint de hyperheuristiek effectief te leren welke heuristieken beter gekozen kunnen worden. Dit verklaart dat in het begin van deze fase de daling minder sterk is: de hyperheuristiek heeft in het begin weinig informatie om de sterke transitiefuncties te kiezen. Naarmate deze groeit wordt de daling sterker. In een derde fase wordt het minder evident om de oplossing verder te verbeteren. Zelfs de beste transitiefunctie zal niet altijd een sterker resultaat opleveren. We zien dat naarmate het aantal processoren wordt opgedreven, de tweede fase langer duurt. Dit is waarschijnlijk te wijten aan een grotere diversiteit aan oplossingen: omdat de verschillende populaties slechts sporadisch informatie uitwisselen krijgen sommige aspecten in een oplossing de kans om verder geoptimaliseerd te worden.
 
-\subsection{De invloed van \emph{ADHS}}
+\subsubsection{De invloed van \emph{ADHS}}
 
 \showgraph[width=\textwidth]{adhslarge4}{De evolutie van oplossingen volgens de globale invloed van \emph{ADHS}.}{adhslarge4}
 
 \emph{ADHS} houdt voor elke transitiefunctie enkele waarden bij om een set van sterke heuristieken te onderhouden. Door gegevens uit te wisselen hopen we dat de hyperheuristiek meer gefundeerde beslissingen zal maken. De details van dit proces staan uitgelegd in \secref{adhs-exp}.
 
 \paragraph{}
-\imgref{adhslarge4} toont de evolutie van oplossingen met $4$~processoren bij een \prbm{SAT}-probleem met $10'000$~variabelen. De verschillende grafieken stellen de evoluties voor bij verschillende waarden voor invloed van de gedistribueerde metingen tegenover lokale metingen. Hiervoor introduceren we een parameter $a$. Bij $a=0$ houdt het systeem dus enkel rekening met metingen die op de lokale machine werden uitgevoerd. Bij $a=1$ beslist men op basis van alle op dat moment beschikbare metingen (zonder de lokale metingen te favoriseren). Op de grafiek wordt zo'n parameter gedragen door gemiddeld $104$~simulaties. Indien een processor enkel beslist op basis van lokale data, lijkt deze sneller in de derde fase terecht te komen. Eenmaal in fase $3$ zien we wel dat de oplossing nog significant verbeterd wordt. Dit is te verklaren omdat een slechte oplossing makkelijker verder te optimaliseren valt en omdat het systeem met behulp van lokale data verder de sterktes en zwaktes van de transitiefuncties leert. Uitsluitend beslissen op basis van gedistribueerde data blijkt ook geen oplossing te bieden: het geval van $a=0.95$ presteert ook vrij slecht. De beste resultaten worden geboekt tussen $a=0.15$ en $a=0.60$. Niet alle waardes van $a$ worden in de grafiek getoond om de grafiek overzichtelijk te houden en deze waardes door te weinig simulaties werden onderzocht om zeker te zijn dat de resultaten niet op een toeval berusten.
+\imgref{adhslarge4} toont de evolutie van oplossingen met $4$~processoren bij een \prbm{SAT}-probleem met $10'000$~variabelen. De verschillende grafieken stellen de evoluties voor bij verschillende waarden voor invloed van de gedistribueerde metingen tegenover lokale metingen. Hiervoor introduceren we een parameter $a$. Bij $a=0$ houdt het systeem dus enkel rekening met metingen die op de lokale machine werden uitgevoerd. Bij $a=1$ beslist men op basis van alle op dat moment beschikbare metingen (zonder de lokale metingen te favoriseren). Op de grafiek wordt zo'n parameter gedragen door gemiddeld $104$~simulaties. Indien een processor enkel beslist op basis van lokale data, lijkt deze sneller in de derde fase terecht te komen. Eenmaal in fase $3$ zien we wel dat de oplossing nog significant verbeterd wordt. Dit is te verklaren omdat een slechte oplossing gemakkelijker verder te optimaliseren valt en omdat het systeem met behulp van lokale data verder de sterktes en zwaktes van de transitiefuncties leert. Uitsluitend beslissen op basis van gedistribueerde data blijkt ook geen oplossing te bieden: het geval van $a=0.95$ presteert ook vrij slecht. De beste resultaten worden geboekt tussen $a=0.15$ en $a=0.60$. Niet alle waardes van $a$ worden in de grafiek getoond om de grafiek overzichtelijk te houden en deze waardes door te weinig simulaties werden onderzocht om zeker te zijn dat de resultaten niet op een toeval berusten.
 
 \paragraph{}
 \inputtable{strongestas}{Sterke en zwakke waarden voor de gedistribueerde invloed bij \emph{ADHS}.}
 
 In het geval van $2$ en $3$~processoren zien we een gelijkaardig fenomeen. Om dit verder te staven werd een tabel opgesteld die voor elke processor-configuratie en voor verschillende probleem-groottes, de $3$ waardes voor $a$ opsomt die tot de sterkste en zwakste resultaten leiden\footnote{De resultaten worden van zwak naar sterk gerangschikt. De meest linkse waarde in een kolom vertegenwoordigt dus de zwakste prestatie.}. In elke simulatie duikt de waarde $a=0.0$ op bij de zwakste waarden. Men kan bijgevolg besluiten dat het uitwisselen van informatie zin heeft. De tabel illustreert ook dat sommige waarden voor $a$ bijna altijd tot zwakke of sterke prestaties leiden.
 
-\subsection{De invloed van \emph{AILLA}}
+\subsubsection{De invloed van \emph{AILLA}}
 
 \emph{AILLA} is het component die beslist of het resultaat van een transitiefunctie effectief zal worden aanvaard als nieuwe actieve oplossing. Door fitness-waardes uit te wisselen, hopen we meer druk op het systeem te zetten om betere oplossingen te genereren. De details van dit proces staan in \secref{ailla-exp}.
 
@@ -46,7 +46,7 @@ Op basis van \tblref{strongestbs} kunnen we argumenteren dat het onderhouden van
 \tblref{strongestcs} vat prestaties samen in verband met het aantal elementen in de rij die verplicht door de lokale machine moeten worden gegenereerd. Een probleem met deze parameter is dat de totale lengte van de lijst natuurlijk groter moet zijn. Uit \tblref{strongestbs} werd afgeleid dat hogere waardes voor $b$ tot betere resultaten leiden. Daarom zullen grote waardes in $c$ ook beter scoren. Vervolgens werd de data verder uitgesplitst in parameter-paren $\tupl{b,c}$. Wat opviel was dat de meeste zwakke simulaties voor beide parameters lage waardes genereren. Anderzijds was er onder de sterkere simulaties met een hoge waarde voor $b$ zowel lage als hoge waarden voor $c$ voor. Dit effect valt enigzins te verklaren omdat wanneer de lijst lang is, er automatisch veel kans is dat er lokale data in de lijst zal worden opgenomen. Bijgevolg is de waarde van de parameter minder relevant. Voldoende data genereren voor het hardmaken van deze stelling was echter onhaalbaar.
 
 
-\subsection{De invloed van \emph{RH}}
+\subsubsection{De invloed van \emph{RH}}
 
 \emph{Relay Hybridisation (RH)} is een component die toelaat om twee transitiefuncties na elkaar uit te voeren. De bedoeling is om op die manier uit een lokaal optimum te geraken. \emph{RH} werkt op basis van een \emph{learning automaton (LA)} en de uitwisseling van de verworven data gebeurd volgens het proces van \emph{mimic learning}. De invloed van andere processoren wordt uitgedrukt met een parameter $d$. De details van dit proces staan in \secref{rh-exp}.
 
@@ -55,7 +55,7 @@ Op basis van \tblref{strongestbs} kunnen we argumenteren dat het onderhouden van
 \paragraph{}
 In \tblref{strongestds} staan de waarden voor $d$ die de sterkste en zwakste resultaten opleveren. Wat opvalt is dat bij kleine problemen vooral een grote invloed tot sterke resultaten leidt. Bij grotere problemen stellen we echter vast dat de invloed best beperkt gehouden wordt. \emph{Relay Hybridisation} is een component die hoofdzakelijk bedoelt is om een oplossing uit een lokaal optimum weg te halen. Indien het probleem klein is, lijkt een uniforme aanpak goed te werken. Wanneer het probleem echter in omvang toeneemt is een aanpak die afsteld is op de specifieke populatie waarschijnlijk interessanter. Dit wordt gesteund door de waardes van de \emph{learning automaton} uit te lezen bij verschillende simulaties op grote problemen: door het inwendig product tussen de verschillende vectoren te uit te rekenen konden we vaststellen dat de meeste kansen significant verschillen.
 
-\subsection{De invloed van de \emph{Zoekruimte} en \emph{Ervaring-set}}
+\subsubsection{De invloed van de \emph{Zoekruimte} en \emph{Ervaring-set}}
 
 \inputtable{strongestes}{Sterke en zwakke groottes voor de \emph{zoekruimte}.}
 
