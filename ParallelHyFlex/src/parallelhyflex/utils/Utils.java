@@ -18,6 +18,7 @@ import parallelhyflex.algebra.tuples.Tuple2;
 public final class Utils {
 
     public static final Random StaticRandom = new Random();
+    public static final double Tolerance = 1e-6;
     public static final double InvSqrt2 = Math.sqrt(0.5d);
 
     public static double border(double min, double val, double max) {
