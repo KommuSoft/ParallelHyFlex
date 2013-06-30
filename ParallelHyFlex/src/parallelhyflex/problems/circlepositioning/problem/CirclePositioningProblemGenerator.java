@@ -2,6 +2,7 @@ package parallelhyflex.problems.circlepositioning.problem;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolution;
 import parallelhyflex.utils.Utils;
@@ -27,7 +28,9 @@ public class CirclePositioningProblemGenerator implements ProblemReader<CirclePo
     
     @Override
     public CirclePositioningProblem readAndGenerate(DataInputStream dis) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double outer = dis.readDouble();
+        double[] radia = SerialisationUtils.readDoubleArray(dis);
+        return new CirclePositioningProblem(outer,radia);
     }
     
 }
