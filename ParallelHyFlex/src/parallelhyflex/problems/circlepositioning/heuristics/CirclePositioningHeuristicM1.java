@@ -6,24 +6,21 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
 import parallelhyflex.utils.Utils;
 
 /**
- *
+ * A mutation heuristic who manipulates the position of a random circle
  * @author kommusoft
  */
-public class CirclePositioningM4 extends MutationHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
-    
-    public CirclePositioningM4 (CirclePositioningProblem problem) {
+public class CirclePositioningHeuristicM1 extends MutationHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
+
+    public CirclePositioningHeuristicM1(CirclePositioningProblem problem) {
         super(problem);
     }
 
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
-        double R = this.getProblem().getLargeCircleRadius();
-        double r = Utils.StaticRandom.nextDouble()*R;
-        double theta = 2.0d*Math.PI*Utils.StaticRandom.nextDouble();
-        double x = r*Math.cos(theta);
-        double y = r*Math.sin(theta);
         int index = Utils.StaticRandom.nextInt(this.getProblem().getNumberOfCircles());
-        from.setCircle(this.getProblem(), index, x, y);
+        double sigma = this.getProblem().getLargeCircleRadius(); sigma = 1.0d/(sigma*sigma);
+        double dx = sigma*Utils.StaticRandom.nextGaussian();
+        double dy = sigma*Utils.StaticRandom.nextGaussian();
+        from.moveCircle(this.getProblem(),index, dx, dy);
     }
-    
 }

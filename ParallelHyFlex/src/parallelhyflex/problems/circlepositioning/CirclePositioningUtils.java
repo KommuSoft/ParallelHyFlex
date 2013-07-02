@@ -50,4 +50,24 @@ public final class CirclePositioningUtils {
             }
         }
     }
+
+    public static double calculateDifferenceCircleOverlapArea(double x1, double y1, double r1, double x2, double y2, double r2, double dr) {
+        if (dr > 0.0d) {
+            return -calculateDifferenceCircleOverlapArea(x1, y1, r1, x2, y2, r2 + dr, -dr);
+        } else if (dr < 0.0d) {
+            double dx = (x2 - x1);
+            double dy = (y2 - y1);
+            double d2 = dx * dx + dy * dy;
+            double d = Math.sqrt(d2);
+            double r12 = r1 * r1;
+            double r22 = r2 * r2;
+            if (d + r2 <= r1) {
+                return 0.0d;
+            } else {
+                return calculateCircleOverlapArea(x1, y1, r1, x2, y2, r2 + dr) - calculateCircleOverlapArea(x1, y1, r1, x2, y2, r2);
+            }
+        } else {
+            return 0.0d;
+        }
+    }
 }

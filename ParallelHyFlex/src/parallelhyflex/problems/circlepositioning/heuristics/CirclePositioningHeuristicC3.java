@@ -5,18 +5,17 @@ import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProble
 import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolution;
 
 /**
- *
+ * A crossover heuristic
  * @author kommusoft
  */
-public class CirclePositioningC2 extends CrossoverHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
+public class CirclePositioningHeuristicC3 extends CrossoverHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
 
-    public CirclePositioningC2 (CirclePositioningProblem problem) {
+    public CirclePositioningHeuristicC3(CirclePositioningProblem problem) {
         super(problem);
     }
 
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from1, CirclePositioningSolution from2) {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO: To change body of generated methods, choose Tools | Templates.
+        //TODO
     }
-    
 }

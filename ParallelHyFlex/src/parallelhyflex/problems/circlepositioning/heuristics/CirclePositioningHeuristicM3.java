@@ -9,9 +9,9 @@ import parallelhyflex.utils.Utils;
  * Modifies the distance of a circle towards the origin
  * @author kommusoft
  */
-public class CirclePositioningM3 extends MutationHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
+public class CirclePositioningHeuristicM3 extends MutationHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
     
-    public CirclePositioningM3 (CirclePositioningProblem problem) {
+    public CirclePositioningHeuristicM3 (CirclePositioningProblem problem) {
         super(problem);
     }
 

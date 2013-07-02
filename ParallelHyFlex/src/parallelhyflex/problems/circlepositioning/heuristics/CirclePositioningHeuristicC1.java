@@ -10,9 +10,9 @@ import parallelhyflex.utils.Utils;
  * Sets the locations of the circles pointwise the probability is based on the evaluation function of both solutions.
  * @author kommusoft
  */
-public class CirclePositioningC1 extends CrossoverHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
+public class CirclePositioningHeuristicC1 extends CrossoverHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
     
-    public CirclePositioningC1 (CirclePositioningProblem problem) {
+    public CirclePositioningHeuristicC1 (CirclePositioningProblem problem) {
         super(problem);
     }
     
@@ -34,6 +34,6 @@ public class CirclePositioningC1 extends CrossoverHeuristicBase<CirclePositionin
             }
         }
     }
-    private static final Logger LOG = Logger.getLogger(CirclePositioningC1.class.getName());
+    private static final Logger LOG = Logger.getLogger(CirclePositioningHeuristicC1.class.getName());
     
 }

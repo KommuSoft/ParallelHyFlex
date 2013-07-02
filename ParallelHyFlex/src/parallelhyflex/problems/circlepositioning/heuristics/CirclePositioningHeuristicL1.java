@@ -8,9 +8,9 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  * Moves circles in the X/Y field according to the potential field until no further improvement can be reached
  * @author kommusoft
  */
-public class CirclePositioningL1 extends LocalSearchHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
+public class CirclePositioningHeuristicL1 extends LocalSearchHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
 
-    public CirclePositioningL1(CirclePositioningProblem problem) {
+    public CirclePositioningHeuristicL1(CirclePositioningProblem problem) {
         super(problem);
     }
 
