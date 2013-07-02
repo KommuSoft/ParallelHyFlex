@@ -19,10 +19,6 @@ public class ThreeSatHeuristicC2 extends CrossoverHeuristicBase<ThreeSatSolution
     }
     
     @Override
-    public void applyHeuristicLocally(ThreeSatSolution from) {
-    }//Do nothing, this is a crossover heuristic
-
-    @Override
     public void applyHeuristicLocally(ThreeSatSolution from1, ThreeSatSolution from2) {
         int[][] influence = this.getProblem().getInfluences();
         long[] clauses = this.getProblem().getClauses();

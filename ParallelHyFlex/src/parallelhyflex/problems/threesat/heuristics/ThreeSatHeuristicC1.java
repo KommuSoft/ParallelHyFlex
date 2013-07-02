@@ -17,10 +17,6 @@ public class ThreeSatHeuristicC1 extends CrossoverHeuristicBase<ThreeSatSolution
     }
 
     @Override
-    public void applyHeuristicLocally(ThreeSatSolution from) {
-    }//Do nothing, this is a crossover heuristic
-
-    @Override
     public void applyHeuristicLocally(ThreeSatSolution from1, ThreeSatSolution from2) {
         CompactBitArray cba1 = from1.getCompactBitArray();
         CompactBitArray cba2 = from2.getCompactBitArray();

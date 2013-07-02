@@ -36,11 +36,29 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
     }
 
     public double getXi(int index) {
-        return getPositions()[index << 0x01];
+        return this.positions[index << 0x01];
     }
 
     public double getYi(int index) {
-        return getPositions()[(index << 0x01) + 0x01];
+        return this.positions[(index << 0x01) + 0x01];
+    }
+
+    public double getR2i(int index) {
+        int i2 = index << 0x01;
+        double x = this.positions[i2];
+        double y = this.positions[i2 + 0x01];
+        return x * x + y * y;
+    }
+
+    public double getRi(int index) {
+        return Math.sqrt(this.getR2i(index));
+    }
+
+    public double getThetai(int index) {
+        int i2 = index << 0x01;
+        double x = this.positions[i2];
+        double y = this.positions[i2 + 0x01];
+        return Math.atan2(y, x);
     }
 
     private double calculateOverlap(double[] rad) {
@@ -164,9 +182,8 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
         }
         return outer;
     }
-    
-    public double getDefaultEvaluation () {
-        return this.getOuterArea()+this.getOverlapArea();
+
+    public double getDefaultEvaluation() {
+        return this.getOuterArea() + this.getOverlapArea();
     }
-    
 }

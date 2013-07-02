@@ -15,10 +15,6 @@ public class CirclePositioningC1 extends CrossoverHeuristicBase<CirclePositionin
     public CirclePositioningC1 (CirclePositioningProblem problem) {
         super(problem);
     }
-
-    @Override
-    public void applyHeuristicLocally(CirclePositioningSolution from) {
-    }//Do nothing, this is a crossover heuristic
     
     @Override
     public void applyHeuristicLocally (CirclePositioningSolution from1, CirclePositioningSolution from2) {
