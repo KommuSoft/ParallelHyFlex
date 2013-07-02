@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package parallelhyflex.problems.circlepositioning.heuristics;
+package parallelhyflex.problems.circlepositioning;
 
+import parallelhyflex.problems.ProblemTestBase;
 import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblem;
 import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblemGenerator;
 import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolution;
@@ -13,26 +14,31 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  *
  * @author kommusoft
  */
-class CirclePositioningTestBase {
+public class CirclePositioningTestBase extends ProblemTestBase<CirclePositioningSolutionGenerator,CirclePositioningProblem,CirclePositioningProblemGenerator,CirclePositioningSolution> {
 
-    protected CirclePositioningSolutionGenerator tsg;
-    protected CirclePositioningProblem tsp;
-    protected CirclePositioningProblemGenerator tspg;
-    protected CirclePositioningSolution tss;
+    
 
+    @Override
     protected void renewProblem() {
+        System.out.println("renewProblem");
         tsp = tspg.generateProblem();
     }
 
+    @Override
     protected void renewProblemGenerator() {
+        System.out.println("renewProblemGenerator");
         tspg = new CirclePositioningProblemGenerator();
     }
 
+    @Override
     protected void renewSolution() {
+        System.out.println("renewSolution");
         tss = tsg.generateSolution();
     }
 
+    @Override
     protected void renewSolutionGenerator() {
+        System.out.println("renewGenerator");
         tsg = tsp.getSolutionGenerator();
     }
 }

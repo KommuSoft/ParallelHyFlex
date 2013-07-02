@@ -7,16 +7,17 @@ package parallelhyflex.problems.circlepositioning.heuristics;
 import junit.framework.Assert;
 import parallelhyflex.TestParameters;
 import parallelhyflex.problemdependent.heuristics.HeuristicBase;
+import parallelhyflex.problems.circlepositioning.CirclePositioningTestBase;
 import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblem;
 import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolution;
-
+import parallelhyflex.problems.threesat.ClauseUtils;
 
 /**
  *
  * @author kommusoft
  */
 public abstract class CirclePositioningHeuristicTestBase extends CirclePositioningTestBase {
-    
+
     protected HeuristicBase<CirclePositioningSolution, CirclePositioningProblem> hb;
 
     public abstract HeuristicBase<CirclePositioningSolution, CirclePositioningProblem> renewHeuristic();
@@ -29,8 +30,8 @@ public abstract class CirclePositioningHeuristicTestBase extends CirclePositioni
             this.renewSolutionGenerator();
             this.renewSolution();
             this.applyHeuristic();
-            Assert.assertEquals(tss.calculateOuter(tsp),tss.getOuterArea());
-            Assert.assertEquals(tss.calculateOverlap(tsp),tss.getOverlapArea());
+            Assert.assertEquals(tss.calculateOuter(tsp), tss.getOuterArea());
+            Assert.assertEquals(tss.calculateOverlap(tsp), tss.getOverlapArea());
         }
     }
 
@@ -50,5 +51,4 @@ public abstract class CirclePositioningHeuristicTestBase extends CirclePositioni
     public void applyHeuristic() {
         hb.applyHeuristicLocally(tss);
     }
-    
 }
