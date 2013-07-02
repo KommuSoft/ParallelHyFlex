@@ -24,13 +24,15 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
         this.overlapArea = overlapArea;
         this.outerArea = outerArea;
     }
+
     public CirclePositioningSolution(double[] positions, double[] radia, double largeRadius) {
-        this(positions,0.0d,0.0d);
+        this(positions, 0.0d, 0.0d);
         this.overlapArea = this.calculateOverlap(radia);
-        this.outerArea = this.calculateOuter(largeRadius,radia);
+        this.outerArea = this.calculateOuter(largeRadius, radia);
     }
+
     public CirclePositioningSolution(double[] positions, CirclePositioningProblem problem) {
-        this(positions,problem.getRadia(),problem.getLargeCircleRadius());
+        this(positions, problem.getRadia(), problem.getLargeCircleRadius());
     }
 
     public double getXi(int index) {
@@ -40,7 +42,7 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
     public double getYi(int index) {
         return getPositions()[(index << 0x01) + 0x01];
     }
-    
+
     private double calculateOverlap(double[] rad) {
         int n = rad.length;
         double overlap = 0.0d;
@@ -75,7 +77,7 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
         double y1 = positions[i];
         double r13 = radia[index];
         double R = problem.getLargeCircleRadius();
-        this.outerArea += CirclePositioningUtils.calculateCircleOuterArea(R, x3, y3, r13)-CirclePositioningUtils.calculateCircleOuterArea(R, x1, y1, r13);
+        this.outerArea += CirclePositioningUtils.calculateCircleOuterArea(R, x3, y3, r13) - CirclePositioningUtils.calculateCircleOuterArea(R, x1, y1, r13);
         for (i = 0; i < n;) {
             if (i != index) {
                 double x2 = positions[i2++];
@@ -91,7 +93,7 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
     public CirclePositioningSolution clone() {
         double[] values = new double[this.getPositions().length];
         System.arraycopy(this.getPositions(), 0, values, 0, this.getPositions().length);
-        return new CirclePositioningSolution(values, this.getOverlapArea(),this.getOuterArea());
+        return new CirclePositioningSolution(values, this.getOverlapArea(), this.getOuterArea());
     }
 
     @Override
@@ -154,7 +156,7 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
         double outer = 0.0d;
         double[] pos = this.positions;
         int n2 = pos.length;
-        for(int i = 0x00, i2 = 0x00; i2 < n2;) {
+        for (int i = 0x00, i2 = 0x00; i2 < n2;) {
             double x = pos[i2++];
             double y = pos[i2++];
             double r = rad[i++];
@@ -162,4 +164,9 @@ public class CirclePositioningSolution implements Solution<CirclePositioningSolu
         }
         return outer;
     }
+    
+    public double getDefaultEvaluation () {
+        return this.getOuterArea()+this.getOverlapArea();
+    }
+    
 }
