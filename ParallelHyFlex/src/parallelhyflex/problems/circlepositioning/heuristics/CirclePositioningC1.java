@@ -21,8 +21,12 @@ public class CirclePositioningC1 extends CrossoverHeuristicBase<CirclePositionin
     
     @Override
     public void applyHeuristicLocally (CirclePositioningSolution from1, CirclePositioningSolution from2) {
-        
-        //TODO: recalculate evaluation
+        double x, y;
+        double[] posb = from2.getPositions();
+        int n = this.getProblem().getNumberOfCircles();
+        for(int i = 0, i2 = 0; i < n; i++) {
+            
+        }
     }
     private static final Logger LOG = Logger.getLogger(CirclePositioningC1.class.getName());
     

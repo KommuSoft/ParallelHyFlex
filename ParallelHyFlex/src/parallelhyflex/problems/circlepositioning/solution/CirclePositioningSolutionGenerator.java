@@ -19,7 +19,7 @@ public class CirclePositioningSolutionGenerator extends SolutionGeneratorBase<Ci
 
     @Override
     public CirclePositioningSolution generateSolution() {
-        int n = this.getProblem().getNumberOfCircles()<<0x01;
+        int n = this.getProblem().getNumberOfCircles() << 0x01;
         double or = this.getProblem().getLargeCircleRadius();
         double[] positions = new double[n];
         for (int i = 0; i < n;) {
@@ -30,14 +30,14 @@ public class CirclePositioningSolutionGenerator extends SolutionGeneratorBase<Ci
             positions[i++] = x;
             positions[i++] = y;
         }
-        return new CirclePositioningSolution(positions,this.getProblem());
+        return new CirclePositioningSolution(positions, this.getProblem());
     }
 
     @Override
     public CirclePositioningSolution readAndGenerate(DataInputStream dis) throws IOException {
         double[] positions = SerialisationUtils.readDoubleArray(dis);
         double overlapArea = dis.readDouble();
-        return new CirclePositioningSolution(positions, overlapArea);
+        double outerArea = dis.readDouble();
+        return new CirclePositioningSolution(positions, overlapArea, outerArea);
     }
-    
 }

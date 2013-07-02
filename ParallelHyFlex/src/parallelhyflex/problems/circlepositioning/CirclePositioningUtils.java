@@ -8,9 +8,26 @@ public final class CirclePositioningUtils {
 
     private CirclePositioningUtils() {
     }
-    
-    public static double calculateCircleAreaRadiusSquare (double r2) {
-        return Math.PI*r2;
+
+    public static double calculateCircleAreaRadiusSquare(double r2) {
+        return Math.PI * r2;
+    }
+
+    public static double calculateCircleOuterArea(double R, double x, double y, double r) {
+        double d2 = x * x + y * y;
+        double d = Math.sqrt(d2);
+        if (d + r <= R) {
+            return 0.0d;
+        } else {
+            double D = -(d + R + r) * (d - R + r) * (d + R - r) * (d - R - r);
+            if (D <= 0.0d) {
+                return 0.0d;
+            } else {
+                double R2 = R * R;
+                double r2 = r * r;
+                return calculateCircleAreaRadiusSquare(r2) + 0.5d * Math.sqrt(D) - R * Math.acos((d2 + R2 - r2) / (2.0d * d * R)) - r * Math.acos((d2 + r2 - R2) / (2.0d * d * r));
+            }
+        }
     }
 
     public static double calculateCircleOverlapArea(double x1, double y1, double r1, double x2, double y2, double r2) {
