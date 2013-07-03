@@ -1,15 +1,13 @@
 package parallelhyflex.problems.threesat.constraint;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import junit.framework.Assert;
 import org.junit.Test;
-import parallelhyflex.TestParameters;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
+import parallelhyflex.problemdependent.constraints.EnforceableConstraintGenerator;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
+import parallelhyflex.problems.TestRenewalStrategy;
+import parallelhyflex.problems.constraint.WritableEnforceableConstraintTest;
 import parallelhyflex.problems.threesat.ClauseUtils;
+import parallelhyflex.problems.threesat.ThreeSatRenewalStrategy;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
@@ -21,7 +19,7 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraint1Test extends ThreeSatWritableEnforceableConstraintTestBase {
+public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforceableConstraintTest<ThreeSatSolutionGenerator,ThreeSatProblem,ThreeSatProblemGenerator,ThreeSatSolution> {
 
     /**
      * Test of enforceTrue method, of class
@@ -70,33 +68,26 @@ public class ThreeSatWritableEnforceableConstraint1Test extends ThreeSatWritable
     /**
      * Test of serialisation/deserialisation method, of class
      * ThreeSatWritableEnforceableConstraint1.
+     * @throws Exception 
      */
     @Test
+    @Override
     public void testSerializeDeserialize() throws Exception {
-        for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            ThreeSatProblemGenerator tspg = new ThreeSatProblemGenerator(10, 42);
-            ThreeSatProblem tsp = tspg.generateProblem();
-            ThreeSatWritableEnforceableConstraintGenerator tsweg = new ThreeSatWritableEnforceableConstraintGenerator(tsp);
-            ThreeSatSolutionGenerator tsg = tsp.getSolutionGenerator();
-            ThreeSatSolution tss = tsg.generateSolution();
-            ThreeSatWritableEnforceableConstraint1 tswec = new ThreeSatWritableEnforceableConstraint1(tsp, ClauseUtils.generateCompletelyTrueClause(tss.getCompactBitArray()));
-            ByteArrayInputStream bais;
-            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                try (DataOutputStream dos = new DataOutputStream(baos)) {
-                    tswec.write(dos);
-                }
-                bais = new ByteArrayInputStream(baos.toByteArray());
-            }
-            try (DataInputStream dis = new DataInputStream(bais)) {
-                EnforceableConstraint<ThreeSatSolution> tswec2 = tsweg.readAndGenerate(dis);
-                Assert.assertEquals(tswec, tswec2);
-            }
-            bais.close();
-        }
+        super.testSerializeDeserialize();
     }
 
     @Override
     public WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWritableEnforceableConstraint() {
         return new ThreeSatWritableEnforceableConstraint1(getTsp(), ClauseUtils.generateTrueClause(getTss().getCompactBitArray()));
+    }
+
+    @Override
+    public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
+        return new ThreeSatRenewalStrategy();
+    }
+
+    @Override
+    public EnforceableConstraintGenerator<ThreeSatSolution, ? extends EnforceableConstraint<ThreeSatSolution>> renewEnforceableConstraintGenerator() {
+        return new ThreeSatWritableEnforceableConstraintGenerator(this.getTsp());
     }
 }
