@@ -2,21 +2,24 @@ package parallelhyflex.problems.threesat.heuristic;
 
 import org.junit.Test;
 import parallelhyflex.problemdependent.heuristics.CrossoverHeuristicBase;
+import parallelhyflex.problems.TestRenewalStrategy;
+import parallelhyflex.problems.heuristics.ProblemHeuristicCTestBase;
+import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
+import parallelhyflex.problems.threesat.ThreeSatRenewalStrategy;
 import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
+import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
+import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 
 /**
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicC1Test extends ThreeSatHeuristicCTestBase {
+public class ThreeSatHeuristicC1Test extends ProblemHeuristicCTestBase<ThreeSatSolutionGenerator,ThreeSatProblem,ThreeSatProblemGenerator,ThreeSatSolution> {
     
-    public ThreeSatHeuristicC1Test() {
-    }
-
     /**
-     * Test of applyHeuristicLocally method, of class ThreeSatHeuristicC1.
+     * Test of applyHeuristicLocally method, of class ThreeSatHeuristicM1.
      */
     @Test
     @Override
@@ -27,5 +30,15 @@ public class ThreeSatHeuristicC1Test extends ThreeSatHeuristicCTestBase {
     @Override
     public CrossoverHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
         return new ThreeSatHeuristicC1(getTsp());
+    }
+
+    @Override
+    public TestHeuristicEvaluationStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> generateHeuristicEvaluationStrategy() {
+        return new ThreeSatEvaluationStrategy();
+    }
+
+    @Override
+    public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
+        return new ThreeSatRenewalStrategy();
     }
 }

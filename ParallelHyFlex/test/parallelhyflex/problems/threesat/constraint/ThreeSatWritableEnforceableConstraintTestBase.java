@@ -3,7 +3,7 @@ package parallelhyflex.problems.threesat.constraint;
 import junit.framework.Assert;
 import parallelhyflex.TestParameters;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
-import parallelhyflex.problems.threesat.ThreeSatTestBase;
+import parallelhyflex.problems.threesat.ThreeSatRenewalStrategy;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
@@ -11,7 +11,7 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public abstract class ThreeSatWritableEnforceableConstraintTestBase extends ThreeSatTestBase {
+public abstract class ThreeSatWritableEnforceableConstraintTestBase extends ThreeSatRenewalStrategy {
 
     protected WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> tswec;
     protected ThreeSatSolution tss2;
