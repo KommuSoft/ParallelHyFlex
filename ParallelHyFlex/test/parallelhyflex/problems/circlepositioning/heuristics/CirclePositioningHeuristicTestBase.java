@@ -30,8 +30,8 @@ public abstract class CirclePositioningHeuristicTestBase extends CirclePositioni
             this.renewSolutionGenerator();
             this.renewSolution();
             this.applyHeuristic();
-            Assert.assertEquals(tss.calculateOuter(tsp), tss.getOuterArea());
-            Assert.assertEquals(tss.calculateOverlap(tsp), tss.getOverlapArea());
+            Assert.assertEquals(getTss().calculateOuter(getTsp()), getTss().getOuterArea());
+            Assert.assertEquals(getTss().calculateOverlap(getTsp()), getTss().getOverlapArea());
         }
     }
 
@@ -42,13 +42,13 @@ public abstract class CirclePositioningHeuristicTestBase extends CirclePositioni
             this.hb = this.renewHeuristic();
             this.renewSolutionGenerator();
             this.renewSolution();
-            double old = tss.getDefaultEvaluation();
+            double old = getTss().getDefaultEvaluation();
             this.applyHeuristic();
-            Assert.assertTrue(old >= tss.getDefaultEvaluation());
+            Assert.assertTrue(old >= getTss().getDefaultEvaluation());
         }
     }
 
     public void applyHeuristic() {
-        hb.applyHeuristicLocally(tss);
+        hb.applyHeuristicLocally(getTss());
     }
 }

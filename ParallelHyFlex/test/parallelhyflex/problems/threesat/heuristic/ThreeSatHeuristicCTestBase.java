@@ -15,7 +15,7 @@ public abstract class ThreeSatHeuristicCTestBase extends ThreeSatHeuristicTestBa
     
     @Override
     public void applyHeuristic() {
-        ThreeSatSolution tss2 = this.tsg.generateSolution();
+        ThreeSatSolution tss2 = this.getTsg().generateSolution();
         hb.applyHeuristicLocally(tss2);
     }
     

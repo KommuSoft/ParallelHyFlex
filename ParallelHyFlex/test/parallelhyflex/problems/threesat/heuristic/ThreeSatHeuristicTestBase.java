@@ -26,7 +26,7 @@ public abstract class ThreeSatHeuristicTestBase extends ThreeSatTestBase {
             this.renewSolutionGenerator();
             this.renewSolution();
             this.applyHeuristic();
-            Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(tss.getCompactBitArray(), tsp.getClauses()), tss.getConflictingClauses());
+            Assert.assertEquals(ClauseUtils.getNumberOfFailedClauses(getTss().getCompactBitArray(), getTsp().getClauses()), getTss().getConflictingClauses());
         }
     }
 
@@ -37,13 +37,13 @@ public abstract class ThreeSatHeuristicTestBase extends ThreeSatTestBase {
             this.hb = this.renewHeuristic();
             this.renewSolutionGenerator();
             this.renewSolution();
-            int old = tss.getConflictingClauses();
+            int old = getTss().getConflictingClauses();
             this.applyHeuristic();
-            Assert.assertTrue(old >= tss.getConflictingClauses());
+            Assert.assertTrue(old >= getTss().getConflictingClauses());
         }
     }
 
     public void applyHeuristic() {
-        hb.applyHeuristicLocally(tss);
+        hb.applyHeuristicLocally(getTss());
     }
 }

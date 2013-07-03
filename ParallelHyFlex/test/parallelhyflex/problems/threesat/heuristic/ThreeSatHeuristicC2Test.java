@@ -26,6 +26,6 @@ public class ThreeSatHeuristicC2Test extends ThreeSatHeuristicCTestBase {
 
     @Override
     public CrossoverHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
-        return new ThreeSatHeuristicC2(tsp);
+        return new ThreeSatHeuristicC2(getTsp());
     }
 }

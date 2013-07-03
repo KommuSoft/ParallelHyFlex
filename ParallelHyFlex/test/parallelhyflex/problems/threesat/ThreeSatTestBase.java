@@ -15,21 +15,21 @@ public class ThreeSatTestBase extends ProblemTestBase<ThreeSatSolutionGenerator,
 
     @Override
     protected void renewProblem() {
-        tsp = tspg.generateProblem();
+        setTsp(getTspg().generateProblem());
     }
 
     @Override
     protected void renewProblemGenerator() {
-        tspg = new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES);
+        setTspg(new ThreeSatProblemGenerator(TestParameters.NUMBER_OF_VARIABLES, TestParameters.NUMBER_OF_CLAUSES));
     }
 
     @Override
     protected void renewSolution() {
-        tss = tsg.generateSolution();
+        setTss(getTsg().generateSolution());
     }
 
     @Override
     protected void renewSolutionGenerator() {
-        tsg = tsp.getSolutionGenerator();
+        setTsg(getTsp().getSolutionGenerator());
     }
 }

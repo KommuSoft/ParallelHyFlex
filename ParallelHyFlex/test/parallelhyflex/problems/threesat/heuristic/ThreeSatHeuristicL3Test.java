@@ -26,7 +26,7 @@ public class ThreeSatHeuristicL3Test extends ThreeSatHeuristicLTestBase {
 
     @Override
     public LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
-        return new ThreeSatHeuristicL3(this.tsp);
+        return new ThreeSatHeuristicL3(this.getTsp());
     }
     
 }

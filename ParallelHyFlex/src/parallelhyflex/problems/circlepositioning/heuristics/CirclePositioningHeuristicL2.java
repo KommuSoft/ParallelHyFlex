@@ -6,18 +6,21 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
 import parallelhyflex.utils.Utils;
 
 /**
- * Moves circles in the radius field according to the potential field until no further improvement can be reached
+ * Moves circles in the angle field according to the potential field until no
+ * further improvement can be reached
+ *
  * @author kommusoft
  */
-public class CirclePositioningHeuristicL1 extends LocalSearchHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
+public class CirclePositioningHeuristicL2 extends LocalSearchHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
 
-    public CirclePositioningHeuristicL1(CirclePositioningProblem problem) {
+    public CirclePositioningHeuristicL2(CirclePositioningProblem problem) {
         super(problem);
     }
 
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
         int index = Utils.StaticRandom.nextInt(this.getProblem().getNumberOfCircles());
-        
+        //TODO
+
     }
 }

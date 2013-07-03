@@ -95,6 +95,6 @@ public class ThreeSatWritableEnforceableConstraint2Test extends ThreeSatWritable
 
     @Override
     public WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWritableEnforceableConstraint() {
-        return new ThreeSatWritableEnforceableConstraint2(tsp, tss.clone(), 5);
+        return new ThreeSatWritableEnforceableConstraint2(getTsp(), getTss().clone(), 5);
     }
 }

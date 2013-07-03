@@ -9,7 +9,7 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  *
  * @author kommusoft
  */
-public class CirclePositioningHeuristicM1Test extends CirclePositioningHeuristicMTestBase {
+public class CirclePositioningHeuristicM4Test extends CirclePositioningHeuristicMTestBase {
     
     /**
      * Test of applyHeuristicLocally method, of class CirclePositioningHeuristicM1.
@@ -22,6 +22,6 @@ public class CirclePositioningHeuristicM1Test extends CirclePositioningHeuristic
 
     @Override
     public MutationHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> renewHeuristic() {
-        return new CirclePositioningHeuristicM1(getTsp());
+        return new CirclePositioningHeuristicM4(getTsp());
     }
 }

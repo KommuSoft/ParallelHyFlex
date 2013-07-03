@@ -21,24 +21,24 @@ public class CirclePositioningTestBase extends ProblemTestBase<CirclePositioning
     @Override
     protected void renewProblem() {
         System.out.println("renewProblem");
-        tsp = tspg.generateProblem();
+        setTsp(getTspg().generateProblem());
     }
 
     @Override
     protected void renewProblemGenerator() {
         System.out.println("renewProblemGenerator");
-        tspg = new CirclePositioningProblemGenerator();
+        setTspg(new CirclePositioningProblemGenerator());
     }
 
     @Override
     protected void renewSolution() {
         System.out.println("renewSolution");
-        tss = tsg.generateSolution();
+        setTss(getTsg().generateSolution());
     }
 
     @Override
     protected void renewSolutionGenerator() {
         System.out.println("renewGenerator");
-        tsg = tsp.getSolutionGenerator();
+        setTsg(getTsp().getSolutionGenerator());
     }
 }

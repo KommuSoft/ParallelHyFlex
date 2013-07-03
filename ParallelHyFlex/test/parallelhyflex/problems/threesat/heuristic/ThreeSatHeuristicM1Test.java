@@ -23,6 +23,6 @@ public class ThreeSatHeuristicM1Test extends ThreeSatHeuristicMTestBase {
 
     @Override
     public MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
-        return new ThreeSatHeuristicM1(tsp);
+        return new ThreeSatHeuristicM1(getTsp());
     }
 }
