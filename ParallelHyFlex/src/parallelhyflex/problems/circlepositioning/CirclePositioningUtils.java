@@ -1,7 +1,5 @@
 package parallelhyflex.problems.circlepositioning;
 
-import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblem;
-
 /**
  *
  * @author kommusoft
@@ -80,6 +78,21 @@ public final class CirclePositioningUtils {
                 return r1 * Math.acos((d2 + r12 - r22) / (2.0d * d * r1)) + r2 * Math.acos((d2 + r22 - r12) / (2.0d * d * r2)) - 0.5d * Math.sqrt(D);
             }
         }
+    }
+    
+    public static double calculateOptimalRadius (double[] pos, double[] rad, int index) {
+        int n = rad.length;
+        double[] dist = new double[n];
+        int i2 = index<<0x01;
+        double x0 = pos[i2];
+        double y0 = pos[i2+0x01];
+        double r0 = rad[index];
+        double norm = 1.0d/Math.sqrt(x0*x0+y0*y0);
+        double x0n = x0*norm;
+        double y0n = y0*norm;
+        //TODO
+        return 0.0d;
+        
     }
 
     public static double calculateDifferenceCircleOverlapArea(double x1, double y1, double r1, double x2, double y2, double r2, double dr) {

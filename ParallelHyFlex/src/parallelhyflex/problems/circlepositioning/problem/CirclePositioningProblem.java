@@ -19,6 +19,7 @@ public class CirclePositioningProblem extends ProblemBase<CirclePositioningSolut
     public CirclePositioningProblem(double largeCircleRadius, double[] radia) {
         this.largeCircleRadius = largeCircleRadius;
         this.radia = radia;
+        this.setSolutionGenerator(new CirclePositioningSolutionGenerator(this));
     }
     
     @Override

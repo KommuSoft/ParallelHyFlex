@@ -43,7 +43,7 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
             double[] real = this.heuristicEvaluationStrategy.calculateRealEvaluations(this);
             Assert.assertEquals(approx.length, real.length);
             for(int j = 0x00; j < approx.length; j++) {
-                Assert.assertTrue(Math.abs(approx[j]-real[j]) <= TestParameters.TOLERANCE);
+                Assert.assertTrue(String.format("%s versus %s",approx[j],real[j]),Math.abs(approx[j]-real[j]) <= TestParameters.TOLERANCE);
             }
         }
     }

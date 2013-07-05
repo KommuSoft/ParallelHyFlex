@@ -4,7 +4,6 @@
  */
 package parallelhyflex.problems.circlepositioning;
 
-import java.util.logging.Logger;
 import parallelhyflex.problems.ProblemTestBase;
 import parallelhyflex.problems.TestRenewalStrategy;
 import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblem;
