@@ -21,6 +21,42 @@ public final class Utils {
     public static final double Tolerance = 1e-6;
     public static final double InvSqrt2 = Math.sqrt(0.5d);
 
+    public static int nextInt() {
+        return StaticRandom.nextInt();
+    }
+
+    public static int nextInt(int n) {
+        return StaticRandom.nextInt(n);
+    }
+
+    public static long nextLong() {
+        return StaticRandom.nextLong();
+    }
+
+    public static boolean nextBoolean() {
+        return StaticRandom.nextBoolean();
+    }
+
+    public static float nextFloat() {
+        return StaticRandom.nextFloat();
+    }
+
+    public static double nextDouble() {
+        return StaticRandom.nextDouble();
+    }
+
+    public static double nextGaussian() {
+        return StaticRandom.nextGaussian();
+    }
+
+    public static boolean isEqualTolerance(double a, double b, double tolerance) {
+        return Math.abs(a - b) <= tolerance;
+    }
+
+    public static boolean isEqualTolerance(double a, double b) {
+        return isEqualTolerance(a, b, 10e-9);
+    }
+
     public static double border(double min, double val, double max) {
         return Math.min(Math.min(max, val), max);
     }
@@ -56,7 +92,7 @@ public final class Utils {
         return hash;
     }
 
-    public static int countOnes(long data) {
+    public static  int countOnes(long data) {
         int ones = 0;
         while (data != 0) {
             ones += data & 1;
@@ -65,7 +101,7 @@ public final class Utils {
         return ones;
     }
 
-    public static boolean arrayEquality(long[] a, long[] b) {
+    public static  boolean arrayEquality(long[] a, long[] b) {
         if (a.length != b.length) {
             return false;
         }
@@ -113,7 +149,7 @@ public final class Utils {
         return true;
     }
 
-    public static String stringReverse(String inp) {
+    public static  String stringReverse(String inp) {
         StringBuilder sb = new StringBuilder();
         for (int i = inp.length() - 1; i >= 0; i--) {
             sb.append(inp.charAt(i));
@@ -180,7 +216,7 @@ public final class Utils {
         }.setValues(from, delta, to);
     }
 
-    public static Iterable<Integer> sequence(int to) {
+    public static  Iterable<Integer> sequence(int to) {
         return sequence(0, 1, to);
     }
 
@@ -313,7 +349,7 @@ public final class Utils {
         return mapping;
     }
 
-    public static int ceiling2Log(int tmp) {
+    public static  int ceiling2Log(int tmp) {
         int d = 0;
         while (tmp != 0x00) {
             tmp >>= 1;
@@ -321,8 +357,7 @@ public final class Utils {
         }
         return d;
     }
-
-    public static int priority2Log(int tmp) {
+int priority2Log(int tmp) {
         return ceiling2Log(tmp) - 1;
     }
 
@@ -345,5 +380,13 @@ public final class Utils {
     }
 
     private Utils() {
+    }
+
+    public synchronized void setSeed(long seed) {
+        StaticRandom.setSeed(seed);
+    }
+
+    public void nextBytes(byte[] bytes) {
+        StaticRandom.nextBytes(bytes);
     }
 }

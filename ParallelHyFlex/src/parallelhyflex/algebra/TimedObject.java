@@ -2,6 +2,7 @@ package parallelhyflex.algebra;
 
 /**
  *
+ * @param <TObject> 
  * @author kommusoft
  */
 public class TimedObject<TObject> implements Comparable<TimedObject<TObject>> {

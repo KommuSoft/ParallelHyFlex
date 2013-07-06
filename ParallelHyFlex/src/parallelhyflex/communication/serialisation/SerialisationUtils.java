@@ -38,6 +38,13 @@ public final class SerialisationUtils {
         }
     }
 
+    public static void writeDoubleArray2d(DataOutputStream dos, double[][] array) throws IOException {
+        dos.writeInt(array.length);
+        for (double[] v : array) {
+            writeDoubleArray(dos, v);
+        }
+    }
+
     public static long[] readLongArray(DataInputStream dis) throws IOException {
         long[] res = new long[dis.readInt()];
         for (int i = 0; i < res.length; i++) {
@@ -92,6 +99,14 @@ public final class SerialisationUtils {
             dis.readDouble();
         }
         return values;
+    }
+
+    public static double[][] readDoubleArray2d(DataInputStream dis) throws IOException {
+        double[][] res = new double[dis.readInt()][];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = readDoubleArray(dis);
+        }
+        return res;
     }
 
     private SerialisationUtils() {

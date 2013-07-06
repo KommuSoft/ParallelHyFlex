@@ -74,6 +74,10 @@ public final class ProbabilityUtils {
         }
         return iterator.next();
     }
+    
+    public static int randomElement (int[] values) {
+        return values[Utils.StaticRandom.nextInt(values.length)];
+    }
 
     private ProbabilityUtils() {
     }
