@@ -6,7 +6,6 @@ import parallelhyflex.problems.TestRenewalStrategy;
 import parallelhyflex.problems.heuristics.ProblemHeuristicCTestBase;
 import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
 import parallelhyflex.problems.threesat.ThreeSatRenewalStrategy;
-import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;

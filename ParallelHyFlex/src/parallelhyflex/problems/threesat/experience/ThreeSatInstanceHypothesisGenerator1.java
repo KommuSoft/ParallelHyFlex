@@ -2,7 +2,7 @@ package parallelhyflex.problems.threesat.experience;
 
 import parallelhyflex.problemdependent.experience.InstanceHypothesisGeneratorBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
+import parallelhyflex.problems.threesat.constraint.ThreeSatWritableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 

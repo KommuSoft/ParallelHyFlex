@@ -1,4 +1,4 @@
-package parallelhyflex.problems.threesat.heuristics;
+package parallelhyflex.problems.threesat.heuristic;
 
 import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
@@ -7,14 +7,12 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.Utils;
 
 /**
- * A mutation heuristic where one or more a failing clause is made completely
- * true
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicM3 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
-    public ThreeSatHeuristicM3(ThreeSatProblem problem) {
+    public ThreeSatHeuristicM2(ThreeSatProblem problem) {
         super(problem);
     }
 
@@ -28,14 +26,14 @@ public class ThreeSatHeuristicM3 extends MutationHeuristicBase<ThreeSatSolution,
     }
 
     private void enforceClause(ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
-        int k = ClauseUtils.getFalseClauseIndex(from, clauses);
-        if(k != -1) {
-            for (Integer i : ClauseUtils.getUniqueIndices(clauses[k])) {
-                from.swapBit(i, problem);
-            }
+        int i = ClauseUtils.getFalseClauseIndex(from, clauses);
+        if (i != -1) {
+            int k = Utils.nextInt(3);
+            int index = ClauseUtils.getIndexI(clauses[i], k);
+            from.swapBit(index, problem);
         }
     }
-    
+
     @Override
     public boolean usesIntensityOfMutation() {
         return true;

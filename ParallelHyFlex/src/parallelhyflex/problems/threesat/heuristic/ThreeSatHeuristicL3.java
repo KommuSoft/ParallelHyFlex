@@ -1,4 +1,4 @@
-package parallelhyflex.problems.threesat.heuristics;
+package parallelhyflex.problems.threesat.heuristic;
 
 import parallelhyflex.problemdependent.heuristic.LocalSearchHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
@@ -11,32 +11,35 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicL2 extends LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
+public class ThreeSatHeuristicL3 extends LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
-    public ThreeSatHeuristicL2(ThreeSatProblem problem) {
+    public ThreeSatHeuristicL3(ThreeSatProblem problem) {
         super(problem);
     }
-    
+
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength(), delta;
-        long[] constraints = this.getProblem().getClauses();
         int[][] influences = this.getProblem().getInfluences();
+        long[] constraints = this.getProblem().getClauses();
         CompactBitArray cba = from.getCompactBitArray();
-        boolean improved;
-        for(Integer i : Utils.sequenceModulo(Utils.nextInt(n), (int) Math.round(Math.pow(this.getProblem().getV(), 1.0-this.getDepthOfSearch())), n)) {
+        int maxindex = -1, maximprove = 0;
+        for (Integer i : Utils.sequenceModulo(Utils.nextInt(n), (int) Math.round(Math.pow(this.getProblem().getV(), 1.0 - this.getDepthOfSearch())), n)) {
             delta = ClauseUtils.calculateLoss(i, cba, constraints, influences[i]);
-            improved = delta < 0;
-            if (improved) {
-                cba.swap(i);
-                from.addConfictingClauses(delta);
+            if (delta < maximprove) {
+                maximprove = delta;
+                maxindex = i;
             }
         }
+        if (maxindex != -1) {
+            cba.swap(maxindex);
+            from.addConfictingClauses(maximprove);
+        }
     }
-
+    
     @Override
     public boolean usesDepthOfSearch() {
         return true;
     }
-    
+
 }

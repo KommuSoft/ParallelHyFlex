@@ -1,4 +1,4 @@
-package parallelhyflex.problems.threesat.heuristics;
+package parallelhyflex.problems.threesat.heuristic;
 
 import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;

@@ -1,4 +1,4 @@
-package parallelhyflex.problems.threesat.constraints;
+package parallelhyflex.problems.threesat.constraint;
 
 import java.io.DataInputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package parallelhyflex.problems.threesat.heuristics;
+package parallelhyflex.problems.threesat.heuristic;
 
 import java.util.ArrayList;
 import parallelhyflex.problemdependent.heuristic.CrossoverHeuristicBase;

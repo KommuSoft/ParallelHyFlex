@@ -1,4 +1,4 @@
-package parallelhyflex.problems.threesat.constraints;
+package parallelhyflex.problems.threesat.constraint;
 
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;

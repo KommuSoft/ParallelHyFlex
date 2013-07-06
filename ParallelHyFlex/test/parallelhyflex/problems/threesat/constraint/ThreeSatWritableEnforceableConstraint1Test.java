@@ -8,8 +8,6 @@ import parallelhyflex.problems.TestRenewalStrategy;
 import parallelhyflex.problems.constraint.WritableEnforceableConstraintTest;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.ThreeSatRenewalStrategy;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraint1;
-import parallelhyflex.problems.threesat.constraints.ThreeSatWritableEnforceableConstraintGenerator;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblemGenerator;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
