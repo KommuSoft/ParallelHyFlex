@@ -1,7 +1,7 @@
 package parallelhyflex.genetic;
 
-import parallelhyflex.interference.InterferenceStructure;
 import java.util.ArrayList;
+import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
@@ -103,5 +103,9 @@ public class InferenceNeighbourhoodBasedMutation implements InterferenceMutation
      */
     public void setDefaultRepeat(int DefaultRepeat) {
         this.DefaultRepeat = DefaultRepeat;
+    }
+
+    public void mutateLocal(InterferenceStructure<Integer> interferenceStructure, int[] frequencyAssignment, int[][] frequencies) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

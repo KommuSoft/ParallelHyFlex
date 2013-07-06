@@ -14,4 +14,6 @@ interface InterferenceMutationImplementation {
 
     int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges);
     
+    void mutateLocal(InterferenceStructure<Integer> interference, int[] input, int[][] ranges);
+    
 }

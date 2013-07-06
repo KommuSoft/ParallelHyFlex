@@ -2,7 +2,10 @@ package parallelhyflex.problems.frequencyassignment.problem;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import parallelhyflex.algebra.generators.IntegerArrayIndexGenerator;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
+import parallelhyflex.interference.FunctionInterferenceStructure;
+import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolutionGenerator;
@@ -19,6 +22,7 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
     private final double[][] means;
     private final double[][] stdevs;
     private final int[] placement;
+    private FunctionInterferenceStructure<Integer, Integer> interference;
 
     public FrequencyAssignmentProblem(int nTransceivers, int nSectors, int[][] frequencies, double[][] means, double[][] stdevs, int[] placement) {
         this.nTransceivers = nTransceivers;
@@ -27,6 +31,7 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         this.means = means;
         this.stdevs = stdevs;
         this.placement = placement;
+        this.interference = new FunctionInterferenceStructure<>(new IntegerArrayIndexGenerator(placement));
     }
 
     /**
@@ -80,5 +85,8 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         SerialisationUtils.writeDoubleArray2d(dos, stdevs);
         SerialisationUtils.writeIntArray(dos, placement);
     }
-    
+
+    public InterferenceStructure<Integer> getInterferenceStructure() {
+        return this.interference;
+    }
 }

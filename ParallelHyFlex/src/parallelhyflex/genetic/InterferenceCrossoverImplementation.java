@@ -9,5 +9,7 @@ import parallelhyflex.interference.InterferenceStructure;
 interface InterferenceCrossoverImplementation {
 
     int[] crossover(InterferenceStructure<Integer> interference, int[]... parents);
+
+    void crossoverLocal(InterferenceStructure<Integer> interference, int[]... parents);
     
 }

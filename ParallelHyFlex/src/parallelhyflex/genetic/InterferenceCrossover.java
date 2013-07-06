@@ -40,4 +40,25 @@ public class InterferenceCrossover implements InterferenceCrossoverImplementatio
         }
         return values;
     }
+
+    @Override
+    public void crossoverLocal(InterferenceStructure<Integer> interference, int[]... parents) {
+        int m = parents.length;
+        if (m > 0x00) {
+            int keyparent = Utils.nextInt(m);
+            int n = parents[0].length;
+            for (int i = 1; i < m; i++) {
+                n = Math.min(n, parents[i].length);
+            }
+            int keyindex = Utils.nextInt(n);
+            int[] values = parents[0x00];
+            for (int i = 0; i < n; i++) {
+                if (interference.interferes(keyindex, i)) {
+                    values[i] = parents[keyparent][i];
+                } else {
+                    values[i] = parents[Utils.ignoreRandomIndex(m, keyparent)][i];
+                }
+            }
+        }
+    }
 }

@@ -6,11 +6,11 @@ import parallelhyflex.algebra.Generator;
  *
  * @author kommusoft
  */
-public class IntegerListIndexGenerator implements Generator<Integer,Integer> {
+public class IntegerArrayIndexGenerator implements Generator<Integer,Integer> {
     
     private final int[] array;
     
-    public IntegerListIndexGenerator (int[] array) {
+    public IntegerArrayIndexGenerator (int[] array) {
         this.array = array;
     }
 
