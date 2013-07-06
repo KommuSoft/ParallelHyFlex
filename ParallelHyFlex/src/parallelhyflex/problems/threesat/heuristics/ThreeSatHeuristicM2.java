@@ -22,13 +22,13 @@ public class ThreeSatHeuristicM2 extends MutationHeuristicBase<ThreeSatSolution,
         long[] clauses = problem.getClauses();
         do {
             enforceClause(from, clauses, problem);
-        } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
+        } while (Utils.nextDouble() < this.getIntensityOfMutation());
     }
 
     private void enforceClause(ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
         int i = ClauseUtils.getFalseClauseIndex(from, clauses);
         if (i != -1) {
-            int k = Utils.StaticRandom.nextInt(3);
+            int k = Utils.nextInt(3);
             int index = ClauseUtils.getIndexI(clauses[i], k);
             from.swapBit(index, problem);
         }

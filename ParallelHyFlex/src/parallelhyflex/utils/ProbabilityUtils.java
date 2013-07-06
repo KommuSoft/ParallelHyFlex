@@ -12,7 +12,7 @@ import java.util.List;
 public final class ProbabilityUtils {
 
     public static <T> T randomElement(List<T> list) {
-        return list.get(Utils.StaticRandom.nextInt(list.size()));
+        return list.get(Utils.nextInt(list.size()));
     }
 
     /**
@@ -21,7 +21,7 @@ public final class ProbabilityUtils {
      * @return an Integer in the interval [0,D[
      */
     public static  int integerFromBenfordDistribution(int D) {
-        return (int) Math.floor(Math.pow(D + 1, Utils.StaticRandom.nextDouble())) - 1;
+        return (int) Math.floor(Math.pow(D + 1, Utils.nextDouble())) - 1;
     }
 
     /**
@@ -30,7 +30,7 @@ public final class ProbabilityUtils {
      * @return an Integer in the Interval [0,D[
      */
     public static int integerFromUniformDistribution(int D) {
-        return (int) Math.floor(D * Utils.StaticRandom.nextDouble());
+        return (int) Math.floor(D * Utils.nextDouble());
     }
 
     public static void unnormalizedWeightsToCDF(double[] weights) {
@@ -58,7 +58,7 @@ public final class ProbabilityUtils {
     }
 
     public static int randomIndexFromCDF(double[] cdf) {
-        double rand = Utils.StaticRandom.nextDouble();
+        double rand = Utils.nextDouble();
         int index = Arrays.binarySearch(cdf, rand);
         if (index < 0) {
             index = ~index;
@@ -67,7 +67,7 @@ public final class ProbabilityUtils {
     }
     
     public static <T> T randomElement (Collection<T> set) {
-        int I = Utils.StaticRandom.nextInt(set.size());
+        int I = Utils.nextInt(set.size());
         Iterator<T> iterator = set.iterator();
         for(int i = 0; i < I; i++) {
             iterator.next();
@@ -76,7 +76,7 @@ public final class ProbabilityUtils {
     }
     
     public static int randomElement (int[] values) {
-        return values[Utils.StaticRandom.nextInt(values.length)];
+        return values[Utils.nextInt(values.length)];
     }
 
     private ProbabilityUtils() {

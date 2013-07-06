@@ -10,7 +10,7 @@ public class RouletteWheelSelector implements Selector {
 
     @Override
     public Integer generate(double[] probabilities) {
-        double p = Utils.StaticRandom.nextDouble();
+        double p = Utils.nextDouble();
         int index = 0;
         while(index < probabilities.length && p > probabilities[index]) {
             p -= probabilities[index++];

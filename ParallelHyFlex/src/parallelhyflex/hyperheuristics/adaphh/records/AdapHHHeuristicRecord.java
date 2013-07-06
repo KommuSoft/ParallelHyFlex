@@ -320,7 +320,7 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
     private void parameterAdaption(int sa, int sb, int s) {
         double u = 1.0d;
         double val = this.getDOSIOM();
-        double p = Utils.StaticRandom.nextDouble();
+        double p = Utils.nextDouble();
         double fsa = this.getAdaphh().getObjectiveFunction(sa);
         double fsb = this.getAdaphh().getObjectiveFunction(sb);
         double fs = this.getAdaphh().getObjectiveFunction(s);

@@ -28,7 +28,7 @@ public class ThreeSatHeuristicM1 extends MutationHeuristicBase<ThreeSatSolution,
         CompactBitArray cba = from.getCompactBitArray();
         do {
             ClauseUtils.swapRandomBit(n, influences, cba, constraints, from);
-        } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
+        } while (Utils.nextDouble() < this.getIntensityOfMutation());
     }
     
     @Override

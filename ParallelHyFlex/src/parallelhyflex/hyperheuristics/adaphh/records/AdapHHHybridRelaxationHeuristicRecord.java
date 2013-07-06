@@ -32,7 +32,7 @@ public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord
     public void execute() {
         this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), AdapHH.S, AdapHH.Sa);
         AdapHHHeuristicRecord adhr;
-        if (this.nextHeuristic.size() > 0 && Utils.StaticRandom.nextDouble() < AdapHH.LIST_PROBABILITY) {
+        if (this.nextHeuristic.size() > 0 && Utils.nextDouble() < AdapHH.LIST_PROBABILITY) {
             //System.out.println("nextHeuristic");
             adhr = ProbabilityUtils.randomElement(nextHeuristic);
         } else {

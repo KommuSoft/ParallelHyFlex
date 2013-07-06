@@ -20,6 +20,19 @@ public final class Utils {
     public static final Random StaticRandom = new Random();
     public static final double Tolerance = 1e-6;
     public static final double InvSqrt2 = Math.sqrt(0.5d);
+    
+    public static int ignoreIndex (int index, int ignore) {
+        if(index < ignore) {
+            return index;
+        }
+        else {
+            return index+0x01;
+        }
+    }
+    
+    public static int ignoreRandomIndex (int n, int ignore) {
+        return ignoreIndex(nextInt(n-1),ignore);
+    }
 
     public static int nextInt() {
         return StaticRandom.nextInt();
@@ -92,7 +105,7 @@ public final class Utils {
         return hash;
     }
 
-    public static  int countOnes(long data) {
+    public static int countOnes(long data) {
         int ones = 0;
         while (data != 0) {
             ones += data & 1;
@@ -101,7 +114,7 @@ public final class Utils {
         return ones;
     }
 
-    public static  boolean arrayEquality(long[] a, long[] b) {
+    public static boolean arrayEquality(long[] a, long[] b) {
         if (a.length != b.length) {
             return false;
         }
@@ -149,7 +162,7 @@ public final class Utils {
         return true;
     }
 
-    public static  String stringReverse(String inp) {
+    public static String stringReverse(String inp) {
         StringBuilder sb = new StringBuilder();
         for (int i = inp.length() - 1; i >= 0; i--) {
             sb.append(inp.charAt(i));
@@ -216,7 +229,7 @@ public final class Utils {
         }.setValues(from, delta, to);
     }
 
-    public static  Iterable<Integer> sequence(int to) {
+    public static Iterable<Integer> sequence(int to) {
         return sequence(0, 1, to);
     }
 
@@ -349,7 +362,7 @@ public final class Utils {
         return mapping;
     }
 
-    public static  int ceiling2Log(int tmp) {
+    public static int ceiling2Log(int tmp) {
         int d = 0;
         while (tmp != 0x00) {
             tmp >>= 1;
@@ -357,7 +370,8 @@ public final class Utils {
         }
         return d;
     }
-int priority2Log(int tmp) {
+
+    int priority2Log(int tmp) {
         return ceiling2Log(tmp) - 1;
     }
 

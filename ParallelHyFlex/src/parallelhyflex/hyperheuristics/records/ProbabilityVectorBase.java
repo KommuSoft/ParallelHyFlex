@@ -30,7 +30,7 @@ public class ProbabilityVectorBase implements ProbabilityVector {
 
     @Override
     public int generateIndex() {
-        double rand = Utils.StaticRandom.nextDouble() * cdf[cdf.length - 1];
+        double rand = Utils.nextDouble() * cdf[cdf.length - 1];
         int index = Arrays.binarySearch(cdf, rand);
         if (index < 0) {
             index = ~index;

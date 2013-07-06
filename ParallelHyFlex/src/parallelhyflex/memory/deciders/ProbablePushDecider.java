@@ -21,6 +21,6 @@ public class ProbablePushDecider<TSolution extends Solution<TSolution>> implemen
 
     @Override
     public boolean decidePush(int index, TSolution sol) {
-        return Utils.StaticRandom.nextDouble() < probability;
+        return Utils.nextDouble() < probability;
     }
 }

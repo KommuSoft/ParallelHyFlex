@@ -8,31 +8,31 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class NotEqualNeighbourhoodBasedMutation implements MutationImplementation {
+public class InferenceNeighbourhoodBasedMutation implements InterferenceMutationImplementation {
 
-    private static final NotEqualNeighbourhoodBasedMutation instance = new NotEqualNeighbourhoodBasedMutation();
+    private static final InferenceNeighbourhoodBasedMutation instance = new InferenceNeighbourhoodBasedMutation();
 
-    public static NotEqualNeighbourhoodBasedMutation getInstance() {
+    public static InferenceNeighbourhoodBasedMutation getInstance() {
         return instance;
     }
     private double DefaultPm = 0.5d;
     private int DefaultRepeat = 5;
 
-    private NotEqualNeighbourhoodBasedMutation() {
+    private InferenceNeighbourhoodBasedMutation() {
     }
 
     @Override
-    public int[] mutate(int[] input, int[][] ranges) {
-        return this.mutate(input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
+    public int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges) {
+        return this.mutate(interference, input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
     }
 
-    public int[] mutate(int[] input, int[][] ranges, double pm, int repeat) {
+    public int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         int[] sender = new int[n], receiver = new int[n], temp;
         ArrayList<Integer> affected = new ArrayList<>();
-        mutationStep(input, ranges, pm, sender, affected);
+        mutationStep(interference, input, ranges, pm, sender, affected);
         for (int k = 0x01; k < repeat; k++) {
-            mutationStep(sender, ranges, pm, receiver, affected);
+            mutationStep(interference, sender, ranges, pm, receiver, affected);
             temp = sender;
             sender = receiver;
             receiver = temp;
@@ -40,7 +40,7 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
         return sender;
     }
 
-    private void mutationStep(int[] input, int[][] ranges, double pm, int[] result, ArrayList<Integer> affected) {
+    private void mutationStep(InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int[] result, ArrayList<Integer> affected) {
         int n = input.length, index;
         if (affected.size() > 0x00) {
             index = ProbabilityUtils.randomElement(affected);
@@ -50,7 +50,7 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
         }
         int val = ProbabilityUtils.randomElement(ranges[index]);
         for (int i = 0x00; i < index; i++) {
-            if (input[i] == val) {
+            if (interference.interferes(index, i)) {
                 affected.add(i);
                 if (Utils.nextDouble() < pm) {
                     result[i] = ProbabilityUtils.randomElement(ranges[i]);
@@ -63,7 +63,7 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
         }
         result[index] = val;
         for (int i = index + 0x01; i < n; i++) {
-            if (input[i] == val) {
+            if (interference.interferes(index, i)) {
                 affected.add(i);
                 if (Utils.nextDouble() < pm) {
                     result[i] = ProbabilityUtils.randomElement(ranges[i]);

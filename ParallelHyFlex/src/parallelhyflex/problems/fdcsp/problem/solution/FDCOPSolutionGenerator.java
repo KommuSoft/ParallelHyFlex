@@ -41,7 +41,7 @@ public class FDCOPSolutionGenerator extends SolutionGeneratorBase<FDCOPSolution,
         System.out.println(String.format("Initial domains are %s",Arrays.toString(domains)));
         for (int i = 0; i < n; i++) {
             if (!assigned.get(i)) {
-                int val = domains[i].getIth(Utils.StaticRandom.nextInt(domains[i].size()));
+                int val = domains[i].getIth(Utils.nextInt(domains[i].size()));
                 values[i] = val;
                 System.out.println(String.format("%s=%s",prob.getVariable(i),val));
                 assigned.set(i, true);

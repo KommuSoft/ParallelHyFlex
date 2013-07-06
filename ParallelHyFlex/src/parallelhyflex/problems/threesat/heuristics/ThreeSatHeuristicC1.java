@@ -22,7 +22,7 @@ public class ThreeSatHeuristicC1 extends CrossoverHeuristicBase<ThreeSatSolution
         CompactBitArray cba2 = from2.getCompactBitArray();
         double prob = (double) from2.getConflictingClauses() / (from1.getConflictingClauses() + from2.getConflictingClauses());
         for (int i = 0; i < cba1.values.length; i++) {
-            if (Utils.StaticRandom.nextDouble() < prob) {
+            if (Utils.nextDouble() < prob) {
                 cba1.values[i] = cba2.values[i];
             }
         }

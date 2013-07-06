@@ -17,10 +17,10 @@ public class CirclePositioningHeuristicM1 extends MutationHeuristicBase<CirclePo
 
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
-        int index = Utils.StaticRandom.nextInt(this.getProblem().getNumberOfCircles());
+        int index = Utils.nextInt(this.getProblem().getNumberOfCircles());
         double sigma = this.getProblem().getLargeCircleRadius(); sigma = 1.0d/(sigma*sigma);
-        double dx = sigma*Utils.StaticRandom.nextGaussian();
-        double dy = sigma*Utils.StaticRandom.nextGaussian();
+        double dx = sigma*Utils.nextGaussian();
+        double dy = sigma*Utils.nextGaussian();
         from.moveCircle(this.getProblem(),index, dx, dy);
     }
 }

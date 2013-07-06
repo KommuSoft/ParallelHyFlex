@@ -23,8 +23,8 @@ public class CirclePositioningSolutionGenerator extends SolutionGeneratorBase<Ci
         double or = this.getProblem().getLargeCircleRadius();
         double[] positions = new double[n];
         for (int i = 0; i < n;) {
-            double r = or * Utils.StaticRandom.nextDouble();
-            double alpha = 2.0d * Math.PI * Utils.StaticRandom.nextDouble();
+            double r = or * Utils.nextDouble();
+            double alpha = 2.0d * Math.PI * Utils.nextDouble();
             double x = r * Math.cos(alpha);
             double y = r * Math.sin(alpha);
             positions[i++] = x;

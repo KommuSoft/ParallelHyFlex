@@ -32,7 +32,7 @@ public class UtilsTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             for (int j = 0; j < 31; j++) {
                 int k = 1 << j;
-                int rand = Utils.StaticRandom.nextInt(k);
+                int rand = Utils.nextInt(k);
                 Assert.assertTrue(Utils.ceiling2Log(rand) <= j);
             }
         }
@@ -53,7 +53,7 @@ public class UtilsTest {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             for (int j = 0; j < 31; j++) {
                 int k = 1 << j;
-                int rand = Utils.StaticRandom.nextInt(k);
+                int rand = Utils.nextInt(k);
                 Assert.assertTrue(Utils.ceiling2Log(rand) < j);
             }
         }

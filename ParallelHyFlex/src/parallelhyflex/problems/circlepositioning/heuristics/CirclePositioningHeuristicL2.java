@@ -19,7 +19,7 @@ public class CirclePositioningHeuristicL2 extends LocalSearchHeuristicBase<Circl
 
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
-        int index = Utils.StaticRandom.nextInt(this.getProblem().getNumberOfCircles());
+        int index = Utils.nextInt(this.getProblem().getNumberOfCircles());
         //TODO
 
     }

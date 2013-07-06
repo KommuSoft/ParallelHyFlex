@@ -23,7 +23,7 @@ public class ThreeSatHeuristicR1 extends RuinRecreateHeuristicBase<ThreeSatSolut
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         CompactBitArray cba = from.getCompactBitArray();
-        int iblock = Utils.StaticRandom.nextInt(cba.getBlockLength()), ioff = iblock << 6, j;
+        int iblock = Utils.nextInt(cba.getBlockLength()), ioff = iblock << 6, j;
         long[] constraints = this.getProblem().getClauses();
         int[] binf = this.getProblem().getBlockInfluences()[iblock];
         int[][] inf = this.getProblem().getInfluences();

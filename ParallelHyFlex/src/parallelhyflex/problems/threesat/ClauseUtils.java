@@ -50,14 +50,14 @@ public class ClauseUtils {
 
     public static long generateTrueClause(CompactBitArray cba) {
         int n = cba.getLength();
-        long i0 = Utils.StaticRandom.nextInt(n);
-        long i1 = Utils.StaticRandom.nextInt(n);
-        long i2 = Utils.StaticRandom.nextInt(n);
+        long i0 = Utils.nextInt(n);
+        long i1 = Utils.nextInt(n);
+        long i2 = Utils.nextInt(n);
         long ia = Math.min(i0, Math.min(i1, i2));
         long ic = Math.max(i0, Math.max(i1, i2));
         long ib = i0 + i1 + i2 - ia - ic;
-        long fill = (((long) Utils.StaticRandom.nextInt(8)) << 60) | generate0Clause(ia, ib, ic);
-        int ci = Utils.StaticRandom.nextInt(3);
+        long fill = (((long) Utils.nextInt(8)) << 60) | generate0Clause(ia, ib, ic);
+        int ci = Utils.nextInt(3);
         long index = ClauseUtils.getIndexI(fill, ci);
         fill = ClauseUtils.setValue(fill, ci, cba.getBit(index));
         return fill;
@@ -73,9 +73,9 @@ public class ClauseUtils {
 
     public static long generateCompletelyTrueClause(CompactBitArray cba) {
         int n = cba.getLength();
-        long i0 = Utils.StaticRandom.nextInt(n);
-        long i1 = Utils.StaticRandom.nextInt(n);
-        long i2 = Utils.StaticRandom.nextInt(n);
+        long i0 = Utils.nextInt(n);
+        long i1 = Utils.nextInt(n);
+        long i2 = Utils.nextInt(n);
         long ia = Math.min(i0, Math.min(i1, i2));
         long ic = Math.max(i0, Math.max(i1, i2));
         long ib = i0 + i1 + i2 - ia - ic;
@@ -151,7 +151,7 @@ public class ClauseUtils {
     }
 
     public static void swapRandomBit(int n, int[][] influences, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
-        int i = Utils.StaticRandom.nextInt(n);
+        int i = Utils.nextInt(n);
         swapBit(i, influences[i], cba, constraints, from);
     }
 
@@ -279,7 +279,7 @@ public class ClauseUtils {
 
     public static int getFalseClauseIndex(ThreeSatSolution from, long[] clauses) {
         int c = clauses.length;
-        int c0 = Utils.StaticRandom.nextInt(c);
+        int c0 = Utils.nextInt(c);
         for(int i = c0; i < c; i++) {
             if (!from.satisfiesClause(clauses[i])) {
                 return i;
@@ -295,7 +295,7 @@ public class ClauseUtils {
     
     public static int getNonEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
         int v = cba1.getLength();
-        int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
+        int v0 = Utils.nextInt(v);//TODO: speedup with block level
         for(int i = v0; i < v; i++) {
             if (cba1.getBit(i) != cba2.getBit(i)) {
                 return i;
@@ -310,7 +310,7 @@ public class ClauseUtils {
     }
     public static int getEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
         int v = cba1.getLength();
-        int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
+        int v0 = Utils.nextInt(v);//TODO: speedup with block level
         for(int i = v0; i < v; i++) {
             if (cba1.getBit(i) == cba2.getBit(i)) {
                 return i;

@@ -19,7 +19,7 @@ public class CompactBitArrayTest {
     public void testGetBit() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             long exp = 0;
             if (instance.get(index)) {
                 exp = 1L;
@@ -36,7 +36,7 @@ public class CompactBitArrayTest {
     public void testGetBit_long() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             long indexl = (long) index;
             assertEquals(instance.getBit(index), instance.getBit(indexl));
         }
@@ -106,7 +106,7 @@ public class CompactBitArrayTest {
     public void testSwap() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             CompactBitArray instance2 = instance.clone();
             instance2.swap(index);
             for (int j = 0; j < 997; j++) {
@@ -126,8 +126,8 @@ public class CompactBitArrayTest {
     public void testSwapRange() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int indexa = Utils.StaticRandom.nextInt(997);
-            int indexb = Utils.StaticRandom.nextInt(997);
+            int indexa = Utils.nextInt(997);
+            int indexb = Utils.nextInt(997);
             int index1 = Math.min(indexa,indexb);
             int index2 = Math.max(indexa,indexb);
             CompactBitArray instance2 = instance.clone();
@@ -149,8 +149,8 @@ public class CompactBitArrayTest {
     public void testSetRange() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int indexa = Utils.StaticRandom.nextInt(997);
-            int indexb = Utils.StaticRandom.nextInt(997);
+            int indexa = Utils.nextInt(997);
+            int indexb = Utils.nextInt(997);
             int index1 = Math.min(indexa,indexb);
             int index2 = Math.max(indexa,indexb);
             CompactBitArray instance2 = instance.clone();
@@ -172,8 +172,8 @@ public class CompactBitArrayTest {
     public void testResetRange() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int indexa = Utils.StaticRandom.nextInt(997);
-            int indexb = Utils.StaticRandom.nextInt(997);
+            int indexa = Utils.nextInt(997);
+            int indexb = Utils.nextInt(997);
             int index1 = Math.min(indexa,indexb);
             int index2 = Math.max(indexa,indexb);
             CompactBitArray instance2 = instance.clone();
@@ -195,7 +195,7 @@ public class CompactBitArrayTest {
     public void testSet1() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             CompactBitArray instance2 = instance.clone();
             instance2.set(index, true);
             for (int j = 0; j < 997; j++) {
@@ -215,7 +215,7 @@ public class CompactBitArrayTest {
     public void testSet2() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             CompactBitArray instance2 = instance.clone();
             instance2.set(index, false);
             for (int j = 0; j < 997; j++) {
@@ -237,7 +237,7 @@ public class CompactBitArrayTest {
         CompactBitArray instance2 = instance.clone();
         for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             Assert.assertEquals(instance,instance2);
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             instance2.swap(index);
             Assert.assertNotSame(instance,instance2);
             instance2.swap(index);
@@ -250,7 +250,7 @@ public class CompactBitArrayTest {
     @Test
     public void testGetLength() {
         for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int length = 1+Utils.StaticRandom.nextInt(997);
+            int length = 1+Utils.nextInt(997);
             CompactBitArray instance = CompactBitArray.randomInstance(length);
             Assert.assertEquals(length,instance.getLength());
         }
@@ -262,7 +262,7 @@ public class CompactBitArrayTest {
     @Test
     public void testGetBlockLength() {
         for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int length = 1+Utils.StaticRandom.nextInt(997);
+            int length = 1+Utils.nextInt(997);
             int block = (int) Math.ceil(length/64.0d);
             CompactBitArray instance = CompactBitArray.randomInstance(length);
             Assert.assertEquals(block,instance.getBlockLength());
@@ -292,7 +292,7 @@ public class CompactBitArrayTest {
     public void testSwapGetBit() {
         CompactBitArray instance = CompactBitArray.randomInstance(997);
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
-            int index = Utils.StaticRandom.nextInt(997);
+            int index = Utils.nextInt(997);
             CompactBitArray instance2 = instance.clone();
             int bit = instance2.swapGetBit(index);
             Assert.assertEquals(instance2.getBit(index), bit);

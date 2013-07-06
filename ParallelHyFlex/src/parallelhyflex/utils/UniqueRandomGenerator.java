@@ -20,7 +20,7 @@ public class UniqueRandomGenerator<T> {
     }
     
     public T next () {
-        int i = ptr+Utils.StaticRandom.nextInt(values.length-ptr);
+        int i = ptr+Utils.nextInt(values.length-ptr);
         T res = (T) values[i];
         values[i] = values[ptr];
         values[ptr++] = res;

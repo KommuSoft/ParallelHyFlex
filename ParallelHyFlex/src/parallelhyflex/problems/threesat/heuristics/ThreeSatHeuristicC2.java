@@ -41,7 +41,7 @@ public class ThreeSatHeuristicC2 extends CrossoverHeuristicBase<ThreeSatSolution
                         nb++;
                     }
                 }
-                if(Utils.StaticRandom.nextDouble() < (double) nb/(na+nb)) {
+                if(Utils.nextDouble() < (double) nb/(na+nb)) {
                     swap.add(i);
                 }
             }

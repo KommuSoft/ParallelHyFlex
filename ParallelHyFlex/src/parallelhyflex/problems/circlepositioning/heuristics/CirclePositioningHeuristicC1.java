@@ -24,7 +24,7 @@ public class CirclePositioningHeuristicC1 extends CrossoverHeuristicBase<CircleP
         double pb = pbt/(pbt+from2.getDefaultEvaluation());
         int n = this.getProblem().getNumberOfCircles();
         for(int i = 0, i2 = 0; i < n; i++) {
-            if(Utils.StaticRandom.nextDouble() < pb) {
+            if(Utils.nextDouble() < pb) {
                 x = posb[i2++];
                 y = posb[i2++];
                 from1.setCircle(this.getProblem(), i, x, y);

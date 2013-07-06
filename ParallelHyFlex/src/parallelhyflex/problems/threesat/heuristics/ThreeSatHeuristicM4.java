@@ -24,14 +24,14 @@ public class ThreeSatHeuristicM4 extends MutationHeuristicBase<ThreeSatSolution,
         long[] clauses = problem.getClauses();
         do {
             enforceClause(c, from, clauses, problem);
-        } while (Utils.StaticRandom.nextDouble() < this.getIntensityOfMutation());
+        } while (Utils.nextDouble() < this.getIntensityOfMutation());
     }
 
     private void enforceClause(int c, ThreeSatSolution from, long[] clauses, ThreeSatProblem problem) {
         CompactBitArray cba = from.getCompactBitArray();
         int[][] influences = problem.getInfluences();
         int delta;
-        int c0 = Utils.StaticRandom.nextInt(c);
+        int c0 = Utils.nextInt(c);
         int i = ClauseUtils.getFalseClauseIndex(from, clauses);
         if (i != -1) {
             int mindelta = Integer.MAX_VALUE;

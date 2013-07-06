@@ -18,11 +18,11 @@ public class CirclePositioningHeuristicM4 extends MutationHeuristicBase<CirclePo
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
         double R = this.getProblem().getLargeCircleRadius();
-        double r = Utils.StaticRandom.nextDouble()*R;
-        double theta = 2.0d*Math.PI*Utils.StaticRandom.nextDouble();
+        double r = Utils.nextDouble()*R;
+        double theta = 2.0d*Math.PI*Utils.nextDouble();
         double x = r*Math.cos(theta);
         double y = r*Math.sin(theta);
-        int index = Utils.StaticRandom.nextInt(this.getProblem().getNumberOfCircles());
+        int index = Utils.nextInt(this.getProblem().getNumberOfCircles());
         from.setCircle(this.getProblem(), index, x, y);
     }
     

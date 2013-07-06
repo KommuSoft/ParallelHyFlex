@@ -17,7 +17,7 @@ public class CompactBitArray implements ICompactBitArray {
     public static CompactBitArray randomInstance(int n) {
         CompactBitArray cba = new CompactBitArray(n);
         for (int i = cba.values.length - 1; i >= 0; i--) {
-            cba.values[i] = Utils.StaticRandom.nextLong();
+            cba.values[i] = Utils.nextLong();
         }
         cba.clearTail();
         return cba;

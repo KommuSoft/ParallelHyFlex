@@ -29,7 +29,7 @@ public class ThreeSatHeuristicL1 extends LocalSearchHeuristicBase<ThreeSatSoluti
         int kappa = (int) Math.round(Math.pow(this.getProblem().getV(), 1.0 - this.getDepthOfSearch()));
         do {
             nextrun = false;
-            for (Integer i : Utils.sequenceModulo(Utils.StaticRandom.nextInt(n), kappa, n)) {
+            for (Integer i : Utils.sequenceModulo(Utils.nextInt(n), kappa, n)) {
                 delta = ClauseUtils.calculateLoss(i, cba, constraints, influences[i]);
                 improved = delta < 0;
                 if (improved) {

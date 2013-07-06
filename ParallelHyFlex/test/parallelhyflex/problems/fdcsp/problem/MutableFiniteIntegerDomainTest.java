@@ -642,7 +642,7 @@ public class MutableFiniteIntegerDomainTest extends FiniteIntegerDomainTestBase 
     }
 
     private void fillRandom(MutableFiniteIntegerDomain fid) {
-        for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
+        for (int j = Utils.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
             fid.add(new IntegerInterval(v1, v2));
@@ -650,7 +650,7 @@ public class MutableFiniteIntegerDomainTest extends FiniteIntegerDomainTestBase 
     }
 
     private void fillRandom(MutableFiniteIntegerDomain fid, TreeSet<Integer> treeset) {
-        for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
+        for (int j = Utils.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
             fid.add(new IntegerInterval(v1, v2));
@@ -661,7 +661,7 @@ public class MutableFiniteIntegerDomainTest extends FiniteIntegerDomainTestBase 
     }
 
     private void fillRandom(MutableFiniteIntegerDomain fid, Collection<IntegerInterval> intervals) {
-        for (int j = Utils.StaticRandom.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
+        for (int j = Utils.nextInt(TestParameters.LOOP2_PARAMETER); j > 0; j--) {
             int v1 = randomDomainValue();
             int v2 = randomDomainValue();
             fid.add(new IntegerInterval(v1, v2));

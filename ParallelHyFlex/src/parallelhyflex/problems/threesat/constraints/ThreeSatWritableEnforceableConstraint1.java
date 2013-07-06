@@ -27,7 +27,7 @@ public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnfo
     public void enforceTrue(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
         if (!cba.satisfiesClause(constraint)) {
-            int ii = Utils.StaticRandom.nextInt(3);
+            int ii = Utils.nextInt(3);
             solution.swapBit(ClauseUtils.getIndexI(this.getConstraint(), ii), this.getProblem());
         }
     }

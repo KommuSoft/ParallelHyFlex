@@ -16,12 +16,12 @@ public class CirclePositioningProblemGenerator implements ProblemReader<CirclePo
     public CirclePositioningProblemGenerator () {}
     
     public CirclePositioningProblem generateProblem () {
-        double outer = Utils.StaticRandom.nextDouble();
-        int n = Utils.StaticRandom.nextInt(100);
+        double outer = Utils.nextDouble();
+        int n = Utils.nextInt(100);
         double maxRadius = Math.sqrt(2.0d*outer/n);
         double[] radia = new double[n];
         for(int i = 0x00; i < n; i++) {
-            radia[i] = maxRadius*Utils.StaticRandom.nextDouble();
+            radia[i] = maxRadius*Utils.nextDouble();
         }
         return new CirclePositioningProblem(outer,radia);
     }

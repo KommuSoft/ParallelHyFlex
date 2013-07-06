@@ -140,7 +140,7 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         adhr.execute();
         this.ailla.acceptMove(Sa, S, Sb);
         double gamma = Utils.border(GAMMA_MIN, (this.getCBestS() + 1.0d) / (this.getCBestR() + 1.0d), GAMMA_MAX);
-        if (Utils.StaticRandom.nextDouble() < Math.pow((double) this.getCPhase() / this.getPl(), gamma)) {
+        if (Utils.nextDouble() < Math.pow((double) this.getCPhase() / this.getPl(), gamma)) {
             AdapHHHybridRelaxationHeuristicRecord ahrh = this.learningAutomaton.getAction();
             ahrh.execute();
             this.ailla.acceptMove(Saa, S, Sb);
@@ -252,8 +252,8 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
     }
 
     public int getRandomHistorySolutionIndex() {
-        int a = Utils.StaticRandom.nextInt(Communication.getCommunication().getSize());
-        int b = Utils.StaticRandom.nextInt(HISTORY_LENGTH);
+        int a = Utils.nextInt(Communication.getCommunication().getSize());
+        int b = Utils.nextInt(HISTORY_LENGTH);
         return LOCAL_MEMORY_SIZE * a + LOCAL_MEMORY_SIZE - HISTORY_LENGTH + b;
     }
 }
