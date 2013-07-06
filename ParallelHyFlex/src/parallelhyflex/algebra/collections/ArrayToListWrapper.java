@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import parallelhyflex.algebra.Generator;
 
 /**
  *
  * @author kommusoft
  */
-public class ArrayToListWrapper<T> implements List<T> {
+public class ArrayToListWrapper<T> implements List<T>, Generator<Integer, T> {
 
     private final T[] array;
 
@@ -168,5 +169,10 @@ public class ArrayToListWrapper<T> implements List<T> {
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T generate(Integer variable) {
+        return this.array[variable];
     }
 }
