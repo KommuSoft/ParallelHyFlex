@@ -8,15 +8,15 @@ import parallelhyflex.parsing.ParsingException;
 import parallelhyflex.parsing.grammar.OperatorBinder;
 import parallelhyflex.parsing.tokenizing.Token;
 import parallelhyflex.parsing.tokenizing.TokenStreamParser;
-import parallelhyflex.problems.fdcsp.problem.constraints.EqualConstraint;
-import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanConstraint;
-import parallelhyflex.problems.fdcsp.problem.constraints.GreaterThanOrEqualConstraint;
-import parallelhyflex.problems.fdcsp.problem.constraints.InOperator;
-import parallelhyflex.problems.fdcsp.problem.constraints.MinimizingOperator;
-import parallelhyflex.problems.fdcsp.problem.constraints.NotEqualConstraint;
-import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanConstraint;
-import parallelhyflex.problems.fdcsp.problem.constraints.SmallerThanOrEqualConstraint;
-import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
+import parallelhyflex.problems.fdcsp.problem.constraint.EqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraint.GreaterThanConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraint.GreaterThanOrEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraint.InOperator;
+import parallelhyflex.problems.fdcsp.problem.constraint.MinimizingOperator;
+import parallelhyflex.problems.fdcsp.problem.constraint.NotEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraint.SmallerThanConstraint;
+import parallelhyflex.problems.fdcsp.problem.constraint.SmallerThanOrEqualConstraint;
+import parallelhyflex.problems.fdcsp.problem.expression.Expression;
 
 /**
  *

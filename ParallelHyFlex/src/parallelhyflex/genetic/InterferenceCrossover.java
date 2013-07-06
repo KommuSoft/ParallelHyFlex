@@ -1,5 +1,6 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.utils.Utils;
 
 /**

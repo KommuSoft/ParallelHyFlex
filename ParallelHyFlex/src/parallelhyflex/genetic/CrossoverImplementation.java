@@ -11,7 +11,11 @@ package parallelhyflex.genetic;
 public interface CrossoverImplementation {
 
     int[] crossover(int[] genes, int[]... parents);
+    
+    void crossoverLocal (int[] genes, int[]... parents);
 
     int[] crossover(int[]... parents);
+    
+    void crossoverLocal (int[]... parents);
     
 }

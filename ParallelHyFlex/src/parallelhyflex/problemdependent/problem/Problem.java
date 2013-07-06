@@ -2,7 +2,7 @@ package parallelhyflex.problemdependent.problem;
 
 import parallelhyflex.communication.serialisation.Writable;
 import parallelhyflex.problemdependent.distance.DistanceFunction;
-import parallelhyflex.problemdependent.heuristics.Heuristic;
+import parallelhyflex.problemdependent.heuristic.Heuristic;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionGenerator;
 

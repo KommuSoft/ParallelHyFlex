@@ -56,4 +56,48 @@ public class UniformCrossover implements CrossoverImplementation {
         }
         return values;
     }
+
+    @Override
+    public void crossoverLocal(int[] genes, int[]... parents) {
+        int m = parents.length;
+        if (m > 0x00) {
+            int n = parents[0].length;
+            for (int i = 0x01; i < m; i++) {
+                n = Math.min(n, parents[i].length);
+            }
+            int k = genes.length;
+            int[] values = parents[0x00];
+            int j = 0x00;
+            for (int i = 0x00; i < k; i++) {
+                int l = Utils.nextInt(m);
+                int J = j + genes[i];
+                if (l > 0x00) {
+                    for (; j < J; j++) {
+                        values[j] = parents[l][j];
+                    }
+                }
+                else {
+                    j = J;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void crossoverLocal(int[]... parents) {
+        int m = parents.length;
+        if (m > 0x00) {
+            int n = parents[0].length;
+            for (int i = 1; i < m; i++) {
+                n = Math.min(n, parents[i].length);
+            }
+            int[] values = parents[0];
+            for (int i = 0; i < n; i++) {
+                int k = Utils.nextInt(m);
+                if (k > 0x00) {
+                    values[i] = parents[k][i];
+                }
+            }
+        }
+    }
 }

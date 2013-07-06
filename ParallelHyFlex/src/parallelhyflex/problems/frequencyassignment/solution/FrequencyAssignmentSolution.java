@@ -34,14 +34,14 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
 
     @Override
     public FrequencyAssignmentSolution clone() {
-        int[] data = new int[this.frequencyAssignment.length];
-        System.arraycopy(this.frequencyAssignment, 0, data, 0, data.length);
-        return new FrequencyAssignmentSolution(data, this.evaluation);
+        int[] data = new int[this.getFrequencyAssignment().length];
+        System.arraycopy(this.getFrequencyAssignment(), 0, data, 0, data.length);
+        return new FrequencyAssignmentSolution(data, this.getEvaluation());
     }
 
     @Override
     public boolean equalSolution(FrequencyAssignmentSolution other) {
-        return (Utils.isEqualTolerance(this.evaluation, other.evaluation) && Utils.arrayEquality(frequencyAssignment, other.frequencyAssignment));
+        return (Utils.isEqualTolerance(this.getEvaluation(), other.getEvaluation()) && Utils.arrayEquality(getFrequencyAssignment(), other.getFrequencyAssignment()));
     }
 
     @Override
@@ -52,12 +52,26 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
     @Override
     public void read(DataInputStream dis) throws IOException {
         this.evaluation = dis.readDouble();
-        SerialisationUtils.readIntArray(dis, frequencyAssignment);
+        SerialisationUtils.readIntArray(dis, getFrequencyAssignment());
     }
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
-        dos.writeDouble(this.evaluation);
-        SerialisationUtils.writeIntArray(dos, frequencyAssignment);
+        dos.writeDouble(this.getEvaluation());
+        SerialisationUtils.writeIntArray(dos, getFrequencyAssignment());
+    }
+
+    /**
+     * @return the frequencyAssignment
+     */
+    public int[] getFrequencyAssignment() {
+        return frequencyAssignment;
+    }
+
+    /**
+     * @return the evaluation
+     */
+    public double getEvaluation() {
+        return evaluation;
     }
 }

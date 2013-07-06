@@ -28,7 +28,7 @@ import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.Im
 import static parallelhyflex.hyperheuristics.records.HeuristicPerformanceType.WorseningMore;
 import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.memory.stateexchange.StateExchangerProxy;
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.problemdependent.heuristic.HeuristicType;
 import parallelhyflex.utils.Utils;
 
 /**

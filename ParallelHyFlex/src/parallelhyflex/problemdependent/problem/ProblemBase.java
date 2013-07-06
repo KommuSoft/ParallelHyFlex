@@ -1,8 +1,8 @@
 package parallelhyflex.problemdependent.problem;
 
 import parallelhyflex.problemdependent.distance.DistanceFunction;
-import parallelhyflex.problemdependent.heuristics.Heuristic;
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.problemdependent.heuristic.Heuristic;
+import parallelhyflex.problemdependent.heuristic.HeuristicType;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problemdependent.solution.SolutionGenerator;
 

@@ -12,7 +12,7 @@ import parallelhyflex.problems.fdcsp.problem.FDCOPProblem;
 import parallelhyflex.problems.fdcsp.problem.FiniteIntegerDomain;
 import parallelhyflex.problems.fdcsp.problem.MutableFiniteIntegerDomain;
 import parallelhyflex.problems.fdcsp.problem.Variable;
-import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
+import parallelhyflex.problems.fdcsp.problem.expression.Expression;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.Utils;
 

@@ -1,5 +1,6 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.interference.InterferenceStructure;
 import java.util.ArrayList;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;

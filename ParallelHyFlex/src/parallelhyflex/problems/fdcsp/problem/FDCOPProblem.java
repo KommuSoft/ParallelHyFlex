@@ -9,7 +9,7 @@ import parallelhyflex.algebra.collections.ArgumentIterable;
 import parallelhyflex.algebra.collections.ArrayIterator;
 import parallelhyflex.problemdependent.problem.ObjectiveFunction;
 import parallelhyflex.problemdependent.problem.ProblemBase;
-import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
+import parallelhyflex.problems.fdcsp.problem.expression.Expression;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolutionGenerator;
 import parallelhyflex.utils.UniqueRandomGenerator;

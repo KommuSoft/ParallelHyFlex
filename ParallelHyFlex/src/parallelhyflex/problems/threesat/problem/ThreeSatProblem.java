@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.distance.DistanceFunction;
-import parallelhyflex.problemdependent.heuristics.Heuristic;
+import parallelhyflex.problemdependent.heuristic.Heuristic;
 import parallelhyflex.problemdependent.problem.ObjectiveFunction;
 import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.threesat.ClauseUtils;

@@ -1,10 +1,9 @@
 package parallelhyflex.problems.circlepositioning.heuristic;
 
 import org.junit.Test;
-import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problems.TestRenewalStrategy;
 import parallelhyflex.problems.circlepositioning.CirclePositioningRenewalStrategy;
-import parallelhyflex.problems.circlepositioning.heuristics.CirclePositioningHeuristicM1;
 import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblem;
 import parallelhyflex.problems.circlepositioning.problem.CirclePositioningProblemGenerator;
 import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolution;

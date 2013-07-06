@@ -1,5 +1,7 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.interference.InterferenceStructure;
+
 /**
  *
  * @author kommusoft

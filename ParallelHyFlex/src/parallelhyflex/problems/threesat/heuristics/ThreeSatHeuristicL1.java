@@ -1,6 +1,6 @@
 package parallelhyflex.problems.threesat.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.LocalSearchHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.LocalSearchHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;

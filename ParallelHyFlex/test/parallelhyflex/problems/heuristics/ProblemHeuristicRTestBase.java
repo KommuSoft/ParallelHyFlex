@@ -1,6 +1,6 @@
 package parallelhyflex.problems.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.RuinRecreateHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.RuinRecreateHeuristicBase;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.solution.Solution;

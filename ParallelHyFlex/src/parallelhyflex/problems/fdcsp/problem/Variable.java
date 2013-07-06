@@ -3,7 +3,7 @@ package parallelhyflex.problems.fdcsp.problem;
 import java.util.ArrayList;
 import java.util.Iterator;
 import parallelhyflex.parsing.tokenizing.Token;
-import parallelhyflex.problems.fdcsp.problem.expressions.Expression;
+import parallelhyflex.problems.fdcsp.problem.expression.Expression;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
 
 /**

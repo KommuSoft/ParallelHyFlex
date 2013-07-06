@@ -12,7 +12,7 @@ import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.memory.senders.PushSenderBase;
 import parallelhyflex.problemdependent.experience.WritableExperience;
-import parallelhyflex.problemdependent.heuristics.Heuristic;
+import parallelhyflex.problemdependent.heuristic.Heuristic;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
 import parallelhyflex.problemdependent.solution.Solution;

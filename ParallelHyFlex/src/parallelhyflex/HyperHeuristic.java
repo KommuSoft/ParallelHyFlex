@@ -28,7 +28,7 @@ import parallelhyflex.memory.stateexchange.StateExchangerBase;
 import parallelhyflex.memory.stateexchange.StateExchangerProxy;
 import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
 import parallelhyflex.problemdependent.experience.WritableExperience;
-import parallelhyflex.problemdependent.heuristics.HeuristicType;
+import parallelhyflex.problemdependent.heuristic.HeuristicType;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemInterface;
 import parallelhyflex.problemdependent.problem.ProblemReader;

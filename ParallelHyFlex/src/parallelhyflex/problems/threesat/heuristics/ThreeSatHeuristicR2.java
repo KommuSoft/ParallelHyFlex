@@ -1,7 +1,7 @@
 package parallelhyflex.problems.threesat.heuristics;
 
 import java.util.HashSet;
-import parallelhyflex.problemdependent.heuristics.RuinRecreateHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.RuinRecreateHeuristicBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;

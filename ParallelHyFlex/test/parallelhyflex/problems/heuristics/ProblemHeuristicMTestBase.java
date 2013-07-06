@@ -4,7 +4,7 @@
  */
 package parallelhyflex.problems.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.solution.Solution;

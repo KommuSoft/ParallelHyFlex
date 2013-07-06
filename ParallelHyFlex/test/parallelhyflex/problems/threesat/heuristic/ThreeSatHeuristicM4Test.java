@@ -1,7 +1,7 @@
 package parallelhyflex.problems.threesat.heuristic;
 
 import org.junit.Test;
-import parallelhyflex.problemdependent.heuristics.MutationHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problems.TestRenewalStrategy;
 import parallelhyflex.problems.heuristics.ProblemHeuristicMTestBase;
 import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;

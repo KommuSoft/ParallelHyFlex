@@ -6,7 +6,7 @@ package parallelhyflex.problems.heuristics;
 
 import junit.framework.Assert;
 import parallelhyflex.TestParameters;
-import parallelhyflex.problemdependent.heuristics.HeuristicBase;
+import parallelhyflex.problemdependent.heuristic.HeuristicBase;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.solution.Solution;

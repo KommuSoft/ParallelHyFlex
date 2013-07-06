@@ -1,6 +1,6 @@
 package parallelhyflex.problems.heuristics;
 
-import parallelhyflex.problemdependent.heuristics.CrossoverHeuristicBase;
+import parallelhyflex.problemdependent.heuristic.CrossoverHeuristicBase;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.solution.Solution;
