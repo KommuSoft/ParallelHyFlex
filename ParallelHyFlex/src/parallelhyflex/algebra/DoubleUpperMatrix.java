@@ -3,6 +3,7 @@ package parallelhyflex.algebra;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  *
@@ -58,5 +59,28 @@ public class DoubleUpperMatrix extends UpperMatrixBase<Double> {
         } else if (i > j && i < n) {
             this.data[calculateOrderedIndex(j, i)] = value;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + this.getN();
+        hash = 97 * hash + Arrays.hashCode(this.data);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DoubleUpperMatrix other = (DoubleUpperMatrix) obj;
+        if (!Arrays.equals(this.data, other.data)) {
+            return false;
+        }
+        return true;
     }
 }

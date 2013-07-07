@@ -20,12 +20,12 @@ public abstract class UpperMatrixBase<T> implements UpperMatrix<T> {
         this.n = n;
     }
     
-    protected int calculateOrderedIndex(int i, int j) {
-        return i * (2 * n - i - 3) / 2 + j - i - 1;
+    public int calculateOrderedIndex(int i, int j) {
+        return i * (2 * n - i - 1) / 2 + j - i -1;
     }
 
-    protected int calculateSize(int n) {
-        return Math.max(0x00,(n * n - 3 * n + 2) / 2);
+    public int calculateSize(int n) {
+        return Math.max(0x00,(n * n - n) / 2);
     }
     
 }

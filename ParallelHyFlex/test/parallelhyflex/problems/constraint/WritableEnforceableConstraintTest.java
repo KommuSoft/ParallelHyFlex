@@ -17,6 +17,10 @@ import parallelhyflex.problems.ProblemTestBase;
 
 /**
  *
+ * @param <TSG> 
+ * @param <TP> 
+ * @param <TPG> 
+ * @param <TS> 
  * @author kommusoft
  */
 public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGenerator<TS>, TP extends Problem<TS>, TPG extends ProblemReader<TS, TP>, TS extends Solution<TS>> extends ProblemTestBase<TSG, TP, TPG, TS> {
