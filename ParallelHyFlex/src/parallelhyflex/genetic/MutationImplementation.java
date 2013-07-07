@@ -1,8 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.genetic;
+
+import java.util.Collection;
 
 /**
  *
@@ -11,7 +9,8 @@ package parallelhyflex.genetic;
 public interface MutationImplementation {
 
     int[] mutate(int[] input, int[][] ranges);
-    
+
     void mutateLocal(int[] input, int[][] ranges);
-    
+
+    void mutateLocal(Collection<Integer> modifiedIndices, int[] input, int[][] ranges);
 }

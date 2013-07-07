@@ -4,6 +4,7 @@
  */
 package parallelhyflex.genetic;
 
+import java.util.Collection;
 import parallelhyflex.interference.InterferenceStructure;
 
 /**
@@ -15,5 +16,9 @@ interface InterferenceMutationImplementation {
     int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges);
     
     void mutateLocal(InterferenceStructure<Integer> interference, int[] input, int[][] ranges);
+    
+    void mutateLocal(InterferenceStructure<Integer> interference, Collection<Integer> modifiedIndices, int[] input, int[][] ranges);
+    
+    
     
 }

@@ -4,6 +4,8 @@
  */
 package parallelhyflex.genetic;
 
+import java.util.Collection;
+
 /**
  *
  * @author kommusoft
@@ -11,11 +13,14 @@ package parallelhyflex.genetic;
 public interface CrossoverImplementation {
 
     int[] crossover(int[] genes, int[]... parents);
-    
-    void crossoverLocal (int[] genes, int[]... parents);
+
+    void crossoverLocal(int[] genes, int[]... parents);
+
+    void crossoverLocal(Collection<Integer> modifiedIndices, int[] genes, int[]... parents);
 
     int[] crossover(int[]... parents);
-    
-    void crossoverLocal (int[]... parents);
-    
+
+    void crossoverLocal(int[]... parents);
+
+    void crossoverLocal(Collection<Integer> modifiedIndices, int[]... parents);
 }
