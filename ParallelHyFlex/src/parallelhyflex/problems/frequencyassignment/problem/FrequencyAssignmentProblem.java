@@ -2,6 +2,7 @@ package parallelhyflex.problems.frequencyassignment.problem;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import parallelhyflex.algebra.DoubleUpperMatrix;
 import parallelhyflex.algebra.generators.IntegerArrayIndexGenerator;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.interference.FunctionInterferenceStructure;
@@ -19,12 +20,12 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
     private final int nTransceivers;//TODO remove counters?
     private final int nSectors;
     private final int[][] frequencies;
-    private final double[][] means;
-    private final double[][] stdevs;
+    private final DoubleUpperMatrix means;
+    private final DoubleUpperMatrix stdevs;
     private final int[] placement;
     private FunctionInterferenceStructure<Integer, Integer> interference;
 
-    public FrequencyAssignmentProblem(int nTransceivers, int nSectors, int[][] frequencies, double[][] means, double[][] stdevs, int[] placement) {
+    public FrequencyAssignmentProblem(int nTransceivers, int nSectors, int[][] frequencies, DoubleUpperMatrix means, DoubleUpperMatrix stdevs, int[] placement) {
         this.nTransceivers = nTransceivers;
         this.nSectors = nSectors;
         this.frequencies = frequencies;
@@ -32,6 +33,7 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         this.stdevs = stdevs;
         this.placement = placement;
         this.interference = new FunctionInterferenceStructure<>(new IntegerArrayIndexGenerator(placement));
+        this.setObjectives(new FrequencyAssignmentObjectiveFunction1());
     }
 
     /**
@@ -58,14 +60,14 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
     /**
      * @return the means
      */
-    public double[][] getMeans() {
+    public DoubleUpperMatrix getMeans() {
         return means;
     }
 
     /**
      * @return the stdevs
      */
-    public double[][] getStdevs() {
+    public DoubleUpperMatrix getStdevs() {
         return stdevs;
     }
 
@@ -81,8 +83,8 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         dos.writeInt(nTransceivers);
         dos.writeInt(nSectors);
         SerialisationUtils.writeIntArray2d(dos, frequencies);
-        SerialisationUtils.writeDoubleArray2d(dos, means);
-        SerialisationUtils.writeDoubleArray2d(dos, stdevs);
+        means.write(dos);
+        stdevs.write(dos);
         SerialisationUtils.writeIntArray(dos, placement);
     }
 

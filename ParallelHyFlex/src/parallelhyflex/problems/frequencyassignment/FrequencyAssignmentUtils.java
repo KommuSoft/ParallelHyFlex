@@ -1,5 +1,6 @@
 package parallelhyflex.problems.frequencyassignment;
 
+import parallelhyflex.algebra.DoubleUpperMatrix;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.utils.StatisticsUtils;
 
@@ -24,11 +25,11 @@ public final class FrequencyAssignmentUtils {
         double eval = 0.0d;
         int n = problem.getnTransceivers();
         int[] sectors = problem.getPlacement();
-        double[][] mu = problem.getMeans();
-        double[][] sigma = problem.getStdevs();
+        DoubleUpperMatrix mu = problem.getMeans();
+        DoubleUpperMatrix sigma = problem.getStdevs();
         for(int i = 0x00; i < n; i++) {
             for(int j = i+0x01; j < n; j++) {
-                eval += Csig(sectors[i],sectors[j],fa[i],fa[j],mu[i][j],sigma[i][j]);
+                eval += Csig(sectors[i],sectors[j],fa[i],fa[j],mu.get(i, j),sigma.get(i, j));
             }
         }
         return eval;

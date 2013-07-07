@@ -8,6 +8,8 @@ import parallelhyflex.problemdependent.solution.SolutionGenerator;
 
 /**
  *
+ * @param <TSolution> 
+ * @param <TSolGen> 
  * @author kommusoft
  */
 public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen extends SolutionGenerator<TSolution>> implements Problem<TSolution> {
@@ -125,7 +127,7 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen
     /**
      * @param heuristics the heuristics to set
      */
-    protected void setHeuristics(Heuristic[] heuristics) {
+    protected void setHeuristics(Heuristic... heuristics) {
         this.heuristics = heuristics;
         for (Heuristic heu : heuristics) {
             ns[heu.getType().ordinal()]++;
@@ -135,14 +137,14 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen
     /**
      * @param objectives the objectives to set
      */
-    protected void setObjectives(ObjectiveFunction[] objectives) {
+    protected void setObjectives(ObjectiveFunction... objectives) {
         this.objectives = objectives;
     }
 
     /**
      * @param distances the distances to set
      */
-    protected void setDistances(DistanceFunction[] distances) {
+    protected void setDistances(DistanceFunction... distances) {
         this.distances = distances;
     }
 
