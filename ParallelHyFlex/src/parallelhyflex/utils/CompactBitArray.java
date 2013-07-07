@@ -5,12 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  *
  * @author kommusoft
  */
-public class CompactBitArray implements ICompactBitArray {
+public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
 
     public static final long BLOCK_MASK = 0xFFFF_FFFF_FFFF_FFBFL;
 
@@ -93,7 +94,7 @@ public class CompactBitArray implements ICompactBitArray {
                 || getBit((constraint >> 20) & 0xF_FFFF) == ((constraint >> 61) & 1)
                 || getBit(constraint & 0x0F_FFFF) == ((constraint >> 60) & 1));
     }
-    
+
     public boolean satisfiesClauseWithout(long constraint, Collection<Integer> nonIndices) {
         int index1 = (int) (constraint >> 40) & 0xF_FFFF, index2 = (int) (constraint >> 20) & 0xF_FFFF, index3 = (int) (constraint & 0x0F_FFFF);
         return ((!nonIndices.contains(index1) && getBit(index1) == ((constraint >> 62) & 1))
@@ -230,7 +231,7 @@ public class CompactBitArray implements ICompactBitArray {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(0x41 * this.values.length - 0x01);
         for (int i = 0; i < this.values.length; i++) {
             sb.append(Utils.stringReverse(String.format("%64s", Long.toBinaryString(this.values[i])).replace(' ', '0'))).append(" ");
         }
@@ -289,38 +290,160 @@ public class CompactBitArray implements ICompactBitArray {
         return (int) ((values[j] >> index) & 0x01);
     }
 
-        public void setAll(int[] indices, int val) {
-        for(int i = 0; i < indices.length; i++) {
-            this.set(indices[i],((val>>i)&0x01) != 0x00);
+    public void setAll(int[] indices, int val) {
+        for (int i = 0; i < indices.length; i++) {
+            this.set(indices[i], ((val >> i) & 0x01) != 0x00);
         }
     }
 
-        public void andWith(CompactBitArray cba) {
+    public void andWith(CompactBitArray cba) {
         long[] valb = cba.values;
-        for(int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             values[i] &= valb[i];
         }
     }
 
     public void orWith(CompactBitArray cba) {
         long[] valb = cba.values;
-        for(int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             values[i] |= valb[i];
         }
     }
-    
-    public void xorWith (CompactBitArray cba) {
+
+    public void xorWith(CompactBitArray cba) {
         long[] valb = cba.values;
-        for(int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             values[i] ^= valb[i];
         }
     }
-    
-    public void swapFull () {
-        for(int i = 0; i < values.length; i++) {
+
+    public void swapFull() {
+        for (int i = 0; i < values.length; i++) {
             values[i] = ~values[i];
         }
         this.clearTail();
     }
-    
+
+    @Override
+    public int size() {
+        int size = 0x00;
+        long[] vals = this.values;
+        int nVals = vals.length;
+        for (int i = 0x00; i < nVals; i++) {
+            size += Utils.countOnes(vals[i]);
+        }
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        long[] vals = this.values;
+        int nVals = vals.length;
+        for (int i = 0x00; i < nVals; i++) {
+            if (vals[i] != 0x00) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        if (o instanceof Integer) {
+            return this.get((Integer) o);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public Iterator<Integer> iterator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object[] toArray() {
+        int size = this.size();
+        Object[] result = new Object[size];
+        long[] values = this.values;
+        int n = values.length, k = 0x00, l = 0x00;
+        for(int i = 0x00; i < n; i++) {
+            long dat = values[i];
+            l = i<<0x06;
+            while(dat != 0x00) {
+                if((dat&0x01) != 0x00) {
+                    result[k++] = l;
+                }
+                l++;
+                dat >>>= 0x01;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public <T> T[] toArray(T[] ts) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean add(Integer e) {
+        boolean result = !this.get(e);
+        this.set(e, true);
+        return result;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (o instanceof Integer) {
+            int index = (Integer) o;
+            boolean result = this.get(index);
+            this.set(index, false);
+            return result;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> clctn) {
+        for (Object o : clctn) {
+            if (!(o instanceof Integer) || !this.get((Integer) o)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Integer> clctn) {
+        boolean result = false;
+        for(Integer i : clctn) {
+            result |= this.add(i);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> clctn) {
+        boolean result = false;
+        for(Object o : clctn) {
+            result |= clctn.remove(o);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> clctn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void clear() {
+        long[] values = this.values;
+        int n = this.values.length;
+        for(int i = 0x00; i < n; i++) {
+            values[i] = 0x00;
+        }
+    }
 }

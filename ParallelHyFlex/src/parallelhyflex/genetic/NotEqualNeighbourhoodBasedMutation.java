@@ -76,6 +76,34 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
         }
     }
 
+    private void mutationStepLocal(int[] input, int[][] ranges, double pm, ArrayList<Integer> affected) {
+        int n = input.length, index;
+        if (affected.size() > 0x00) {
+            index = ProbabilityUtils.randomElement(affected);
+            affected.clear();
+        } else {
+            index = Utils.nextInt(n);
+        }
+        int val = ProbabilityUtils.randomElement(ranges[index]);
+        for (int i = 0x00; i < index; i++) {
+            if (input[i] == val) {
+                affected.add(i);
+                if (Utils.nextDouble() < pm) {
+                    input[i] = ProbabilityUtils.randomElement(ranges[i]);
+                }
+            }
+        }
+        input[index] = val;
+        for (int i = index + 0x01; i < n; i++) {
+            if (input[i] == val) {
+                affected.add(i);
+                if (Utils.nextDouble() < pm) {
+                    input[i] = ProbabilityUtils.randomElement(ranges[i]);
+                }
+            }
+        }
+    }
+
     /**
      * @return the DefaultPm
      */
@@ -102,5 +130,18 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
      */
     public void setDefaultRepeat(int DefaultRepeat) {
         this.DefaultRepeat = DefaultRepeat;
+    }
+
+    @Override
+    public void mutateLocal(int[] input, int[][] ranges) {
+        this.mutateLocal(input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
+    }
+
+    private void mutateLocal(int[] input, int[][] ranges, double pm, int repeat) {
+        int n = input.length;
+        ArrayList<Integer> affected = new ArrayList<>();
+        for (int k = 0x00; k < repeat; k++) {
+            mutationStepLocal(input, ranges, pm, affected);
+        }
     }
 }

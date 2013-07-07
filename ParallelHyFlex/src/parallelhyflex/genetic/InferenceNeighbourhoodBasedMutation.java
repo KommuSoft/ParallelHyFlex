@@ -30,7 +30,7 @@ public class InferenceNeighbourhoodBasedMutation implements InterferenceMutation
     public int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         int[] sender = new int[n], receiver = new int[n], temp;
-        ArrayList<Integer> affected = new ArrayList<>();
+        ArrayList<Integer> affected = new ArrayList<>(Math.max((int) Math.sqrt(input.length),0x03));
         mutationStep(interference, input, ranges, pm, sender, affected);
         for (int k = 0x01; k < repeat; k++) {
             mutationStep(interference, sender, ranges, pm, receiver, affected);
