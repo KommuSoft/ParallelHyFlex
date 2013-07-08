@@ -5,8 +5,8 @@
 package parallelhyflex.algebra;
 
 import java.io.IOException;
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import parallelhyflex.TestParameters;
 import parallelhyflex.communication.serialisation.ReadWriteableBaseTest;
 import parallelhyflex.utils.Utils;
@@ -19,33 +19,38 @@ public class DoubleUpperMatrixTest extends ReadWriteableBaseTest<DoubleUpperMatr
 
     @Test
     public void testGetSet() {
-        System.out.println("get");
-        int i = 0;
-        int j = 0;
-        DoubleUpperMatrix instance = null;
-        Double expResult = null;
-        Double result = instance.get(i, j);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0x00; i < TestParameters.LOOP_PARAMETER; i++) {
+            int n = i + 0x05;
+            double[][] vals = new double[n][n];
+            for (int a = 0x00; a < n; a++) {
+                for (int b = 0x00; b < n; b++) {
+                    vals[a][b] = 0.0d;
+                }
+                vals[a][a] = Double.NaN;
+            }
+            DoubleUpperMatrix dum = new DoubleUpperMatrix(n);
+            for (int j = 0x00; j < TestParameters.LOOP_PARAMETER; j++) {
+                double val = Utils.nextGaussian();
+                int i0 = Utils.nextInt(n), j0;
+                do {
+                    j0 = Utils.nextInt(n);
+                } while (j0 == i0);
+                vals[i0][j0] = val;
+                vals[j0][i0] = val;
+                dum.set(i0, j0, val);
+                for (int a = 0x00; a < n; a++) {
+                    for (int b = 0x00; b < n; b++) {
+                        Assert.assertEquals(vals[a][b], dum.get(a, b), 10e-9);
+                    }
+                }
+            }
+        }
     }
 
     @Test
     @Override
     public void testSerialisation() throws IOException {
         super.testSerialisation();
-    }
-
-    @Test
-    public void testSet() {
-        System.out.println("set");
-        int i = 0;
-        int j = 0;
-        Double value = null;
-        DoubleUpperMatrix instance = null;
-        instance.set(i, j, value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     @Override

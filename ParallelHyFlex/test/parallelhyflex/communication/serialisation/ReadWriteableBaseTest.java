@@ -10,12 +10,10 @@ import parallelhyflex.TestParameters;
 
 /**
  *
+ * @param <T> 
  * @author kommusoft
  */
 public abstract class ReadWriteableBaseTest<T extends ReadWriteable> {
-
-    public ReadWriteableBaseTest() {
-    }
 
     public void testSerialisation() throws IOException {
         for (int i = 0x00; i < TestParameters.LOOP_PARAMETER; i++) {
