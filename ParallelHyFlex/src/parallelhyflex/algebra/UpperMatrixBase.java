@@ -12,6 +12,16 @@ public abstract class UpperMatrixBase<T> implements UpperMatrix<T> {
         this.n = n;
     }
     
+    @Override
+    public T getA (int i, int j) {
+        return this.get(i, j);
+    }
+    
+    @Override
+    public T getD (int i, int j) {
+        return this.get(i, j);
+    }
+    
     public int getN () {
         return this.n;
     }

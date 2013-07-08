@@ -33,6 +33,26 @@ public class DoubleUpperMatrix extends UpperMatrixBase<Double> {
     }
 
     @Override
+    public Double getA(int i, int j) {
+        int n = this.getN();
+        if (j < n) {
+            return this.data[calculateOrderedIndex(i, j)];
+        } else {
+            return Double.NaN;
+        }
+    }
+
+    @Override
+    public Double getD(int i, int j) {
+        int n = this.getN();
+        if (i < n) {
+            return this.data[calculateOrderedIndex(j, i)];
+        } else {
+            return Double.NaN;
+        }
+    }
+
+    @Override
     public void read(DataInputStream dis) throws IOException {
         int n = dis.readInt();
         this.setN(n);

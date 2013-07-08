@@ -74,4 +74,12 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
     public double getEvaluation() {
         return evaluation;
     }
+
+    public void evaluationDelta(double dEvaluation) {
+        this.evaluation += dEvaluation;
+    }
+
+    public double calculateEvaluation(FrequencyAssignmentProblem tsp) {
+        return FrequencyAssignmentUtils.evaluate(tsp, this.frequencyAssignment);
+    }
 }

@@ -17,7 +17,6 @@ public class FrequencyAssignmentHeuristicC2 extends CrossoverHeuristicBase<Frequ
 
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from1, FrequencyAssignmentSolution from2) {
-        InterferenceCrossover.getInstance().crossoverLocal(this.getProblem().getInterferenceStructure(), new int[][]{from1.getFrequencyAssignment(), from2.getFrequencyAssignment()});
-        //TODO: recalc score
+        InterferenceCrossover.getInstance().crossoverLocal(this.getProblem().getInterferenceStructure(), new FrequencyAssignmentManipulator(this.getProblem(), from1), new int[][]{from1.getFrequencyAssignment(), from2.getFrequencyAssignment()});
     }
 }

@@ -15,8 +15,8 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
  *
  * @author kommusoft
  */
-public class ThreeSatHeuristicC1Test extends ProblemHeuristicCTestBase<ThreeSatSolutionGenerator,ThreeSatProblem,ThreeSatProblemGenerator,ThreeSatSolution> {
-    
+public class ThreeSatHeuristicC1Test extends ProblemHeuristicCTestBase<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> {
+
     /**
      * Test of applyHeuristicLocally method, of class ThreeSatHeuristicM1.
      */
