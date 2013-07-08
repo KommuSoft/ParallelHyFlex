@@ -2,7 +2,6 @@ package parallelhyflex.problems.circlepositioning;
 
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import parallelhyflex.TestParameters;
 
 /**

@@ -371,10 +371,6 @@ public final class Utils {
         return d;
     }
 
-    int priority2Log(int tmp) {
-        return ceiling2Log(tmp) - 1;
-    }
-
     public static int next2Pow(int original) {
         original = fillTail(original);
         return original + 1;
@@ -394,6 +390,10 @@ public final class Utils {
     }
 
     private Utils() {
+    }
+
+    int priority2Log(int tmp) {
+        return ceiling2Log(tmp) - 1;
     }
 
     public synchronized void setSeed(long seed) {

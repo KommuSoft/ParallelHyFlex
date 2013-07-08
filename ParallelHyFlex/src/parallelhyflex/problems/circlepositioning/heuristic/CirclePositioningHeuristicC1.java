@@ -11,6 +11,7 @@ import parallelhyflex.utils.Utils;
  * @author kommusoft
  */
 public class CirclePositioningHeuristicC1 extends CrossoverHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
+    private static final Logger LOG = Logger.getLogger(CirclePositioningHeuristicC1.class.getName());
     
     public CirclePositioningHeuristicC1 (CirclePositioningProblem problem) {
         super(problem);
@@ -34,6 +35,5 @@ public class CirclePositioningHeuristicC1 extends CrossoverHeuristicBase<CircleP
             }
         }
     }
-    private static final Logger LOG = Logger.getLogger(CirclePositioningHeuristicC1.class.getName());
     
 }

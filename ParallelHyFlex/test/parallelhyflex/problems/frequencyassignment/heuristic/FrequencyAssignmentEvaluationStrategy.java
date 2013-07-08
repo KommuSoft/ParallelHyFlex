@@ -17,7 +17,7 @@ import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
  */
 class FrequencyAssignmentEvaluationStrategy implements TestHeuristicEvaluationStrategy<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
 
-    public FrequencyAssignmentEvaluationStrategy() {
+    FrequencyAssignmentEvaluationStrategy() {
     }
 
     @Override

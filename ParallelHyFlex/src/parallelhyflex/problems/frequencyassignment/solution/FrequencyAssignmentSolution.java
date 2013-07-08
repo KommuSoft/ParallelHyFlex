@@ -5,8 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.Solution;
-import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.FrequencyAssignmentUtils;
+import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.utils.Utils;
 
 /**

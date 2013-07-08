@@ -1,6 +1,5 @@
 package parallelhyflex.hyperheuristics.adaphh.records;
 
-import parallelhyflex.communication.Communication;
 import parallelhyflex.hyperheuristics.adaphh.AdapHH;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W1;
 import static parallelhyflex.hyperheuristics.adaphh.AdapHH.ADHS_W2;

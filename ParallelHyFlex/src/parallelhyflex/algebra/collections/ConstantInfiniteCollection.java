@@ -32,7 +32,7 @@ public class ConstantInfiniteCollection<T> implements Collection<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ConstantInfiniteIterator<T>(this.data);
+        return new ConstantInfiniteIterator<>(this.data);
     }
 
     @Override

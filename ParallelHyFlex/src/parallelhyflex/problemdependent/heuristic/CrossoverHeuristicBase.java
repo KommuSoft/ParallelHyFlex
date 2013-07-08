@@ -2,7 +2,6 @@ package parallelhyflex.problemdependent.heuristic;
 
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.solution.Solution;
-import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolution;
 
 /**
  *

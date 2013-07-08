@@ -6,9 +6,6 @@ package parallelhyflex.problems.circlepositioning;
  */
 public final class CirclePositioningUtils {
 
-    private CirclePositioningUtils() {
-    }
-
     public static double calculateCircleAreaRadiusSquare(double r2) {
         return Math.PI * r2;
     }
@@ -79,8 +76,8 @@ public final class CirclePositioningUtils {
             }
         }
     }
-    
-    public static double calculateOptimalRadius (double[] pos, double[] rad, int index) {
+
+    public static double calculateOptimalRadius(double[] pos, double[] rad, int index) {
         int n = rad.length;
         double[] dist = new double[n];
         int i2 = index<<0x01;
@@ -94,8 +91,8 @@ public final class CirclePositioningUtils {
         return 0.0d;
         
     }
-
-    public static double calculateDifferenceCircleOverlapArea(double x1, double y1, double r1, double x2, double y2, double r2, double dr) {
+    
+    public static double calculateDifferenceCircleOverlapArea (double x1, double y1, double r1, double x2, double y2, double r2, double dr) {
         if (dr > 0.0d) {
             return -calculateDifferenceCircleOverlapArea(x1, y1, r1, x2, y2, r2 + dr, -dr);
         } else if (dr < 0.0d) {
@@ -163,5 +160,8 @@ public final class CirclePositioningUtils {
 
     public static double calculateDifferenceOuterRadius(double R, double x, double y, double r0, double r1) {
         return CirclePositioningUtils.calculateCircleOuterArea(R, x, y, r1) - CirclePositioningUtils.calculateCircleOuterArea(R, x, y, r0);
+    }
+
+    private CirclePositioningUtils() {
     }
 }
