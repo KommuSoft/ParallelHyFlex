@@ -9,7 +9,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class InferenceNeighbourhoodBasedMutation implements InterferenceMutationImplementation {
+public class InferenceNeighbourhoodBasedMutation extends InterferenceMutationImplementationBase {
 
     private static final InferenceNeighbourhoodBasedMutation instance = new InferenceNeighbourhoodBasedMutation();
 
@@ -30,7 +30,7 @@ public class InferenceNeighbourhoodBasedMutation implements InterferenceMutation
     public int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         int[] sender = new int[n], receiver = new int[n], temp;
-        ArrayList<Integer> affected = new ArrayList<>(Math.max((int) Math.sqrt(input.length),0x03));
+        ArrayList<Integer> affected = new ArrayList<>(Math.max((int) Math.sqrt(input.length), 0x03));
         mutationStep(interference, input, ranges, pm, sender, affected);
         for (int k = 0x01; k < repeat; k++) {
             mutationStep(interference, sender, ranges, pm, receiver, affected);
@@ -105,7 +105,50 @@ public class InferenceNeighbourhoodBasedMutation implements InterferenceMutation
         this.DefaultRepeat = DefaultRepeat;
     }
 
-    public void mutateLocal(InterferenceStructure<Integer> interferenceStructure, int[] frequencyAssignment, int[][] frequencies) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public void mutateLocal(ManipulationObserver observer, InterferenceStructure<Integer> interference, int[] input, int[][] ranges) {
+        this.mutateLocal(observer, interference, input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
+    }
+
+    public void mutateLocal(ManipulationObserver observer, InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int repeat) {
+        int n = input.length;
+        ArrayList<Integer> affected = new ArrayList<>(Math.max((int) Math.sqrt(input.length), 0x03));
+        for (int k = 0x00; k < repeat; k++) {
+            mutationStepLocal(observer, interference, input, ranges, pm, affected);
+        }
+    }
+
+    private void mutationStepLocal(ManipulationObserver observer, InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, ArrayList<Integer> affected) {
+        int n = input.length, index;
+        if (affected.size() > 0x00) {
+            index = ProbabilityUtils.randomElement(affected);
+            affected.clear();
+        } else {
+            index = Utils.nextInt(n);
+        }
+        int val;
+        for (int i = 0x00; i < index; i++) {
+            if (interference.interferes(index, i)) {
+                affected.add(i);
+                if (Utils.nextDouble() < pm) {
+                    val = ProbabilityUtils.randomElement(ranges[i]);
+                    observer.modify(i, val);
+                    input[i] = val;
+                }
+            }
+        }
+        val = ProbabilityUtils.randomElement(ranges[index]);
+        observer.modify(index, val);
+        input[index] = val;
+        for (int i = index + 0x01; i < n; i++) {
+            if (interference.interferes(index, i)) {
+                affected.add(i);
+                if (Utils.nextDouble() < pm) {
+                    val = ProbabilityUtils.randomElement(ranges[i]);
+                    observer.modify(i, val);
+                    input[i] = val;
+                }
+            }
+        }
     }
 }

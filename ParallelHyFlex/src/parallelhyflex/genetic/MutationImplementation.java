@@ -12,5 +12,5 @@ public interface MutationImplementation {
 
     void mutateLocal(int[] input, int[][] ranges);
 
-    void mutateLocal(Collection<Integer> modifiedIndices, int[] input, int[][] ranges);
+    void mutateLocal(ManipulationObserver observer, int[] input, int[][] ranges);
 }

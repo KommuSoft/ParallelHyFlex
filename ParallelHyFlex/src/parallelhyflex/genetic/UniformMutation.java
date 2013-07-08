@@ -3,7 +3,7 @@ package parallelhyflex.genetic;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
-public class UniformMutationImplementation implements MutationImplementation {
+public class UniformMutation implements MutationImplementation {
 
     @Override
     public int[] mutate(int[] input, int[][] ranges) {
