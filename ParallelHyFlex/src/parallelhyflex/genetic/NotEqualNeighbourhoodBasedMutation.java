@@ -8,7 +8,7 @@ import parallelhyflex.utils.Utils;
  *
  * @author kommusoft
  */
-public class NotEqualNeighbourhoodBasedMutation implements MutationImplementation {
+public class NotEqualNeighbourhoodBasedMutation extends MutationImplementationBase {
 
     private static final NotEqualNeighbourhoodBasedMutation instance = new NotEqualNeighbourhoodBasedMutation();
 
@@ -76,7 +76,7 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
         }
     }
 
-    private void mutationStepLocal(int[] input, int[][] ranges, double pm, ArrayList<Integer> affected) {
+    private void mutationStepLocal(ManipulationObserver observer, int[] input, int[][] ranges, double pm, ArrayList<Integer> affected) {
         int n = input.length, index;
         if (affected.size() > 0x00) {
             index = ProbabilityUtils.randomElement(affected);
@@ -84,21 +84,26 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
         } else {
             index = Utils.nextInt(n);
         }
-        int val = ProbabilityUtils.randomElement(ranges[index]);
+        int val = ProbabilityUtils.randomElement(ranges[index]), val2;
         for (int i = 0x00; i < index; i++) {
             if (input[i] == val) {
                 affected.add(i);
                 if (Utils.nextDouble() < pm) {
-                    input[i] = ProbabilityUtils.randomElement(ranges[i]);
+                    val2 = ProbabilityUtils.randomElement(ranges[i]);
+                    observer.modify(i, val2);
+                    input[i] = val2;
                 }
             }
         }
+        observer.modify(index, val);
         input[index] = val;
         for (int i = index + 0x01; i < n; i++) {
             if (input[i] == val) {
                 affected.add(i);
                 if (Utils.nextDouble() < pm) {
-                    input[i] = ProbabilityUtils.randomElement(ranges[i]);
+                    val2 = ProbabilityUtils.randomElement(ranges[i]);
+                    observer.modify(i, val2);
+                    input[i] = val2;
                 }
             }
         }
@@ -133,15 +138,15 @@ public class NotEqualNeighbourhoodBasedMutation implements MutationImplementatio
     }
 
     @Override
-    public void mutateLocal(int[] input, int[][] ranges) {
-        this.mutateLocal(input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
+    public void mutateLocal(ManipulationObserver observer, int[] input, int[][] ranges) {
+        this.mutateLocal(observer, input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
     }
 
-    private void mutateLocal(int[] input, int[][] ranges, double pm, int repeat) {
+    private void mutateLocal(ManipulationObserver observer, int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         ArrayList<Integer> affected = new ArrayList<>();
         for (int k = 0x00; k < repeat; k++) {
-            mutationStepLocal(input, ranges, pm, affected);
+            mutationStepLocal(observer, input, ranges, pm, affected);
         }
     }
 }

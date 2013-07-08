@@ -3,7 +3,7 @@ package parallelhyflex.genetic;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
-public class UniformMutation implements MutationImplementation {
+public class UniformMutation extends MutationImplementationBase {
 
     @Override
     public int[] mutate(int[] input, int[][] ranges) {
@@ -17,8 +17,10 @@ public class UniformMutation implements MutationImplementation {
     }
 
     @Override
-    public void mutateLocal(int[] input, int[][] ranges) {
+    public void mutateLocal(ManipulationObserver observer, int[] input, int[][] ranges) {
         int index = Utils.nextInt(input.length);
-        input[index] = ProbabilityUtils.randomElement(ranges[index]);
+        int val = ProbabilityUtils.randomElement(ranges[index]);
+        observer.modify(index, val);
+        input[index] = val;
     }
 }

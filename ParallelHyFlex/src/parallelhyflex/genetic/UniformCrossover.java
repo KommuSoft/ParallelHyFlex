@@ -1,12 +1,14 @@
 package parallelhyflex.genetic;
 
+import java.util.Collection;
+import java.util.Iterator;
 import parallelhyflex.utils.Utils;
 
 /**
  *
  * @author kommusoft
  */
-public class UniformCrossover implements CrossoverImplementation {
+public class UniformCrossover extends CrossoverImplementationBase {
 
     private static final UniformCrossover instance = new UniformCrossover();
 
@@ -18,24 +20,7 @@ public class UniformCrossover implements CrossoverImplementation {
     }
 
     @Override
-    public int[] crossover(int[]... parents) {
-        int m = parents.length;
-        if (m <= 0x00) {
-            return null;
-        }
-        int n = parents[0].length;
-        for (int i = 1; i < m; i++) {
-            n = Math.min(n, parents[i].length);
-        }
-        int[] values = new int[n];
-        for (int i = 0; i < n; i++) {
-            values[i] = parents[Utils.nextInt(m)][i];
-        }
-        return values;
-    }
-
-    @Override
-    public int[] crossover(int[] genes, int[]... parents) {
+    public int[] crossover(Collection<Integer> genes, int[]... parents) {
         int m = parents.length;
         if (m <= 0x00) {
             return null;
@@ -44,58 +29,38 @@ public class UniformCrossover implements CrossoverImplementation {
         for (int i = 0x01; i < m; i++) {
             n = Math.min(n, parents[i].length);
         }
-        int k = genes.length;
         int[] values = new int[n];
-        int j = 0x00;
-        for (int i = 0x00; i < k; i++) {
+        Iterator<Integer> gi = genes.iterator();
+        for (int i = 0x00; i < n && gi.hasNext();) {
             int l = Utils.nextInt(m);
-            int J = j + genes[i];
-            for (; j < J; j++) {
-                values[j] = parents[l][j];
+            int ie = Math.min(n, i + gi.next());
+            for (; i < ie; i++) {
+                values[i] = parents[l][i];
             }
         }
         return values;
     }
 
     @Override
-    public void crossoverLocal(int[] genes, int[]... parents) {
+    public void crossoverLocal(ManipulationObserver observer, Collection<Integer> genes, int[]... parents) {
         int m = parents.length;
         if (m > 0x00) {
             int n = parents[0].length;
             for (int i = 0x01; i < m; i++) {
                 n = Math.min(n, parents[i].length);
             }
-            int k = genes.length;
             int[] values = parents[0x00];
-            int j = 0x00;
-            for (int i = 0x00; i < k; i++) {
+            Iterator<Integer> gi = genes.iterator();
+            for (int i = 0x00; i < n && gi.hasNext();) {
+                int ie = Math.min(n, i + gi.next());
                 int l = Utils.nextInt(m);
-                int J = j + genes[i];
-                if (l > 0x00) {
-                    for (; j < J; j++) {
-                        values[j] = parents[l][j];
+                if (l != 0x00) {
+                    for (; i < ie; i++) {
+                        observer.modify(i, parents[l][i]);
+                        values[i] = parents[l][i];
                     }
-                }
-                else {
-                    j = J;
-                }
-            }
-        }
-    }
-
-    @Override
-    public void crossoverLocal(int[]... parents) {
-        int m = parents.length;
-        if (m > 0x00) {
-            int n = parents[0].length;
-            for (int i = 1; i < m; i++) {
-                n = Math.min(n, parents[i].length);
-            }
-            int[] values = parents[0];
-            for (int i = 0; i < n; i++) {
-                int k = Utils.nextInt(m);
-                if (k > 0x00) {
-                    values[i] = parents[k][i];
+                } else {
+                    i = ie;
                 }
             }
         }

@@ -1,7 +1,7 @@
 package parallelhyflex.genetic;
 
 import java.util.Collection;
-import parallelhyflex.algebra.collections.ConstantInfiniteCollection;
+import java.util.Iterator;
 import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.utils.Utils;
 
@@ -33,11 +33,16 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
         }
         int keyindex = Utils.nextInt(n);
         int[] values = new int[n];
-        for (int i = 0; i < n; i++) {
-            if (interference.interferes(keyindex, i)) {
-                values[i] = parents[keyparent][i];
-            } else {
-                values[i] = parents[Utils.ignoreRandomIndex(m, keyparent)][i];
+        Iterator<Integer> gi = genes.iterator();
+        for (int i = 0x00; i < n && gi.hasNext();) {
+            int ie = Math.min(n, i + gi.next());
+            int other = Utils.ignoreRandomIndex(m, keyparent);
+            for (; i < ie; i++) {
+                if (interference.interferes(keyindex, i)) {
+                    values[i] = parents[keyparent][i];
+                } else {
+                    values[i] = parents[other][i];
+                }
             }
         }
         return values;
@@ -54,11 +59,20 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
             }
             int keyindex = Utils.nextInt(n);
             int[] values = parents[0x00];
-            for (int i = 0; i < n; i++) {
-                if (interference.interferes(keyindex, i)) {
-                    values[i] = parents[keyparent][i];
-                } else {
-                    values[i] = parents[Utils.ignoreRandomIndex(m, keyparent)][i];
+            Iterator<Integer> gi = genes.iterator();
+            for (int i = 0; i < n && gi.hasNext();) {
+                int ie = Math.min(n, i + gi.next());
+                int other = Utils.ignoreRandomIndex(m, keyparent);
+                for (; i < ie; i++) {
+                    if (interference.interferes(keyindex, i)) {
+                        if (keyparent != 0x00) {
+                            observer.modify(i, parents[keyparent][i]);
+                            values[i] = parents[keyparent][i];
+                        }
+                    } else if (other != 0x00) {
+                        observer.modify(i, parents[other][i]);
+                        values[i] = parents[other][i];
+                    }
                 }
             }
         }

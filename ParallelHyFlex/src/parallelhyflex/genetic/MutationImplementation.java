@@ -1,7 +1,5 @@
 package parallelhyflex.genetic;
 
-import java.util.Collection;
-
 /**
  *
  * @author kommusoft
