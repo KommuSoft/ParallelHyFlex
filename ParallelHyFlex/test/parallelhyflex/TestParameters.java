@@ -9,11 +9,11 @@ public class TestParameters {
     /**
      *
      */
-    public static final int LOOP_PARAMETER = 80_000_000;
+    public static final int LOOP_PARAMETER = 8_000_000;
     /**
      *
      */
-    public static final int LOOP2_PARAMETER = 10_000;
+    public static final int LOOP2_PARAMETER = 1_000;
     /**
      *
      */

@@ -1,5 +1,7 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.genetic.observer.NullManipulationObserver;
+
 /**
  *
  * @author kommusoft

@@ -15,7 +15,7 @@ import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentHeuristicM1Test extends ProblemHeuristicMTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
+public class FrequencyAssignmentHeuristicM2Test extends ProblemHeuristicMTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
 
     /**
      * Test of applyHeuristicLocally method, of class
@@ -33,7 +33,7 @@ public class FrequencyAssignmentHeuristicM1Test extends ProblemHeuristicMTestBas
      */
     @Override
     public MutationHeuristicBase<FrequencyAssignmentSolution, FrequencyAssignmentProblem> renewHeuristic() {
-        return new FrequencyAssignmentHeuristicM1(getTsp());
+        return new FrequencyAssignmentHeuristicM2(getTsp());
     }
 
     /**

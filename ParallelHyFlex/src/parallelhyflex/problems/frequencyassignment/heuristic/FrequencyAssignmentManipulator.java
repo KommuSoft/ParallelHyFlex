@@ -1,6 +1,6 @@
 package parallelhyflex.problems.frequencyassignment.heuristic;
 
-import parallelhyflex.genetic.ProblemSolutionPointerManipulationObserverBase;
+import parallelhyflex.genetic.observer.ProblemSolutionPointerManipulationObserverBase;
 import parallelhyflex.problems.frequencyassignment.FrequencyAssignmentUtils;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;

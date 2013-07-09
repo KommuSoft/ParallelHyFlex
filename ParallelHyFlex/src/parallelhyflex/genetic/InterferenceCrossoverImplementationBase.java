@@ -1,5 +1,7 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.genetic.observer.ManipulationObserver;
+import parallelhyflex.genetic.observer.NullManipulationObserver;
 import java.util.Collection;
 import parallelhyflex.algebra.collections.ConstantInfiniteCollection;
 import parallelhyflex.interference.InterferenceStructure;

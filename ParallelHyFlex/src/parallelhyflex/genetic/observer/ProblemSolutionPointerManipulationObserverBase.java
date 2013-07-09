@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.observer;
 
 import parallelhyflex.algebra.ProblemSolutionPointerBase;
 import parallelhyflex.problemdependent.problem.Problem;

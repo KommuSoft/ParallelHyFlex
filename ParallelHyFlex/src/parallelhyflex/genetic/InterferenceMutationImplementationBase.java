@@ -1,5 +1,7 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.genetic.observer.ManipulationObserver;
+import parallelhyflex.genetic.observer.NullManipulationObserver;
 import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.interference.NoInterferenceStructure;
 
