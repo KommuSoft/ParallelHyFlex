@@ -28,7 +28,7 @@ public class FrequencyAssignmentProblemGenerator implements ProblemReader<Freque
     }
     
     public FrequencyAssignmentProblem generateProblem() {
-        int n = Utils.nextInt(8000);
+        int n = Utils.nextInt(8_000);
         int m = Utils.nextInt((int) Math.ceil(Math.sqrt(n)));
         int l = Utils.nextInt((int) Math.ceil(0.5d*Math.sqrt(n)));
         int[][] freqs = new int[n][];

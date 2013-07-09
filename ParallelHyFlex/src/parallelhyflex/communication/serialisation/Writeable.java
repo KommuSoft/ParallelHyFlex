@@ -7,7 +7,7 @@ import java.io.IOException;
  *
  * @author kommusoft
  */
-public interface Writable {
+public interface Writeable {
 
     void write(DataOutputStream dos) throws IOException;
 }

@@ -4,5 +4,6 @@ package parallelhyflex.communication.serialisation;
  *
  * @author kommusoft
  */
-public interface ReadWriteable extends Readable, Writeable {
+public interface StreamReadWriteable extends StreamReadable, StreamWriteable {
+    
 }
