@@ -10,6 +10,19 @@ import parallelhyflex.utils.IntegerUniqueRandomGenerator;
  */
 public class UniformBestImprovementLocalSearch extends LocalSearchImplementationBase {
 
+    private static final UniformBestImprovementLocalSearch instance = new UniformBestImprovementLocalSearch();
+
+    /**
+     *
+     * @return
+     */
+    public static UniformBestImprovementLocalSearch getInstance() {
+        return instance;
+    }
+
+    private UniformBestImprovementLocalSearch() {
+    }
+
     @Override
     protected void localSearchLocalInternal(ManipulationGuider guider, ManipulationObserver observer, int[][] ranges, IntegerUniqueRandomGenerator inputUrg, int[] input) {
         for (Integer index : inputUrg) {
@@ -27,8 +40,8 @@ public class UniformBestImprovementLocalSearch extends LocalSearchImplementation
                     }
                 }
             }
-            if(bestval > 0.0d) {
-                observer.modify(index,bestval);
+            if (bestval > 0.0d) {
+                observer.modify(index, bestval);
                 input[index] = bestval;
                 inputUrg.reset();
             }

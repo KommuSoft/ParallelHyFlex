@@ -10,6 +10,19 @@ import parallelhyflex.utils.IntegerUniqueRandomGenerator;
  */
 public class UniformFirstImprovementLocalSearch extends LocalSearchImplementationBase {
 
+    private static final UniformFirstImprovementLocalSearch instance = new UniformFirstImprovementLocalSearch();
+
+    /**
+     *
+     * @return
+     */
+    public static UniformFirstImprovementLocalSearch getInstance() {
+        return instance;
+    }
+
+    private UniformFirstImprovementLocalSearch() {
+    }
+
     @Override
     protected void localSearchLocalInternal(ManipulationGuider guider, ManipulationObserver observer, int[][] ranges, IntegerUniqueRandomGenerator inputUrg, int[] input) {
         for (Integer index : inputUrg) {
