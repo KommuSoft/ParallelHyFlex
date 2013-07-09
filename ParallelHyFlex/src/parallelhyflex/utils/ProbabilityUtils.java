@@ -26,7 +26,7 @@ public final class ProbabilityUtils {
      * @param D
      * @return an Integer in the interval [0,D[
      */
-    public static  int integerFromBenfordDistribution(int D) {
+    public static int integerFromBenfordDistribution(int D) {
         return (int) Math.floor(Math.pow(D + 1, Utils.nextDouble())) - 1;
     }
 
@@ -86,29 +86,47 @@ public final class ProbabilityUtils {
         }
         return index;
     }
-    
+
     /**
      *
      * @param <T>
      * @param set
      * @return
      */
-    public static <T> T randomElement (Collection<T> set) {
+    public static <T> T randomElement(Collection<T> set) {
         int I = Utils.nextInt(set.size());
         Iterator<T> iterator = set.iterator();
-        for(int i = 0; i < I; i++) {
+        for (int i = 0; i < I; i++) {
             iterator.next();
         }
         return iterator.next();
     }
-    
+
     /**
      *
      * @param values
      * @return
      */
-    public static int randomElement (int[] values) {
+    public static int randomElement(int[] values) {
         return values[Utils.nextInt(values.length)];
+    }
+
+    public static int randomIndexFromPDF(List<Double> pdf) {
+        int index = -0x01;
+        double val = Utils.nextDouble();
+        for (Iterator<Double> pi = pdf.iterator(); val >= 0.0d && pi.hasNext(); index++) {
+            val -= pi.next();
+        }
+        return index;
+    }
+
+    public static int randomBoundedIndexFromPDF(List<Double> pdf, int maxn) {
+        int index = -0x01;
+        double val = Utils.nextDouble();
+        for (Iterator<Double> pi = pdf.iterator(); val >= 0.0d && pi.hasNext() && index < maxn; index++) {
+            val -= pi.next();
+        }
+        return Math.max(index, 0x00);
     }
 
     private ProbabilityUtils() {

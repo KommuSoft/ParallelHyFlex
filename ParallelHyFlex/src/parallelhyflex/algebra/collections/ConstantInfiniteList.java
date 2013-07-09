@@ -2,12 +2,14 @@ package parallelhyflex.algebra.collections;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  *
  * @author kommusoft
  */
-public class ConstantInfiniteCollection<T> implements Collection<T> {
+public class ConstantInfiniteList<T> implements List<T> {
 
     private final T data;
 
@@ -15,7 +17,7 @@ public class ConstantInfiniteCollection<T> implements Collection<T> {
      *
      * @param data
      */
-    public ConstantInfiniteCollection(T data) {
+    public ConstantInfiniteList(T data) {
         this.data = data;
     }
 
@@ -62,7 +64,7 @@ public class ConstantInfiniteCollection<T> implements Collection<T> {
      */
     @Override
     public Object[] toArray() {
-        return new Object[] {this.data};
+        return new Object[]{this.data};
     }
 
     /**
@@ -147,5 +149,61 @@ public class ConstantInfiniteCollection<T> implements Collection<T> {
     @Override
     public void clear() {
     }
-    
+
+    @Override
+    public boolean addAll(int i, Collection<? extends T> clctn) {
+        return false;
+    }
+
+    @Override
+    public T get(int i) {
+        return this.data;
+    }
+
+    @Override
+    public T set(int i, T e) {
+        return this.data;
+    }
+
+    @Override
+    public void add(int i, T e) {
+    }
+
+    @Override
+    public T remove(int i) {
+        return this.data;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        if (this.data.equals(o)) {
+            return 0x00;
+        } else {
+            return -0x01;
+        }
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        if (this.data.equals(o)) {
+            return Integer.MAX_VALUE;
+        } else {
+            return -0x01;
+        }
+    }
+
+    @Override
+    public ListIterator<T> listIterator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ListIterator<T> listIterator(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<T> subList(int i, int i1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

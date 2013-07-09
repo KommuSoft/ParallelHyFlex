@@ -1,7 +1,7 @@
 package parallelhyflex.genetic.crossover;
 
 import java.util.Collection;
-import parallelhyflex.algebra.collections.ConstantInfiniteCollection;
+import parallelhyflex.algebra.collections.ConstantInfiniteList;
 import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.genetic.observer.NullManipulationObserver;
 
@@ -39,7 +39,7 @@ public abstract class CrossoverImplementationBase implements CrossoverImplementa
      */
     @Override
     public int[] crossover(int genes, int[]... parents) {
-        return this.crossover(new ConstantInfiniteCollection<>(genes), parents);
+        return this.crossover(new ConstantInfiniteList<>(genes), parents);
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class CrossoverImplementationBase implements CrossoverImplementa
      */
     @Override
     public void crossoverLocal(int genes, int[]... parents) {
-        this.crossoverLocal(new ConstantInfiniteCollection<>(genes), parents);
+        this.crossoverLocal(new ConstantInfiniteList<>(genes), parents);
     }
 
     /**
@@ -68,7 +68,7 @@ public abstract class CrossoverImplementationBase implements CrossoverImplementa
      */
     @Override
     public void crossoverLocal(ManipulationObserver observer, int[]... parents) {
-        this.crossoverLocal(observer, new ConstantInfiniteCollection<>(0x01), parents);
+        this.crossoverLocal(observer, new ConstantInfiniteList<>(0x01), parents);
     }
 
     /**
@@ -79,6 +79,6 @@ public abstract class CrossoverImplementationBase implements CrossoverImplementa
      */
     @Override
     public void crossoverLocal(ManipulationObserver observer, int genes, int[]... parents) {
-        this.crossoverLocal(observer, new ConstantInfiniteCollection<>(genes), parents);
+        this.crossoverLocal(observer, new ConstantInfiniteList<>(genes), parents);
     }
 }

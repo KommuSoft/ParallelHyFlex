@@ -1,7 +1,7 @@
 package parallelhyflex.genetic.crossover;
 
 import java.util.Collection;
-import parallelhyflex.algebra.collections.ConstantInfiniteCollection;
+import parallelhyflex.algebra.collections.ConstantInfiniteList;
 import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.genetic.observer.NullManipulationObserver;
 import parallelhyflex.interference.InterferenceStructure;
@@ -42,7 +42,7 @@ public abstract class InterferenceCrossoverImplementationBase extends CrossoverI
      */
     @Override
     public int[] crossover(InterferenceStructure<Integer> interference, int[]... parents) {
-        return this.crossover(interference, new ConstantInfiniteCollection<>(1), parents);
+        return this.crossover(interference, new ConstantInfiniteList<>(1), parents);
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class InterferenceCrossoverImplementationBase extends CrossoverI
      */
     @Override
     public void crossoverLocal(InterferenceStructure<Integer> interference, ManipulationObserver observer, int[]... parents) {
-        this.crossoverLocal(interference, observer, new ConstantInfiniteCollection<>(0x01), parents);
+        this.crossoverLocal(interference, observer, new ConstantInfiniteList<>(0x01), parents);
     }
 
     /**
