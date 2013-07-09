@@ -81,14 +81,14 @@ public final class FrequencyAssignmentUtils {
             sigmaj = sigma.getA(j, index);
             sj = sectors[j];
             fj = fa[j];
-            delta += CsigDelta(sj, si, fj, fi0, fi1, muj, sigmaj);
+            delta += Csig(sj, si, fj, fi1, muj, sigmaj) - Csig(sj, si, fj, fi0, muj, sigmaj);
         }
         for (int j = index + 0x01; j < n; j++) {
             muj = mu.getA(index, j);
             sigmaj = sigma.getA(index, j);
             sj = sectors[j];
             fj = fa[j];
-            delta += CsigDelta(sj, si, fj, fi0, fi1, muj, sigmaj);
+            delta += Csig(sj, si, fj, fi1, muj, sigmaj) - Csig(sj, si, fj, fi0, muj, sigmaj);
         }
         return delta;
     }
@@ -119,26 +119,6 @@ public final class FrequencyAssignmentUtils {
             } else if (delta == 1) {
                 return Cadj(mu, sigma);
             }
-        }
-        return 0.0d;
-    }
-
-    /**
-     *
-     * @param st
-     * @param su
-     * @param pt
-     * @param pu0
-     * @param pu1
-     * @param mu
-     * @param sigma
-     * @return
-     */
-    public static double CsigDelta(int st, int su, int pt, int pu0, int pu1, double mu, double sigma) {
-        if (st != su && mu > 0) {
-            int delta0 = Math.abs(pt - pu0);
-            int delta1 = Math.abs(pt - pu1);
-            return CotherSectorMuLarge(mu, sigma, delta1) - CotherSectorMuLarge(mu, sigma, delta0);
         }
         return 0.0d;
     }

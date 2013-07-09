@@ -23,8 +23,8 @@ public class FrequencyAssignmentHeuristicC2Test extends ProblemHeuristicCTestBas
      */
     @Test
     @Override
-    public void testApplyHeuristicLocallyConflictingClauses() {
-        super.testApplyHeuristicLocallyConflictingClauses();
+    public void testApplyHeuristicLocallyEvaluationApprox() {
+        super.testApplyHeuristicLocallyEvaluationApprox();
     }
 
     @Override

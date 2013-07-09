@@ -22,8 +22,8 @@ public class ThreeSatHeuristicC1Test extends ProblemHeuristicCTestBase<ThreeSatS
      */
     @Test
     @Override
-    public void testApplyHeuristicLocallyConflictingClauses() {
-        super.testApplyHeuristicLocallyConflictingClauses();
+    public void testApplyHeuristicLocallyEvaluationApprox() {
+        super.testApplyHeuristicLocallyEvaluationApprox();
     }
 
     /**

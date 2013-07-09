@@ -45,7 +45,7 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
     /**
      *
      */
-    public void testApplyHeuristicLocallyConflictingClauses() {
+    public void testApplyHeuristicLocallyEvaluationApprox() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
             this.renewProblem();

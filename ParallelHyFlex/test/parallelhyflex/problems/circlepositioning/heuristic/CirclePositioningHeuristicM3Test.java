@@ -22,8 +22,8 @@ public class CirclePositioningHeuristicM3Test extends ProblemHeuristicMTestBase<
      */
     @Test
     @Override
-    public void testApplyHeuristicLocallyConflictingClauses() {
-        super.testApplyHeuristicLocallyConflictingClauses();
+    public void testApplyHeuristicLocallyEvaluationApprox() {
+        super.testApplyHeuristicLocallyEvaluationApprox();
     }
 
     /**
