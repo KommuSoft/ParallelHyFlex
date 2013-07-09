@@ -68,29 +68,32 @@ public final class FrequencyAssignmentUtils {
      * @return
      */
     public static double calculateInterferenceDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
-        double delta = 0.0d;
-        int n = problem.getnTransceivers();
-        int[] sectors = problem.getPlacement();
-        DoubleUpperMatrix mu = problem.getMeans();
-        DoubleUpperMatrix sigma = problem.getStdevs();
-        int si = sectors[index], sj;
-        int fi0 = fa[index], fj;
-        double muj, sigmaj;
-        for (int j = 0x00; j < index; j++) {
-            muj = mu.getA(j, index);
-            sigmaj = sigma.getA(j, index);
-            sj = sectors[j];
-            fj = fa[j];
-            delta += Csig(sj, si, fj, fi1, muj, sigmaj) - Csig(sj, si, fj, fi0, muj, sigmaj);
+        int fi0 = fa[index];
+        if (fi0 != fi1) {
+            double delta = 0.0d;
+            int n = problem.getnTransceivers();
+            int[] sectors = problem.getPlacement();
+            DoubleUpperMatrix mu = problem.getMeans();
+            DoubleUpperMatrix sigma = problem.getStdevs();
+            int si = sectors[index];
+            for (int j = 0x00; j < index; j++) {
+                double muj = mu.get(j, index);
+                double sigmaj = sigma.get(j, index);
+                int sj = sectors[j];
+                int fj = fa[j];
+                delta += Csig(si, sj, fi1, fj, muj, sigmaj) - Csig(si, sj, fi0, fj, muj, sigmaj);
+            }
+            for (int j = index + 0x01; j < n; j++) {
+                double muj = mu.get(index, j);
+                double sigmaj = sigma.get(index, j);
+                int sj = sectors[j];
+                int fj = fa[j];
+                delta += Csig(sj, si, fj, fi1, muj, sigmaj) - Csig(sj, si, fj, fi0, muj, sigmaj);
+            }
+            return delta;
+        } else {
+            return 0.0d;
         }
-        for (int j = index + 0x01; j < n; j++) {
-            muj = mu.getA(index, j);
-            sigmaj = sigma.getA(index, j);
-            sj = sectors[j];
-            fj = fa[j];
-            delta += Csig(sj, si, fj, fi1, muj, sigmaj) - Csig(sj, si, fj, fi0, muj, sigmaj);
-        }
-        return delta;
     }
 
     public static int Ccon(int st, int su, int pt, int pu) {
@@ -165,21 +168,21 @@ public final class FrequencyAssignmentUtils {
         return eval;
     }
 
-    public static double calculateNConflictsDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
-        double delta = 0x00;
+    public static int calculateNConflictsDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
+        int delta = 0x00;
         int n = problem.getnTransceivers();
         int[] sectors = problem.getPlacement();
-        int si = sectors[index], sj;
-        int fi0 = fa[index], fj;
+        int si = sectors[index];
+        int fi0 = fa[index];
         for (int j = 0x00; j < index; j++) {
-            sj = sectors[j];
-            fj = fa[j];
-            delta += CconDelta(sj, si, fj, fi0, fi1);
+            int sj = sectors[j];
+            int fj = fa[j];
+            delta += Ccon(sj, si, fj, fi1) - Ccon(sj, si, fj, fi0);
         }
         for (int j = index + 0x01; j < n; j++) {
-            sj = sectors[j];
-            fj = fa[j];
-            delta += CconDelta(sj, si, fj, fi0, fi1);
+            int sj = sectors[j];
+            int fj = fa[j];
+            delta += Ccon(sj, si, fj, fi1) - Ccon(sj, si, fj, fi0);
         }
         return delta;
     }

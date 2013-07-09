@@ -27,6 +27,7 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
         if (m <= 0x00) {
             return null;
         }
+        System.out.println(m);
         int keyparent = Utils.nextInt(m);
         int n = parents[0].length;
         for (int i = 1; i < m; i++) {
@@ -100,5 +101,4 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
     public void crossoverLocal(ManipulationObserver observer, Collection<Integer> genes, int[]... parents) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

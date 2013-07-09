@@ -80,8 +80,8 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
         return interference;
     }
 
-    public void interferenceDelta(double dEvaluation) {
-        this.setInterference(this.interference + dEvaluation);
+    public void interferenceDelta(double dInterference) {
+        this.interference += dInterference;
     }
 
     public double calculateInterference(FrequencyAssignmentProblem tsp) {

@@ -1,8 +1,8 @@
 package parallelhyflex.genetic;
 
-import parallelhyflex.genetic.observer.ManipulationObserver;
 import java.util.Collection;
 import java.util.Iterator;
+import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -45,6 +45,7 @@ public class UniformCrossover extends CrossoverImplementationBase {
     @Override
     public void crossoverLocal(ManipulationObserver observer, Collection<Integer> genes, int[]... parents) {
         int m = parents.length;
+        System.out.println(m);
         if (m > 0x00) {
             int n = parents[0].length;
             for (int i = 0x01; i < m; i++) {

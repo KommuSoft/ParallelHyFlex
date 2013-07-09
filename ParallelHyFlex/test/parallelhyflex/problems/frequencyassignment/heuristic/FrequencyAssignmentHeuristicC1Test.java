@@ -18,7 +18,8 @@ import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
 public class FrequencyAssignmentHeuristicC1Test extends ProblemHeuristicCTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
 
     /**
-     * Test of applyHeuristicLocally method, of class FrequencyAssignmentHeuristicM1.
+     * Test of applyHeuristicLocally method, of class
+     * FrequencyAssignmentHeuristicM1.
      */
     @Test
     @Override

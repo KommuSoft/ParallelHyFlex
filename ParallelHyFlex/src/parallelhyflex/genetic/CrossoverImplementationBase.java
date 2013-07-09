@@ -1,13 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.genetic;
 
-import parallelhyflex.genetic.observer.ManipulationObserver;
-import parallelhyflex.genetic.observer.NullManipulationObserver;
 import java.util.Collection;
 import parallelhyflex.algebra.collections.ConstantInfiniteCollection;
+import parallelhyflex.genetic.observer.ManipulationObserver;
+import parallelhyflex.genetic.observer.NullManipulationObserver;
 
 /**
  *
