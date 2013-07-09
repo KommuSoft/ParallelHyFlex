@@ -38,13 +38,13 @@ public class FrequencyAssignmentProblemGenerator implements ProblemReader<Freque
      * @return
      */
     public FrequencyAssignmentProblem generateProblem() {
-        int n = Utils.nextInt(8_000);
-        int m = Utils.nextInt((int) Math.ceil(Math.sqrt(n)));
-        int l = Utils.nextInt((int) Math.ceil(0.5d*Math.sqrt(n)));
+        int n = Math.max(0x02,Utils.nextInt(8_000));
+        int m = Math.max(0x02,Utils.nextInt((int) Math.ceil(Math.sqrt(n))));
+        int l = Math.max(0x02,Utils.nextInt((int) Math.ceil(0.5d*Math.sqrt(n))));
         int[][] freqs = new int[n][];
         int[] placement = new int[n];
         for(int i = 0x00; i < n; i++) {
-            int k = Utils.nextInt((int) Math.ceil(2.0d*Math.sqrt(m)));
+            int k = Math.max(0x01,Utils.nextInt((int) Math.ceil(2.0d*Math.sqrt(m))));
             int[] vals = new int[k];
             for(int j = 0x00; j < k; j++) {
                 vals[j] = Utils.nextInt(l);

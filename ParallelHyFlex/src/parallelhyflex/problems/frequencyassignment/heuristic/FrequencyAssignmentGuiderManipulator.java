@@ -36,11 +36,12 @@ public class FrequencyAssignmentGuiderManipulator extends ProblemSolutionPointer
      */
     @Override
     public void modify(int index, int value) {
-        this.getSolution().evaluationDelta(this.calculateDelta(index, value));
+        this.getSolution().interferenceDelta(this.calculateDelta(index, value));
+        this.getSolution().nConfictsDelta(FrequencyAssignmentUtils.calculateNConflicts(this.getProblem(), this.getSolution().getFrequencyAssignment()));
     }
 
     @Override
     public double calculateDelta(int index, int value) {
-        return FrequencyAssignmentUtils.evaluateDelta(this.getProblem(), this.getSolution().getFrequencyAssignment(), index, value);
+        return FrequencyAssignmentUtils.calculateInterferenceDelta(this.getProblem(), this.getSolution().getFrequencyAssignment(), index, value);
     }
 }

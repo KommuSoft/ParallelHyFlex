@@ -2,6 +2,7 @@ package parallelhyflex.problems.frequencyassignment.solution;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.SolutionGeneratorBase;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.utils.ProbabilityUtils;
@@ -10,13 +11,13 @@ import parallelhyflex.utils.ProbabilityUtils;
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentSolutionGenerator extends SolutionGeneratorBase<FrequencyAssignmentSolution,FrequencyAssignmentProblem> {
-    
+public class FrequencyAssignmentSolutionGenerator extends SolutionGeneratorBase<FrequencyAssignmentSolution, FrequencyAssignmentProblem> {
+
     /**
      *
      * @param problem
      */
-    public FrequencyAssignmentSolutionGenerator (FrequencyAssignmentProblem problem) {
+    public FrequencyAssignmentSolutionGenerator(FrequencyAssignmentProblem problem) {
         super(problem);
     }
 
@@ -29,10 +30,10 @@ public class FrequencyAssignmentSolutionGenerator extends SolutionGeneratorBase<
         int[][] frequencies = this.getProblem().getFrequencies();
         int n = frequencies.length;
         int[] values = new int[n];
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             values[i] = ProbabilityUtils.randomElement(frequencies[i]);
         }
-        return new FrequencyAssignmentSolution(values,this.getProblem());
+        return new FrequencyAssignmentSolution(values, this.getProblem());
     }
 
     /**
@@ -43,8 +44,9 @@ public class FrequencyAssignmentSolutionGenerator extends SolutionGeneratorBase<
      */
     @Override
     public FrequencyAssignmentSolution readAndGenerate(DataInputStream dis) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double inf = dis.readDouble();
+        int nco = dis.readInt();
+        int[] freq = SerialisationUtils.readIntArray(dis);
+        return new FrequencyAssignmentSolution(freq, inf, nco);
     }
-
-    
 }

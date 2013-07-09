@@ -195,7 +195,7 @@ public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
             IntegerInterval ii = fillRandom();
             int high = this.randomDomainValue();
             ii.setHigh(high);
-            Assert.assertEquals(high, (int) ii.low());
+            Assert.assertEquals(high, (int) ii.high());
         }
     }
 

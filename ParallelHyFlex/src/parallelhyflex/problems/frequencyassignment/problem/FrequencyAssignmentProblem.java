@@ -34,6 +34,7 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         this.placement = placement;
         this.interference = new FunctionInterferenceStructure<>(new IntegerArrayIndexGenerator(placement));
         this.setObjectives(new FrequencyAssignmentObjectiveFunction1());
+        this.setSolutionGenerator(new FrequencyAssignmentSolutionGenerator(this));
     }
 
     /**

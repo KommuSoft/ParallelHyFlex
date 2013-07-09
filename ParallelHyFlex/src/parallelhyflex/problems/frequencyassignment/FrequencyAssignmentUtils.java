@@ -13,10 +13,6 @@ public final class FrequencyAssignmentUtils {
     /**
      *
      */
-    public static final double K = 10e9;
-    /**
-     *
-     */
     public static final double Csh = 0.15d;
     /**
      *
@@ -49,7 +45,7 @@ public final class FrequencyAssignmentUtils {
      * @param fa
      * @return
      */
-    public static double evaluate(FrequencyAssignmentProblem problem, int[] fa) {
+    public static double calculateInterference(FrequencyAssignmentProblem problem, int[] fa) {
         double eval = 0.0d;
         int n = problem.getnTransceivers();
         int[] sectors = problem.getPlacement();
@@ -71,7 +67,7 @@ public final class FrequencyAssignmentUtils {
      * @param fi1
      * @return
      */
-    public static double evaluateDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
+    public static double calculateInterferenceDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
         double delta = 0.0d;
         int n = problem.getnTransceivers();
         int[] sectors = problem.getPlacement();
@@ -97,6 +93,14 @@ public final class FrequencyAssignmentUtils {
         return delta;
     }
 
+    public static int Ccon(int st, int su, int pt, int pu) {
+        if (st == su && Math.abs(pt - pu) < 2) {
+            return 0x01;
+        } else {
+            return 0x00;
+        }
+    }
+
     /**
      *
      * @param st
@@ -108,13 +112,8 @@ public final class FrequencyAssignmentUtils {
      * @return
      */
     public static double Csig(int st, int su, int pt, int pu, double mu, double sigma) {
-        boolean equal = st == su;
-        int delta = Math.abs(pt - pu);
-        if (equal) {
-            if (delta < 2) {
-                return K;
-            }
-        } else if (mu > 0) {
+        if (st == su && mu > 0) {
+            int delta = Math.abs(pt - pu);
             if (delta == 0) {
                 return Cco(mu, sigma);
             } else if (delta == 1) {
@@ -136,22 +135,25 @@ public final class FrequencyAssignmentUtils {
      * @return
      */
     public static double CsigDelta(int st, int su, int pt, int pu0, int pu1, double mu, double sigma) {
-        boolean equal = st == su;
-        int delta0 = Math.abs(pt - pu0);
-        int delta1 = Math.abs(pt - pu1);
-        if (equal) {
-            boolean delta02 = delta0 < 2, delta12 = delta1 < 2;
-            if (delta02 ^ delta12) {
-                if (delta02) {
-                    return -K;
-                } else {
-                    return K;
-                }
-            }
-        } else if (mu > 0) {
+        if (st != su && mu > 0) {
+            int delta0 = Math.abs(pt - pu0);
+            int delta1 = Math.abs(pt - pu1);
             return CotherSectorMuLarge(mu, sigma, delta1) - CotherSectorMuLarge(mu, sigma, delta0);
         }
         return 0.0d;
+    }
+
+    public static int CconDelta(int st, int su, int pt, int pu0, int pu1) {
+        boolean delta02 = Math.abs(pt - pu0) < 2;
+        boolean delta12 = Math.abs(pt - pu1) < 2;
+        if (delta02 ^ delta12) {
+            if (delta02) {
+                return -0x01;
+            } else {
+                return 0x01;
+            }
+        }
+        return 0x00;
     }
 
     /**
@@ -169,6 +171,37 @@ public final class FrequencyAssignmentUtils {
         } else {
             return 0.0d;
         }
+    }
+
+    public static int calculateNConflicts(FrequencyAssignmentProblem problem, int[] fa) {
+        int eval = 0x00;
+        int n = problem.getnTransceivers();
+        int[] sectors = problem.getPlacement();
+        for (int i = 0x00; i < n; i++) {
+            for (int j = i + 0x01; j < n; j++) {
+                eval += Ccon(sectors[i], sectors[j], fa[i], fa[j]);
+            }
+        }
+        return eval;
+    }
+
+    public static double calculateNConflictsDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
+        double delta = 0x00;
+        int n = problem.getnTransceivers();
+        int[] sectors = problem.getPlacement();
+        int si = sectors[index], sj;
+        int fi0 = fa[index], fj;
+        for (int j = 0x00; j < index; j++) {
+            sj = sectors[j];
+            fj = fa[j];
+            delta += CconDelta(sj, si, fj, fi0, fi1);
+        }
+        for (int j = index + 0x01; j < n; j++) {
+            sj = sectors[j];
+            fj = fa[j];
+            delta += CconDelta(sj, si, fj, fi0, fi1);
+        }
+        return delta;
     }
 
     private FrequencyAssignmentUtils() {

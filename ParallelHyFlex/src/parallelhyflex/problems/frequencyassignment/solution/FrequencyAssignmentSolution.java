@@ -16,32 +16,35 @@ import parallelhyflex.utils.Utils;
 public class FrequencyAssignmentSolution implements Solution<FrequencyAssignmentSolution> {
 
     private final int[] frequencyAssignment;
-    private double evaluation;
+    private double interference;
+    private int nConflicts;
 
-    public FrequencyAssignmentSolution(double evaluation, int[] frequencyAssignment) {
+    public FrequencyAssignmentSolution(double interference, int nConflicts, int[] frequencyAssignment) {
         this.frequencyAssignment = frequencyAssignment;
-        this.evaluation = evaluation;
+        this.interference = interference;
+        this.nConflicts = nConflicts;
     }
 
     public FrequencyAssignmentSolution(int[] frequencyAssignment, FrequencyAssignmentProblem problem) {
         this.frequencyAssignment = frequencyAssignment;
-        this.evaluation = FrequencyAssignmentUtils.evaluate(problem, frequencyAssignment);
+        this.interference = FrequencyAssignmentUtils.calculateInterference(problem, frequencyAssignment);
+        this.nConflicts = FrequencyAssignmentUtils.calculateNConflicts(problem, frequencyAssignment);
     }
 
-    public FrequencyAssignmentSolution(int[] frequencyAssignment, double evaluation) {
-        this(evaluation, frequencyAssignment);
+    public FrequencyAssignmentSolution(int[] frequencyAssignment, double evaluation, int nConflicts) {
+        this(evaluation, nConflicts, frequencyAssignment);
     }
 
     @Override
     public FrequencyAssignmentSolution clone() {
         int[] data = new int[this.getFrequencyAssignment().length];
         System.arraycopy(this.getFrequencyAssignment(), 0, data, 0, data.length);
-        return new FrequencyAssignmentSolution(data, this.getEvaluation());
+        return new FrequencyAssignmentSolution(data, this.getInterference(), this.getnConflicts());
     }
 
     @Override
     public boolean equalSolution(FrequencyAssignmentSolution other) {
-        return (Utils.isEqualTolerance(this.getEvaluation(), other.getEvaluation()) && Utils.arrayEquality(getFrequencyAssignment(), other.getFrequencyAssignment()));
+        return (this.getnConflicts() == other.getnConflicts() && Utils.isEqualTolerance(this.getInterference(), other.getInterference()) && Utils.arrayEquality(getFrequencyAssignment(), other.getFrequencyAssignment()));
     }
 
     @Override
@@ -51,13 +54,15 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
 
     @Override
     public void read(DataInputStream dis) throws IOException {
-        this.evaluation = dis.readDouble();
+        this.setInterference(dis.readDouble());
+        this.setnConflicts(dis.readInt());
         SerialisationUtils.readIntArray(dis, getFrequencyAssignment());
     }
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
-        dos.writeDouble(this.getEvaluation());
+        dos.writeDouble(this.getInterference());
+        dos.writeInt(this.getnConflicts());
         SerialisationUtils.writeIntArray(dos, getFrequencyAssignment());
     }
 
@@ -71,15 +76,44 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
     /**
      * @return the evaluation
      */
-    public double getEvaluation() {
-        return evaluation;
+    public double getInterference() {
+        return interference;
     }
 
-    public void evaluationDelta(double dEvaluation) {
-        this.evaluation += dEvaluation;
+    public void interferenceDelta(double dEvaluation) {
+        this.setInterference(this.interference + dEvaluation);
     }
 
-    public double calculateEvaluation(FrequencyAssignmentProblem tsp) {
-        return FrequencyAssignmentUtils.evaluate(tsp, this.frequencyAssignment);
+    public double calculateInterference(FrequencyAssignmentProblem tsp) {
+        return FrequencyAssignmentUtils.calculateInterference(tsp, this.frequencyAssignment);
+    }
+    
+    public double calculateNConflicts(FrequencyAssignmentProblem tsp) {
+        return FrequencyAssignmentUtils.calculateNConflicts(tsp, this.frequencyAssignment);
+    }
+
+    /**
+     * @param interference the interference to set
+     */
+    public void setInterference(double interference) {
+        this.interference = interference;
+    }
+
+    /**
+     * @return the nConflicts
+     */
+    public int getnConflicts() {
+        return nConflicts;
+    }
+
+    /**
+     * @param nConflicts the nConflicts to set
+     */
+    public void setnConflicts(int nConflicts) {
+        this.nConflicts = nConflicts;
+    }
+
+    public void nConfictsDelta(int dNc) {
+        this.nConflicts += dNc;
     }
 }

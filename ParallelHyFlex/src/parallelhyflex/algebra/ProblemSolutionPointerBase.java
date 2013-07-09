@@ -27,6 +27,6 @@ public class ProblemSolutionPointerBase<TSolution extends Solution<TSolution>, T
      */
     @Override
     public TSolution getSolution() {
-        return this.getSolution();
+        return this.solution;
     }
 }

@@ -9,11 +9,11 @@ public class TestParameters {
     /**
      *
      */
-    public static final int LOOP_PARAMETER = 2500;
+    public static final int LOOP_PARAMETER = 250;
     /**
      *
      */
-    public static final int LOOP2_PARAMETER = 2500;
+    public static final int LOOP2_PARAMETER = 250;
     /**
      *
      */
@@ -33,7 +33,7 @@ public class TestParameters {
     /**
      *
      */
-    public static final double TOLERANCE = 10e-9;
+    public static final double TOLERANCE = 10e-8;
     
     private TestParameters () {}
     

@@ -11,12 +11,16 @@ public class FrequencyAssignmentObjectiveFunction1 extends ObjectiveFunctionBase
 
     /**
      *
+     */
+    public static final double K = 10e9;
+
+    /**
+     *
      * @param solution
      * @return
      */
     @Override
     public double evaluateSolution(FrequencyAssignmentSolution solution) {
-        return solution.getEvaluation();
+        return solution.getInterference() + K * solution.getnConflicts();
     }
-    
 }
