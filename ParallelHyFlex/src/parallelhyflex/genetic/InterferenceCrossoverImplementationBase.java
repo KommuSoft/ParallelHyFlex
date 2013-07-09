@@ -11,7 +11,7 @@ import parallelhyflex.interference.NoInterferenceStructure;
  *
  * @author kommusoft
  */
-public abstract class InterferenceCrossoverImplementationBase implements InterferenceCrossoverImplementation {
+public abstract class InterferenceCrossoverImplementationBase extends CrossoverImplementationBase implements InterferenceCrossoverImplementation {
 
     /**
      *
@@ -58,38 +58,6 @@ public abstract class InterferenceCrossoverImplementationBase implements Interfe
 
     /**
      *
-     * @param parents
-     * @return
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public int[] crossover(int[]... parents) {
-        return this.crossover(NoInterferenceStructure.getInstance(), parents);
-    }
-
-    /**
-     *
-     * @param parents
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void crossoverLocal(int[]... parents) {
-        this.crossoverLocal(NoInterferenceStructure.getInstance(), parents);
-    }
-
-    /**
-     *
-     * @param observer
-     * @param parents
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void crossoverLocal(ManipulationObserver observer, int[]... parents) {
-        this.crossoverLocal(NoInterferenceStructure.getInstance(), observer, parents);
-    }
-
-    /**
-     *
      * @param observer
      * @param interference
      * @param parents
@@ -121,16 +89,6 @@ public abstract class InterferenceCrossoverImplementationBase implements Interfe
     @SuppressWarnings("unchecked")
     public int[] crossover(Collection<Integer> genes, int[]... parents) {
         return this.crossover(NoInterferenceStructure.getInstance(), genes, parents);
-    }
-
-    /**
-     *
-     * @param genes
-     * @param parents
-     */
-    @Override
-    public void crossoverLocal(Collection<Integer> genes, int[]... parents) {
-        this.crossoverLocal(NullManipulationObserver.getInstance(), genes, parents);
     }
 
     /**

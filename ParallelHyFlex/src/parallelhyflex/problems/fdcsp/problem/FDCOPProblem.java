@@ -12,7 +12,7 @@ import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.fdcsp.problem.expression.Expression;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolution;
 import parallelhyflex.problems.fdcsp.problem.solution.FDCOPSolutionGenerator;
-import parallelhyflex.utils.UniqueRandomGenerator;
+import parallelhyflex.utils.GenericUniqueRandomGenerator;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -26,7 +26,7 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
     private final MutableFiniteIntegerDomain[] variableDomains;
     private final int[] domainSizes;
     private final Expression[] minimalisations;
-    private final UniqueRandomGenerator<Integer> variableSelector;
+    private final GenericUniqueRandomGenerator<Integer> variableSelector;
 
     /**
      *
@@ -36,7 +36,7 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
     public FDCOPProblem(Variable[] variables, Expression[] minimalisations) {
         this.setSolutionGenerator(new FDCOPSolutionGenerator(this));
         //System.out.println(String.format("FDCOPP %s %s", Arrays.toString(variables), Arrays.toString(minimalisations)));
-        variableSelector = new UniqueRandomGenerator(Utils.sequence(0, variables.length));
+        variableSelector = new GenericUniqueRandomGenerator(Utils.sequence(0, variables.length));
         this.variables = variables;
         this.variableDomains = new MutableFiniteIntegerDomain[this.variables.length];
         this.minimalisations = minimalisations;

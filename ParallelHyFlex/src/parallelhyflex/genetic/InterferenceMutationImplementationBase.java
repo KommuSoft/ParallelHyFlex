@@ -9,7 +9,7 @@ import parallelhyflex.interference.NoInterferenceStructure;
  *
  * @author kommusoft
  */
-public abstract class InterferenceMutationImplementationBase implements InterferenceMutationImplementation {
+public abstract class InterferenceMutationImplementationBase extends MutationImplementationBase implements InterferenceMutationImplementation {
 
     /**
      *
@@ -32,17 +32,6 @@ public abstract class InterferenceMutationImplementationBase implements Interfer
     @SuppressWarnings("unchecked")
     public int[] mutate(int[] input, int[][] ranges) {
         return this.mutate(NoInterferenceStructure.getInstance(), input, ranges);
-    }
-
-    /**
-     *
-     * @param input
-     * @param ranges
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void mutateLocal(int[] input, int[][] ranges) {
-        this.mutateLocal(NoInterferenceStructure.getInstance(), input, ranges);
     }
 
     /**

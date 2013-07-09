@@ -2,6 +2,7 @@ package parallelhyflex.problems.frequencyassignment.heuristic;
 
 import parallelhyflex.genetic.observer.ProblemSolutionPointerManipulationGuiderObserverBase;
 import parallelhyflex.problems.frequencyassignment.FrequencyAssignmentUtils;
+import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentObjectiveFunction1;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
 
@@ -48,7 +49,7 @@ public class FrequencyAssignmentGuiderManipulator extends ProblemSolutionPointer
      */
     @Override
     public double calculateDelta(int index, int value) {
-        return calculateInterferenceDelta(index, value);
+        return calculateInterferenceDelta(index, value)+FrequencyAssignmentObjectiveFunction1.K*this.calculateConflictDelta(index, value);
     }
 
     /**
