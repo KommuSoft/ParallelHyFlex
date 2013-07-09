@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -102,5 +103,23 @@ public class DoubleUpperMatrix extends UpperMatrixBase<Double> {
             return false;
         }
         return true;
+    }
+
+    public static DoubleUpperMatrix generateRandomGaussian(int n, double mean, double sigma) {
+        int m = n * (n - 1) / 2;
+        double[] data = new double[m];
+        for (int i = 0x00; i < m; i++) {
+            data[i] = sigma*Utils.nextGaussian()+mean;
+        }
+        return new DoubleUpperMatrix(n,data);
+    }
+    
+    public static DoubleUpperMatrix generateRandomAbsoluteGaussian(int n, double mean, double sigma) {
+        int m = n * (n - 1) / 2;
+        double[] data = new double[m];
+        for (int i = 0x00; i < m; i++) {
+            data[i] = Math.abs(sigma*Utils.nextGaussian()+mean);
+        }
+        return new DoubleUpperMatrix(n,data);
     }
 }

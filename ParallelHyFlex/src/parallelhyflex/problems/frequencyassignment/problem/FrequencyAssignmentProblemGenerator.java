@@ -6,6 +6,7 @@ import parallelhyflex.algebra.DoubleUpperMatrix;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -27,6 +28,22 @@ public class FrequencyAssignmentProblemGenerator implements ProblemReader<Freque
     }
     
     public FrequencyAssignmentProblem generateProblem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int n = Utils.nextInt(8000);
+        int m = Utils.nextInt((int) Math.ceil(Math.sqrt(n)));
+        int l = Utils.nextInt((int) Math.ceil(0.5d*Math.sqrt(n)));
+        int[][] freqs = new int[n][];
+        int[] placement = new int[n];
+        for(int i = 0x00; i < n; i++) {
+            int k = Utils.nextInt((int) Math.ceil(2.0d*Math.sqrt(m)));
+            int[] vals = new int[k];
+            for(int j = 0x00; j < k; j++) {
+                vals[j] = Utils.nextInt(l);
+            }
+            freqs[i] = vals;
+            placement[i] = Utils.nextInt(m);
+        }
+        DoubleUpperMatrix means = DoubleUpperMatrix.generateRandomGaussian(m, 0.0d, 1.0d);
+        DoubleUpperMatrix sigmas = DoubleUpperMatrix.generateRandomAbsoluteGaussian(m, 1.0d, 1.0d);
+        return new FrequencyAssignmentProblem(n,m,freqs,means,sigmas,placement);
     }
 }
