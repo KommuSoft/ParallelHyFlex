@@ -76,17 +76,19 @@ public class DoubleUpperMatrix extends UpperMatrixBase<Double> {
         int n = dis.readInt();
         this.setN(n);
         int size = calculateSize(n);
-        this.data = new double[size];
+        double[] data = new double[size];
         for (int i = 0x00; i < size; i++) {
-            this.data[i] = dis.readDouble();
+            data[i] = dis.readDouble();
         }
+        this.data = data;
     }
 
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeInt(this.getN());
-        for (int i = 0x00; i < this.data.length; i++) {
-            dos.writeDouble(this.data[i]);
+        final double[] data = this.data;
+        for (int i = 0x00; i < data.length; i++) {
+            dos.writeDouble(data[i]);
         }
     }
 

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package parallelhyflex.algebra;
 
 import java.io.IOException;
@@ -20,7 +16,7 @@ public class DoubleUpperMatrixTest extends ReadWriteableBaseTest<DoubleUpperMatr
     @Test
     public void testGetSet() {
         for (int i = 0x00; i < TestParameters.LOOP_PARAMETER; i++) {
-            int n = i + 0x05;
+            int n = i + 0x10;
             double[][] vals = new double[n][n];
             for (int a = 0x00; a < n; a++) {
                 for (int b = 0x00; b < n; b++) {
@@ -31,10 +27,7 @@ public class DoubleUpperMatrixTest extends ReadWriteableBaseTest<DoubleUpperMatr
             DoubleUpperMatrix dum = new DoubleUpperMatrix(n);
             for (int j = 0x00; j < TestParameters.LOOP_PARAMETER; j++) {
                 double val = Utils.nextGaussian();
-                int i0 = Utils.nextInt(n), j0;
-                do {
-                    j0 = Utils.nextInt(n);
-                } while (j0 == i0);
+                int i0 = Utils.nextInt(n), j0 = Utils.ignoreRandomIndex(n, i0);
                 vals[i0][j0] = val;
                 vals[j0][i0] = val;
                 dum.set(i0, j0, val);
@@ -55,6 +48,11 @@ public class DoubleUpperMatrixTest extends ReadWriteableBaseTest<DoubleUpperMatr
     @Override
     public void testSerialisation() throws IOException {
         super.testSerialisation();
+    }
+
+    @Override
+    public DoubleUpperMatrix createInstance() {
+        return new DoubleUpperMatrix(0x00);
     }
 
     /**

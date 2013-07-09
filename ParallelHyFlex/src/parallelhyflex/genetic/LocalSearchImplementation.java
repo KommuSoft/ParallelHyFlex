@@ -1,5 +1,7 @@
 package parallelhyflex.genetic;
 
+import parallelhyflex.genetic.observer.ManipulationGuider;
+import parallelhyflex.genetic.observer.ManipulationGuiderObserver;
 import parallelhyflex.genetic.observer.ManipulationObserver;
 
 /**
@@ -8,9 +10,11 @@ import parallelhyflex.genetic.observer.ManipulationObserver;
  */
 public interface LocalSearchImplementation {
 
-    int[] localSearch(int[] input, int[][] ranges);
+    int[] localSearch(ManipulationGuider guider, int[] input, int[][] ranges);
 
-    void localSearchLocal(int[] input, int[][] ranges);
+    void localSearchLocal(ManipulationGuider guider, int[] input, int[][] ranges);
 
-    void localSearchLocal(ManipulationObserver observer, int[] input, int[][] ranges);
+    void localSearchLocal(ManipulationGuider guider, ManipulationObserver observer, int[] input, int[][] ranges);
+
+    void localSearchLocal(ManipulationGuiderObserver guiderObserver, int[] input, int[][] ranges);
 }

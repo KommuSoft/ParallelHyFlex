@@ -17,7 +17,7 @@ public class FrequencyAssignmentHeuristicM1 extends MutationHeuristicBase<Freque
 
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from) {
-        InferenceNeighbourhoodBasedMutation.getInstance().mutateLocal(new FrequencyAssignmentManipulator(this.getProblem(),from),this.getProblem().getInterferenceStructure(), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
+        InferenceNeighbourhoodBasedMutation.getInstance().mutateLocal(new FrequencyAssignmentGuiderManipulator(this.getProblem(),from),this.getProblem().getInterferenceStructure(), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
     }
     
 }
