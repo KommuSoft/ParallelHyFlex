@@ -34,13 +34,13 @@ public class UniformBestImprovementLocalSearch extends LocalSearchImplementation
             for (int val : values) {
                 if (val != orig) {
                     double delta = guider.calculateDelta(index, val);
-                    if (delta > bestdelta) {
+                    if (delta < bestdelta) {
                         bestdelta = delta;
                         bestval = val;
                     }
                 }
             }
-            if (bestval > 0.0d) {
+            if (bestval < 0.0d) {
                 observer.modify(index, bestval);
                 input[index] = bestval;
                 inputUrg.reset();

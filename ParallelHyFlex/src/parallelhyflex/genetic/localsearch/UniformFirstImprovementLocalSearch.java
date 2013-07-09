@@ -30,7 +30,7 @@ public class UniformFirstImprovementLocalSearch extends LocalSearchImplementatio
             int I = values.length;
             int orig = input[index];
             for (int val : values) {
-                if (val != orig && guider.calculateDelta(index, val) > 0x00) {
+                if (val != orig && guider.calculateDelta(index, val) < 0.0d) {
                     observer.modify(index, val);
                     input[index] = val;
                     inputUrg.reset();
