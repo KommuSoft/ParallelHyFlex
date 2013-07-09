@@ -36,7 +36,6 @@ public class FrequencyAssignmentGuiderManipulator extends ProblemSolutionPointer
      */
     @Override
     public void modify(int index, int value) {
-        System.out.println(String.format("modification called with %s, %s", index, value));
         this.getSolution().interferenceDelta(calculateInterferenceDelta(index, value));
         this.getSolution().nConfictsDelta(calculateConflictDelta(index, value));
     }

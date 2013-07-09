@@ -2,14 +2,21 @@ package parallelhyflex.problems.frequencyassignment.problem;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 import parallelhyflex.algebra.DoubleUpperMatrix;
 import parallelhyflex.algebra.generators.IntegerArrayIndexGenerator;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.interference.FunctionInterferenceStructure;
 import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.problemdependent.problem.ProblemBase;
+import parallelhyflex.problems.frequencyassignment.heuristic.FrequencyAssignmentHeuristicC1;
+import parallelhyflex.problems.frequencyassignment.heuristic.FrequencyAssignmentHeuristicC2;
+import parallelhyflex.problems.frequencyassignment.heuristic.FrequencyAssignmentHeuristicM1;
+import parallelhyflex.problems.frequencyassignment.heuristic.FrequencyAssignmentHeuristicM2;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolutionGenerator;
+import parallelhyflex.utils.Utils;
 
 /**
  *
@@ -35,6 +42,29 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         this.interference = new FunctionInterferenceStructure<>(new IntegerArrayIndexGenerator(placement));
         this.setObjectives(new FrequencyAssignmentObjectiveFunction1());
         this.setSolutionGenerator(new FrequencyAssignmentSolutionGenerator(this));
+        this.setHeuristics(new FrequencyAssignmentHeuristicC1(this), new FrequencyAssignmentHeuristicC2(this), new FrequencyAssignmentHeuristicM1(this), new FrequencyAssignmentHeuristicM2(this));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.nTransceivers;
+        hash = 37 * hash + this.nSectors;
+        hash = 37 * hash + Arrays.deepHashCode(this.frequencies);
+        hash = 37 * hash + Objects.hashCode(this.means);
+        hash = 37 * hash + Objects.hashCode(this.stdevs);
+        hash = 37 * hash + Arrays.hashCode(this.placement);
+        hash = 37 * hash + Objects.hashCode(this.interference);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof FrequencyAssignmentProblem)) {
+            return false;
+        }
+        FrequencyAssignmentProblem fap = (FrequencyAssignmentProblem) obj;
+        return (this.nSectors == fap.nSectors && this.nTransceivers == fap.nTransceivers && this.means.equals(fap.means) && this.stdevs.equals(fap.stdevs) && Utils.arrayEquality(placement, fap.placement) && Utils.arrayEquality(this.frequencies, fap.frequencies));
     }
 
     /**
@@ -100,5 +130,10 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
      */
     public InterferenceStructure<Integer> getInterferenceStructure() {
         return this.interference;
+    }
+
+    @Override
+    public String toString() {
+        return "FrequencyAssignmentProblem{" + "nTransceivers=" + nTransceivers + ", nSectors=" + nSectors + ", frequencies=" + frequencies + ", means=\n" + means + ", stdevs=\n" + stdevs + ", placement=" + placement + ", interference=" + interference + '}';
     }
 }

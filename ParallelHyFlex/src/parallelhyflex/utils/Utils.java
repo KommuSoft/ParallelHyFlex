@@ -29,30 +29,29 @@ public final class Utils {
      *
      */
     public static final double InvSqrt2 = Math.sqrt(0.5d);
-    
+
     /**
      *
      * @param index
      * @param ignore
      * @return
      */
-    public static int ignoreIndex (int index, int ignore) {
-        if(index < ignore) {
+    public static int ignoreIndex(int index, int ignore) {
+        if (index < ignore) {
             return index;
-        }
-        else {
-            return index+0x01;
+        } else {
+            return index + 0x01;
         }
     }
-    
+
     /**
      *
      * @param n
      * @param ignore
      * @return
      */
-    public static int ignoreRandomIndex (int n, int ignore) {
-        return ignoreIndex(nextInt(n-1),ignore);
+    public static int ignoreRandomIndex(int n, int ignore) {
+        return ignoreIndex(nextInt(n - 1), ignore);
     }
 
     /**
@@ -243,6 +242,18 @@ public final class Utils {
         }
         for (int i = 0; i < a.length; i++) {
             if (a[i] != b[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean arrayEquality(int[][] a, int[][] b) {
+        if (a.length != b.length) {
+            return false;
+        }
+        for (int i = 0; i < a.length; i++) {
+            if (!Utils.arrayEquality(a[i], b[i])) {
                 return false;
             }
         }

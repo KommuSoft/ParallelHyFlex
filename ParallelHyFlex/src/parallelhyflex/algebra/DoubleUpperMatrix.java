@@ -16,20 +16,19 @@ public class DoubleUpperMatrix extends UpperMatrixBase<Double> {
         int m = n * (n - 1) / 2;
         double[] data = new double[m];
         for (int i = 0x00; i < m; i++) {
-            data[i] = sigma*Utils.nextGaussian()+mean;
+            data[i] = sigma * Utils.nextGaussian() + mean;
         }
-        return new DoubleUpperMatrix(n,data);
+        return new DoubleUpperMatrix(n, data);
     }
-    
+
     public static DoubleUpperMatrix generateRandomAbsoluteGaussian(int n, double mean, double sigma) {
         int m = n * (n - 1) / 2;
         double[] data = new double[m];
         for (int i = 0x00; i < m; i++) {
-            data[i] = Math.abs(sigma*Utils.nextGaussian()+mean);
+            data[i] = Math.abs(sigma * Utils.nextGaussian() + mean);
         }
-        return new DoubleUpperMatrix(n,data);
+        return new DoubleUpperMatrix(n, data);
     }
-
     private double[] data;
 
     public DoubleUpperMatrix(int n, double... data) {
@@ -123,5 +122,22 @@ public class DoubleUpperMatrix extends UpperMatrixBase<Double> {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        int n = this.getN();
+        StringBuilder sb = new StringBuilder();
+        int k = 0x00;
+        for (int i = 0x00; i < n; i++) {
+            for(int j = 0x00; j <= i; j++) {
+                sb.append("\t");
+            }
+            for (int j = i+0x01; j < n; j++) {
+                sb.append(String.format("%.2f\t", this.data[k++]));
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

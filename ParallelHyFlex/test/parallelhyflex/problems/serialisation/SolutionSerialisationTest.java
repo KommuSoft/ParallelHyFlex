@@ -39,7 +39,7 @@ public abstract class SolutionSerialisationTest<TSG extends SolutionGenerator<TS
                 }
                 DataInputStream dis = new DataInputStream(bais);
                 TS tss2 = this.getTsg().readAndGenerate(dis);
-                Assert.assertEquals(this.getTss(), tss2);
+                Assert.assertTrue(this.getTss().equalSolution(tss2));
                 dis.close();
                 bais.close();
             }
