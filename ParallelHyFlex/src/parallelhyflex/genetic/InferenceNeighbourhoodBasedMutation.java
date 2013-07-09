@@ -167,4 +167,5 @@ public class InferenceNeighbourhoodBasedMutation extends InterferenceMutationImp
             }
         }
     }
+    
 }

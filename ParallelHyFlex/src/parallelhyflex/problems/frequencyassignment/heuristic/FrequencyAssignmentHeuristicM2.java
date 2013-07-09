@@ -1,5 +1,6 @@
 package parallelhyflex.problems.frequencyassignment.heuristic;
 
+import parallelhyflex.genetic.UniformMutation;
 import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
@@ -8,7 +9,7 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentHeuristicM2 extends MutationHeuristicBase<FrequencyAssignmentSolution,FrequencyAssignmentProblem> {
+public class FrequencyAssignmentHeuristicM2 extends MutationHeuristicBase<FrequencyAssignmentSolution, FrequencyAssignmentProblem> {
 
     /**
      *
@@ -17,14 +18,13 @@ public class FrequencyAssignmentHeuristicM2 extends MutationHeuristicBase<Freque
     public FrequencyAssignmentHeuristicM2(FrequencyAssignmentProblem problem) {
         super(problem);
     }
-    
+
     /**
      *
      * @param from
      */
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from) {
-        //TODO: recalc evaluation
+        UniformMutation.getInstance().mutateLocal(new FrequencyAssignmentManipulator(this.getProblem(), from), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
     }
-    
 }

@@ -5,6 +5,15 @@ import parallelhyflex.utils.Utils;
 
 public class UniformMutation extends MutationImplementationBase {
 
+    private static final UniformMutation instance = new UniformMutation();
+
+    public static UniformMutation getInstance() {
+        return instance;
+    }
+
+    private UniformMutation() {
+    }
+
     @Override
     public int[] mutate(int[] input, int[][] ranges) {
         int n = input.length;

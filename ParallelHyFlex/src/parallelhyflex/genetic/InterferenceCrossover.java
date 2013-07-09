@@ -84,4 +84,20 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
             }
         }
     }
+
+    @Override
+    public int[] crossover(Collection<Integer> genes, int[]... parents) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void crossoverLocal(Collection<Integer> genes, int[]... parents) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void crossoverLocal(ManipulationObserver observer, Collection<Integer> genes, int[]... parents) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
