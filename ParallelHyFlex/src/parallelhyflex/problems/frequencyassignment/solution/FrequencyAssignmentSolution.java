@@ -6,6 +6,7 @@ import java.io.IOException;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problems.frequencyassignment.FrequencyAssignmentUtils;
+import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentObjectiveFunction1;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.utils.Utils;
 
@@ -131,7 +132,7 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
     public double calculateInterference(FrequencyAssignmentProblem tsp) {
         return FrequencyAssignmentUtils.calculateInterference(tsp, this.frequencyAssignment);
     }
-    
+
     /**
      *
      * @param tsp
@@ -168,5 +169,9 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
      */
     public void nConfictsDelta(int dNc) {
         this.nConflicts += dNc;
+    }
+
+    public double getEvaluation() {
+        return this.interference + this.nConflicts * FrequencyAssignmentObjectiveFunction1.K;
     }
 }

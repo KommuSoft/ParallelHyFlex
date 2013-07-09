@@ -15,7 +15,7 @@ import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentHeuristicC2Test extends ProblemHeuristicCTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
+public class FrequencyAssignmentHeuristicC3Test extends ProblemHeuristicCTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
 
     /**
      * Test of applyHeuristicLocally method, of class
