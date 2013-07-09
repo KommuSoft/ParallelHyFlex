@@ -6,7 +6,7 @@ import java.util.Iterator;
  *
  * @author kommusoft
  */
-interface UniqueRandomGenerator<T> extends Iterator<T> {
+interface UniqueRandomGenerator<T> extends Iterator<T>, Iterable<T> {
 
     /**
      *

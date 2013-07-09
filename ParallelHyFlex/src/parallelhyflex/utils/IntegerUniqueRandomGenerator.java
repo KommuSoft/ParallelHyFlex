@@ -1,13 +1,19 @@
 package parallelhyflex.utils;
 
-public class IntegerUniqueRandomGenerator implements UniqueRandomGenerator<Integer> {
+import java.util.Iterator;
+
+public class IntegerUniqueRandomGenerator extends UniqueRandomGeneratorBase<Integer> {
 
     private int[] values;
     private int ptr = 0x00;
 
+    public IntegerUniqueRandomGenerator(int n) {
+        this(0x00, n);
+    }
+
     public IntegerUniqueRandomGenerator(int from, int to) {
-        this.values = new int[to - from + 1];
-        for (int i = from, j = 0x00; i <= to; i++, j++) {
+        this.values = new int[to - from];
+        for (int i = from, j = 0x00; i < to; i++, j++) {
             this.values[j] = i;
         }
     }

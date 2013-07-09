@@ -6,7 +6,7 @@ import java.util.ArrayList;
  *
  * @author kommusoft
  */
-public class GenericUniqueRandomGenerator<T> implements UniqueRandomGenerator<T> {
+public class GenericUniqueRandomGenerator<T> extends UniqueRandomGeneratorBase<T> {
 
     private Object[] values;
     private int ptr = 0x00;
