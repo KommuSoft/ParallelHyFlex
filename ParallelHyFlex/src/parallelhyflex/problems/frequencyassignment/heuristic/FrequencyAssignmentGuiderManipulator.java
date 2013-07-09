@@ -40,15 +40,33 @@ public class FrequencyAssignmentGuiderManipulator extends ProblemSolutionPointer
         this.getSolution().nConfictsDelta(calculateConflictDelta(index, value));
     }
 
+    /**
+     *
+     * @param index
+     * @param value
+     * @return
+     */
     @Override
     public double calculateDelta(int index, int value) {
         return calculateInterferenceDelta(index, value);
     }
 
+    /**
+     *
+     * @param index
+     * @param value
+     * @return
+     */
     public double calculateInterferenceDelta(int index, int value) {
         return FrequencyAssignmentUtils.calculateInterferenceDelta(this.getProblem(), this.getSolution().getFrequencyAssignment(), index, value);
     }
 
+    /**
+     *
+     * @param index
+     * @param value
+     * @return
+     */
     public int calculateConflictDelta(int index, int value) {
         return FrequencyAssignmentUtils.calculateNConflictsDelta(this.getProblem(), this.getSolution().getFrequencyAssignment(), index, value);
     }

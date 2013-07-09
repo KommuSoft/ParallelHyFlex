@@ -16,6 +16,11 @@ public class GenericUpperMatrix<T> extends UpperMatrixBase<T> {
     
     private Object[] data;
     
+    /**
+     *
+     * @param n
+     * @param data
+     */
     public GenericUpperMatrix(int n, T... data) {
         super(n);
         int size = calculateSize(n);
@@ -23,6 +28,12 @@ public class GenericUpperMatrix<T> extends UpperMatrixBase<T> {
         System.arraycopy(data, 0, this.data, 0, Math.min(size, data.length));
     }
     
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     @Override
     @SuppressWarnings("unchecked")
     public T get(int i, int j) {

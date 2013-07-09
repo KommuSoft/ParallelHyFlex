@@ -1,7 +1,7 @@
 package parallelhyflex.genetic;
 
-import parallelhyflex.genetic.observer.ManipulationObserver;
 import java.util.ArrayList;
+import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.interference.InterferenceStructure;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
@@ -14,6 +14,10 @@ public class InferenceNeighbourhoodBasedMutation extends InterferenceMutationImp
 
     private static final InferenceNeighbourhoodBasedMutation instance = new InferenceNeighbourhoodBasedMutation();
 
+    /**
+     *
+     * @return
+     */
     public static InferenceNeighbourhoodBasedMutation getInstance() {
         return instance;
     }
@@ -23,11 +27,27 @@ public class InferenceNeighbourhoodBasedMutation extends InterferenceMutationImp
     private InferenceNeighbourhoodBasedMutation() {
     }
 
+    /**
+     *
+     * @param interference
+     * @param input
+     * @param ranges
+     * @return
+     */
     @Override
     public int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges) {
         return this.mutate(interference, input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
     }
 
+    /**
+     *
+     * @param interference
+     * @param input
+     * @param ranges
+     * @param pm
+     * @param repeat
+     * @return
+     */
     public int[] mutate(InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         int[] sender = new int[n], receiver = new int[n], temp;

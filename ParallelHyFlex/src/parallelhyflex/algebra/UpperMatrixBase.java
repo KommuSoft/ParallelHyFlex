@@ -8,10 +8,20 @@ public abstract class UpperMatrixBase<T> implements UpperMatrix<T> {
 
     private int n;
     
+    /**
+     *
+     * @param n
+     */
     public UpperMatrixBase (int n) {
         this.n = n;
     }
     
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     @Override
     public T getA (int i, int j) {
         return this.get(i, j);

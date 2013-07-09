@@ -25,16 +25,31 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
         this.nConflicts = nConflicts;
     }
 
+    /**
+     *
+     * @param frequencyAssignment
+     * @param problem
+     */
     public FrequencyAssignmentSolution(int[] frequencyAssignment, FrequencyAssignmentProblem problem) {
         this.frequencyAssignment = frequencyAssignment;
         this.interference = FrequencyAssignmentUtils.calculateInterference(problem, frequencyAssignment);
         this.nConflicts = FrequencyAssignmentUtils.calculateNConflicts(problem, frequencyAssignment);
     }
 
+    /**
+     *
+     * @param frequencyAssignment
+     * @param evaluation
+     * @param nConflicts
+     */
     public FrequencyAssignmentSolution(int[] frequencyAssignment, double evaluation, int nConflicts) {
         this(evaluation, nConflicts, frequencyAssignment);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public FrequencyAssignmentSolution clone() {
         int[] data = new int[this.getFrequencyAssignment().length];
@@ -42,16 +57,31 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
         return new FrequencyAssignmentSolution(data, this.getInterference(), this.getnConflicts());
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean equalSolution(FrequencyAssignmentSolution other) {
         return (this.getnConflicts() == other.getnConflicts() && Utils.isEqualTolerance(this.getInterference(), other.getInterference()) && Utils.arrayEquality(getFrequencyAssignment(), other.getFrequencyAssignment()));
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean hasFastDifferenceWith(FrequencyAssignmentSolution other) {
         return false;
     }
 
+    /**
+     *
+     * @param dis
+     * @throws IOException
+     */
     @Override
     public void read(DataInputStream dis) throws IOException {
         this.setInterference(dis.readDouble());
@@ -59,6 +89,11 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
         SerialisationUtils.readIntArray(dis, getFrequencyAssignment());
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeDouble(this.getInterference());
@@ -80,14 +115,28 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
         return interference;
     }
 
+    /**
+     *
+     * @param dInterference
+     */
     public void interferenceDelta(double dInterference) {
         this.interference += dInterference;
     }
 
+    /**
+     *
+     * @param tsp
+     * @return
+     */
     public double calculateInterference(FrequencyAssignmentProblem tsp) {
         return FrequencyAssignmentUtils.calculateInterference(tsp, this.frequencyAssignment);
     }
     
+    /**
+     *
+     * @param tsp
+     * @return
+     */
     public double calculateNConflicts(FrequencyAssignmentProblem tsp) {
         return FrequencyAssignmentUtils.calculateNConflicts(tsp, this.frequencyAssignment);
     }
@@ -113,6 +162,10 @@ public class FrequencyAssignmentSolution implements Solution<FrequencyAssignment
         this.nConflicts = nConflicts;
     }
 
+    /**
+     *
+     * @param dNc
+     */
     public void nConfictsDelta(int dNc) {
         this.nConflicts += dNc;
     }

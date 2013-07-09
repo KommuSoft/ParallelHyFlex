@@ -13,6 +13,9 @@ import parallelhyflex.utils.Utils;
  */
 public class DoubleUpperMatrixTest extends ReadWriteableBaseTest<DoubleUpperMatrix> {
 
+    /**
+     *
+     */
     @Test
     public void testGetSet() {
         for (int i = 0x00; i < TestParameters.LOOP_PARAMETER; i++) {

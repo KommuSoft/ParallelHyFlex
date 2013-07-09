@@ -1,7 +1,7 @@
 package parallelhyflex.genetic;
 
-import parallelhyflex.genetic.observer.ManipulationObserver;
 import java.util.ArrayList;
+import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
@@ -13,6 +13,10 @@ public class NotEqualNeighbourhoodBasedMutation extends MutationImplementationBa
 
     private static final NotEqualNeighbourhoodBasedMutation instance = new NotEqualNeighbourhoodBasedMutation();
 
+    /**
+     *
+     * @return
+     */
     public static NotEqualNeighbourhoodBasedMutation getInstance() {
         return instance;
     }
@@ -22,11 +26,25 @@ public class NotEqualNeighbourhoodBasedMutation extends MutationImplementationBa
     private NotEqualNeighbourhoodBasedMutation() {
     }
 
+    /**
+     *
+     * @param input
+     * @param ranges
+     * @return
+     */
     @Override
     public int[] mutate(int[] input, int[][] ranges) {
         return this.mutate(input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
     }
 
+    /**
+     *
+     * @param input
+     * @param ranges
+     * @param pm
+     * @param repeat
+     * @return
+     */
     public int[] mutate(int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         int[] sender = new int[n], receiver = new int[n], temp;

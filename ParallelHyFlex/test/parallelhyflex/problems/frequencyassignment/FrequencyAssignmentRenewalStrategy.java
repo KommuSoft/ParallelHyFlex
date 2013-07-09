@@ -13,6 +13,10 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  */
 public class FrequencyAssignmentRenewalStrategy implements TestRenewalStrategy<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> {
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewProblem(ProblemTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> testbase) {
         testbase.setTsp(testbase.getTspg().generateProblem());

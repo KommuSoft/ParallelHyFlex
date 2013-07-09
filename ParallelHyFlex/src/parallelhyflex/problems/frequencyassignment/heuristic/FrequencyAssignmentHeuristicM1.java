@@ -11,6 +11,10 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  */
 public class FrequencyAssignmentHeuristicM1 extends MutationHeuristicBase<FrequencyAssignmentSolution,FrequencyAssignmentProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     public FrequencyAssignmentHeuristicM1 (FrequencyAssignmentProblem problem) {
         super(problem);
     }

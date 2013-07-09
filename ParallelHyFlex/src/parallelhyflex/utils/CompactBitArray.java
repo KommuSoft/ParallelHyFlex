@@ -18,6 +18,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
      */
     public static final long BLOCK_MASK = 0xFFFF_FFFF_FFFF_FFBFL;
 
+    /**
+     *
+     * @param n
+     * @return
+     */
     public static CompactBitArray randomInstance(int n) {
         CompactBitArray cba = new CompactBitArray(n);
         for (int i = cba.values.length - 1; i >= 0; i--) {
@@ -27,6 +32,12 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return cba;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     public static CompactBitArray fromDataInputStream(DataInputStream dis) throws IOException {
         int n = dis.readInt();
         int j = (n + 63) >> 6;
@@ -42,21 +53,38 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
     public final long[] values;
     private int n;
 
+    /**
+     *
+     * @param n
+     */
     public CompactBitArray(int n) {
         this.n = n;
         this.values = new long[(n + 63) >> 6];
     }
 
+    /**
+     *
+     * @param values
+     */
     public CompactBitArray(long[] values) {
         this.n = 64 * values.length;
         this.values = values;
     }
 
+    /**
+     *
+     * @param n
+     * @param values
+     */
     public CompactBitArray(int n, long[] values) {
         this.n = n;
         this.values = values;
     }
 
+    /**
+     *
+     * @param values
+     */
     public CompactBitArray(boolean[] values) {
         this(values.length);
         for (int i = 0, j = 0; i < values.length; j++) {
@@ -72,6 +100,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public boolean get(int index) {
         int j = index >> 6;
@@ -80,6 +113,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return (values[j] & mask) != 0;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public long getBit(int index) {
         int j = index >> 6;
@@ -87,6 +125,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return (values[j] >> index) & 1;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public long getBit(long index) {
         long j = index >> 6;
@@ -94,6 +137,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return (values[(int) j] >> index) & 1;
     }
 
+    /**
+     *
+     * @param constraint
+     * @return
+     */
     @Override
     public boolean satisfiesClause(long constraint) {
         return (getBit((constraint >> 40) & 0xF_FFFF) == ((constraint >> 62) & 1)
@@ -101,6 +149,12 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
                 || getBit(constraint & 0x0F_FFFF) == ((constraint >> 60) & 1));
     }
 
+    /**
+     *
+     * @param constraint
+     * @param nonIndices
+     * @return
+     */
     public boolean satisfiesClauseWithout(long constraint, Collection<Integer> nonIndices) {
         int index1 = (int) (constraint >> 40) & 0xF_FFFF, index2 = (int) (constraint >> 20) & 0xF_FFFF, index3 = (int) (constraint & 0x0F_FFFF);
         return ((!nonIndices.contains(index1) && getBit(index1) == ((constraint >> 62) & 1))
@@ -108,6 +162,12 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
                 || (!nonIndices.contains(index3) && getBit(index3) == ((constraint >> 60) & 1)));
     }
 
+    /**
+     *
+     * @param constraint
+     * @param blockindex
+     * @return
+     */
     public boolean satisfiesClauseWithoutBlock(long constraint, int blockindex) {
         long index1 = (constraint >> 40) & 0xF_FFFF, index2 = (constraint >> 20) & 0xF_FFFF, index3 = constraint & 0x0F_FFFF;
         long pattern = (long) blockindex << 6;
@@ -116,6 +176,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
                 || ((index3 & BLOCK_MASK) != pattern && getBit(index3) == ((constraint >> 60) & 1)));
     }
 
+    /**
+     *
+     * @param constraints
+     * @return
+     */
     public int getNumberOfFailingClauses(long[] constraints) {
         int nfail = 0;
         for (long constraint : constraints) {
@@ -126,6 +191,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return nfail;
     }
 
+    /**
+     *
+     * @param index
+     */
     @Override
     public void swap(int index) {
         int j = index >> 6;
@@ -134,6 +203,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         values[j] ^= mask;
     }
 
+    /**
+     *
+     * @param fromIndex
+     * @param toIndex
+     */
     @Override
     public void swapRange(int fromIndex, int toIndex) {
         int fj = fromIndex >> 6, tj = toIndex >> 6;
@@ -152,6 +226,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param fromIndex
+     * @param toIndex
+     */
     @Override
     public void setRange(int fromIndex, int toIndex) {
         int fj = fromIndex >> 6, tj = toIndex >> 6;
@@ -173,6 +252,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param fromIndex
+     * @param toIndex
+     */
     @Override
     public void resetRange(int fromIndex, int toIndex) {
         int fj = fromIndex >> 6, tj = toIndex >> 6;
@@ -192,6 +276,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @param value
+     */
     @Override
     public void set(int index, boolean value) {
         int j = index >> 6;
@@ -203,6 +292,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof CompactBitArray) {
@@ -220,6 +314,9 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return false;
     }
 
+    /**
+     *
+     */
     @Override
     public void clearTail() {
         long tailmask = 64 + this.n - (this.values.length << 6);
@@ -228,6 +325,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         this.values[this.values.length - 1] &= tailmask;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 5;
@@ -235,6 +336,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return hash;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(0x41 * this.values.length - 0x01);
@@ -244,6 +349,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public CompactBitArray clone() {
         long[] valc = new long[this.values.length];
@@ -251,6 +360,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return new CompactBitArray(this.n, valc);
     }
 
+    /**
+     *
+     * @param os
+     * @throws IOException
+     */
     @Override
     public void writeSolution(DataOutputStream os) throws IOException {
         os.writeInt(this.n);
@@ -259,6 +373,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param is
+     * @throws IOException
+     */
     @Override
     public void readSolution(DataInputStream is) throws IOException {
         this.n = is.readInt();
@@ -267,16 +386,30 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getLength() {
         return this.n;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getBlockLength() {
         return this.values.length;
     }
 
+    /**
+     *
+     * @param constraint
+     * @param index
+     * @return
+     */
     @Override
     public boolean willSwap(long constraint, int index) {
         long index1 = (constraint >> 40) & 0xF_FFFF;
@@ -287,6 +420,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
                 && (index3 == index || getBit(index3) != ((constraint >> 60) & 1)));
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public int swapGetBit(int index) {
         int j = index >> 6;
@@ -296,12 +434,21 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return (int) ((values[j] >> index) & 0x01);
     }
 
+    /**
+     *
+     * @param indices
+     * @param val
+     */
     public void setAll(int[] indices, int val) {
         for (int i = 0; i < indices.length; i++) {
             this.set(indices[i], ((val >> i) & 0x01) != 0x00);
         }
     }
 
+    /**
+     *
+     * @param cba
+     */
     public void andWith(CompactBitArray cba) {
         long[] valb = cba.values;
         for (int i = 0; i < values.length; i++) {
@@ -309,6 +456,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param cba
+     */
     public void orWith(CompactBitArray cba) {
         long[] valb = cba.values;
         for (int i = 0; i < values.length; i++) {
@@ -316,6 +467,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param cba
+     */
     public void xorWith(CompactBitArray cba) {
         long[] valb = cba.values;
         for (int i = 0; i < values.length; i++) {
@@ -323,6 +478,9 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     */
     public void swapFull() {
         for (int i = 0; i < values.length; i++) {
             values[i] = ~values[i];
@@ -330,6 +488,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         this.clearTail();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         int size = 0x00;
@@ -341,6 +503,10 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return size;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isEmpty() {
         long[] vals = this.values;
@@ -353,6 +519,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return true;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean contains(Object o) {
         if (o instanceof Integer) {
@@ -362,11 +533,19 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Integer> iterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Object[] toArray() {
         int size = this.size();

@@ -96,6 +96,14 @@ public final class FrequencyAssignmentUtils {
         }
     }
 
+    /**
+     *
+     * @param st
+     * @param su
+     * @param pt
+     * @param pu
+     * @return
+     */
     public static int Ccon(int st, int su, int pt, int pu) {
         if (st == su && Math.abs(pt - pu) < 2) {
             return 0x01;
@@ -126,6 +134,15 @@ public final class FrequencyAssignmentUtils {
         return 0.0d;
     }
 
+    /**
+     *
+     * @param st
+     * @param su
+     * @param pt
+     * @param pu0
+     * @param pu1
+     * @return
+     */
     public static int CconDelta(int st, int su, int pt, int pu0, int pu1) {
         boolean delta02 = Math.abs(pt - pu0) < 2;
         boolean delta12 = Math.abs(pt - pu1) < 2;
@@ -156,6 +173,12 @@ public final class FrequencyAssignmentUtils {
         }
     }
 
+    /**
+     *
+     * @param problem
+     * @param fa
+     * @return
+     */
     public static int calculateNConflicts(FrequencyAssignmentProblem problem, int[] fa) {
         int eval = 0x00;
         int n = problem.getnTransceivers();
@@ -168,6 +191,14 @@ public final class FrequencyAssignmentUtils {
         return eval;
     }
 
+    /**
+     *
+     * @param problem
+     * @param fa
+     * @param index
+     * @param fi1
+     * @return
+     */
     public static int calculateNConflictsDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
         int delta = 0x00;
         int n = problem.getnTransceivers();
