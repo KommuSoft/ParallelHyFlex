@@ -15,15 +15,6 @@ public interface LocalSearchImplementation {
      * @param guider
      * @param input
      * @param ranges
-     * @return
-     */
-    int[] localSearch(ManipulationGuider guider, int[] input, int[][] ranges);
-
-    /**
-     *
-     * @param guider
-     * @param input
-     * @param ranges
      */
     void localSearchLocal(ManipulationGuider guider, int[] input, int[][] ranges);
 

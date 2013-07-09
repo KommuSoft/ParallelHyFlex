@@ -8,7 +8,7 @@ import parallelhyflex.utils.IntegerUniqueRandomGenerator;
  *
  * @author kommusoft
  */
-public class UniformFirstImprovementLocalSearch extends LocalSearchImplementationBase {
+public class UniformBestImprovementLocalSearch extends LocalSearchImplementationBase {
 
     @Override
     protected void localSearchLocalInternal(ManipulationGuider guider, ManipulationObserver observer, int[][] ranges, IntegerUniqueRandomGenerator inputUrg, int[] input) {
@@ -16,13 +16,21 @@ public class UniformFirstImprovementLocalSearch extends LocalSearchImplementatio
             int[] values = ranges[index];
             int I = values.length;
             int orig = input[index];
+            double bestdelta = 0.0d;
+            int bestval = -0x01;
             for (int val : values) {
-                if (val != orig && guider.calculateDelta(index, val) > 0x00) {
-                    observer.modify(index, val);
-                    input[index] = val;
-                    inputUrg.reset();
-                    break;
+                if (val != orig) {
+                    double delta = guider.calculateDelta(index, val);
+                    if (delta > bestdelta) {
+                        bestdelta = delta;
+                        bestval = val;
+                    }
                 }
+            }
+            if(bestval > 0.0d) {
+                observer.modify(index,bestval);
+                input[index] = bestval;
+                inputUrg.reset();
             }
         }
     }

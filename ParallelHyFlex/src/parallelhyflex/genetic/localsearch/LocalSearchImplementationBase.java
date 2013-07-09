@@ -25,30 +25,6 @@ public abstract class LocalSearchImplementationBase implements LocalSearchImplem
 
     /**
      *
-     * @param guider
-     * @param input
-     * @param ranges
-     * @return
-     */
-    @Override
-    public int[] localSearch(ManipulationGuider guider, int[] input, int[][] ranges) {
-        int n = input.length;
-        int[] cache = new int[n], cache2 = new int[n], tmp;
-        System.arraycopy(input, 0x00, cache, 0x00, n);
-        IntegerUniqueRandomGenerator urg = new IntegerUniqueRandomGenerator(input.length);
-        boolean modified;
-        do {
-            modified = localSearchIteration(guider, ranges, urg, cache, cache2);
-            urg.reset();
-            tmp = cache;
-            cache = cache2;
-            cache2 = tmp;
-        } while (modified);
-        return cache;
-    }
-
-    /**
-     *
      * @param guiderObserver
      * @param input
      * @param ranges
@@ -68,20 +44,9 @@ public abstract class LocalSearchImplementationBase implements LocalSearchImplem
     @Override
     public void localSearchLocal(ManipulationGuider guider, ManipulationObserver observer, int[] input, int[][] ranges) {
         int n = input.length;
-        int[] cache = new int[n], cache2 = new int[n], tmp;
-        System.arraycopy(input, 0x00, cache, 0x00, n);
-        IntegerUniqueRandomGenerator urg = new IntegerUniqueRandomGenerator(input.length);
-        boolean modified;
-        do {
-            modified = localSearchLocalIteration(guider, observer, ranges, urg, input);
-            urg.reset();
-            tmp = cache;
-            cache = cache2;
-            cache2 = tmp;
-        } while (modified);
+        IntegerUniqueRandomGenerator urg = new IntegerUniqueRandomGenerator(n);
+        localSearchLocalInternal(guider, observer, ranges, urg, input);
     }
 
-    protected abstract boolean localSearchIteration(ManipulationGuider guider, int[][] ranges, IntegerUniqueRandomGenerator inputUrg, int[] cache, int[] cache2);
-
-    protected abstract boolean localSearchLocalIteration(ManipulationGuider guider, ManipulationObserver observer, int[][] ranges, IntegerUniqueRandomGenerator inputUrg, int[] input);
+    protected abstract void localSearchLocalInternal(ManipulationGuider guider, ManipulationObserver observer, int[][] ranges, IntegerUniqueRandomGenerator inputUrg, int[] input);
 }
