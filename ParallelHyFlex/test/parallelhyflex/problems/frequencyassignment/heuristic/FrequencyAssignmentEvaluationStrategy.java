@@ -1,5 +1,6 @@
 package parallelhyflex.problems.frequencyassignment.heuristic;
 
+import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentObjectiveFunction1;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblemGenerator;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
@@ -18,11 +19,13 @@ class FrequencyAssignmentEvaluationStrategy implements TestHeuristicEvaluationSt
 
     @Override
     public double[] calculateApproximatedEvaluations(ProblemHeuristicTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> heuristicTestbase) {
-        return new double[]{heuristicTestbase.getTss().getnConflicts(), heuristicTestbase.getTss().getInterference()};
+        return new double[]{heuristicTestbase.getTss().getEvaluation(), heuristicTestbase.getTss().getnConflicts(), heuristicTestbase.getTss().getInterference()};
     }
 
     @Override
     public double[] calculateRealEvaluations(ProblemHeuristicTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> heuristicTestbase) {
-        return new double[]{heuristicTestbase.getTss().calculateNConflicts(heuristicTestbase.getTsp()), heuristicTestbase.getTss().calculateInterference(heuristicTestbase.getTsp())};
+        double a = heuristicTestbase.getTss().calculateNConflicts(heuristicTestbase.getTsp());
+        double b = heuristicTestbase.getTss().calculateInterference(heuristicTestbase.getTsp());
+        return new double[]{a * FrequencyAssignmentObjectiveFunction1.K + b, a, b};
     }
 }
