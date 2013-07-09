@@ -150,30 +150,62 @@ public class ConstantInfiniteList<T> implements List<T> {
     public void clear() {
     }
 
+    /**
+     *
+     * @param i
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean addAll(int i, Collection<? extends T> clctn) {
         return false;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public T get(int i) {
         return this.data;
     }
 
+    /**
+     *
+     * @param i
+     * @param e
+     * @return
+     */
     @Override
     public T set(int i, T e) {
         return this.data;
     }
 
+    /**
+     *
+     * @param i
+     * @param e
+     */
     @Override
     public void add(int i, T e) {
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public T remove(int i) {
         return this.data;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int indexOf(Object o) {
         if (this.data.equals(o)) {
@@ -183,6 +215,11 @@ public class ConstantInfiniteList<T> implements List<T> {
         }
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int lastIndexOf(Object o) {
         if (this.data.equals(o)) {
@@ -192,16 +229,31 @@ public class ConstantInfiniteList<T> implements List<T> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ListIterator<T> listIterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public ListIterator<T> listIterator(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param i
+     * @param i1
+     * @return
+     */
     @Override
     public List<T> subList(int i, int i1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -18,14 +18,13 @@ public abstract class ProblemHeuristicCTestBase<TSG extends SolutionGenerator<TS
      */
     @Override
     public abstract CrossoverHeuristicBase<TS, TP> renewHeuristic();
-    
+
     /**
      *
      */
     @Override
     public void applyHeuristic() {
         TS tss2 = this.getTsg().generateSolution();
-        this.getHeuristicBase().applyHeuristicLocally(tss2);
+        this.getHeuristicBase().applyHeuristicLocally(this.getTss(), tss2);
     }
-    
 }

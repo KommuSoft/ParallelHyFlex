@@ -15,26 +15,27 @@ import parallelhyflex.problems.ProblemTestBase;
 
 /**
  *
+ * @param <TSG>
+ * @param <TP> 
  * @author kommusoft
  */
 public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>, TP extends Problem<TS>, TPG extends ProblemReader<TS, TP>, TS extends Solution<TS>> extends ProblemTestBase<TSG, TP, TPG, TS> {
 
     private HeuristicBase<TS, TP> heuristicBase;
-    
-    private TestHeuristicEvaluationStrategy<TSG,TP,TPG,TS> heuristicEvaluationStrategy;
-    
+    private TestHeuristicEvaluationStrategy<TSG, TP, TPG, TS> heuristicEvaluationStrategy;
+
     /**
      *
      */
-    public ProblemHeuristicTestBase () {
+    public ProblemHeuristicTestBase() {
         this.heuristicEvaluationStrategy = this.generateHeuristicEvaluationStrategy();
     }
-    
+
     /**
      *
      * @return
      */
-    public abstract TestHeuristicEvaluationStrategy<TSG,TP,TPG,TS> generateHeuristicEvaluationStrategy ();
+    public abstract TestHeuristicEvaluationStrategy<TSG, TP, TPG, TS> generateHeuristicEvaluationStrategy();
 
     /**
      *
@@ -56,8 +57,8 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
             double[] approx = this.heuristicEvaluationStrategy.calculateApproximatedEvaluations(this);
             double[] real = this.heuristicEvaluationStrategy.calculateRealEvaluations(this);
             Assert.assertEquals(approx.length, real.length);
-            for(int j = 0x00; j < approx.length; j++) {
-                Assert.assertTrue(String.format("%s versus %s",approx[j],real[j]),Math.abs(approx[j]-real[j]) <= TestParameters.TOLERANCE);
+            for (int j = 0x00; j < approx.length; j++) {
+                Assert.assertTrue(String.format("%s versus %s", approx[j], real[j]), Math.abs(approx[j] - real[j]) <= TestParameters.TOLERANCE);
             }
         }
     }
@@ -75,8 +76,8 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
             double[] od = this.heuristicEvaluationStrategy.calculateApproximatedEvaluations(this);
             this.applyHeuristic();
             double[] nw = this.heuristicEvaluationStrategy.calculateApproximatedEvaluations(this);
-            Assert.assertEquals(od.length,nw.length);
-            for(int j = 0x00; j < od.length; j++) {
+            Assert.assertEquals(od.length, nw.length);
+            for (int j = 0x00; j < od.length; j++) {
                 Assert.assertTrue(od[j] >= nw[j]);
             }
         }

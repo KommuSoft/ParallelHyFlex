@@ -9,6 +9,11 @@ public class Tuple2<TValue1, TValue2> {
     private final TValue1 value1;
     private final TValue2 value2;
 
+    /**
+     *
+     * @param value1
+     * @param value2
+     */
     public Tuple2(TValue1 value1, TValue2 value2) {
         this.value1 = value1;
         this.value2 = value2;

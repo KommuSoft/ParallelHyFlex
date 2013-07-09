@@ -6,7 +6,6 @@ import java.util.List;
 import parallelhyflex.algebra.collections.ConstantInfiniteList;
 import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.utils.ProbabilityUtils;
-import parallelhyflex.utils.Utils;
 
 /**
  *

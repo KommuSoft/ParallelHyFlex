@@ -120,6 +120,12 @@ public final class ProbabilityUtils {
         return index;
     }
 
+    /**
+     *
+     * @param pdf
+     * @param maxn
+     * @return
+     */
     public static int randomBoundedIndexFromPDF(List<Double> pdf, int maxn) {
         int index = -0x01;
         double val = Utils.nextDouble();
