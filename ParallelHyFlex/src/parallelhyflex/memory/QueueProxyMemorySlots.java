@@ -10,8 +10,16 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extends ProxyMemorySlots<TSolution> {
 
+    /**
+     *
+     */
     protected final LinkedList<TSolution>[] solutionQueue;
 
+    /**
+     *
+     * @param memorySize
+     * @param policy
+     */
     public QueueProxyMemorySlots(int memorySize, MemoryExchangePolicy policy) {
         super(policy);
         LinkedList<TSolution> dummy = new LinkedList<>();
@@ -24,6 +32,11 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
         }
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public TSolution getSolution(int index) {
         if (this.solutionQueue[index].size() > 1) {
@@ -33,6 +46,10 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getSize() {
         return this.solutionQueue.length;
@@ -43,6 +60,11 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
         this.solutionQueue[index].add(sol);
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public TSolution peekSolution(int index) {
         return this.solutionQueue[index].peek();

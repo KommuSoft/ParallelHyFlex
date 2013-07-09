@@ -11,6 +11,10 @@ public class UniqueRandomGenerator<T> {
     private Object[] values;
     private int ptr = 0;
     
+    /**
+     *
+     * @param generator
+     */
     public UniqueRandomGenerator (Iterable<T> generator) {
         ArrayList<T> list = new ArrayList<>();
         for(T t : generator) {
@@ -19,6 +23,10 @@ public class UniqueRandomGenerator<T> {
         values = list.toArray();
     }
     
+    /**
+     *
+     * @return
+     */
     public T next () {
         int i = ptr+Utils.nextInt(values.length-ptr);
         T res = (T) values[i];
@@ -27,6 +35,9 @@ public class UniqueRandomGenerator<T> {
         return res;
     }
     
+    /**
+     *
+     */
     public void reset () {
         this.ptr = 0;
     }

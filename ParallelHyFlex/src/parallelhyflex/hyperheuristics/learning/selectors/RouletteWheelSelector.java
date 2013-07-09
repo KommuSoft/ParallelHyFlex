@@ -8,6 +8,11 @@ import parallelhyflex.utils.Utils;
  */
 public class RouletteWheelSelector implements Selector {
 
+    /**
+     *
+     * @param probabilities
+     * @return
+     */
     @Override
     public Integer generate(double[] probabilities) {
         double p = Utils.nextDouble();

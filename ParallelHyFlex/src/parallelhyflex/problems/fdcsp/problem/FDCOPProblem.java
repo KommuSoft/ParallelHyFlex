@@ -28,6 +28,11 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
     private final Expression[] minimalisations;
     private final UniqueRandomGenerator<Integer> variableSelector;
 
+    /**
+     *
+     * @param variables
+     * @param minimalisations
+     */
     public FDCOPProblem(Variable[] variables, Expression[] minimalisations) {
         this.setSolutionGenerator(new FDCOPSolutionGenerator(this));
         //System.out.println(String.format("FDCOPP %s %s", Arrays.toString(variables), Arrays.toString(minimalisations)));
@@ -60,36 +65,73 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
         return constraints;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public ObjectiveFunction<FDCOPSolution> getObjectiveFunction(int index) {
         return objectivesFw.generate(index);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfObjectiveFunctions() {
         return this.minimalisations.length;
     }
 
+    /**
+     *
+     * @param variableIndex
+     * @return
+     */
     public int getDomainSize(int variableIndex) {
         return this.domainSizes[variableIndex];
     }
 
+    /**
+     *
+     * @param var
+     * @return
+     */
     public int getDomainSize(Variable var) {
         return this.domainSizes[var.getIndex()];
     }
 
+    /**
+     *
+     * @param variableIndex
+     * @return
+     */
     public Variable getVariable(int variableIndex) {
         return this.variables[variableIndex];
     }
 
+    /**
+     *
+     * @param variableIndex
+     * @return
+     */
     public MutableFiniteIntegerDomain getDomain(int variableIndex) {
         return this.variables[variableIndex].getDomain();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfVariables() {
         return this.variables.length;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberOfMinimalisations() {
         return this.minimalisations.length;
     }
@@ -118,24 +160,46 @@ public class FDCOPProblem extends ProblemBase<FDCOPSolution, FDCOPSolutionGenera
         } while (!toAdd.isEmpty());
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         //TODO
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Variable> iterator() {
         return new ArrayIterator<>(this.variables);
     }
 
+    /**
+     *
+     * @return
+     */
     public Iterator<Variable> variableIterator() {
         return this.iterator();
     }
 
+    /**
+     *
+     * @return
+     */
     public Iterator<Expression> minimalisationIterator() {
         return new ArrayIterator<>(this.minimalisations);
     }
 
+    /**
+     *
+     * @param argument
+     * @return
+     */
     @Override
     public Iterator<FDCOPConstraint> iterator(Variable argument) {
         return argument.iterator();

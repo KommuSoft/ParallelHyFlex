@@ -8,6 +8,9 @@ import parallelhyflex.algebra.PinnedFlightWeight;
  */
 public class VariableStore extends PinnedFlightWeight<String,Variable> {
     
+    /**
+     *
+     */
     public VariableStore () {
         super(VariableGenerator.getInstance());
     }

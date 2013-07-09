@@ -13,10 +13,18 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatHeuristicM4 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatHeuristicM4(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         ThreeSatProblem problem = this.getProblem();
@@ -51,6 +59,10 @@ public class ThreeSatHeuristicM4 extends MutationHeuristicBase<ThreeSatSolution,
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean usesIntensityOfMutation() {
         return true;

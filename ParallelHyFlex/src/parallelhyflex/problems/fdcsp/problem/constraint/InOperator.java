@@ -18,36 +18,67 @@ import parallelhyflex.problems.fdcsp.problem.Variable;
 @OperatorAnnotation()
 public class InOperator extends OperatorBase<Token,Token> implements TokenGenerator<InOperator> {
     
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public InOperator generate(String variable) {
         return new InOperator();
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
     @Override
     public boolean canSetLeft(Token token) {
         return(token instanceof Variable);
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
     @Override
     public boolean canSetRight(Token token) {
         return(token instanceof MutableFiniteIntegerDomain);
     }
 
+    /**
+     *
+     */
     @Override
     public void process() {
         ((Variable) this.getLeft()).setDomain((MutableFiniteIntegerDomain) this.getRight());//TODO: intersect domain? (multiple ins for the same variable?)
     }
 
+    /**
+     *
+     * @param text
+     * @return
+     */
     @Override
     public boolean validate(String text) {
         return TokenGeneratorImplementation.validate(this, text);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getPriority() {
         return TokenGeneratorImplementation.getPriority(this);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Pattern getPattern() {
         return TokenGeneratorImplementation.getPattern(this);

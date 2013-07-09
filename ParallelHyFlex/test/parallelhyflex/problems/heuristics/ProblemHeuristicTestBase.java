@@ -23,14 +23,28 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
     
     private TestHeuristicEvaluationStrategy<TSG,TP,TPG,TS> heuristicEvaluationStrategy;
     
+    /**
+     *
+     */
     public ProblemHeuristicTestBase () {
         this.heuristicEvaluationStrategy = this.generateHeuristicEvaluationStrategy();
     }
     
+    /**
+     *
+     * @return
+     */
     public abstract TestHeuristicEvaluationStrategy<TSG,TP,TPG,TS> generateHeuristicEvaluationStrategy ();
 
+    /**
+     *
+     * @return
+     */
     public abstract HeuristicBase<TS, TP> renewHeuristic();
 
+    /**
+     *
+     */
     public void testApplyHeuristicLocallyConflictingClauses() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
@@ -48,6 +62,9 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
         }
     }
 
+    /**
+     *
+     */
     public void testApplyHeuristicLocallyImprovementConflictingClauses() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
@@ -65,6 +82,9 @@ public abstract class ProblemHeuristicTestBase<TSG extends SolutionGenerator<TS>
         }
     }
 
+    /**
+     *
+     */
     public void applyHeuristic() {
         getHeuristicBase().applyHeuristicLocally(getTss());
     }

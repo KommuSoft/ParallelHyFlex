@@ -10,6 +10,11 @@ public class TimedObject<TObject> implements Comparable<TimedObject<TObject>> {
     private final double time;
     private final TObject object;
     
+    /**
+     *
+     * @param time
+     * @param object
+     */
     public TimedObject (double time, TObject object) {
         this.time = time;
         this.object = object;
@@ -29,6 +34,11 @@ public class TimedObject<TObject> implements Comparable<TimedObject<TObject>> {
         return object;
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     @Override
     public int compareTo(TimedObject<TObject> t) {
         return (int) Math.signum(this.getTime()-t.getTime());

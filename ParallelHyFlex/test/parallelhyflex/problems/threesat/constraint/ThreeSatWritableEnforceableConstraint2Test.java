@@ -18,6 +18,9 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
  */
 public class ThreeSatWritableEnforceableConstraint2Test extends WritableEnforceableConstraintTest<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> {
 
+    /**
+     *
+     */
     public ThreeSatWritableEnforceableConstraint2Test() {
     }
 
@@ -73,16 +76,28 @@ public class ThreeSatWritableEnforceableConstraint2Test extends WritableEnforcea
         super.testSerializeDeserialize();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWritableEnforceableConstraint() {
         return new ThreeSatWritableEnforceableConstraint2(getTsp(), getTss().clone(), 5);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public EnforceableConstraintGenerator<ThreeSatSolution, ? extends EnforceableConstraint<ThreeSatSolution>> renewEnforceableConstraintGenerator() {
         return new ThreeSatWritableEnforceableConstraintGenerator(this.getTsp());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
         return new ThreeSatRenewalStrategy();

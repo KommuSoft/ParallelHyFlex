@@ -9,6 +9,11 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  */
 public class FrequencyAssignmentObjectiveFunction1 extends ObjectiveFunctionBase<FrequencyAssignmentSolution> {
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     @Override
     public double evaluateSolution(FrequencyAssignmentSolution solution) {
         return solution.getEvaluation();

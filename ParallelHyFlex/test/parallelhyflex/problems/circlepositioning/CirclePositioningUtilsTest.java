@@ -10,9 +10,15 @@ import parallelhyflex.TestParameters;
  */
 public class CirclePositioningUtilsTest {
 
+    /**
+     *
+     */
     public CirclePositioningUtilsTest() {
     }
 
+    /**
+     *
+     */
     @Test
     public void testCalculateCircleOverlapArea1() {
         double x1, x2, y1, y2, r1, r2, expResult;

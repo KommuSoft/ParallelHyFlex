@@ -16,18 +16,32 @@ public class CirclePositioningProblem extends ProblemBase<CirclePositioningSolut
     private final double largeCircleRadius;
     private final double[] radia;
     
+    /**
+     *
+     * @param largeCircleRadius
+     * @param radia
+     */
     public CirclePositioningProblem(double largeCircleRadius, double[] radia) {
         this.largeCircleRadius = largeCircleRadius;
         this.radia = radia;
         this.setSolutionGenerator(new CirclePositioningSolutionGenerator(this));
     }
     
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeDouble(getLargeCircleRadius());
         SerialisationUtils.writeDoubleArray(dos, getRadia());
     }
     
+    /**
+     *
+     * @return
+     */
     public int getNumberOfCircles () {
         return this.radia.length;
     }

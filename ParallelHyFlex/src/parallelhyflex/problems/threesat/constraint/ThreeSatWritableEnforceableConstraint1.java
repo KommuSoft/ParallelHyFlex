@@ -13,16 +13,31 @@ import parallelhyflex.utils.Utils;
  * @author kommusoft
  */
 public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnforceableConstraint {
+    /**
+     *
+     */
     public static final long MASK_BIT = 0x8000_0000_0000_0000L;
+    /**
+     *
+     */
     public static final long MASK = 0x7FFF_FFFF_FFFF_FFFFL;
 
     private long constraint;
 
+    /**
+     *
+     * @param problem
+     * @param constraint
+     */
     public ThreeSatWritableEnforceableConstraint1(ThreeSatProblem problem, long constraint) {
         super(problem);
         this.constraint = constraint;
     }
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
@@ -32,6 +47,10 @@ public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnfo
         }
     }
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
         CompactBitArray cba = solution.getCompactBitArray();
@@ -52,16 +71,31 @@ public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnfo
         }
     }
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     @Override
     public boolean isSatisfied(ThreeSatSolution solution) {
         return solution.satisfiesClause(getConstraint());
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeLong(MASK_BIT | this.getConstraint());
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ThreeSatWritableEnforceableConstraint1) {
@@ -71,6 +105,10 @@ public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnfo
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -92,6 +130,10 @@ public class ThreeSatWritableEnforceableConstraint1 extends ThreeSatWritableEnfo
         this.constraint = data;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString () {
         return String.format("(%s)",ClauseUtils.clauseToString(this.getConstraint()));

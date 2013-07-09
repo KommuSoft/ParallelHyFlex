@@ -1,19 +1,37 @@
 package parallelhyflex.hyperheuristics.learning.learningschemes;
 
+/**
+ *
+ * @author kommusoft
+ */
 public class LinearLearningScheme extends LearningSchemeBase {
 
     private double lambda1;
     private double lambda2;
 
+    /**
+     *
+     */
     public LinearLearningScheme() {
         this(1.0d, 1.0d);
     }
 
+    /**
+     *
+     * @param lambda1
+     * @param lambda2
+     */
     public LinearLearningScheme(double lambda1, double lambda2) {
         this.setLambda1(lambda1);
         this.setLambda2(lambda2);
     }
 
+    /**
+     *
+     * @param probabilities
+     * @param index
+     * @param reward
+     */
     @Override
     protected void execute(double[] probabilities, int index, double reward) {
         for (int i = 0; i < index; i++) {

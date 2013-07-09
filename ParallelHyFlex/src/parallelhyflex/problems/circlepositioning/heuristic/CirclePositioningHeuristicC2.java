@@ -10,10 +10,19 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  */
 public class CirclePositioningHeuristicC2 extends CrossoverHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public CirclePositioningHeuristicC2(CirclePositioningProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from1
+     * @param from2
+     */
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from1, CirclePositioningSolution from2) {
         int n = this.getProblem().getNumberOfCircles();

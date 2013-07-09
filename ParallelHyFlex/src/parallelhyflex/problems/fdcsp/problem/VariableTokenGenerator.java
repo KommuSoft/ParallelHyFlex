@@ -16,6 +16,11 @@ public class VariableTokenGenerator extends TokenGeneratorBase<Variable> {
     
     private VariableStore variableStore = new VariableStore();
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public Variable generate(String variable) {
         return this.getVariableStore().generate(variable);

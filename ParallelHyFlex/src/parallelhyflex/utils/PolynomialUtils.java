@@ -6,6 +6,13 @@ package parallelhyflex.utils;
  */
 public final class PolynomialUtils {
     
+    /**
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @return
+     */
     public static double[] solveSecondOrder (double a, double b, double c) {
         double D = b*b-4*a*c;
         if(D < 0.0d) {
@@ -21,6 +28,13 @@ public final class PolynomialUtils {
         }
     }
     
+    /**
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @return
+     */
     public static double[] solveSecondOrderOrdered (double a, double b, double c) {
         double D = b*b-4*a*c;
         if(D < 0.0d) {

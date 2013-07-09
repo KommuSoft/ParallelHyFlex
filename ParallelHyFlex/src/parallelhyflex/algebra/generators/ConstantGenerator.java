@@ -10,10 +10,19 @@ public class ConstantGenerator<TX,TF> implements Generator<TX,TF> {
     
     private final TF constant;
     
+    /**
+     *
+     * @param constant
+     */
     public ConstantGenerator (TF constant) {
         this.constant = constant;   
     }
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public TF generate(TX variable) {
         return constant;

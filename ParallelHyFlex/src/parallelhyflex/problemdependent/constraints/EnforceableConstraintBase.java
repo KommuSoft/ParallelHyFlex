@@ -9,6 +9,10 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class EnforceableConstraintBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends ConstraintBase<TSolution, TProblem> implements EnforceableConstraint<TSolution> {
 
+    /**
+     *
+     * @param problem
+     */
     public EnforceableConstraintBase(TProblem problem) {
         super(problem);
     }

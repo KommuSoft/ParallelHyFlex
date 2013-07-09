@@ -13,11 +13,21 @@ import parallelhyflex.problems.heuristics.TestHeuristicEvaluationStrategy;
  */
 public class CirclePositioningEvaluationStrategy implements TestHeuristicEvaluationStrategy<CirclePositioningSolutionGenerator,CirclePositioningProblem,CirclePositioningProblemGenerator,CirclePositioningSolution> {
 
+    /**
+     *
+     * @param heuristicTestbase
+     * @return
+     */
     @Override
     public double[] calculateApproximatedEvaluations(ProblemHeuristicTestBase<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> heuristicTestbase) {
         return new double[] {heuristicTestbase.getTss().getOuterArea(),heuristicTestbase.getTss().getOverlapArea()};
     }
 
+    /**
+     *
+     * @param heuristicTestbase
+     * @return
+     */
     @Override
     public double[] calculateRealEvaluations(ProblemHeuristicTestBase<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> heuristicTestbase) {
         return new double[] {heuristicTestbase.getTss().calculateOuter(heuristicTestbase.getTsp()),heuristicTestbase.getTss().calculateOverlap(heuristicTestbase.getTsp())};

@@ -20,6 +20,9 @@ import parallelhyflex.problemdependent.solution.Solution;
  * @author kommusoft
  */
 public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Solution<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>, TRG extends ReadableGenerator<TEC>> extends AsynchronousGatherAll<byte[]> implements WritableSearchSpaceNegotiator<TSolution, TEC> {
+    /**
+     *
+     */
     public static final int SendTag = 2;
 
     private final TRG generator;
@@ -28,27 +31,47 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
     private final HashSet<TEC> own = new HashSet<>();
     private SearchSpace<TSolution> ss;
 
+    /**
+     *
+     * @param generator
+     */
     protected MergingWritableSearchSpaceNegotiator(TRG generator) {
         super(SendTag);
         this.generator = generator;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isReady() {
         return this.ready;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isActive() {
         return this.active;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public SearchSpace<TSolution> getSearchSpace() {
         this.ready = false;
         return this.ss;
     }
 
+    /**
+     *
+     * @param enforceableConstraints
+     */
     @Override
     public void sendEnforceableConstraints(Collection<TEC> enforceableConstraints) {
         active = true;
@@ -61,6 +84,12 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
         }
     }
 
+    /**
+     *
+     * @param enforceableConstraints
+     * @return
+     * @throws IOException
+     */
     public byte[] generatePacket(Collection<TEC> enforceableConstraints) throws IOException {
         byte[] data;
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -74,6 +103,11 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
         return data;
     }
 
+    /**
+     *
+     * @param tecs
+     * @param datamatrix
+     */
     public void readPacket(HashSet<TEC> tecs, byte[] datamatrix) {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(datamatrix)) {
             readEntry(bais, tecs);
@@ -90,6 +124,12 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
         }
     }
 
+    /**
+     *
+     * @param own
+     * @param others
+     * @return
+     */
     protected abstract SearchSpace<TSolution> innerNegotiate(Collection<TEC> own, Collection<TEC> others);
 
     /**
@@ -99,6 +139,13 @@ public abstract class MergingWritableSearchSpaceNegotiator<TSolution extends Sol
         return generator;
     }
 
+    /**
+     *
+     * @param from
+     * @param tag
+     * @param data
+     * @throws Exception
+     */
     @Override
     public void receivePacket(int from, int tag, Object data) throws Exception {
         super.receivePacket(from, tag, data);

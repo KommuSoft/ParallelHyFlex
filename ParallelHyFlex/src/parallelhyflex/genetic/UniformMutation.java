@@ -16,6 +16,12 @@ public class UniformMutation extends MutationImplementationBase {
         return result;
     }
 
+    /**
+     *
+     * @param observer
+     * @param input
+     * @param ranges
+     */
     @Override
     public void mutateLocal(ManipulationObserver observer, int[] input, int[][] ranges) {
         int index = Utils.nextInt(input.length);

@@ -16,12 +16,20 @@ import parallelhyflex.problems.serialisation.SolutionSerialisationTest;
  */
 public class CirclePositioningSolutionSerialisationTest extends SolutionSerialisationTest<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> {
 
+    /**
+     *
+     * @throws IOException
+     */
     @Test
     @Override
     public void testSerializationDeserialization() throws IOException {
         super.testSerializationDeserialization();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> getRenewalStrategy() {
         return new CirclePositioningRenewalStrategy();

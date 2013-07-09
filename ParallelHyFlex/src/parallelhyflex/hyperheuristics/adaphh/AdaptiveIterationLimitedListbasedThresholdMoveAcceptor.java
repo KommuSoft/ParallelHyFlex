@@ -13,6 +13,10 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
     private int l, k, adapt_iterations, w_iterations = 0, best_list_index = 0;
     private StridingList<Double> bestList;
 
+    /**
+     *
+     * @param adaphh
+     */
     public AdaptiveIterationLimitedListbasedThresholdMoveAcceptor(AdapHH adaphh) {
         super(adaphh);
         this.l = 10;
@@ -23,6 +27,12 @@ public class AdaptiveIterationLimitedListbasedThresholdMoveAcceptor extends Adap
         }
     }
 
+    /**
+     *
+     * @param sa
+     * @param s
+     * @param sb
+     */
     public void acceptMove(int sa, int s, int sb) {
         double fs = this.getAdapHH().getObjectiveFunction(s);
         double fsa = this.getAdapHH().getObjectiveFunction(sa);

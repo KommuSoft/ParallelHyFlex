@@ -14,10 +14,19 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatHeuristicC2 extends CrossoverHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatHeuristicC2(ThreeSatProblem problem) {
         super(problem);
     }
     
+    /**
+     *
+     * @param from1
+     * @param from2
+     */
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from1, ThreeSatSolution from2) {
         int[][] influence = this.getProblem().getInfluences();

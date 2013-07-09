@@ -12,6 +12,14 @@ import parallelhyflex.communication.abstraction.UdpWorld;
  */
 public class UdpTester {
     
+    /**
+     *
+     * @param args
+     * @throws SocketException
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void main (String[] args) throws SocketException, UnknownHostException, IOException, ClassNotFoundException {
         UdpWorld world1 = new UdpWorld(1);
         UdpWorld world2 = new UdpWorld(2);

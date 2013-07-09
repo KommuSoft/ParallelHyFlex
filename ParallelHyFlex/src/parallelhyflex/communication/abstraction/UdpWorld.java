@@ -25,7 +25,13 @@ import parallelhyflex.algebra.tuples.Tuple2;
  */
 public class UdpWorld {
 
+    /**
+     *
+     */
     public static final int PORT_OFFSET = 0x5048;
+    /**
+     *
+     */
     public static final int MAXIMUM_PACKET_SIZE = 65_507;
     private final byte[] buffer = new byte[MAXIMUM_PACKET_SIZE];
     private final DatagramPacket receivePacket;
@@ -33,12 +39,30 @@ public class UdpWorld {
     private final InetAddress address;
     private final HashMap<Tuple2<Integer, Integer>, LinkedList<Object>> receiveCache = new HashMap<>();
 
+    /**
+     *
+     * @param rank
+     * @throws SocketException
+     * @throws UnknownHostException
+     */
     public UdpWorld(int rank) throws SocketException, UnknownHostException {
         address = InetAddress.getLocalHost();
         this.socket = new DatagramSocket(PORT_OFFSET + rank);
         this.receivePacket = new DatagramPacket(this.buffer, MAXIMUM_PACKET_SIZE);
     }
 
+    /**
+     *
+     * @param buf
+     * @param offset
+     * @param count
+     * @param datatype
+     * @param source
+     * @param tag
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public boolean recv(Object buf, int offset, int count, Datatype datatype, int source, int tag) throws IOException, ClassNotFoundException {
         int n = Array.getLength(buf);
         int subcount = Math.min(n - offset, count);
@@ -51,6 +75,18 @@ public class UdpWorld {
         return true;
     }
 
+    /**
+     *
+     * @param buf
+     * @param offset
+     * @param count
+     * @param datatype
+     * @param source
+     * @param tag
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public boolean irecv(Object buf, int offset, int count, Datatype datatype, int source, int tag) throws IOException, ClassNotFoundException {
         int n = Array.getLength(buf);
         int subcount = Math.min(n - offset, count);
@@ -67,6 +103,17 @@ public class UdpWorld {
         return true;
     }
 
+    /**
+     *
+     * @param buf
+     * @param offset
+     * @param count
+     * @param datatype
+     * @param dest
+     * @param tag
+     * @return
+     * @throws IOException
+     */
     public boolean isend(Object buf, int offset, int count, Datatype datatype, int dest, int tag) throws IOException {
         int n = Array.getLength(buf);
         int end = Math.min(n, count + offset);

@@ -16,11 +16,20 @@ public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,
 
     private int n, k;
 
+    /**
+     *
+     * @param n
+     * @param k
+     */
     public ThreeSatProblemGenerator(int n, int k) {
         this.n = n;
         this.k = k;
     }
 
+    /**
+     *
+     * @return
+     */
     public ThreeSatProblem generateProblem() {
         long[] constraints = new long[k];
         CompactBitArray cba = CompactBitArray.randomInstance(this.n);
@@ -61,6 +70,12 @@ public class ThreeSatProblemGenerator implements ProblemReader<ThreeSatSolution,
         this.k = k;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public ThreeSatProblem readAndGenerate(DataInputStream dis) throws IOException {
         long[] constraints = SerialisationUtils.readLongArray(dis);

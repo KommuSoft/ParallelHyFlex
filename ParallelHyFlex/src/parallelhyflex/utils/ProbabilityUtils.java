@@ -11,6 +11,12 @@ import java.util.List;
  */
 public final class ProbabilityUtils {
 
+    /**
+     *
+     * @param <T>
+     * @param list
+     * @return
+     */
     public static <T> T randomElement(List<T> list) {
         return list.get(Utils.nextInt(list.size()));
     }
@@ -33,6 +39,10 @@ public final class ProbabilityUtils {
         return (int) Math.floor(D * Utils.nextDouble());
     }
 
+    /**
+     *
+     * @param weights
+     */
     public static void unnormalizedWeightsToCDF(double[] weights) {
         double suminv = 0.0d;
         double min = 0.0d;
@@ -49,6 +59,12 @@ public final class ProbabilityUtils {
         }
     }
 
+    /**
+     *
+     * @param cdf
+     * @param without
+     * @return
+     */
     public static int randomIndexFromCDF(double[] cdf, Collection<Integer> without) {
         int index;
         do {
@@ -57,6 +73,11 @@ public final class ProbabilityUtils {
         return index;
     }
 
+    /**
+     *
+     * @param cdf
+     * @return
+     */
     public static int randomIndexFromCDF(double[] cdf) {
         double rand = Utils.nextDouble();
         int index = Arrays.binarySearch(cdf, rand);
@@ -66,6 +87,12 @@ public final class ProbabilityUtils {
         return index;
     }
     
+    /**
+     *
+     * @param <T>
+     * @param set
+     * @return
+     */
     public static <T> T randomElement (Collection<T> set) {
         int I = Utils.nextInt(set.size());
         Iterator<T> iterator = set.iterator();
@@ -75,6 +102,11 @@ public final class ProbabilityUtils {
         return iterator.next();
     }
     
+    /**
+     *
+     * @param values
+     * @return
+     */
     public static int randomElement (int[] values) {
         return values[Utils.nextInt(values.length)];
     }

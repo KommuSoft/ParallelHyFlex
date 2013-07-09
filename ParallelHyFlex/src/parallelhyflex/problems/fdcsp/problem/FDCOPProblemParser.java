@@ -27,6 +27,10 @@ public class FDCOPProblemParser {
     private static TokenStreamParser<Token> tokenParser;
     private static VariableTokenGenerator variableToken = new VariableTokenGenerator();
 
+    /**
+     *
+     * @return
+     */
     public static TokenStreamParser getTokenParser() {
         if (tokenParser == null) {
             tokenParser = new TokenStreamParser();
@@ -44,6 +48,12 @@ public class FDCOPProblemParser {
         return tokenParser;
     }
 
+    /**
+     *
+     * @param stream
+     * @return
+     * @throws ParsingException
+     */
     public FDCOPProblem parse(InputStream stream) throws ParsingException {
         OperatorBinder ob = new OperatorBinder();
         Iterable<Token> tokens = ob.bind(getTokenParser().getIterable(stream));
@@ -62,6 +72,13 @@ public class FDCOPProblemParser {
         return new FDCOPProblem(vars, mini.toArray(new Expression[mini.size()]));
     }
 
+    /**
+     *
+     * @param text
+     * @return
+     * @throws IOException
+     * @throws ParsingException
+     */
     public FDCOPProblem parse(String text) throws IOException, ParsingException {
         FDCOPProblem result;
         try (InputStream is = new ByteArrayInputStream(text.getBytes())) {

@@ -15,12 +15,22 @@ public class GreaterThanConstraint extends TokenGeneratorBase<IntegerDomainConst
     
     private static final GreaterThanConstraint instance = new GreaterThanConstraint();
     
+    /**
+     *
+     * @return
+     */
     public static GreaterThanConstraint getInstance () {
         return instance;
     }
     
     private GreaterThanConstraint () {}
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(MutableFiniteIntegerDomain i1, MutableFiniteIntegerDomain i2) {
         int la = i1.high();
@@ -31,16 +41,33 @@ public class GreaterThanConstraint extends TokenGeneratorBase<IntegerDomainConst
         return red;
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(int i1, MutableFiniteIntegerDomain i2) {
         return i2.intersectWith(i2.low(), i1-1);
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(MutableFiniteIntegerDomain i1, int i2) {
         return i1.minusWith(i2+1, i1.high());
     }
     
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public IntegerDomainConstraintOperator generate(String variable) {
         return new IntegerDomainConstraintOperator(getInstance());

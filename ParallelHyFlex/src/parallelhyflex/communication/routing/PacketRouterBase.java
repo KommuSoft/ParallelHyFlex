@@ -5,10 +5,18 @@ import java.util.LinkedList;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
 
+/**
+ *
+ * @author kommusoft
+ */
 public class PacketRouterBase implements PacketRouter {
 
     private final HashMap<Integer, LinkedList<PacketReceiver>> tagMapper = new HashMap<>();
 
+    /**
+     *
+     * @param receiver
+     */
     @Override
     public void registerPacketReceiver(PacketReceiver receiver) {
         for (Integer i : receiver.getPacketTags()) {
@@ -23,6 +31,10 @@ public class PacketRouterBase implements PacketRouter {
         }
     }
 
+    /**
+     *
+     * @param receiver
+     */
     @Override
     public void unregisterPacketReceiver(PacketReceiver receiver) {
         for (Integer i : receiver.getPacketTags()) {
@@ -33,6 +45,12 @@ public class PacketRouterBase implements PacketRouter {
         }
     }
 
+    /**
+     *
+     * @param sender
+     * @param tag
+     * @param data
+     */
     @Override
     public void routePacket(int sender, int tag, Object data) {
         for (PacketReceiver pr : tagMapper.get(tag)) {
@@ -44,11 +62,22 @@ public class PacketRouterBase implements PacketRouter {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] getPacketTags() {
         return new int[]{MPI.ANY_TAG};
     }
 
+    /**
+     *
+     * @param from
+     * @param tag
+     * @param data
+     * @throws Exception
+     */
     @Override
     public void receivePacket(int from, int tag, Object data) throws Exception {
         this.routePacket(tag, tag, data);

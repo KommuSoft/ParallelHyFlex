@@ -15,10 +15,20 @@ public class NotEqualConstraint extends TokenGeneratorBase<IntegerDomainConstrai
     
     private static final NotEqualConstraint instance = new NotEqualConstraint();
     
+    /**
+     *
+     * @return
+     */
     public static NotEqualConstraint getInstance () {
         return instance;
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(MutableFiniteIntegerDomain i1, MutableFiniteIntegerDomain i2) {
         boolean red = false;
@@ -38,16 +48,33 @@ public class NotEqualConstraint extends TokenGeneratorBase<IntegerDomainConstrai
         return red;
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(int i1, MutableFiniteIntegerDomain i2) {
         return i2.minusWith(i1);
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(MutableFiniteIntegerDomain i1, int i2) {
         return i1.minusWith(i2);
     }
     
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public IntegerDomainConstraintOperator generate(String variable) {
         return new IntegerDomainConstraintOperator(getInstance());

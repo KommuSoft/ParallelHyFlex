@@ -48,6 +48,13 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
         return values;
     }
 
+    /**
+     *
+     * @param interference
+     * @param observer
+     * @param genes
+     * @param parents
+     */
     @Override
     public void crossoverLocal(InterferenceStructure<Integer> interference, ManipulationObserver observer, Collection<Integer> genes, int[]... parents) {
         int m = parents.length;

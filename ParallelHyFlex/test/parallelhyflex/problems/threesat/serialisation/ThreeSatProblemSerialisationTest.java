@@ -16,12 +16,20 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
  */
 public class ThreeSatProblemSerialisationTest extends ProblemSerialisationTest<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> {
 
+    /**
+     *
+     * @throws IOException
+     */
     @Test
     @Override
     public void testSerializationDeserialization() throws IOException {
         super.testSerializationDeserialization();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
         return new ThreeSatRenewalStrategy();

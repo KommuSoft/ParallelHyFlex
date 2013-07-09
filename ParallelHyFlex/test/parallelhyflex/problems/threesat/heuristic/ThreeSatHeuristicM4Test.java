@@ -26,16 +26,28 @@ public class ThreeSatHeuristicM4Test extends ProblemHeuristicMTestBase<ThreeSatS
         super.testApplyHeuristicLocallyConflictingClauses();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
         return new ThreeSatHeuristicM4(getTsp());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestHeuristicEvaluationStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> generateHeuristicEvaluationStrategy() {
         return new ThreeSatEvaluationStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
         return new ThreeSatRenewalStrategy();

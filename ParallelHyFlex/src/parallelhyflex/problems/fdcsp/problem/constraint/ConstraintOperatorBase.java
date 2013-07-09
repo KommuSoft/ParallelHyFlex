@@ -10,6 +10,9 @@ import parallelhyflex.problems.fdcsp.problem.Variable;
  */
 public abstract class ConstraintOperatorBase extends OperatorBase implements FDCOPConstraint {
 
+    /**
+     *
+     */
     @Override
     public void process() {
         for(Variable v : this) {

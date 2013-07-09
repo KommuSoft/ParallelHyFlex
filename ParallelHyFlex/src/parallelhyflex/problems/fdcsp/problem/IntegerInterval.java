@@ -15,6 +15,11 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
     private int low;
     private int high;
 
+    /**
+     *
+     * @param low
+     * @param high
+     */
     public IntegerInterval(int low, int high) {
         this.low = low;
         this.high = high;
@@ -24,6 +29,10 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         this(value, value);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         if (this.low <= this.high) {
@@ -33,11 +42,20 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         }
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public boolean contains(Integer value) {
         return (low <= value && value <= high);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean clear() {
         boolean res = this.notEmpty();
@@ -46,27 +64,56 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         return res;
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     * @return
+     */
     public boolean contains(int low, int high) {
         return high < low || (this.low <= low && high <= this.high);
     }
 
+    /**
+     *
+     * @param si
+     * @return
+     */
     public boolean contains(IntegerInterval si) {
         return contains(si.low, si.high);
     }
 
+    /**
+     *
+     * @param si
+     * @return
+     */
     public boolean overlap(IntegerInterval si) {
         return Math.max(this.low, si.low) <= Math.min(this.high, si.high);
     }
 
+    /**
+     *
+     * @param si
+     * @return
+     */
     @Override
     public boolean canUnion(IntegerInterval si) {
         return (Math.max(this.low, si.low) - 1 <= Math.min(this.high, si.high)) || this.empty() || si.empty();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean empty() {
         return this.high < this.low;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean notEmpty() {
         return this.high >= this.low;
     }
@@ -101,16 +148,30 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         this.high = high;
     }
 
+    /**
+     *
+     * @param t
+     * @return
+     */
     @Override
     public int compareTo(IntegerInterval t) {
         return this.low - t.low;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         return 79 * this.low + this.high + 43_687;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj != null && obj instanceof IntegerInterval) {
@@ -120,11 +181,19 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected IntegerInterval clone() {
         return new IntegerInterval(this.low, this.high);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         if (this.low < this.high) {
@@ -136,6 +205,12 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         }
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     * @throws InductiveBiasException
+     */
     @Override
     public IntegerInterval union(IntegerInterval other) throws InductiveBiasException {
         if (this.canUnion(other)) {
@@ -145,6 +220,12 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         }
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     * @throws InductiveBiasException
+     */
     @Override
     public boolean unionWith(IntegerInterval other) throws InductiveBiasException {
         if (this.canUnion(other)) {
@@ -157,6 +238,11 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         }
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public IntegerInterval intersection(IntegerInterval other) {
         int low = Math.max(this.low, other.low);
@@ -164,6 +250,11 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         return new IntegerInterval(low, high);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean intersectWith(IntegerInterval other) {
         boolean ch = (other.low > this.low || other.high < this.high);
@@ -172,6 +263,12 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         return ch;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     * @throws InductiveBiasException
+     */
     @Override
     public IntegerInterval minus(IntegerInterval other) throws InductiveBiasException {
         if (!canMinus(other)) {
@@ -185,6 +282,12 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         }
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     * @throws InductiveBiasException
+     */
     @Override
     public boolean minusWith(IntegerInterval other) throws InductiveBiasException {
         boolean ch = true;
@@ -202,53 +305,98 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         return ch;
     }
 
+    /**
+     *
+     * @param tr
+     * @return
+     */
     @Override
     public boolean canIntersect(IntegerInterval tr) {
         return true;
     }
 
+    /**
+     *
+     * @param tr
+     * @return
+     */
     @Override
     public boolean canMinus(IntegerInterval tr) {
         return (tr.low <= this.low || tr.high >= this.high);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public IntegerInterval add(IntegerInterval other) {
         return new IntegerInterval(this.low + other.low, this.high + other.high);
     }
 
+    /**
+     *
+     * @param other
+     */
     @Override
     public void addWith(IntegerInterval other) {
         this.low += other.low;
         this.high += other.high;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public IntegerInterval sub(IntegerInterval other) {
         return new IntegerInterval(this.low - other.high, this.high - other.low);
     }
 
+    /**
+     *
+     * @param other
+     */
     @Override
     public void subWith(IntegerInterval other) {
         this.low -= other.high;
         this.high -= other.low;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean canAdd(IntegerInterval other) {
         return true;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean canSub(IntegerInterval other) {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public IntegerInterval neg() {
         return new IntegerInterval(-this.high, -this.low);
     }
 
+    /**
+     *
+     */
     @Override
     public void negWith() {
         int tmp = -this.low;
@@ -256,16 +404,29 @@ public final class IntegerInterval implements Comparable<IntegerInterval>, Itera
         this.high = tmp;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean canNeg() {
         return true;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public Integer getIth(int index) {
         return this.low + index;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Integer> iterator() {
         return Utils.sequence(low, high + 1).iterator();

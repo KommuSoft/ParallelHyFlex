@@ -26,22 +26,37 @@ public class ThreeSatHeuristicL1Test extends ProblemHeuristicLTestBase<ThreeSatS
         super.testApplyHeuristicLocallyConflictingClauses();
     }
     
+    /**
+     *
+     */
     @Test
     @Override
     public void testApplyHeuristicLocallyImprovementConflictingClauses() {
         super.testApplyHeuristicLocallyImprovementConflictingClauses();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
         return new ThreeSatHeuristicL1(getTsp());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestHeuristicEvaluationStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> generateHeuristicEvaluationStrategy() {
         return new ThreeSatEvaluationStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
         return new ThreeSatRenewalStrategy();

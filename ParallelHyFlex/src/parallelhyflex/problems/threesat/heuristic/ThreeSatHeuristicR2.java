@@ -15,10 +15,18 @@ import parallelhyflex.utils.CompactBitArray;
  */
 public class ThreeSatHeuristicR2 extends RuinRecreateHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatHeuristicR2(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         long[] clauses = this.getProblem().getClauses();

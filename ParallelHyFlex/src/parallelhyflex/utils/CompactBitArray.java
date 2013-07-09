@@ -13,6 +13,9 @@ import java.util.Iterator;
  */
 public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
 
+    /**
+     *
+     */
     public static final long BLOCK_MASK = 0xFFFF_FFFF_FFFF_FFBFL;
 
     public static CompactBitArray randomInstance(int n) {
@@ -33,6 +36,9 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
         return new CompactBitArray(n, values);
     }
+    /**
+     *
+     */
     public final long[] values;
     private int n;
 
@@ -381,11 +387,22 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param ts
+     * @return
+     */
     @Override
     public <T> T[] toArray(T[] ts) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean add(Integer e) {
         boolean result = !this.get(e);
@@ -393,6 +410,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean remove(Object o) {
         if (o instanceof Integer) {
@@ -405,6 +427,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         }
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean containsAll(Collection<?> clctn) {
         for (Object o : clctn) {
@@ -415,6 +442,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return true;
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean addAll(Collection<? extends Integer> clctn) {
         boolean result = false;
@@ -424,6 +456,11 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean removeAll(Collection<?> clctn) {
         boolean result = false;
@@ -433,11 +470,19 @@ public class CompactBitArray implements ICompactBitArray, Collection<Integer> {
         return result;
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean retainAll(Collection<?> clctn) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     */
     @Override
     public void clear() {
         long[] values = this.values;

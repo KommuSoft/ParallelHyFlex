@@ -5,29 +5,53 @@ import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.generators.ConstantGenerator;
 import parallelhyflex.utils.Utils;
 
+/**
+ *
+ * @author kommusoft
+ */
 public class ProbabilityVectorBase implements ProbabilityVector {
 
     private double[] cdf;
 
+    /**
+     *
+     * @param initialLength
+     */
     public ProbabilityVectorBase(int initialLength) {
         this(initialLength, new ConstantGenerator<Integer, Double>(1.0d));
     }
 
+    /**
+     *
+     * @param initialLength
+     * @param generator
+     */
     public ProbabilityVectorBase(int initialLength, Generator<Integer, Double> generator) {
         this.cdf = new double[initialLength];
         this.resetProbabilities(generator);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double[] getProbabilities() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     */
     @Override
     public void resetProbabilities() {
         this.resetProbabilities(new ConstantGenerator<Integer, Double>(1.0d));
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int generateIndex() {
         double rand = Utils.nextDouble() * cdf[cdf.length - 1];
@@ -38,16 +62,30 @@ public class ProbabilityVectorBase implements ProbabilityVector {
         return index;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public double getProbability(int index) {
         return this.getUnnormalizedProbability(index) / this.getUnnormalizedTotal();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getUnnormalizedTotal() {
         return this.cdf[this.cdf.length - 1];
     }
 
+    /**
+     *
+     * @param index
+     * @param probability
+     */
     @Override
     public void setProbability(int index, double probability) {
         double P = this.getUnnormalizedTotal();
@@ -55,6 +93,10 @@ public class ProbabilityVectorBase implements ProbabilityVector {
         this.setUnnormalizedProbability(index, probability * (P - pj) / (1 - probability));
     }
 
+    /**
+     *
+     * @param newLength
+     */
     @Override
     public void setLength(int newLength) {
         if (this.cdf.length != newLength) {
@@ -69,11 +111,19 @@ public class ProbabilityVectorBase implements ProbabilityVector {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getLength() {
         return this.cdf.length;
     }
 
+    /**
+     *
+     * @param generator
+     */
     @Override
     public void resetProbabilities(Generator<Integer, Double> generator) {
         double cdfi = 0.0d;
@@ -83,6 +133,11 @@ public class ProbabilityVectorBase implements ProbabilityVector {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public double getUnnormalizedProbability(int index) {
         if (index > 0) {
@@ -92,6 +147,11 @@ public class ProbabilityVectorBase implements ProbabilityVector {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @param probability
+     */
     @Override
     public void setUnnormalizedProbability(int index, double probability) {
         double dp;

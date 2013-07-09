@@ -170,57 +170,115 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         }
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     @Override
     public void synchronizeState() throws IOException {
         stateExchanger.synchronizeState();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ExchangeState getLocalState() {
         return stateExchanger.getLocalState();
     }
 
+    /**
+     *
+     * @param rank
+     * @return
+     */
     @Override
     public ExchangeState getState(int rank) {
         return stateExchanger.getState(rank);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ArrayIterator<ExchangeState> stateIterator() {
         return stateExchanger.stateIterator();
     }
 
+    /**
+     *
+     * @param heuristic
+     * @param from
+     * @param to
+     */
     public void applyHeuristic(int heuristic, int from, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from, to);
         postHeuristicApplication(to);
     }
 
+    /**
+     *
+     * @param objective
+     * @return
+     */
     public double getBestObjectiveSolution(int objective) {
         return this.bestObjectives[objective];
     }
 
+    /**
+     *
+     * @param objective
+     * @return
+     */
     public int getBestObjectiveSolutionIndex(int objective) {
         return this.bestObjectiveSolutionIndices[objective];
     }
 
+    /**
+     *
+     * @return
+     */
     public double getBestObjectiveSolution() {
         return this.getBestObjectiveSolution(0);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getBestObjectiveSolutionIndex() {
         return this.getBestObjectiveSolutionIndex(0);
     }
 
+    /**
+     *
+     * @param heuristic
+     * @param from1
+     * @param from2
+     * @param to
+     */
     public void applyHeuristic(int heuristic, int from1, int from2, int to) {
         this.proxyMemory.applyHeuristic(problem.getHeuristic(heuristic), from1, from2, to);
         postHeuristicApplication(to);
     }
 
+    /**
+     *
+     * @param index
+     */
     public final void initializeSolution(int index) {
         this.proxyMemory.setSolution(index, this.problem.getSolutionGenerator().generateSolution());
         updateBestObjectives(index);
     }
 
+    /**
+     *
+     * @param objective
+     * @param solutionIndex
+     * @return
+     */
     public double getObjectiveFunction(int objective, int solutionIndex) {
         TSolution tsol = this.proxyMemory.getSolution(solutionIndex);
         if (tsol != null) {
@@ -230,26 +288,55 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         }
     }
 
+    /**
+     *
+     * @param solutionIndex
+     * @return
+     */
     public double getObjectiveFunction(int solutionIndex) {
         return this.getObjectiveFunction(0, solutionIndex);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getReadableMemory() {
         return this.proxyMemory.getMemorySize();
     }
 
+    /**
+     *
+     * @return
+     */
     public final int getWritableMemory() {
         return this.proxyMemory.getLocalMemorySize();
     }
 
+    /**
+     *
+     * @param distance
+     * @param index1
+     * @param index2
+     * @return
+     */
     public double getDistanceFunction(int distance, int index1, int index2) {
         return this.problem.getDistanceFunction(distance).evaluateDistance(this.proxyMemory.getSolution(index1), this.proxyMemory.getSolution(index2));
     }
 
+    /**
+     *
+     * @param solution1
+     * @param solution2
+     * @return
+     */
     public boolean areEqual(int solution1, int solution2) {
         return this.proxyMemory.peekSolution(solution1).equalSolution(this.proxyMemory.peekSolution(solution2));
     }
 
+    /**
+     *
+     */
     public final void startExecute() {
         Date date = new Date();
         long time = date.getTime();
@@ -259,84 +346,157 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.execute();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean hasTimeLeft() {
         return this.stopTime.after(new Date());
     }
 
+    /**
+     *
+     * @return
+     */
     public long getRemaingTime() {
         return this.stopTime.getTime() - new Date().getTime();
     }
 
+    /**
+     *
+     * @return
+     */
     public long getTotalTime() {
         return this.durationTicks;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getElapsedTime() {
         return new Date().getTime() - this.startTime.getTime();
     }
 
+    /**
+     *
+     */
     protected abstract void execute();
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getDepthOfSearch() {
         return this.problem.getDepthOfSearch();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getIntensityOfMutation() {
         return this.problem.getIntensityOfMutation();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfDistanceFunctions() {
         return this.problem.getNumberOfDistanceFunctions();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfHeuristics() {
         return this.problem.getNumberOfHeuristics();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfObjectiveFunctions() {
         return this.problem.getNumberOfObjectiveFunctions();
     }
 
+    /**
+     *
+     * @param dos
+     */
     @Override
     public void setDepthOfSearch(double dos) {
         this.problem.setDepthOfSearch(dos);
     }
 
+    /**
+     *
+     * @param iom
+     */
     @Override
     public void setIntensityOfMutation(double iom) {
         this.problem.setIntensityOfMutation(iom);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfLocalSearchHeuristics() {
         return this.problem.getNumberOfLocalSearchHeuristics();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfMutationHeuristics() {
         return this.problem.getNumberOfMutationHeuristics();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfCrossoverHeuristics() {
         return this.problem.getNumberOfCrossoverHeuristics();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfRuinRecreateHeuristics() {
         return this.problem.getNumberOfRuinRecreateHeuristics();
     }
 
+    /**
+     *
+     * @param heuristic
+     * @return
+     */
     @Override
     public HeuristicType getHeuristicType(int heuristic) {
         return this.problem.getHeuristicType(heuristic);
     }
 
+    /**
+     *
+     * @param type
+     * @return
+     */
     @Override
     public int getNumberOfHeuristicsOfType(HeuristicType type) {
         return this.problem.getNumberOfHeuristicsOfType(type);
@@ -356,31 +516,60 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.negotiationTicks = negotiationTicks;
     }
 
+    /**
+     *
+     * @param receiver
+     */
     @Override
     public final void registerPacketReceiver(PacketReceiver receiver) {
         this.prr.registerPacketReceiver(receiver);
     }
 
+    /**
+     *
+     * @param receiver
+     */
     @Override
     public final void unregisterPacketReceiver(PacketReceiver receiver) {
         this.prr.unregisterPacketReceiver(receiver);
     }
 
+    /**
+     *
+     * @param sender
+     * @param tag
+     * @param data
+     */
     @Override
     public void routePacket(int sender, int tag, Object data) {
         this.prr.routePacket(sender, tag, data);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] getPacketTags() {
         return this.prr.getPacketTags();
     }
 
+    /**
+     *
+     * @param from
+     * @param tag
+     * @param data
+     * @throws Exception
+     */
     @Override
     public void receivePacket(int from, int tag, Object data) throws Exception {
         this.prr.receivePacket(from, tag, data);
     }
 
+    /**
+     *
+     * @return
+     */
     public CompactBitArray getExchangeBlockingMask() {
         return this.proxyMemory.getExchangeBlockingMask();
     }
@@ -395,6 +584,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         }
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     */
     public void copySolution(int from, int to) {
         this.proxyMemory.copySolution(from, to);
     }
@@ -416,6 +610,12 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
         this.fetchContol.recheck();
     }
 
+    /**
+     *
+     * @param <T>
+     * @param index
+     * @return
+     */
     @Override
     public <T extends Serializable> StateExchangerProxy<T> generateProxy(int index) {
         return this.stateExchanger.generateProxy(index);

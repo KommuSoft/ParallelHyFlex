@@ -12,10 +12,19 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  */
 public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<ThreeSatSolution, ThreeSatWritableEnforceableConstraint1, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatInstanceHypothesisGenerator1(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public ThreeSatWritableEnforceableConstraint1 generate(ThreeSatSolution variable) {
         double[] cdf = this.getProblem().getIndexCDF();

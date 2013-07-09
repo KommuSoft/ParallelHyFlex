@@ -13,6 +13,12 @@ import parallelhyflex.parsing.tokenizing.Token;
  */
 public class OperatorBinder {
 
+    /**
+     *
+     * @param tokenStream
+     * @return
+     * @throws ParsingException
+     */
     public MultiThreadedList<Token> bind(Iterable<? extends Token> tokenStream) throws ParsingException {
         MultiThreadedList<Token> memory = new MultiThreadedList<>();
         TreeMap<Double, LinkedList<MultiThreadedListNode<Token>>> bindingMap = new TreeMap<>();

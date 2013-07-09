@@ -8,10 +8,19 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public class DummySearchSpace<TSolution extends Solution<TSolution>> extends SearchSpaceBase<TSolution> {
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void correct(TSolution solution) {
     }
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     @Override
     public boolean isInSearchSpace(TSolution solution) {
         return true;

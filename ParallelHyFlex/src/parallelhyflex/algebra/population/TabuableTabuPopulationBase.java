@@ -4,8 +4,17 @@ import java.util.Collection;
 import parallelhyflex.algebra.Tabuable;
 
 
+/**
+ *
+ * @author kommusoft
+ * @param <TIndividual>
+ */
 public class TabuableTabuPopulationBase<TIndividual extends Tabuable> extends TabuPopulationBase<TIndividual> implements TabuableTabuPopulation<TIndividual> {
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Collection<TIndividual> tabuTick () {
         Collection<TIndividual> result = super.tabuTick();
@@ -15,6 +24,11 @@ public class TabuableTabuPopulationBase<TIndividual extends Tabuable> extends Ta
         return result;
     }
     
+    /**
+     *
+     * @param individual
+     * @return
+     */
     @Override
     public boolean untabu (TIndividual individual) {
         boolean mod = super.untabu(individual);
@@ -24,12 +38,22 @@ public class TabuableTabuPopulationBase<TIndividual extends Tabuable> extends Ta
         return mod;
     }
     
+    /**
+     *
+     * @param individual
+     * @return
+     */
     @Override
     public boolean tabu(TIndividual individual) {
         individual.willTabu();
         return this.tabu(individual,individual.getTabuDuration());
     }
 
+    /**
+     *
+     * @param individuals
+     * @return
+     */
     @Override
     public boolean tabu(Collection<TIndividual> individuals) {
         boolean mod = false;

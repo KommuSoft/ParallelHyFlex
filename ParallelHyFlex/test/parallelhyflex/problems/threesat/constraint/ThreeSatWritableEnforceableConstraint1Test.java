@@ -74,16 +74,28 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
         super.testSerializeDeserialize();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWritableEnforceableConstraint() {
         return new ThreeSatWritableEnforceableConstraint1(getTsp(), ClauseUtils.generateTrueClause(getTss().getCompactBitArray()));
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
         return new ThreeSatRenewalStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public EnforceableConstraintGenerator<ThreeSatSolution, ? extends EnforceableConstraint<ThreeSatSolution>> renewEnforceableConstraintGenerator() {
         return new ThreeSatWritableEnforceableConstraintGenerator(this.getTsp());

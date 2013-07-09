@@ -13,10 +13,18 @@ import parallelhyflex.utils.Utils;
  */
 public class CirclePositioningSolutionGenerator extends SolutionGeneratorBase<CirclePositioningSolution, CirclePositioningProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public CirclePositioningSolutionGenerator(CirclePositioningProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public CirclePositioningSolution generateSolution() {
         int n = this.getProblem().getNumberOfCircles() << 0x01;
@@ -33,6 +41,12 @@ public class CirclePositioningSolutionGenerator extends SolutionGeneratorBase<Ci
         return new CirclePositioningSolution(positions, this.getProblem());
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public CirclePositioningSolution readAndGenerate(DataInputStream dis) throws IOException {
         double[] positions = SerialisationUtils.readDoubleArray(dis);

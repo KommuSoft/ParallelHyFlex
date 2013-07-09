@@ -6,6 +6,11 @@ package parallelhyflex.genetic;
  */
 public abstract class MutationImplementationBase implements MutationImplementation {
 
+    /**
+     *
+     * @param input
+     * @param ranges
+     */
     @Override
     public void mutateLocal(int[] input, int[][] ranges) {
         this.mutateLocal(NullManipulationObserver.getInstance(), input, ranges);

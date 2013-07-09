@@ -10,12 +10,21 @@ public class FDCOPObjectiveFunctionIGenerator implements Generator<Integer, FDCO
     
     private static final FDCOPObjectiveFunctionIGenerator instance = new FDCOPObjectiveFunctionIGenerator();
     
+    /**
+     *
+     * @return
+     */
     public static FDCOPObjectiveFunctionIGenerator getInstance () {
         return instance;
     }
     
     private FDCOPObjectiveFunctionIGenerator () {}
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public FDCOPObjectiveFunctionI generate(Integer variable) {
         return new FDCOPObjectiveFunctionI(variable);

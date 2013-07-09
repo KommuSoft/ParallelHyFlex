@@ -30,6 +30,12 @@ public class CompactBitArrayInterferenceStructure implements InterferenceStructu
         }
     }
 
+    /**
+     *
+     * @param i
+     * @param j
+     * @return
+     */
     @Override
     public boolean interferes(Integer i, Integer j) {
         if (i != j && i < n && j < n) {

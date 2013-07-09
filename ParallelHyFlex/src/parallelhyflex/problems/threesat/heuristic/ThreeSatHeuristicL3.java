@@ -13,10 +13,18 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatHeuristicL3 extends LocalSearchHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatHeuristicL3(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength(), delta;
@@ -37,6 +45,10 @@ public class ThreeSatHeuristicL3 extends LocalSearchHeuristicBase<ThreeSatSoluti
         }
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean usesDepthOfSearch() {
         return true;

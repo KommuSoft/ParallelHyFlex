@@ -14,6 +14,11 @@ import java.util.ArrayList;
  */
 public class ExchangeState extends ArrayList<Serializable> {
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     public byte[] writePacket() throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.writeInt(this.size());
@@ -24,6 +29,12 @@ public class ExchangeState extends ArrayList<Serializable> {
         }
     }
 
+    /**
+     *
+     * @param <T>
+     * @param index
+     * @return
+     */
     public <T extends Serializable> T readObject(int index) {
         if (index < this.size() && index >= 0x00) {
             try {
@@ -36,6 +47,12 @@ public class ExchangeState extends ArrayList<Serializable> {
         }
     }
 
+    /**
+     *
+     * @param data
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void readPacket(byte[] data) throws IOException, ClassNotFoundException {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(data); ObjectInputStream ois = new ObjectInputStream(bais)) {
             int l = ois.readInt();
@@ -55,6 +72,10 @@ public class ExchangeState extends ArrayList<Serializable> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ExchangeState[");

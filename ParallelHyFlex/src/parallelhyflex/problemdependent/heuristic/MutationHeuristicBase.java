@@ -9,6 +9,10 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class MutationHeuristicBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends HeuristicBase<TSolution,TProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     public MutationHeuristicBase(TProblem problem) {
         super(problem,HeuristicType.Mutation);
     }

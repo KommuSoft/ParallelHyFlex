@@ -17,10 +17,20 @@ public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSo
 
     private final TwoSetSearchSpace<TSolution> searchSpace = new TwoSetSearchSpace<>();
 
+    /**
+     *
+     * @param generator
+     */
     public TwoSetWriteableSearchSpaceNegotiator(TRG generator) {
         super(generator);
     }
 
+    /**
+     *
+     * @param own
+     * @param others
+     * @return
+     */
     @Override
     protected SearchSpace<TSolution> innerNegotiate(Collection<TEC> own, Collection<TEC> others) {
         this.getSearchSpace().replacePositive(own);
@@ -36,6 +46,11 @@ public class TwoSetWriteableSearchSpaceNegotiator<TSolution extends Solution<TSo
         return searchSpace;
     }
 
+    /**
+     *
+     * @param argument
+     * @return
+     */
     @Override
     public TwoSetWriteableSearchSpaceNegotiator<TSolution, TProblem, TEC, TRG> clone(TProblem argument) {
         return new TwoSetWriteableSearchSpaceNegotiator<>(this.getGenerator().clone(argument));

@@ -12,8 +12,17 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class PushSenderBase<TSolution extends Solution<TSolution>> implements PushSender<TSolution>, SendTagged {
     
+    /**
+     *
+     */
     public static final int SendTag = 0x00;
 
+    /**
+     *
+     * @param index
+     * @param solution
+     * @return
+     */
     public Object[] generatePacket(int index, TSolution solution) {
         Object[] data = new Object[3];
         data[0] = Communication.getCommunication().getRank();
@@ -31,6 +40,10 @@ public abstract class PushSenderBase<TSolution extends Solution<TSolution>> impl
         return new Object[] {data};
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getSendTag() {
         return SendTag;

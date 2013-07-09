@@ -11,14 +11,27 @@ public class ProbablePushDecider<TSolution extends Solution<TSolution>> implemen
 
     private double probability;
 
+    /**
+     *
+     */
     public ProbablePushDecider() {
         this(0.5);
     }
 
+    /**
+     *
+     * @param probability
+     */
     public ProbablePushDecider(double probability) {
         this.probability = probability;
     }
 
+    /**
+     *
+     * @param index
+     * @param sol
+     * @return
+     */
     @Override
     public boolean decidePush(int index, TSolution sol) {
         return Utils.nextDouble() < probability;

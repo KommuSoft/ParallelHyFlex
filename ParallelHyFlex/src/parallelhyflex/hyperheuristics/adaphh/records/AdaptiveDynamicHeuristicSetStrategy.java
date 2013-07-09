@@ -13,10 +13,17 @@ public class AdaptiveDynamicHeuristicSetStrategy extends TabuableTabuPopulationB
 
     private final AdapHHHeuristicRecordEvaluator evaluator;
     
+    /**
+     *
+     * @param evaluator
+     */
     public AdaptiveDynamicHeuristicSetStrategy (AdapHHHeuristicRecordEvaluator evaluator) {
         this.evaluator = evaluator;
     }
 
+    /**
+     *
+     */
     @Override
     public void newPhase() {
         this.tabuTick();

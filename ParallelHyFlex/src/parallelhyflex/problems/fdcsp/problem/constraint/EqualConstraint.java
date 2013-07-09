@@ -15,12 +15,22 @@ public class EqualConstraint extends TokenGeneratorBase<IntegerDomainConstraintO
     
     private static final EqualConstraint instance = new EqualConstraint();
     
+    /**
+     *
+     * @return
+     */
     public static EqualConstraint getInstance () {
         return instance;
     }
     
     private EqualConstraint () {}
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(MutableFiniteIntegerDomain i1, MutableFiniteIntegerDomain i2) {
         boolean red = i1.intersectWith(i2);
@@ -28,16 +38,33 @@ public class EqualConstraint extends TokenGeneratorBase<IntegerDomainConstraintO
         return red;
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(int i1, MutableFiniteIntegerDomain i2) {
         return i2.intersectWith(i1);
     }
 
+    /**
+     *
+     * @param i1
+     * @param i2
+     * @return
+     */
     @Override
     public boolean reduceDomains(MutableFiniteIntegerDomain i1, int i2) {
         return i1.intersectWith(i2);
     }
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public IntegerDomainConstraintOperator generate(String variable) {
         return new IntegerDomainConstraintOperator(getInstance());

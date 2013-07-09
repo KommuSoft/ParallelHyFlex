@@ -6,10 +6,21 @@ package parallelhyflex.problems.circlepositioning;
  */
 public final class CirclePositioningUtils {
 
+    /**
+     *
+     * @param r2
+     * @return
+     */
     public static double calculateCircleAreaRadiusSquare(double r2) {
         return Math.PI * r2;
     }
 
+    /**
+     *
+     * @param rad
+     * @param pos
+     * @return
+     */
     public static double calculateOverlap(double[] rad, double[] pos) {
         int n = rad.length;
         double overlap = 0.0d;
@@ -27,6 +38,13 @@ public final class CirclePositioningUtils {
         return overlap;
     }
 
+    /**
+     *
+     * @param largeRadius
+     * @param rad
+     * @param pos
+     * @return
+     */
     public static double calculateOuter(double largeRadius, double[] rad, double[] pos) {
         double outer = 0.0d;
         int n2 = pos.length;
@@ -39,6 +57,14 @@ public final class CirclePositioningUtils {
         return outer;
     }
 
+    /**
+     *
+     * @param R
+     * @param x
+     * @param y
+     * @param r
+     * @return
+     */
     public static double calculateCircleOuterArea(double R, double x, double y, double r) {
         double d2 = x * x + y * y;
         double d = Math.sqrt(d2);
@@ -56,6 +82,16 @@ public final class CirclePositioningUtils {
         }
     }
 
+    /**
+     *
+     * @param x1
+     * @param y1
+     * @param r1
+     * @param x2
+     * @param y2
+     * @param r2
+     * @return
+     */
     public static double calculateCircleOverlapArea(double x1, double y1, double r1, double x2, double y2, double r2) {
         double dx = (x2 - x1);
         double dy = (y2 - y1);
@@ -77,6 +113,13 @@ public final class CirclePositioningUtils {
         }
     }
 
+    /**
+     *
+     * @param pos
+     * @param rad
+     * @param index
+     * @return
+     */
     public static double calculateOptimalRadius(double[] pos, double[] rad, int index) {
         int n = rad.length;
         double[] dist = new double[n];
@@ -92,6 +135,17 @@ public final class CirclePositioningUtils {
         
     }
     
+    /**
+     *
+     * @param x1
+     * @param y1
+     * @param r1
+     * @param x2
+     * @param y2
+     * @param r2
+     * @param dr
+     * @return
+     */
     public static double calculateDifferenceCircleOverlapArea (double x1, double y1, double r1, double x2, double y2, double r2, double dr) {
         if (dr > 0.0d) {
             return -calculateDifferenceCircleOverlapArea(x1, y1, r1, x2, y2, r2 + dr, -dr);
@@ -112,6 +166,18 @@ public final class CirclePositioningUtils {
         }
     }
 
+    /**
+     *
+     * @param pos
+     * @param index0
+     * @param index1
+     * @param radia
+     * @param x2
+     * @param y2
+     * @param r2
+     * @param dr
+     * @return
+     */
     public static double calculateDifferenceOverlapRadius(double[] pos, int index0, int index1, double[] radia, double x2, double y2, double r2, double dr) {
         int n = radia.length;
         double doverlap = 0.0d, x1, y1, r1;
@@ -136,6 +202,18 @@ public final class CirclePositioningUtils {
         return doverlap;
     }
 
+    /**
+     *
+     * @param pos
+     * @param index
+     * @param radia
+     * @param x3
+     * @param y3
+     * @param r13
+     * @param x1
+     * @param y1
+     * @return
+     */
     public static double calculateDifferenceOverlap(double[] pos, int index, double[] radia, double x3, double y3, double r13, double x1, double y1) {
         int n = radia.length;
         double doverlap = 0.0d, x2, y2, r2;
@@ -154,10 +232,29 @@ public final class CirclePositioningUtils {
         return doverlap;
     }
 
+    /**
+     *
+     * @param R
+     * @param x3
+     * @param y3
+     * @param r13
+     * @param x1
+     * @param y1
+     * @return
+     */
     public static double calculateDifferenceOuter(double R, double x3, double y3, double r13, double x1, double y1) {
         return CirclePositioningUtils.calculateCircleOuterArea(R, x3, y3, r13) - CirclePositioningUtils.calculateCircleOuterArea(R, x1, y1, r13);
     }
 
+    /**
+     *
+     * @param R
+     * @param x
+     * @param y
+     * @param r0
+     * @param r1
+     * @return
+     */
     public static double calculateDifferenceOuterRadius(double R, double x, double y, double r0, double r1) {
         return CirclePositioningUtils.calculateCircleOuterArea(R, x, y, r1) - CirclePositioningUtils.calculateCircleOuterArea(R, x, y, r0);
     }

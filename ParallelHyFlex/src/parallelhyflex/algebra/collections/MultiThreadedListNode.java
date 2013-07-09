@@ -9,6 +9,10 @@ public class MultiThreadedListNode<TElement> {
     private TElement element;
     private MultiThreadedListNode<TElement> next = null, previous = null;
     
+    /**
+     *
+     * @param element
+     */
     public MultiThreadedListNode (TElement element) {
         this.element = element;
     }

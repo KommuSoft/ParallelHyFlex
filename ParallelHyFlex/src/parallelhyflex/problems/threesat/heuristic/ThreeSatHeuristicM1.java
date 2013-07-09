@@ -14,12 +14,19 @@ import parallelhyflex.utils.Utils;
  * @author kommusoft
  */
 public class ThreeSatHeuristicM1 extends MutationHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
-    //swaps a random variable
-
+    /**
+     *
+     * @param problem
+     */
+    
     public ThreeSatHeuristicM1(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from) {
         int n = from.getLength();
@@ -31,6 +38,10 @@ public class ThreeSatHeuristicM1 extends MutationHeuristicBase<ThreeSatSolution,
         } while (Utils.nextDouble() < this.getIntensityOfMutation());
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean usesIntensityOfMutation() {
         return true;

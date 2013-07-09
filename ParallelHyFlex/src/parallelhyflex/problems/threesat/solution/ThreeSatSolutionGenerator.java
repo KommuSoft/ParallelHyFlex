@@ -12,10 +12,18 @@ import parallelhyflex.utils.CompactBitArray;
  */
 public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatSolutionGenerator(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ThreeSatSolution generateSolution() {
         ThreeSatProblem problem = this.getProblem();
@@ -30,6 +38,12 @@ public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSol
         return new ThreeSatSolution(nfail, cba);
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public ThreeSatSolution readAndGenerate(DataInputStream dis) throws IOException {
         return new ThreeSatSolution(dis.readInt(), CompactBitArray.fromDataInputStream(dis));

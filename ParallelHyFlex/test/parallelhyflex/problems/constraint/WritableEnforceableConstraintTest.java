@@ -29,10 +29,21 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
     private EnforceableConstraintGenerator<TS, ? extends EnforceableConstraint<TS>> ecg;
     private TS tss2;
 
+    /**
+     *
+     * @return
+     */
     public abstract WritableEnforceableConstraintBase<TS, TP> renewWritableEnforceableConstraint();
     
+    /**
+     *
+     * @return
+     */
     public abstract EnforceableConstraintGenerator<TS, ? extends EnforceableConstraint<TS>> renewEnforceableConstraintGenerator ();
 
+    /**
+     *
+     */
     public void testEnforceTrue1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
@@ -46,6 +57,9 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
         }
     }
 
+    /**
+     *
+     */
     public void testEnforceTrue2() {
         this.renewProblemGenerator();
         this.renewProblem();
@@ -60,10 +74,16 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
         }
     }
 
+    /**
+     *
+     */
     protected void renewSolution2() {
         this.setTss2(getTsg().generateSolution());
     }
 
+    /**
+     *
+     */
     public void testEnforceFalse1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();
@@ -77,6 +97,9 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
         }
     }
 
+    /**
+     *
+     */
     public void testEnforceFalse2() {
         this.renewProblemGenerator();
         this.renewProblem();
@@ -91,6 +114,10 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
         }
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     public void testSerializeDeserialize() throws Exception {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.setEcg(this.renewEnforceableConstraintGenerator());

@@ -10,10 +10,18 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  */
 public class FrequencyAssignmentHeuristicM2 extends MutationHeuristicBase<FrequencyAssignmentSolution,FrequencyAssignmentProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public FrequencyAssignmentHeuristicM2(FrequencyAssignmentProblem problem) {
         super(problem);
     }
     
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from) {
         //TODO: recalc evaluation

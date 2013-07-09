@@ -9,6 +9,11 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  */
 public class CirclePositioningObjectiveFunction1 extends ObjectiveFunctionBase<CirclePositioningSolution> {
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     @Override
     public double evaluateSolution(CirclePositioningSolution solution) {
         return solution.getOverlapArea()+solution.getOuterArea();

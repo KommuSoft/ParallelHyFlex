@@ -19,10 +19,19 @@ public class AdapHHHeuristicRecordEvaluator extends EvaluatedHeuristicRecordEval
 
     private final AdapHH adapHH;
 
+    /**
+     *
+     * @param adapHH
+     */
     public AdapHHHeuristicRecordEvaluator(AdapHH adapHH) {
         this.adapHH = adapHH;
     }
 
+    /**
+     *
+     * @param rec
+     * @return
+     */
     @Override
     public Double generate(AdapHHHeuristicRecord rec) {
         int cpbest = rec.getCpbest();
@@ -53,6 +62,10 @@ public class AdapHHHeuristicRecordEvaluator extends EvaluatedHeuristicRecordEval
         return var;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public AdapHH getAdapHH() {
         return this.adapHH;

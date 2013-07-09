@@ -10,6 +10,12 @@ public final class Tuple3<TItem1,TItem2,TItem3> {
     private final TItem2 item2;
     private final TItem3 item3;
     
+    /**
+     *
+     * @param item1
+     * @param item2
+     * @param item3
+     */
     public Tuple3 (TItem1 item1, TItem2 item2, TItem3 item3) {
         this.item1 = item1;
         this.item2 = item2;

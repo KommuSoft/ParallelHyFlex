@@ -16,6 +16,13 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
     private final PushDecider<TSolution> pushDecider;
     private final PushSender<TSolution> pushSender;
 
+    /**
+     *
+     * @param memorySize
+     * @param policy
+     * @param pushDecider
+     * @param pushSender
+     */
     public LocalMemorySlots(int memorySize, MemoryExchangePolicy policy, PushDecider<TSolution> pushDecider, PushSender<TSolution> pushSender) {
         super(policy);
         this.storage = new Object[memorySize];
@@ -29,6 +36,10 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         return true;
     }
 
+    /**
+     *
+     * @param index
+     */
     @Override
     public void pushSolution(int index) {
         if (this.willExchange(index)) {
@@ -39,8 +50,12 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         }
     }
 
-    //protected abstract void sendSolution ();
-    @Override
+    /**
+     *
+     * @param index
+     * @param sol
+     */
+        @Override
     public void setSolution(int index, TSolution sol) {
         if (index < this.storage.length) {
             this.storage[index] = sol;
@@ -50,11 +65,20 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         }
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public TSolution getSolution(int index) {
         return (TSolution) this.storage[index];
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getSize() {
         return this.storage.length;
@@ -68,6 +92,11 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         return blockingMask;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public boolean willExchange(int index) {
         return !this.blockingMask.get(index);

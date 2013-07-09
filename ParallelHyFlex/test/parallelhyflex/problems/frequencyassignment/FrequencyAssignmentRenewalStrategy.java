@@ -18,16 +18,28 @@ public class FrequencyAssignmentRenewalStrategy implements TestRenewalStrategy<F
         testbase.setTsp(testbase.getTspg().generateProblem());
     }
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewProblemGenerator(ProblemTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> testbase) {
         testbase.setTspg(new FrequencyAssignmentProblemGenerator());
     }
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewSolution(ProblemTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> testbase) {
         testbase.setTss(testbase.getTsg().generateSolution());
     }
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewSolutionGenerator(ProblemTestBase<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> testbase) {
         testbase.setTsg(testbase.getTsp().getSolutionGenerator());

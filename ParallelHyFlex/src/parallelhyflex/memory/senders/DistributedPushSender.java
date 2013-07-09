@@ -13,6 +13,11 @@ public class DistributedPushSender<TSolution extends Solution<TSolution>> extend
 
     private int sendIndex = 0;
 
+    /**
+     *
+     * @param index
+     * @param solution
+     */
     @Override
     public void sendSolution(int index, TSolution solution) {
         if (Communication.getCommunication().getSize() > 1) {

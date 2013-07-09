@@ -137,6 +137,12 @@ public class NotEqualNeighbourhoodBasedMutation extends MutationImplementationBa
         this.DefaultRepeat = DefaultRepeat;
     }
 
+    /**
+     *
+     * @param observer
+     * @param input
+     * @param ranges
+     */
     @Override
     public void mutateLocal(ManipulationObserver observer, int[] input, int[][] ranges) {
         this.mutateLocal(observer, input, ranges, this.getDefaultPm(), this.getDefaultRepeat());

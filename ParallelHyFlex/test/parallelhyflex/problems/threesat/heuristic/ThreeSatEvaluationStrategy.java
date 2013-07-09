@@ -19,11 +19,21 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 public class ThreeSatEvaluationStrategy implements TestHeuristicEvaluationStrategy<ThreeSatSolutionGenerator,ThreeSatProblem,ThreeSatProblemGenerator,ThreeSatSolution> {
     
 
+    /**
+     *
+     * @param heuristicTestbase
+     * @return
+     */
     @Override
     public double[] calculateApproximatedEvaluations(ProblemHeuristicTestBase<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> heuristicTestbase) {
         return new double[] {heuristicTestbase.getTss().getConflictingClauses()};
     }
 
+    /**
+     *
+     * @param heuristicTestbase
+     * @return
+     */
     @Override
     public double[] calculateRealEvaluations(ProblemHeuristicTestBase<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> heuristicTestbase) {
         return new double[] {ClauseUtils.getNumberOfFailedClauses(heuristicTestbase.getTss().getCompactBitArray(), heuristicTestbase.getTsp().getClauses())};

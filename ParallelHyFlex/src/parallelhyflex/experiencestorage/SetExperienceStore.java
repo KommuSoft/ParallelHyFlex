@@ -27,6 +27,15 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
     private final Comparator<SetHypothesisItem> comparator;
     private double mineval = Double.POSITIVE_INFINITY;
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     * @param comparator
+     * @param historySize
+     * @param hypothesisSize
+     * @param generationSize
+     */
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem);
         //this.setLock = new ReentrantReadWriteLock();
@@ -37,18 +46,41 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
         this.comparator = comparator;
     }
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     * @param historySize
+     * @param hypothesisSize
+     * @param generationSize
+     */
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, int historySize, int hypothesisSize, int generationSize) {
         this(problem, hypothesisGenerator, SetHypothesisItemComparator1.getInstance(), historySize, hypothesisSize, generationSize);
     }
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     * @param comparator
+     */
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator) {
         this(problem, hypothesisGenerator, comparator, 5, 20, 5);
     }
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     */
     public SetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator) {
         this(problem, hypothesisGenerator, SetHypothesisItemComparator1.getInstance(), 5, 20, 5);
     }
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void join(TSolution solution) {
         double eval = this.getProblem().getObjectiveFunction(0).evaluateSolution(solution);
@@ -64,6 +96,9 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void amnesia() {
         ArrayList<SetHypothesisItem<TSolution, THypothesis>> items = getSortedHypothesisList();
@@ -73,6 +108,10 @@ public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem 
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Collection<THypothesis> generateEnforceableConstraints() {
         ArrayList<THypothesis> generatedEcs = new ArrayList<>();

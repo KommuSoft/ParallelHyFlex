@@ -11,6 +11,11 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public class BroadcastPushSender<TSolution extends Solution<TSolution>> extends PushSenderBase<TSolution> {
 
+    /**
+     *
+     * @param index
+     * @param solution
+     */
     @Override
     public void sendSolution(int index, TSolution solution) {
         Communication.BcastRoot(CommMode.MpiNonBlocking,this.generatePacket(index, solution), 0, 1, MPI.OBJECT, PushSenderBase.SendTag);

@@ -14,6 +14,12 @@ import parallelhyflex.utils.Utils;
  */
 public class FrequencyAssignmentProblemGenerator implements ProblemReader<FrequencyAssignmentSolution, FrequencyAssignmentProblem> {
     
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public FrequencyAssignmentProblem readAndGenerate(DataInputStream dis) throws IOException {
         int nTransceivers = dis.readInt();
@@ -27,6 +33,10 @@ public class FrequencyAssignmentProblemGenerator implements ProblemReader<Freque
         return new FrequencyAssignmentProblem(nTransceivers, nSectors, frequencies, means, stdevs, placement);
     }
     
+    /**
+     *
+     * @return
+     */
     public FrequencyAssignmentProblem generateProblem() {
         int n = Utils.nextInt(8_000);
         int m = Utils.nextInt((int) Math.ceil(Math.sqrt(n)));

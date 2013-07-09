@@ -7,10 +7,22 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ *
+ * @author kommusoft
+ * @param <TKey>
+ * @param <TItem>
+ */
 public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
 
     private final HashMap<TKey, MultiThreadedList<TItem>> map = new HashMap<>();
 
+    /**
+     *
+     * @param key
+     * @param item
+     * @return
+     */
     @Override
     public TItem put(TKey key, TItem item) {
         MultiThreadedList<TItem> list;
@@ -24,6 +36,11 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         return null;
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     @Override
     public Iterator<TItem> iterator(TKey key) {
         if (this.map.containsKey(key)) {
@@ -33,6 +50,10 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         int siz = 0;
@@ -42,6 +63,10 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         return siz;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isEmpty() {
         for (MultiThreadedList<TItem> l : this.map.values()) {
@@ -52,16 +77,31 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         return true;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean containsKey(Object o) {
         return this.map.containsKey(o);
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean containsValue(Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public TItem get(Object o) {
         if (this.map.containsKey(o)) {
@@ -76,6 +116,11 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         }
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public TItem remove(Object o) {
         MultiThreadedList<TItem> item = this.map.remove(o);
@@ -86,6 +131,10 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         }
     }
 
+    /**
+     *
+     * @param map
+     */
     @Override
     public void putAll(Map<? extends TKey, ? extends TItem> map) {
         for (Entry<? extends TKey, ? extends TItem> item : map.entrySet()) {
@@ -93,26 +142,45 @@ public class ListMapperBase<TKey, TItem> implements ListMapper<TKey, TItem> {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void clear() {
         this.map.clear();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Set<TKey> keySet() {
         return this.map.keySet();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Collection<TItem> values() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Set<Entry<TKey, TItem>> entrySet() {
         return new EntrySet();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Entry<TKey, TItem>> iterator() {
         return new EntryIterator(map.entrySet().iterator());

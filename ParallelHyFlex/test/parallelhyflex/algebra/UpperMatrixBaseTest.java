@@ -13,6 +13,9 @@ import parallelhyflex.TestParameters;
  */
 public class UpperMatrixBaseTest {
 
+    /**
+     *
+     */
     @Test
     public void testCalculateOrderedIndex() {
         for (int n = 0x00; n < TestParameters.LOOP_PARAMETER; n++) {
@@ -27,6 +30,9 @@ public class UpperMatrixBaseTest {
         }
     }
 
+    /**
+     *
+     */
     @Test
     public void testCalculateSize() {
         UpperMatrixBaseImpl um = new UpperMatrixBaseImpl(0x00);
@@ -35,25 +41,54 @@ public class UpperMatrixBaseTest {
         }
     }
 
+    /**
+     *
+     */
     public class UpperMatrixBaseImpl extends UpperMatrixBase {
 
+        /**
+         *
+         * @param n
+         */
         public UpperMatrixBaseImpl(int n) {
             super(n);
         }
 
+        /**
+         *
+         * @param i
+         * @param j
+         * @return
+         */
         @Override
         public Object get(int i, int j) {
             return null;
         }
 
+        /**
+         *
+         * @param i
+         * @param j
+         * @param value
+         */
         @Override
         public void set(int i, int j, Object value) {
         }
 
+        /**
+         *
+         * @param dis
+         * @throws IOException
+         */
         @Override
         public void read(DataInputStream dis) throws IOException {
         }
 
+        /**
+         *
+         * @param dos
+         * @throws IOException
+         */
         @Override
         public void write(DataOutputStream dos) throws IOException {
         }

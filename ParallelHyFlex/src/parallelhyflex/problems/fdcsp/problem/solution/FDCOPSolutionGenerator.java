@@ -22,10 +22,18 @@ import parallelhyflex.utils.Utils;
  */
 public class FDCOPSolutionGenerator extends SolutionGeneratorBase<FDCOPSolution, FDCOPProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     public FDCOPSolutionGenerator(FDCOPProblem problem) {
         super(problem);
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public FDCOPSolution generateSolution() {
         FDCOPProblem prob = this.getProblem();
@@ -58,6 +66,12 @@ public class FDCOPSolutionGenerator extends SolutionGeneratorBase<FDCOPSolution,
         return sol;
     }
     
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public FDCOPSolution readAndGenerate(DataInputStream dis) throws IOException {
         int[] values = SerialisationUtils.readIntArray(dis);

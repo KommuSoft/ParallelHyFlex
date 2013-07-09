@@ -8,10 +8,19 @@ public class CloningGenerator<TArgument, TDestination extends ArgumentCloneable<
 
     private final TDestination origin;
 
+    /**
+     *
+     * @param origin
+     */
     public CloningGenerator(TDestination origin) {
         this.origin = origin;
     }
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public TDestination generate(TArgument variable) {
         return this.getOrigin().clone(variable);

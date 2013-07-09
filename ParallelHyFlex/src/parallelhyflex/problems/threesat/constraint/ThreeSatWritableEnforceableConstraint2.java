@@ -17,6 +17,12 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
     private final ThreeSatSolution root;
     private final int maxDistance;
 
+    /**
+     *
+     * @param problem
+     * @param root
+     * @param maxDistance
+     */
     public ThreeSatWritableEnforceableConstraint2(ThreeSatProblem problem, ThreeSatSolution root, int maxDistance) {
         super(problem);
         this.root = root;
@@ -27,6 +33,10 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         return (int) Math.floor(this.getProblem().getDistanceFunction(0).evaluateDistance(this.getRoot(), solution));
     }
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void enforceTrue(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
@@ -38,6 +48,10 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         }
     }
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void enforceFalse(ThreeSatSolution solution) {
         int distance = this.calculateDistance(solution);
@@ -52,6 +66,11 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         //System.out.println(String.format("end for (distance must be larger than %s)",maxDistance));
     }
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     @Override
     public boolean isSatisfied(ThreeSatSolution solution) {
         return this.getProblem().getDistanceFunction(0).evaluateDistanceSmallerThanOrEqual(this.getRoot(), solution, this.getMaxDistance());
@@ -71,12 +90,22 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         return maxDistance;
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeLong((long) this.maxDistance);
         this.root.write(dos);
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ThreeSatWritableEnforceableConstraint2) {
@@ -87,6 +116,10 @@ public class ThreeSatWritableEnforceableConstraint2 extends ThreeSatWritableEnfo
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;

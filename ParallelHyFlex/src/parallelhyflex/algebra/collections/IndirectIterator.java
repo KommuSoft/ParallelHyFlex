@@ -11,10 +11,18 @@ public class IndirectIterator<TItem> implements Iterator<TItem> {
     private final Iterator<? extends Iterable<TItem>> realIterator;
     private Iterator<TItem> subIterator;
 
+    /**
+     *
+     * @param realIterator
+     */
     public IndirectIterator(Iterator<? extends Iterable<TItem>> realIterator) {
         this.realIterator = realIterator;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean hasNext() {
         if (subIterator == null) {
@@ -26,12 +34,19 @@ public class IndirectIterator<TItem> implements Iterator<TItem> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TItem next() {
         hasNext();
         return subIterator.next();
     }
 
+    /**
+     *
+     */
     @Override
     public void remove() {
         if (this.subIterator != null) {

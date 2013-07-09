@@ -47,12 +47,20 @@ public class DoubleUpperMatrixTest extends ReadWriteableBaseTest<DoubleUpperMatr
         }
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     @Test
     @Override
     public void testSerialisation() throws IOException {
         super.testSerialisation();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public DoubleUpperMatrix createRandomInstance() {
         int n = Utils.nextInt(TestParameters.LOOP2_PARAMETER);

@@ -12,15 +12,27 @@ public abstract class SolutionGeneratorBase<TSolution extends Solution<TSolution
 
     private final Random random = new Random();
 
+    /**
+     *
+     * @param problem
+     */
     public SolutionGeneratorBase(TProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param seed
+     */
     @Override
     public void setSeed(long seed) {
         this.random.setSeed(seed);
     }
 
+    /**
+     *
+     * @return
+     */
     protected Random getRandom() {
         return this.random;
     }

@@ -28,11 +28,18 @@ import parallelhyflex.parsing.tokenizing.TokenGeneratorBase;
 public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<MutableFiniteIntegerDomain> implements FiniteIntegerDomain, ReadWriteable, ReadableGenerator<MutableFiniteIntegerDomain>, Token {
     private static final Pattern subPattern = Pattern.compile("\\[(-?[0-9]+),(-?[0-9]+)\\]|\\{(-?[0-9]+)\\}");
 
+    /**
+     *
+     * @return
+     */
     public static MutableFiniteIntegerDomain all() {
         return new MutableFiniteIntegerDomain(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     private final TreeSet<IntegerInterval> singleIntervals;
 
+    /**
+     *
+     */
     public MutableFiniteIntegerDomain() {
         singleIntervals = new TreeSet<>();
     }
@@ -41,15 +48,28 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         this.singleIntervals = singleIntervals;
     }
 
+    /**
+     *
+     * @param value
+     */
     public MutableFiniteIntegerDomain(int value) {
         this(value, value);
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     */
     public MutableFiniteIntegerDomain(int low, int high) {
         this();
         this.singleIntervals.add(new IntegerInterval(low, high));
     }
 
+    /**
+     *
+     * @param sis
+     */
     public MutableFiniteIntegerDomain(Iterable<? extends IntegerInterval> sis) {
         this();
         for (IntegerInterval si : sis) {
@@ -57,6 +77,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Integer low() {
         if (this.singleIntervals.size() > 0) {
@@ -66,6 +90,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Integer high() {
         if (this.singleIntervals.size() > 0) {
@@ -75,6 +103,11 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         }
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public Integer getIth(int index) {
         for (IntegerInterval ii : this.singleIntervals) {
@@ -88,6 +121,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return null;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         int siz = 0;
@@ -97,6 +134,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return siz;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean clear() {
         boolean mod = this.singleIntervals.size() > 0;
@@ -104,6 +145,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return mod;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -119,22 +164,43 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return sb.toString();
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public boolean contains(Integer value) {
         IntegerInterval ii = this.singleIntervals.floor(new IntegerInterval(value));
         return (ii != null && ii.contains(value));
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public boolean add(int value) {
         return this.add(value, value);
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     * @return
+     */
     @Override
     public boolean add(int low, int high) {
         return this.add(new IntegerInterval(low, high));
     }
 
+    /**
+     *
+     * @param si
+     * @return
+     */
     @Override
     public boolean add(IntegerInterval si) {
         boolean ch = false;
@@ -169,11 +235,20 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return ch;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public MutableFiniteIntegerDomain clone() {
         return new MutableFiniteIntegerDomain(this.singleIntervals);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public MutableFiniteIntegerDomain union(FiniteIntegerDomain other) {
         MutableFiniteIntegerDomain res = this.clone();
@@ -181,6 +256,11 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return res;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean unionWith(Iterable<IntegerInterval> other) {
         boolean ch = false;
@@ -192,26 +272,52 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return ch;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean unionWith(FiniteIntegerDomain other) {
         return unionWith((Iterable<IntegerInterval>) other);
     }
 
+    /**
+     *
+     * @param interval
+     * @return
+     */
     @Override
     public boolean unionWith(IntegerInterval interval) {
         return unionWith(new ItemIterable<>(interval));
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     * @return
+     */
     @Override
     public boolean unionWith(int low, int high) {
         return unionWith(new IntegerInterval(low, high));
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public boolean unionWith(int value) {
         return unionWith(value, value);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public MutableFiniteIntegerDomain intersection(FiniteIntegerDomain other) {
         MutableFiniteIntegerDomain res = this.clone();
@@ -219,26 +325,52 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return res;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean intersectWith(FiniteIntegerDomain other) {
         return intersectWith((Iterable<IntegerInterval>) other);
     }
 
+    /**
+     *
+     * @param interval
+     * @return
+     */
     @Override
     public boolean intersectWith(IntegerInterval interval) {
         return intersectWith(new ItemIterable<>(interval));
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     * @return
+     */
     @Override
     public boolean intersectWith(int low, int high) {
         return intersectWith(new IntegerInterval(low, high));
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public boolean intersectWith(int value) {
         return intersectWith(value, value);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public MutableFiniteIntegerDomain minus(FiniteIntegerDomain other) {
         MutableFiniteIntegerDomain res = this.clone();
@@ -246,26 +378,52 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return res;
     }
 
+    /**
+     *
+     * @param fid
+     * @return
+     */
     @Override
     public boolean minusWith(FiniteIntegerDomain fid) {
         return this.minusWith((Iterable<IntegerInterval>) fid);
     }
 
+    /**
+     *
+     * @param interval
+     * @return
+     */
     @Override
     public boolean minusWith(IntegerInterval interval) {
         return minusWith(new ItemIterable<>(interval));
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     * @return
+     */
     @Override
     public boolean minusWith(int low, int high) {
         return minusWith(new IntegerInterval(low, high));
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public boolean minusWith(int value) {
         return minusWith(value, value);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean minusWith(Iterable<IntegerInterval> other) {
         int oldSize = 0;
@@ -303,16 +461,29 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return (this.size() != oldSize);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<IntegerInterval> iterator() {
         return this.singleIntervals.iterator();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Integer> integerIterator() {
         return new IndirectIterator(iterator());
     }
 
+    /**
+     *
+     * @param dis
+     * @throws IOException
+     */
     @Override
     public void read(DataInputStream dis) throws IOException {
         int n = dis.readInt();
@@ -322,6 +493,11 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         }
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeInt(this.singleIntervals.size());
@@ -331,6 +507,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -340,6 +520,11 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -361,6 +546,12 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return true;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public MutableFiniteIntegerDomain readAndGenerate(DataInputStream dis) throws IOException {
         int n = dis.readInt();
@@ -371,21 +562,41 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return new MutableFiniteIntegerDomain(sis);
     }
 
+    /**
+     *
+     * @param tr
+     * @return
+     */
     @Override
     public boolean canIntersect(FiniteIntegerDomain tr) {
         return true;
     }
 
+    /**
+     *
+     * @param tr
+     * @return
+     */
     @Override
     public boolean canMinus(FiniteIntegerDomain tr) {
         return true;
     }
 
+    /**
+     *
+     * @param si
+     * @return
+     */
     @Override
     public boolean canUnion(FiniteIntegerDomain si) {
         return true;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean intersectWith(Iterable<IntegerInterval> other) {
         ArrayList<IntegerInterval> q = new ArrayList<>();
@@ -406,6 +617,10 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         return (oldSize != this.size());
     }
 
+    /**
+     *
+     * @param interval
+     */
     @Override
     public void setToSingle(IntegerInterval interval) {
         this.singleIntervals.clear();
@@ -414,16 +629,30 @@ public final class MutableFiniteIntegerDomain extends TokenGeneratorBase<Mutable
         }
     }
 
+    /**
+     *
+     * @param low
+     * @param high
+     */
     @Override
     public void setToSingle(int low, int high) {
         this.setToSingle(new IntegerInterval(low, high));
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
     public void setToSingle(int value) {
         this.setToSingle(value, value);
     }
 
+    /**
+     *
+     * @param text
+     * @return
+     */
     @Override
     public MutableFiniteIntegerDomain generate(String text) {
         Matcher matcher = this.getPattern().matcher(text);

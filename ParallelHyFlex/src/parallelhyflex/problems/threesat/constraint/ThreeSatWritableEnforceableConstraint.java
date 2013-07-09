@@ -10,6 +10,10 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  */
 public abstract class ThreeSatWritableEnforceableConstraint extends WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     protected ThreeSatWritableEnforceableConstraint(ThreeSatProblem problem) {
         super(problem);
     }

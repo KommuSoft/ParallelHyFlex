@@ -38,6 +38,12 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     private int totalMemory = 0;
     private double smallEval = Double.POSITIVE_INFINITY;
 
+    /**
+     *
+     * @param initialMemory
+     * @param localPolicy
+     * @param solutionReader
+     */
     public ProxyMemory(int initialMemory, MemoryExchangePolicy localPolicy, SolutionReader<TSolution> solutionReader) {
         this.solutionReader = solutionReader;
         MemoryExchangePolicy[] policies = MemoryExchangePolicy.values();
@@ -71,14 +77,27 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         //Communication.Log(Arrays.deepToString(this.others)+" with "+Arrays.toString(solutionCache));
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMemorySize() {
         return this.totalMemory;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLocalMemorySize() {
         return this.localSlots.getSize();
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     public TSolution getSolution(int index) {
         int ii = Utils.getLengthIndex(this.cdfI, index + 1);
         int ij = index;
@@ -88,6 +107,11 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         return this.solutionCache[ii].getSolution(ij);
     }
 
+    /**
+     *
+     * @param index
+     * @param value
+     */
     public void setSolution(int index, TSolution value) {
         this.getWritableExperience().join(value);
         double eval = this.getObjectiveGenerator().generate(value);
@@ -99,8 +123,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         this.localSlots.setSolution(index, value);
     }
 
-    //TODO: carefull with heuristics applied to global solution space
-    public void applyHeuristic(Heuristic<TSolution> heuristic, int from, int to) {
+    /**
+     *
+     * @param heuristic
+     * @param from
+     * @param to
+     */
+        public void applyHeuristic(Heuristic<TSolution> heuristic, int from, int to) {
         if (from == to) {
             heuristic.applyHeuristicLocally(this.getSolution(from));
             pushSolution(to);
@@ -109,6 +138,13 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         }
     }
 
+    /**
+     *
+     * @param heuristic
+     * @param from1
+     * @param from2
+     * @param to
+     */
     public void applyHeuristic(Heuristic<TSolution> heuristic, int from1, int from2, int to) {
         if (from1 == to) {
             heuristic.applyHeuristicLocally(this.getSolution(from1), this.getSolution(from2));
@@ -123,6 +159,11 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         this.localSlots.pushSolution(to);
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     public Solution peekSolution(int index) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
@@ -162,11 +203,22 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] getPacketTags() {
         return new int[]{PushSenderBase.SendTag};
     }
 
+    /**
+     *
+     * @param from
+     * @param tag
+     * @param data
+     * @throws IOException
+     */
     @Override
     public void receivePacket(int from, int tag, Object data) throws IOException {
         Object[] buffer = (Object[]) data;
@@ -180,14 +232,27 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public CompactBitArray getExchangeBlockingMask() {
         return this.localSlots.getBlockingMask();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     */
     public void copySolution(int from, int to) {
         this.setSolution(to, this.getSolution(from).clone());
     }
 
+    /**
+     *
+     * @param generator
+     */
     public void initializeProxyMemory(SolutionGenerator<TSolution> generator) {
         MemorySlots ms;
         for (int i = 1; i < solutionCache.length; i++) {

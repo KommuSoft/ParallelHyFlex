@@ -84,6 +84,9 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         this.tabuDuration = tabuDurationOffset;
     }
 
+    /**
+     *
+     */
     @Override
     public void newPhase() {
         if (!this.isTabued()) {
@@ -92,21 +95,36 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         }
     }
 
+    /**
+     *
+     * @param dt
+     */
     public void processed(long dt) {
         this.getExchangeRecord().processed(dt);
         this.tpspent += dt;
     }
 
+    /**
+     *
+     */
     public void newBest() {
         this.getExchangeRecord().newBest();
         this.cpbest++;
     }
 
+    /**
+     *
+     * @param df
+     */
     public void addImprovement(double df) {
         this.getExchangeRecord().addImprovement(df);
         this.fpimp += df;
     }
 
+    /**
+     *
+     * @param df
+     */
     public void addWorsening(double df) {
         this.getExchangeRecord().addWorsening(df);
         this.fpwrs += df;
@@ -161,14 +179,24 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         return tpspent;
     }
 
+    /**
+     *
+     */
     public void incrementTabuDuration() {
         this.tabuDuration = Math.min(this.getTabuDuration() + 1, this.tabuDurationLimit);
     }
 
+    /**
+     *
+     */
     public void resetTabuDuration() {
         this.tabuDuration = this.tabuDurationOffset;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean shouldExclude() {
         return this.tabuDuration >= this.tabuDurationOffset;
     }
@@ -181,6 +209,9 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         return tabuDuration;
     }
 
+    /**
+     *
+     */
     @Override
     public void willTabu() {
         this.tabued = true;
@@ -210,6 +241,9 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         this.tpspent = 0;
     }
 
+    /**
+     *
+     */
     @Override
     public void willUntabu() {
         this.tabued = false;
@@ -229,6 +263,11 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         return this.getExchangeRecord().getCbest();
     }
 
+    /**
+     *
+     * @param dt
+     * @param delta
+     */
     public void processed(long dt, double delta) {
         this.processed(dt);
         if (delta > 0.0d) {
@@ -252,18 +291,34 @@ public class AdapHHHeuristicRecord extends EvaluatedHeuristicRecordBase implemen
         return tabuEscapeCounter;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCiMove() {
         return (double) this.getCmoves() / (double) this.getTspent();
     }
 
+    /**
+     *
+     */
     public void execute() {
         this.execute(AdapHH.S, AdapHH.Sa);
     }
 
+    /**
+     *
+     * @param from
+     */
     public void execute(int from) {
         this.execute(from, from + 1);
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     */
     public void execute(int from, int to) {
         Communication.logFileTime(LoggingParameters.LOG_ADAPHH_EXRC, LoggingParameters.LOG_ADAPHH_EXRC_TEXT, this.getHeuristicIndex(), from, to);
         adaphh.setDepthOfSearch(this.getDOSIOM());

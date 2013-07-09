@@ -9,20 +9,37 @@ public class HeuristicRecordBase implements HeuristicRecord {
     
     private final int heuristicIndex;
     
+    /**
+     *
+     * @param heuristicIndex
+     */
     public HeuristicRecordBase (int heuristicIndex) {
         this.heuristicIndex = heuristicIndex;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getHeuristicIndex() {
         return this.heuristicIndex;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode () {
         return ((Integer) this.heuristicIndex).hashCode();
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

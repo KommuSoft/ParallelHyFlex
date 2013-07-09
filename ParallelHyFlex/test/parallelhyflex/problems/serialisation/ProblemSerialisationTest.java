@@ -19,6 +19,10 @@ import parallelhyflex.problems.ProblemTestBase;
  */
 public abstract class ProblemSerialisationTest<TSG extends SolutionGenerator<TS>, TP extends Problem<TS>, TPG extends ProblemReader<TS, TP>, TS extends Solution<TS>> extends ProblemTestBase<TSG, TP, TPG, TS> {
     
+    /**
+     *
+     * @throws IOException
+     */
     public void testSerializationDeserialization() throws IOException {
         for(int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewProblemGenerator();

@@ -13,21 +13,42 @@ public class AdapHHHybridRelaxationHeuristicRecord extends AdapHHHeuristicRecord
 
     private final CircularList<AdapHHHeuristicRecord> nextHeuristic;//TODO: fill list with records and maintain them
 
+    /**
+     *
+     * @param adaphh
+     * @param heuristicIndex
+     */
     public AdapHHHybridRelaxationHeuristicRecord(AdapHH adaphh, int heuristicIndex) {
         super(adaphh, heuristicIndex);
         this.nextHeuristic = new CircularList<>(AdapHH.LIST_SIZE);
     }
 
+    /**
+     *
+     * @param adaphh
+     * @param heuristicIndex
+     * @param tabuDurationOffset
+     */
     public AdapHHHybridRelaxationHeuristicRecord(AdapHH adaphh, int heuristicIndex, int tabuDurationOffset) {
         super(adaphh, heuristicIndex, tabuDurationOffset);
         this.nextHeuristic = new CircularList<>(AdapHH.LIST_SIZE);
     }
 
+    /**
+     *
+     * @param adaphh
+     * @param heuristicIndex
+     * @param tabuDurationOffset
+     * @param tabuDurationLimit
+     */
     public AdapHHHybridRelaxationHeuristicRecord(AdapHH adaphh, int heuristicIndex, int tabuDurationOffset, int tabuDurationLimit) {
         super(adaphh, heuristicIndex, tabuDurationOffset, tabuDurationLimit);
         this.nextHeuristic = new CircularList<>(AdapHH.LIST_SIZE);
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         this.getAdaphh().applyHeuristic(this.getHeuristicIndex(), AdapHH.S, AdapHH.Sa);

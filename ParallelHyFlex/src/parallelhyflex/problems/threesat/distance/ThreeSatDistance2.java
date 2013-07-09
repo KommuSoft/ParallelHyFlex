@@ -11,10 +11,20 @@ import parallelhyflex.utils.CompactBitArray;
  */
 public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatDistance2(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param solution1
+     * @param solution2
+     * @return
+     */
     @Override
     public double evaluateDistance(ThreeSatSolution solution1, ThreeSatSolution solution2) {
         CompactBitArray cba1 = solution1.getCompactBitArray();
@@ -28,6 +38,13 @@ public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution, Th
         return dis;
     }
 
+    /**
+     *
+     * @param solution1
+     * @param solution2
+     * @param maxDistance
+     * @return
+     */
     @Override
     public boolean evaluateDistanceSmallerThanOrEqual(ThreeSatSolution solution1, ThreeSatSolution solution2, double maxDistance) {
         CompactBitArray cba1 = solution1.getCompactBitArray();

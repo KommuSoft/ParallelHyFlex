@@ -19,6 +19,10 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
     private final List<EnforceableConstraint<TSolution>> negative = new MultiThreadedList<>();
     private final ReentrantReadWriteLock negLock = new ReentrantReadWriteLock();
 
+    /**
+     *
+     * @param solution
+     */
     @Override
     public void correct(TSolution solution) {
         /*Lock lo = this.posLock.readLock();
@@ -41,6 +45,11 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
         }*/
     }
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     @Override
     public boolean isInSearchSpace(TSolution solution) {
         //TODO: positive
@@ -65,6 +74,10 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
         return positive;
     }
 
+    /**
+     *
+     * @param positive
+     */
     public void replacePositive(Collection<? extends EnforceableConstraint<TSolution>> positive) {
         /*Lock lo = this.posLock.writeLock();
         lo.lock();
@@ -83,6 +96,10 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
         return negative;
     }
 
+    /**
+     *
+     * @param positive
+     */
     public void replaceNegative(Collection<? extends EnforceableConstraint<TSolution>> positive) {
         /*Lock lo = this.negLock.writeLock();
         lo.lock();
@@ -94,6 +111,10 @@ public class TwoSetSearchSpace<TSolution extends Solution<TSolution>> extends Se
         }*/
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString () {
         StringBuilder sb = new StringBuilder();

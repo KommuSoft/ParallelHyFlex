@@ -8,6 +8,12 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public class AlwaysPushDecider<TSolution extends Solution<TSolution>> implements PushDecider<TSolution> {
 
+    /**
+     *
+     * @param index
+     * @param sol
+     * @return
+     */
     @Override
     public boolean decidePush(int index, TSolution sol) {
         return true;

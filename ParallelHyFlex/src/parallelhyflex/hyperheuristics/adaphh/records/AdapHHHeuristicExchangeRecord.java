@@ -12,19 +12,34 @@ public class AdapHHHeuristicExchangeRecord implements Serializable {
     private long tspent = 0x00;
     private int cbest = 0, cmoves = 0;
 
+    /**
+     *
+     * @param dt
+     */
     public void processed(long dt) {
         this.cmoves++;
         this.tspent += dt;
     }
 
+    /**
+     *
+     */
     public void newBest() {
         this.cbest++;
     }
 
+    /**
+     *
+     * @param df
+     */
     public void addImprovement(double df) {
         this.fimp += df;
     }
 
+    /**
+     *
+     * @param df
+     */
     public void addWorsening(double df) {
         this.fwrs += df;
     }
@@ -64,6 +79,10 @@ public class AdapHHHeuristicExchangeRecord implements Serializable {
         return cmoves;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return String.format("AdapHHHeuristicExchangeRecord{fimp=%s, fwrs=%s, tspent=%s, cbest=%s, cmoves=%s%s", fimp, fwrs, tspent, cbest, cmoves, '}');

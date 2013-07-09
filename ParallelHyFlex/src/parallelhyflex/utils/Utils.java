@@ -17,10 +17,25 @@ import parallelhyflex.algebra.tuples.Tuple2;
  */
 public final class Utils {
 
+    /**
+     *
+     */
     public static final Random StaticRandom = new Random();
+    /**
+     *
+     */
     public static final double Tolerance = 1e-6;
+    /**
+     *
+     */
     public static final double InvSqrt2 = Math.sqrt(0.5d);
     
+    /**
+     *
+     * @param index
+     * @param ignore
+     * @return
+     */
     public static int ignoreIndex (int index, int ignore) {
         if(index < ignore) {
             return index;
@@ -30,50 +45,111 @@ public final class Utils {
         }
     }
     
+    /**
+     *
+     * @param n
+     * @param ignore
+     * @return
+     */
     public static int ignoreRandomIndex (int n, int ignore) {
         return ignoreIndex(nextInt(n-1),ignore);
     }
 
+    /**
+     *
+     * @return
+     */
     public static int nextInt() {
         return StaticRandom.nextInt();
     }
 
+    /**
+     *
+     * @param n
+     * @return
+     */
     public static int nextInt(int n) {
         return StaticRandom.nextInt(n);
     }
 
+    /**
+     *
+     * @return
+     */
     public static long nextLong() {
         return StaticRandom.nextLong();
     }
 
+    /**
+     *
+     * @return
+     */
     public static boolean nextBoolean() {
         return StaticRandom.nextBoolean();
     }
 
+    /**
+     *
+     * @return
+     */
     public static float nextFloat() {
         return StaticRandom.nextFloat();
     }
 
+    /**
+     *
+     * @return
+     */
     public static double nextDouble() {
         return StaticRandom.nextDouble();
     }
 
+    /**
+     *
+     * @return
+     */
     public static double nextGaussian() {
         return StaticRandom.nextGaussian();
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @param tolerance
+     * @return
+     */
     public static boolean isEqualTolerance(double a, double b, double tolerance) {
         return Math.abs(a - b) <= tolerance;
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public static boolean isEqualTolerance(double a, double b) {
         return isEqualTolerance(a, b, 10e-9);
     }
 
+    /**
+     *
+     * @param min
+     * @param val
+     * @param max
+     * @return
+     */
     public static double border(double min, double val, double max) {
         return Math.min(Math.min(max, val), max);
     }
 
+    /**
+     *
+     * @param cdfI
+     * @param index
+     * @return
+     */
     public static int getLengthIndex(int[] cdfI, int index) {
         int i = Arrays.binarySearch(cdfI, index);
         if (i < 0) {
@@ -82,6 +158,12 @@ public final class Utils {
         return i;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param values
+     * @return
+     */
     public static <T> int hashCode(T... values) {
         int hash = 7;
         for (T val : values) {
@@ -90,6 +172,12 @@ public final class Utils {
         return hash;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param iterable
+     * @return
+     */
     public static <T> T headOrNull(Iterable<T> iterable) {
         for (T t : iterable) {
             return t;
@@ -97,6 +185,12 @@ public final class Utils {
         return null;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param values
+     * @return
+     */
     public static <T> int hashCode(int... values) {
         int hash = 7;
         for (int val : values) {
@@ -105,6 +199,11 @@ public final class Utils {
         return hash;
     }
 
+    /**
+     *
+     * @param data
+     * @return
+     */
     public static int countOnes(long data) {
         int ones = 0;
         while (data != 0) {
@@ -114,6 +213,12 @@ public final class Utils {
         return ones;
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public static boolean arrayEquality(long[] a, long[] b) {
         if (a.length != b.length) {
             return false;
@@ -126,6 +231,12 @@ public final class Utils {
         return true;
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public static boolean arrayEquality(int[] a, int[] b) {
         if (a.length != b.length) {
             return false;
@@ -138,6 +249,13 @@ public final class Utils {
         return true;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param ta
+     * @param tb
+     * @return
+     */
     public static <T> boolean arrayEquality(Iterator<T> ta, Iterator<T> tb) {
         boolean na = ta.hasNext(), nb = tb.hasNext();
         while (na && nb) {
@@ -150,6 +268,12 @@ public final class Utils {
         return na == nb;
     }
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public static boolean arrayEquality(double[] a, double[] b) {
         if (a.length != b.length) {
             return false;
@@ -162,6 +286,11 @@ public final class Utils {
         return true;
     }
 
+    /**
+     *
+     * @param inp
+     * @return
+     */
     public static String stringReverse(String inp) {
         StringBuilder sb = new StringBuilder();
         for (int i = inp.length() - 1; i >= 0; i--) {
@@ -170,6 +299,13 @@ public final class Utils {
         return sb.toString();
     }
 
+    /**
+     *
+     * @param <T>
+     * @param a
+     * @param b
+     * @return
+     */
     public static <T> boolean arrayEquality(T[] a, T... b) {
         if (a.length != b.length) {
             return false;
@@ -182,6 +318,13 @@ public final class Utils {
         return true;
     }
 
+    /**
+     *
+     * @param from
+     * @param delta
+     * @param to
+     * @return
+     */
     public static Iterable<Integer> sequence(int from, int delta, int to) {
         return new Iterable<Integer>() {
             private int from, delta, to;
@@ -229,14 +372,32 @@ public final class Utils {
         }.setValues(from, delta, to);
     }
 
+    /**
+     *
+     * @param to
+     * @return
+     */
     public static Iterable<Integer> sequence(int to) {
         return sequence(0, 1, to);
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     public static Iterable<Integer> sequence(int from, int to) {
         return sequence(from, 1, to);
     }
 
+    /**
+     *
+     * @param offset
+     * @param delta
+     * @param modulo
+     * @return
+     */
     public static Iterable<Integer> sequenceModulo(int offset, int delta, int modulo) {
         return new Iterable<Integer>() {
             private int offset, delta, modulo;
@@ -285,10 +446,22 @@ public final class Utils {
         }.setValues(offset, delta, modulo);
     }
 
+    /**
+     *
+     * @param offset
+     * @param modulo
+     * @return
+     */
     public static Iterable<Integer> sequenceModulo(int offset, int modulo) {
         return sequenceModulo(offset, 1, modulo);
     }
 
+    /**
+     *
+     * @param <T>
+     * @param iterable
+     * @return
+     */
     public static <T> ArrayList<T> toArrayList(Iterable<T> iterable) {
         ArrayList<T> list = new ArrayList<>();
         for (T t : iterable) {
@@ -297,6 +470,13 @@ public final class Utils {
         return list;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param collection
+     * @param predicate
+     * @return
+     */
     public static <T> boolean any(Iterable<T> collection, Generator<T, Boolean> predicate) {
         for (T t : collection) {
             if (predicate.generate(t)) {
@@ -306,6 +486,13 @@ public final class Utils {
         return false;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param collection
+     * @param predicate
+     * @return
+     */
     public static <T> boolean all(Iterable<T> collection, Generator<T, Boolean> predicate) {
         for (T t : collection) {
             if (!predicate.generate(t)) {
@@ -315,6 +502,14 @@ public final class Utils {
         return true;
     }
 
+    /**
+     *
+     * @param <TFrom>
+     * @param <TTo>
+     * @param collection
+     * @param generator
+     * @return
+     */
     public static <TFrom, TTo> HashMap<TFrom, TTo> generateMapping(Collection<TFrom> collection, Generator<TFrom, TTo> generator) {
         HashMap<TFrom, TTo> mapping = new HashMap<>();
         for (TFrom from : collection) {
@@ -323,6 +518,14 @@ public final class Utils {
         return mapping;
     }
 
+    /**
+     *
+     * @param <TFrom>
+     * @param <TTo>
+     * @param iterable
+     * @param generator
+     * @return
+     */
     public static <TFrom, TTo> ArrayList<TTo> generateMappedArrayList(Iterable<TFrom> iterable, Generator<TFrom, TTo> generator) {
         ArrayList<TTo> result = new ArrayList<>();
         for (TFrom x : iterable) {
@@ -331,6 +534,13 @@ public final class Utils {
         return result;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param function
+     * @param iterable
+     * @return
+     */
     public static <T> T fold(Generator<Tuple2<? extends T, ? extends T>, ? extends T> function, Iterable<? extends T> iterable) {
         Iterator<? extends T> it = iterable.iterator();
         if (it.hasNext()) {
@@ -345,15 +555,35 @@ public final class Utils {
         }
     }
 
+    /**
+     *
+     * @param <T>
+     * @param iterable
+     * @return
+     */
     public static <T> HashMap<T, Integer> generateIndexHashMapper(Iterable<T> iterable) {
         return generateIndexMapper(iterable, new HashMap<T, Integer>());
     }
 
+    /**
+     *
+     * @param <T>
+     * @param iterable
+     * @return
+     */
     public static <T> HashBiMap<T, Integer> generateIndexHashBiMapper(Iterable<T> iterable) {
         HashBiMap<T, Integer> map = HashBiMap.create();
         return generateIndexMapper(iterable, map);
     }
 
+    /**
+     *
+     * @param <T>
+     * @param <TMap>
+     * @param iterable
+     * @param mapping
+     * @return
+     */
     public static <T, TMap extends Map<T, Integer>> TMap generateIndexMapper(Iterable<T> iterable, TMap mapping) {
         int index = 0;
         for (T t : iterable) {
@@ -362,6 +592,11 @@ public final class Utils {
         return mapping;
     }
 
+    /**
+     *
+     * @param tmp
+     * @return
+     */
     public static int ceiling2Log(int tmp) {
         int d = 0;
         while (tmp != 0x00) {
@@ -371,15 +606,30 @@ public final class Utils {
         return d;
     }
 
+    /**
+     *
+     * @param original
+     * @return
+     */
     public static int next2Pow(int original) {
         original = fillTail(original);
         return original + 1;
     }
 
+    /**
+     *
+     * @param original
+     * @return
+     */
     public static int base2Pow(int original) {
         return (fillTail(original) + 1) >> 1;
     }
 
+    /**
+     *
+     * @param original
+     * @return
+     */
     public static int fillTail(int original) {
         original |= original >> 0x10;
         original |= original >> 0x08;
@@ -396,10 +646,18 @@ public final class Utils {
         return ceiling2Log(tmp) - 1;
     }
 
+    /**
+     *
+     * @param seed
+     */
     public synchronized void setSeed(long seed) {
         StaticRandom.setSeed(seed);
     }
 
+    /**
+     *
+     * @param bytes
+     */
     public void nextBytes(byte[] bytes) {
         StaticRandom.nextBytes(bytes);
     }

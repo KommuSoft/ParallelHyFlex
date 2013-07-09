@@ -13,10 +13,20 @@ import parallelhyflex.algebra.ReversedComparator;
 import parallelhyflex.utils.ProbabilityUtils;
 
 
+/**
+ *
+ * @author kommusoft
+ * @param <TIndividual>
+ */
 public class PopulationBase<TIndividual> implements Population<TIndividual> {
 
     private Collection<TIndividual> collection = new HashSet<>();
     
+    /**
+     *
+     * @param predicate
+     * @return
+     */
     @Override
     public Collection<TIndividual> removeWithPredicate(Predicate<TIndividual> predicate) {
         Iterator<TIndividual> iterator = collection.iterator();
@@ -31,71 +41,135 @@ public class PopulationBase<TIndividual> implements Population<TIndividual> {
         return removed;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         return collection.size();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isEmpty() {
         return collection.isEmpty();
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean contains(Object o) {
         return collection.contains(o);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<TIndividual> iterator() {
         return collection.iterator();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Object[] toArray() {
         return collection.toArray();
     }
 
+    /**
+     *
+     * @param <T>
+     * @param a
+     * @return
+     */
     @Override
     public <T> T[] toArray(T[] a) {
         return collection.toArray(a);
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean add(TIndividual e) {
         return collection.add(e);
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean remove(Object o) {
         return collection.remove(o);
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean containsAll(Collection<?> c) {
         return collection.containsAll(c);
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean addAll(Collection<? extends TIndividual> c) {
         return collection.addAll(c);
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean removeAll(Collection<?> c) {
         return collection.removeAll(c);
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean retainAll(Collection<?> c) {
         return collection.retainAll(c);
     }
 
+    /**
+     *
+     */
     @Override
     public void clear() {
         collection.clear();
     }
 
+    /**
+     *
+     * @param procedure
+     */
     @Override
     public void processAll(Procedure<TIndividual> procedure) {
         for(TIndividual ind : this.collection) {
@@ -103,6 +177,12 @@ public class PopulationBase<TIndividual> implements Population<TIndividual> {
         }
     }
 
+    /**
+     *
+     * @param comparator
+     * @param length
+     * @return
+     */
     @Override
     public SortedSet<TIndividual> getBests(Comparator<? super TIndividual> comparator, int length) {
         SortedSet<TIndividual> sortedset = new TreeSet<>(comparator);
@@ -118,11 +198,21 @@ public class PopulationBase<TIndividual> implements Population<TIndividual> {
         return sortedset;
     }
 
+    /**
+     *
+     * @param comparator
+     * @param length
+     * @return
+     */
     @Override
     public SortedSet<TIndividual> getWorsts(Comparator<? super TIndividual> comparator, int length) {
         return this.getBests(new ReversedComparator<>(comparator), length);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TIndividual getRandomIndividual() {
         return ProbabilityUtils.randomElement(this.collection);

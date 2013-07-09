@@ -27,6 +27,9 @@ public class UtilsTest {
         Assert.assertEquals(32, Utils.countOnes(0x0123_4567_89AB_CDEFL));
     }
 
+    /**
+     *
+     */
     @Test
     public void ceiling2Log1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
@@ -38,6 +41,9 @@ public class UtilsTest {
         }
     }
 
+    /**
+     *
+     */
     @Test
     public void ceiling2Log2() {
         for (int i = 1; i < 31; i++) {
@@ -48,6 +54,9 @@ public class UtilsTest {
         }
     }
     
+    /**
+     *
+     */
     @Test
     public void priority2Log1() {
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
@@ -59,6 +68,9 @@ public class UtilsTest {
         }
     }
 
+    /**
+     *
+     */
     @Test
     public void priority2Log2() {
         for (int i = 1; i < 31; i++) {
@@ -69,6 +81,9 @@ public class UtilsTest {
         }
     }
 
+    /**
+     *
+     */
     @Test
     public void testNext2Pow() {
         for (int i = 0; i < 31; i++) {
@@ -79,6 +94,9 @@ public class UtilsTest {
         }
     }
     
+    /**
+     *
+     */
     @Test
     public void testBase2Pow() {
         for (int i = 0; i < 31; i++) {
@@ -156,6 +174,9 @@ public class UtilsTest {
         Assert.assertArrayEquals(new Integer[]{4, 5, 6, 7, 8, 9, 0, 1, 2, 3}, a.toArray(new Integer[]{}));
     }
 
+    /**
+     *
+     */
     @Test
     public void testSequence1() {
         Iterable<Integer> iterable = Utils.sequence(5);
@@ -223,6 +244,9 @@ public class UtilsTest {
         Assert.assertFalse(iterator.hasNext());
     }
 
+    /**
+     *
+     */
     @Test
     public void testSequence2() {
         Iterable<Integer> iterable = Utils.sequence(1, 5);
@@ -279,6 +303,9 @@ public class UtilsTest {
         Assert.assertFalse(iterator.hasNext());
     }
 
+    /**
+     *
+     */
     @Test
     public void testSequence3() {
         Iterable<Integer> iterable = Utils.sequence(1, 2, 5);

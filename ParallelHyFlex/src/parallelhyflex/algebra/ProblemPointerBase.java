@@ -11,10 +11,18 @@ public class ProblemPointerBase<TSolution extends Solution<TSolution>, TProblem 
 
     private final TProblem problem;
 
+    /**
+     *
+     * @param problem
+     */
     public ProblemPointerBase(TProblem problem) {
         this.problem = problem;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TProblem getProblem() {
         return problem;

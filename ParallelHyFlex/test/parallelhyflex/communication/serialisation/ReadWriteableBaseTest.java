@@ -15,6 +15,10 @@ import parallelhyflex.TestParameters;
  */
 public abstract class ReadWriteableBaseTest<T extends ReadWriteable> {
 
+    /**
+     *
+     * @throws IOException
+     */
     public void testSerialisation() throws IOException {
         for (int i = 0x00; i < TestParameters.LOOP_PARAMETER; i++) {
             T instance1 = this.createRandomInstance();
@@ -33,8 +37,16 @@ public abstract class ReadWriteableBaseTest<T extends ReadWriteable> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract T createRandomInstance();
 
+    /**
+     *
+     * @return
+     */
     public T createInstance() {
         return this.createRandomInstance();
     }

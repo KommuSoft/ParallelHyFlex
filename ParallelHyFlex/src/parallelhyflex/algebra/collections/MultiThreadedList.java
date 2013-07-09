@@ -14,16 +14,29 @@ public class MultiThreadedList<TElement> implements List<TElement> {
     private int size = 0;
     private MultiThreadedListNode<TElement> first = null, last = null;
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         return this.size;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isEmpty() {
         return this.size() < 0;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean contains(Object o) {
         MultiThreadedListNode<TElement> node = this.first;
@@ -36,21 +49,40 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<TElement> iterator() {
         return new MultiThreadedListIterator<>(this.first);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Object[] toArray() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param <T>
+     * @param a
+     * @return
+     */
     @Override
     public <T> T[] toArray(T[] a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean add(TElement e) {
         MultiThreadedListNode<TElement> element = new MultiThreadedListNode<>(e);
@@ -66,11 +98,21 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return true;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean remove(Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean containsAll(Collection<?> c) {
         for (Object obj : c) {
@@ -81,6 +123,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return true;
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean addAll(Collection<? extends TElement> c) {
         boolean chang = false;
@@ -90,6 +137,12 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return chang;
     }
 
+    /**
+     *
+     * @param index
+     * @param c
+     * @return
+     */
     @Override
     public boolean addAll(int index, Collection<? extends TElement> c) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -120,6 +173,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         }
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean removeAll(Collection<?> c) {
         boolean ch = false;
@@ -147,11 +205,19 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return ch;
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     @Override
     public boolean retainAll(Collection<?> c) {
         return this.removeAll(new OppositeCollection(c));
     }
 
+    /**
+     *
+     */
     @Override
     public void clear() {
         this.size = 0;
@@ -159,6 +225,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         this.last = null;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public TElement get(int index) {
         MultiThreadedListNode<TElement> elem = this.getNode(index);
@@ -169,6 +240,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     public MultiThreadedListNode<TElement> getNode(int index) {
         MultiThreadedListNode<TElement> elem = this.first;
         for (int i = 0; elem != null && i < index; i++) {
@@ -177,14 +253,28 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return elem;
     }
 
+    /**
+     *
+     * @return
+     */
     public MultiThreadedListNode<TElement> getFirstNode() {
         return this.first;
     }
 
+    /**
+     *
+     * @return
+     */
     public MultiThreadedListNode<TElement> getLastNode() {
         return this.last;
     }
 
+    /**
+     *
+     * @param index
+     * @param element
+     * @return
+     */
     @Override
     public TElement set(int index, TElement element) {
         MultiThreadedListNode<TElement> elem = this.getNode(index);
@@ -197,6 +287,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @param element
+     */
     @Override
     public void add(int index, TElement element) {
         MultiThreadedListNode<TElement> elem = new MultiThreadedListNode<>(element);
@@ -217,6 +312,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         this.size++;
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public TElement remove(int index) {
         TElement data = null;
@@ -240,6 +340,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return data;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int indexOf(Object o) {
         MultiThreadedListNode<TElement> node = this.first;
@@ -254,6 +359,11 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return -0x01;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int lastIndexOf(Object o) {
         MultiThreadedListNode<TElement> node = this.first;
@@ -269,21 +379,40 @@ public class MultiThreadedList<TElement> implements List<TElement> {
         return lastSeen;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ListIterator<TElement> listIterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     @Override
     public ListIterator<TElement> listIterator(int index) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param fromIndex
+     * @param toIndex
+     * @return
+     */
     @Override
     public List<TElement> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

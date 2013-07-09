@@ -13,8 +13,15 @@ import parallelhyflex.utils.Utils;
  */
 public class CirclePositioningProblemGenerator implements ProblemReader<CirclePositioningSolution,CirclePositioningProblem> {
 
+    /**
+     *
+     */
     public CirclePositioningProblemGenerator () {}
     
+    /**
+     *
+     * @return
+     */
     public CirclePositioningProblem generateProblem () {
         double outer = Utils.nextDouble();
         int n = Utils.nextInt(100);
@@ -26,6 +33,12 @@ public class CirclePositioningProblemGenerator implements ProblemReader<CirclePo
         return new CirclePositioningProblem(outer,radia);
     }
     
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public CirclePositioningProblem readAndGenerate(DataInputStream dis) throws IOException {
         double outer = dis.readDouble();

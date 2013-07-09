@@ -12,10 +12,18 @@ import parallelhyflex.utils.ProbabilityUtils;
  */
 public class FrequencyAssignmentSolutionGenerator extends SolutionGeneratorBase<FrequencyAssignmentSolution,FrequencyAssignmentProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     public FrequencyAssignmentSolutionGenerator (FrequencyAssignmentProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public FrequencyAssignmentSolution generateSolution() {
         int[][] frequencies = this.getProblem().getFrequencies();
@@ -27,6 +35,12 @@ public class FrequencyAssignmentSolutionGenerator extends SolutionGeneratorBase<
         return new FrequencyAssignmentSolution(values,this.getProblem());
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public FrequencyAssignmentSolution readAndGenerate(DataInputStream dis) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

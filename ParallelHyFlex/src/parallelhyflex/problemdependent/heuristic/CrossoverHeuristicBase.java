@@ -11,6 +11,10 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class CrossoverHeuristicBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends HeuristicBase<TSolution,TProblem> {
     
+    /**
+     *
+     * @param problem
+     */
     public CrossoverHeuristicBase(TProblem problem) {
         super(problem,HeuristicType.Crossover);
     }
@@ -23,6 +27,11 @@ public abstract class CrossoverHeuristicBase<TSolution extends Solution<TSolutio
     public final void applyHeuristicLocally(TSolution from) {
     }
     
+    /**
+     *
+     * @param from1
+     * @param from2
+     */
     @Override
     public abstract void applyHeuristicLocally (TSolution from1, TSolution from2);
     

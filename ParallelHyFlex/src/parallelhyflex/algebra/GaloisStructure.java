@@ -11,6 +11,11 @@ public class GaloisStructure<TConcrete, TAbstract> {
     private final Generator<TConcrete, TAbstract> alpha;
     private final Generator<TAbstract, TConcrete> gamma;
 
+    /**
+     *
+     * @param alpha
+     * @param gamma
+     */
     public GaloisStructure(Generator<TConcrete, TAbstract> alpha, Generator<TAbstract, TConcrete> gamma) {
         this.alpha = alpha;
         this.gamma = gamma;

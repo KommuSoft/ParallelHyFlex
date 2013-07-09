@@ -6,10 +6,20 @@ package parallelhyflex.algebra.tuples;
  */
 public class ComparableTuple2<TItem1 extends Comparable<? super TItem1>,TItem2 extends Comparable<? super TItem2>> extends Tuple2<TItem1,TItem2> implements Comparable<ComparableTuple2<TItem1,TItem2>> {
     
+    /**
+     *
+     * @param item1
+     * @param item2
+     */
     public ComparableTuple2 (TItem1 item1, TItem2 item2) {
         super(item1,item2);
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(ComparableTuple2<TItem1,TItem2> o) {
         if(o == null) {

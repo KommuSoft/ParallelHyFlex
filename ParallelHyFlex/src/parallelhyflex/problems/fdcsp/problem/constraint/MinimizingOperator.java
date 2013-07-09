@@ -20,39 +20,75 @@ public class MinimizingOperator extends OperatorBase<Token, Token> implements To
 
     private static final MinimizingOperator instance = new MinimizingOperator();
 
+    /**
+     *
+     * @return
+     */
     public static MinimizingOperator getInstance() {
         return instance;
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
     @Override
     public boolean canSetLeft(Token token) {
         return false;
     }
 
+    /**
+     *
+     * @param token
+     * @return
+     */
     @Override
     public boolean canSetRight(Token token) {
         return (token instanceof Expression);
     }
 
+    /**
+     *
+     * @return
+     */
     public Expression getExpression() {
         return (Expression) this.getRight();
     }
 
+    /**
+     *
+     * @param text
+     * @return
+     */
     @Override
     public boolean validate(String text) {
         return TokenGeneratorImplementation.validate(this, text);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getPriority() {
         return TokenGeneratorImplementation.getPriority(this);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Pattern getPattern() {
         return TokenGeneratorImplementation.getPattern(this);
     }
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public MinimizingOperator generate(String variable) {
         return new MinimizingOperator();

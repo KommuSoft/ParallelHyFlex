@@ -13,11 +13,20 @@ public class StateExchangerProxy<T extends Serializable> implements Iterable<T> 
     private final StateExchanger exchanger;
     private final int index;
 
+    /**
+     *
+     * @param exchanger
+     * @param index
+     */
     public StateExchangerProxy(StateExchanger exchanger, int index) {
         this.exchanger = exchanger;
         this.index = index;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<T> iterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

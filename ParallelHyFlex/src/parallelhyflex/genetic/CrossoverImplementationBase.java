@@ -13,21 +13,40 @@ import parallelhyflex.algebra.collections.ConstantInfiniteCollection;
  */
 public abstract class CrossoverImplementationBase implements CrossoverImplementation {
 
+    /**
+     *
+     * @param genes
+     * @param parents
+     */
     @Override
     public void crossoverLocal(Collection<Integer> genes, int[]... parents) {
         this.crossoverLocal(NullManipulationObserver.getInstance(), genes, parents);
     }
 
+    /**
+     *
+     * @param parents
+     * @return
+     */
     @Override
     public int[] crossover(int[]... parents) {
         return this.crossover(new ConstantInfiniteCollection<>(0x01), parents);
     }
 
+    /**
+     *
+     * @param parents
+     */
     @Override
     public void crossoverLocal(int[]... parents) {
         this.crossoverLocal(new ConstantInfiniteCollection<>(0x01), parents);
     }
 
+    /**
+     *
+     * @param observer
+     * @param parents
+     */
     @Override
     public void crossoverLocal(ManipulationObserver observer, int[]... parents) {
         this.crossoverLocal(observer, new ConstantInfiniteCollection<>(0x01), parents);

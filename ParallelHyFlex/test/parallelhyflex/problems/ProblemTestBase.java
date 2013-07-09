@@ -21,24 +21,43 @@ public abstract class ProblemTestBase<TSG extends SolutionGenerator<TS>, TP exte
     private TS tss;
     private TestRenewalStrategy renewalStrategy;
 
+    /**
+     *
+     */
     public ProblemTestBase() {
         this.renewalStrategy = this.getRenewalStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract TestRenewalStrategy<TSG, TP, TPG, TS> getRenewalStrategy();
 
+    /**
+     *
+     */
     protected final void renewProblem() {
         this.renewalStrategy.renewProblem(this);
     }
 
+    /**
+     *
+     */
     protected final void renewProblemGenerator() {
         this.renewalStrategy.renewProblemGenerator(this);
     }
 
+    /**
+     *
+     */
     protected final void renewSolution() {
         this.renewalStrategy.renewSolution(this);
     }
 
+    /**
+     *
+     */
     protected final void renewSolutionGenerator() {
         this.renewalStrategy.renewSolutionGenerator(this);
     }

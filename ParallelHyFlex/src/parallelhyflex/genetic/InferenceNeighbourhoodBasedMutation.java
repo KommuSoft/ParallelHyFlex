@@ -105,11 +105,27 @@ public class InferenceNeighbourhoodBasedMutation extends InterferenceMutationImp
         this.DefaultRepeat = DefaultRepeat;
     }
 
+    /**
+     *
+     * @param observer
+     * @param interference
+     * @param input
+     * @param ranges
+     */
     @Override
     public void mutateLocal(ManipulationObserver observer, InterferenceStructure<Integer> interference, int[] input, int[][] ranges) {
         this.mutateLocal(observer, interference, input, ranges, this.getDefaultPm(), this.getDefaultRepeat());
     }
 
+    /**
+     *
+     * @param observer
+     * @param interference
+     * @param input
+     * @param ranges
+     * @param pm
+     * @param repeat
+     */
     public void mutateLocal(ManipulationObserver observer, InterferenceStructure<Integer> interference, int[] input, int[][] ranges, double pm, int repeat) {
         int n = input.length;
         ArrayList<Integer> affected = new ArrayList<>(Math.max((int) Math.sqrt(input.length), 0x03));

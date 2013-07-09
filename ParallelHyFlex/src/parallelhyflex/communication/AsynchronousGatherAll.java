@@ -20,45 +20,86 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
     private final Object[] cache;
     private int receiveCache;
 
+    /**
+     *
+     * @param packetTag
+     */
     public AsynchronousGatherAll(int packetTag) {
         packetTags = new int[]{packetTag};
         this.cache = new Object[Communication.getCommunication().getSize()];
         this.reset();
     }
 
+    /**
+     *
+     */
     public void reset() {
         this.receiveCache = Communication.getCommunication().getNeighbor(currentDimension) << 1;
         this.currentDimension = 0;
     }
 
+    /**
+     *
+     * @param rank
+     * @return
+     */
     public boolean available(int rank) {
         int diff = Utils.base2Pow(Communication.getCommunication().getRank() ^ rank);
         return (this.receiveCache & diff) != 0x00;
     }
 
+    /**
+     *
+     * @param value
+     */
     public void send(T value) {
         this.receiveCache = 1;
         this.cache[Communication.getCommunication().getRank()] = value;
         this.checkSend();
     }
 
+    /**
+     *
+     * @param rank
+     * @return
+     */
     public T getData(int rank) {
         return (T) cache[rank];
     }
 
+    /**
+     *
+     * @param type
+     * @return
+     */
     public T[] toArray(T[] type) {
         return toArrayList().toArray(type);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isReady() {
         return this.currentDimension >= Communication.getCommunication().getDimensions() && (this.receiveCache & (1 << Communication.getCommunication().getDimensions())) != 0x00;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] getPacketTags() {
         return this.packetTags;
     }
 
+    /**
+     *
+     * @param from
+     * @param tag
+     * @param data
+     * @throws Exception
+     */
     @Override
     public void receivePacket(int from, int tag, Object data) throws Exception {
         Object[] unpack = (Object[]) data;
@@ -92,6 +133,10 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
         this.currentDimension = cd;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<T> toArrayList() {
         ArrayList<T> al = new ArrayList<>(cache.length);
         for (Object o : cache) {
@@ -100,6 +145,10 @@ public class AsynchronousGatherAll<T> implements PacketReceiver, Iterable<T> {
         return al;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<T> iterator() {
         return new CastingIterator<>(new ArrayIterator<>(this.cache));

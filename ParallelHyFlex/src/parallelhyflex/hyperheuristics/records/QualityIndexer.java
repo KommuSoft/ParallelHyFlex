@@ -14,6 +14,10 @@ public class QualityIndexer<TRecord extends HeuristicRecord> {
     
     private final Comparator<TRecord> comparator;
     
+    /**
+     *
+     * @param comparator
+     */
     public QualityIndexer (Comparator<TRecord> comparator) {
         this.comparator = comparator;
     }

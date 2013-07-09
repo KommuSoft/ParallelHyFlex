@@ -13,10 +13,19 @@ import parallelhyflex.utils.Utils;
 public class CirclePositioningHeuristicC1 extends CrossoverHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
     private static final Logger LOG = Logger.getLogger(CirclePositioningHeuristicC1.class.getName());
     
+    /**
+     *
+     * @param problem
+     */
     public CirclePositioningHeuristicC1 (CirclePositioningProblem problem) {
         super(problem);
     }
     
+    /**
+     *
+     * @param from1
+     * @param from2
+     */
     @Override
     public void applyHeuristicLocally (CirclePositioningSolution from1, CirclePositioningSolution from2) {
         double x, y;

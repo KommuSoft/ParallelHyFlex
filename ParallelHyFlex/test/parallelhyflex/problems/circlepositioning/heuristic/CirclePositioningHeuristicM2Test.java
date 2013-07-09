@@ -26,16 +26,28 @@ public class CirclePositioningHeuristicM2Test extends ProblemHeuristicMTestBase<
         super.testApplyHeuristicLocallyConflictingClauses();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public MutationHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> renewHeuristic() {
         return new CirclePositioningHeuristicM2(getTsp());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestHeuristicEvaluationStrategy<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> generateHeuristicEvaluationStrategy() {
         return new CirclePositioningEvaluationStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> getRenewalStrategy() {
         return new CirclePositioningRenewalStrategy();

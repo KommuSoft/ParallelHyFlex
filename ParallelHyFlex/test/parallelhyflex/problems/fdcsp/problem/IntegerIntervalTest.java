@@ -15,6 +15,9 @@ import parallelhyflex.utils.Utils;
  */
 public class IntegerIntervalTest extends FiniteIntegerDomainTestBase {
 
+    /**
+     *
+     */
     public IntegerIntervalTest() {
     }
 

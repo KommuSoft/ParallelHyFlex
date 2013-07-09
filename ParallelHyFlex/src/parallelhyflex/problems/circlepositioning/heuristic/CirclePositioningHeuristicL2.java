@@ -13,10 +13,18 @@ import parallelhyflex.utils.Utils;
  */
 public class CirclePositioningHeuristicL2 extends LocalSearchHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public CirclePositioningHeuristicL2(CirclePositioningProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
         int index = Utils.nextInt(this.getProblem().getNumberOfCircles());

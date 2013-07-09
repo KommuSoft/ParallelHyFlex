@@ -12,6 +12,10 @@ public class SetHypothesisItemComparator1 implements Comparator<SetHypothesisIte
 
     private static final SetHypothesisItemComparator1 staticInstance = new SetHypothesisItemComparator1();
 
+    /**
+     *
+     * @return
+     */
     public static SetHypothesisItemComparator1 getInstance() {
         return staticInstance;
     }
@@ -19,6 +23,12 @@ public class SetHypothesisItemComparator1 implements Comparator<SetHypothesisIte
     private SetHypothesisItemComparator1() {
     }
 
+    /**
+     *
+     * @param o1
+     * @param o2
+     * @return
+     */
     @Override
     public int compare(SetHypothesisItem o1, SetHypothesisItem o2) {
         if (!o1.equals(o2)) {

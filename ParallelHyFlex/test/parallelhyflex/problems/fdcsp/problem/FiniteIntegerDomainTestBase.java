@@ -13,6 +13,10 @@ import parallelhyflex.utils.Utils;
  */
 public abstract class FiniteIntegerDomainTestBase {
 
+    /**
+     *
+     * @return
+     */
     public int randomDomainValue() {
         return Utils.nextInt(TestParameters.DOMAIN_HIGH + 1 - TestParameters.DOMAIN_LOW) + TestParameters.DOMAIN_LOW;
     }

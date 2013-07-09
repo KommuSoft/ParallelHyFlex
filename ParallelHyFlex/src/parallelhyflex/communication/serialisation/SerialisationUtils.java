@@ -10,6 +10,12 @@ import java.io.IOException;
  */
 public final class SerialisationUtils {
 
+    /**
+     *
+     * @param dos
+     * @param array
+     * @throws IOException
+     */
     public static void writeLongArray(DataOutputStream dos, long... array) throws IOException {
         dos.writeInt(array.length);
         for (long v : array) {
@@ -17,6 +23,12 @@ public final class SerialisationUtils {
         }
     }
 
+    /**
+     *
+     * @param dos
+     * @param array
+     * @throws IOException
+     */
     public static void writeIntArray(DataOutputStream dos, int... array) throws IOException {
         dos.writeInt(array.length);
         for (int v : array) {
@@ -24,6 +36,12 @@ public final class SerialisationUtils {
         }
     }
 
+    /**
+     *
+     * @param dos
+     * @param array
+     * @throws IOException
+     */
     public static void writeDoubleArray(DataOutputStream dos, double... array) throws IOException {
         dos.writeInt(array.length);
         for (double v : array) {
@@ -31,6 +49,12 @@ public final class SerialisationUtils {
         }
     }
 
+    /**
+     *
+     * @param dos
+     * @param array
+     * @throws IOException
+     */
     public static void writeIntArray2d(DataOutputStream dos, int[][] array) throws IOException {
         dos.writeInt(array.length);
         for (int[] v : array) {
@@ -38,6 +62,12 @@ public final class SerialisationUtils {
         }
     }
 
+    /**
+     *
+     * @param dos
+     * @param array
+     * @throws IOException
+     */
     public static void writeDoubleArray2d(DataOutputStream dos, double[][] array) throws IOException {
         dos.writeInt(array.length);
         for (double[] v : array) {
@@ -45,6 +75,12 @@ public final class SerialisationUtils {
         }
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     public static long[] readLongArray(DataInputStream dis) throws IOException {
         long[] res = new long[dis.readInt()];
         for (int i = 0; i < res.length; i++) {
@@ -53,6 +89,12 @@ public final class SerialisationUtils {
         return res;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     public static int[] readIntArray(DataInputStream dis) throws IOException {
         int[] res = new int[dis.readInt()];
         for (int i = 0; i < res.length; i++) {
@@ -61,6 +103,13 @@ public final class SerialisationUtils {
         return res;
     }
 
+    /**
+     *
+     * @param dis
+     * @param values
+     * @return
+     * @throws IOException
+     */
     public static int[] readIntArray(DataInputStream dis, int[] values) throws IOException {
         int n = dis.readInt();
         int k = Math.min(n, values.length);
@@ -73,6 +122,12 @@ public final class SerialisationUtils {
         return values;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     public static double[] readDoubleArray(DataInputStream dis) throws IOException {
         double[] res = new double[dis.readInt()];
         for (int i = 0; i < res.length; i++) {
@@ -81,6 +136,12 @@ public final class SerialisationUtils {
         return res;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     public static int[][] readIntArray2d(DataInputStream dis) throws IOException {
         int[][] res = new int[dis.readInt()][];
         for (int i = 0; i < res.length; i++) {
@@ -89,6 +150,13 @@ public final class SerialisationUtils {
         return res;
     }
 
+    /**
+     *
+     * @param dis
+     * @param values
+     * @return
+     * @throws IOException
+     */
     public static double[] readDoubleArray(DataInputStream dis, double[] values) throws IOException {
         int n = dis.readInt();
         int k = Math.min(n, values.length);
@@ -101,6 +169,12 @@ public final class SerialisationUtils {
         return values;
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     public static double[][] readDoubleArray2d(DataInputStream dis) throws IOException {
         double[][] res = new double[dis.readInt()][];
         for (int i = 0; i < res.length; i++) {

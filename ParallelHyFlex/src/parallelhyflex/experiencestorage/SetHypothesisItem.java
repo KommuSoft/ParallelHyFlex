@@ -16,16 +16,30 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
     private final PriorityQueue<Double> bestEvaluations;
     private final int historySize;
 
+    /**
+     *
+     * @param hypothesis
+     */
     public SetHypothesisItem(THypothesis hypothesis) {
         this(hypothesis, 5);
     }
 
+    /**
+     *
+     * @param hypothesis
+     * @param historySize
+     */
     public SetHypothesisItem(THypothesis hypothesis, int historySize) {
         this.bestEvaluations = new PriorityQueue<>(historySize, ReversedDoubleComparator.getInstance());
         this.hypo = hypothesis;
         this.historySize = historySize;
     }
 
+    /**
+     *
+     * @param solution
+     * @param evaluation
+     */
     public void checkInstance(TSolution solution, double evaluation) {
         if (this.getHypothesis().isSatisfied(solution)) {
             if (this.getBestEvaluations().size() < this.getHistorySize() || this.getBestEvaluations().peek() > evaluation) {
@@ -37,6 +51,11 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
         }
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof SetHypothesisItem) {
@@ -46,6 +65,10 @@ public class SetHypothesisItem<TSolution extends Solution<TSolution>, THypothesi
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 5;

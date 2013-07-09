@@ -11,10 +11,20 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatDistance1(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param solution1
+     * @param solution2
+     * @return
+     */
     @Override
     public double evaluateDistance(ThreeSatSolution solution1, ThreeSatSolution solution2) {
         int dis = 0;
@@ -26,6 +36,13 @@ public class ThreeSatDistance1 extends DistanceFunctionBase<ThreeSatSolution, Th
         return dis;
     }
 
+    /**
+     *
+     * @param solution1
+     * @param solution2
+     * @param maxDistance
+     * @return
+     */
     @Override
     public boolean evaluateDistanceSmallerThanOrEqual(ThreeSatSolution solution1, ThreeSatSolution solution2, double maxDistance) {
         int dis = (int) Math.round(-maxDistance);

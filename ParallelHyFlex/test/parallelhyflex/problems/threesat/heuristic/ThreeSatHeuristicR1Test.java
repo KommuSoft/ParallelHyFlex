@@ -26,16 +26,28 @@ public class ThreeSatHeuristicR1Test extends ProblemHeuristicRTestBase<ThreeSatS
         super.testApplyHeuristicLocallyConflictingClauses();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public RuinRecreateHeuristicBase<ThreeSatSolution, ThreeSatProblem> renewHeuristic() {
         return new ThreeSatHeuristicR1(getTsp());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestHeuristicEvaluationStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> generateHeuristicEvaluationStrategy() {
         return new ThreeSatEvaluationStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<ThreeSatSolutionGenerator, ThreeSatProblem, ThreeSatProblemGenerator, ThreeSatSolution> getRenewalStrategy() {
         return new ThreeSatRenewalStrategy();

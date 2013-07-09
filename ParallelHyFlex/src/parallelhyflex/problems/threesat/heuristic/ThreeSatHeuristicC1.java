@@ -12,10 +12,19 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatHeuristicC1 extends CrossoverHeuristicBase<ThreeSatSolution, ThreeSatProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatHeuristicC1(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from1
+     * @param from2
+     */
     @Override
     public void applyHeuristicLocally(ThreeSatSolution from1, ThreeSatSolution from2) {
         CompactBitArray cba1 = from1.getCompactBitArray();

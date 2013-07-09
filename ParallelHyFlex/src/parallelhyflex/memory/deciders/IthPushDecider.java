@@ -11,11 +11,22 @@ public class IthPushDecider<TSolution extends Solution<TSolution>> implements Pu
     private int[] counters;
     private int n;
 
+    /**
+     *
+     * @param memorySize
+     * @param n
+     */
     public IthPushDecider(int memorySize, int n) {
         this.n = n;
         this.counters = new int[memorySize];
     }
 
+    /**
+     *
+     * @param index
+     * @param sol
+     * @return
+     */
     @Override
     public boolean decidePush(int index, TSolution sol) {
         int counter = this.counters[index];

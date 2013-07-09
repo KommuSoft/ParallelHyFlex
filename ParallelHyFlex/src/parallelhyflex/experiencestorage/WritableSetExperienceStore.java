@@ -12,18 +12,46 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public class WritableSetExperienceStore<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, THypothesis extends WritableEnforceableConstraint<TSolution>> extends SetExperienceStore<TSolution, TProblem, THypothesis> implements WritableExperience<TSolution, THypothesis> {
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     * @param comparator
+     * @param historySize
+     * @param hypothesisSize
+     * @param generationSize
+     */
     public WritableSetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator, int historySize, int hypothesisSize, int generationSize) {
         super(problem, hypothesisGenerator, comparator, historySize, hypothesisSize, generationSize);
     }
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     * @param historySize
+     * @param hypothesisSize
+     * @param generationSize
+     */
     public WritableSetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, int historySize, int hypothesisSize, int generationSize) {
         super(problem, hypothesisGenerator, historySize, hypothesisSize, generationSize);
     }
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     * @param comparator
+     */
     public WritableSetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator, Comparator<SetHypothesisItem> comparator) {
         super(problem, hypothesisGenerator, comparator);
     }
 
+    /**
+     *
+     * @param problem
+     * @param hypothesisGenerator
+     */
     public WritableSetExperienceStore(TProblem problem, InstanceHypothesisGenerator<TSolution, THypothesis> hypothesisGenerator) {
         super(problem, hypothesisGenerator, SetHypothesisItemComparator1.getInstance());
     }

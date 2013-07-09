@@ -78,6 +78,11 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         return placement;
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeInt(nTransceivers);
@@ -88,6 +93,10 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         SerialisationUtils.writeIntArray(dos, placement);
     }
 
+    /**
+     *
+     * @return
+     */
     public InterferenceStructure<Integer> getInterferenceStructure() {
         return this.interference;
     }

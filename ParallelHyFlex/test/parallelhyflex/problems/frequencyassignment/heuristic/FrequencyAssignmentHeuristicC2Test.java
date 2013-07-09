@@ -37,6 +37,10 @@ public class FrequencyAssignmentHeuristicC2Test extends ProblemHeuristicCTestBas
         return new FrequencyAssignmentEvaluationStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> getRenewalStrategy() {
         return new FrequencyAssignmentRenewalStrategy();

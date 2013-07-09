@@ -13,16 +13,31 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  */
 public class ThreeSatWritableEnforceableConstraintGenerator1 extends EnforceableConstraintGeneratorBase<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> implements ArgumentCloneable<ThreeSatProblem, ThreeSatWritableEnforceableConstraintGenerator1> {
     
+    /**
+     *
+     * @param problem
+     */
     public ThreeSatWritableEnforceableConstraintGenerator1(ThreeSatProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param dis
+     * @return
+     * @throws IOException
+     */
     @Override
     public ThreeSatWritableEnforceableConstraint1 readAndGenerate(DataInputStream dis) throws IOException {
         long vala = dis.readLong();
         return new ThreeSatWritableEnforceableConstraint1(this.getProblem(), ThreeSatWritableEnforceableConstraint1.MASK & vala);
     }
 
+    /**
+     *
+     * @param argument
+     * @return
+     */
     @Override
     public ThreeSatWritableEnforceableConstraintGenerator1 clone(ThreeSatProblem argument) {
         return new ThreeSatWritableEnforceableConstraintGenerator1(argument);

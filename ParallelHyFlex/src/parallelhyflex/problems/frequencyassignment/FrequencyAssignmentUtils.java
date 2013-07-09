@@ -10,18 +10,45 @@ import parallelhyflex.utils.StatisticsUtils;
  */
 public final class FrequencyAssignmentUtils {
 
+    /**
+     *
+     */
     public static final double K = 10e9;
+    /**
+     *
+     */
     public static final double Csh = 0.15d;
-    public static final double Cadj = 0.05d;//constraint: larger than 0
+    /**
+     *
+     */
+    public static final double Cadj = 0.05d;
 
+    /**
+     *
+     * @param mu
+     * @param sigma
+     * @return
+     */
     public static double Cco(double mu, double sigma) {
         return 100.0d * StatisticsUtils.normalCdf(mu, sigma, Csh);
     }
 
+    /**
+     *
+     * @param mu
+     * @param sigma
+     * @return
+     */
     public static double Cadj(double mu, double sigma) {
         return 100.0d * StatisticsUtils.normalCdf(mu, sigma, Csh - Cadj);
     }
 
+    /**
+     *
+     * @param problem
+     * @param fa
+     * @return
+     */
     public static double evaluate(FrequencyAssignmentProblem problem, int[] fa) {
         double eval = 0.0d;
         int n = problem.getnTransceivers();
@@ -36,6 +63,14 @@ public final class FrequencyAssignmentUtils {
         return eval;
     }
 
+    /**
+     *
+     * @param problem
+     * @param fa
+     * @param index
+     * @param fi1
+     * @return
+     */
     public static double evaluateDelta(FrequencyAssignmentProblem problem, int[] fa, int index, int fi1) {
         double delta = 0.0d;
         int n = problem.getnTransceivers();
@@ -62,6 +97,16 @@ public final class FrequencyAssignmentUtils {
         return delta;
     }
 
+    /**
+     *
+     * @param st
+     * @param su
+     * @param pt
+     * @param pu
+     * @param mu
+     * @param sigma
+     * @return
+     */
     public static double Csig(int st, int su, int pt, int pu, double mu, double sigma) {
         boolean equal = st == su;
         int delta = Math.abs(pt - pu);
@@ -79,6 +124,17 @@ public final class FrequencyAssignmentUtils {
         return 0.0d;
     }
 
+    /**
+     *
+     * @param st
+     * @param su
+     * @param pt
+     * @param pu0
+     * @param pu1
+     * @param mu
+     * @param sigma
+     * @return
+     */
     public static double CsigDelta(int st, int su, int pt, int pu0, int pu1, double mu, double sigma) {
         boolean equal = st == su;
         int delta0 = Math.abs(pt - pu0);
@@ -98,6 +154,13 @@ public final class FrequencyAssignmentUtils {
         return 0.0d;
     }
 
+    /**
+     *
+     * @param mu
+     * @param sigma
+     * @param delta
+     * @return
+     */
     public static double CotherSectorMuLarge(double mu, double sigma, int delta) {
         if (delta == 0) {
             return Cco(mu, sigma);

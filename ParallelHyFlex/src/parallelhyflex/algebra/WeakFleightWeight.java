@@ -13,10 +13,19 @@ public class WeakFleightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, 
 
     private final HashMap<TOrigin, WeakReference<Type>> map = new HashMap<>();
 
+    /**
+     *
+     * @param generator
+     */
     public WeakFleightWeight(Generator<TOrigin, Type> generator) {
         super(generator);
     }
 
+    /**
+     *
+     * @param origin
+     * @return
+     */
     @Override
     public boolean inCache(TOrigin origin) {
         if (this.map.containsKey(origin)) {
@@ -37,6 +46,9 @@ public class WeakFleightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, 
         return val;
     }
 
+    /**
+     *
+     */
     @Override
     public void reduce() {
         for (Iterator<Entry<TOrigin, WeakReference<Type>>> it = this.map.entrySet().iterator(); it.hasNext();) {
@@ -47,6 +59,11 @@ public class WeakFleightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, 
         }
     }
 
+    /**
+     *
+     * @param origin
+     * @return
+     */
     @Override
     public Type generate(TOrigin origin) {
         if (this.map.containsKey(origin)) {
@@ -61,16 +78,27 @@ public class WeakFleightWeight<TOrigin, Type> extends FlightWeightBase<TOrigin, 
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         return this.map.size();
     }
 
+    /**
+     *
+     */
     @Override
     public void clear() {
         this.map.clear();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Type> iterator() {
         return new WeakFlightWeightIterator();

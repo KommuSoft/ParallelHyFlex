@@ -17,21 +17,37 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  */
 public class CirclePositioningRenewalStrategy implements TestRenewalStrategy<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> {
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewProblem(ProblemTestBase<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> testbase) {
         testbase.setTsp(testbase.getTspg().generateProblem());
     }
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewProblemGenerator(ProblemTestBase<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> testbase) {
         testbase.setTspg(new CirclePositioningProblemGenerator());
     }
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewSolution(ProblemTestBase<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> testbase) {
         testbase.setTss(testbase.getTsg().generateSolution());
     }
 
+    /**
+     *
+     * @param testbase
+     */
     @Override
     public void renewSolutionGenerator(ProblemTestBase<CirclePositioningSolutionGenerator, CirclePositioningProblem, CirclePositioningProblemGenerator, CirclePositioningSolution> testbase) {
         testbase.setTsg(testbase.getTsp().getSolutionGenerator());

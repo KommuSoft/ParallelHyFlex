@@ -12,10 +12,20 @@ public class FunctionInterferenceStructure<TItem, TFunction> implements Interfer
 
     private Generator<TItem, TFunction> generator;
 
+    /**
+     *
+     * @param generator
+     */
     public FunctionInterferenceStructure(Generator<TItem, TFunction> generator) {
         this.generator = generator;
     }
 
+    /**
+     *
+     * @param item1
+     * @param item2
+     * @return
+     */
     @Override
     public boolean interferes(TItem item1, TItem item2) {
         return this.getGenerator().generate(item1).equals(this.getGenerator().generate(item2));

@@ -26,16 +26,28 @@ public class FrequencyAssignmentHeuristicM1Test extends ProblemHeuristicMTestBas
         super.testApplyHeuristicLocallyConflictingClauses();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public MutationHeuristicBase<FrequencyAssignmentSolution, FrequencyAssignmentProblem> renewHeuristic() {
         return new FrequencyAssignmentHeuristicM1(getTsp());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestHeuristicEvaluationStrategy<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> generateHeuristicEvaluationStrategy() {
         return new FrequencyAssignmentEvaluationStrategy();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TestRenewalStrategy<FrequencyAssignmentSolutionGenerator, FrequencyAssignmentProblem, FrequencyAssignmentProblemGenerator, FrequencyAssignmentSolution> getRenewalStrategy() {
         return new FrequencyAssignmentRenewalStrategy();

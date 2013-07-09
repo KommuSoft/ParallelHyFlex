@@ -11,10 +11,18 @@ import parallelhyflex.utils.Utils;
  */
 public class CirclePositioningHeuristicM1 extends MutationHeuristicBase<CirclePositioningSolution, CirclePositioningProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public CirclePositioningHeuristicM1(CirclePositioningProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
         int index = Utils.nextInt(this.getProblem().getNumberOfCircles());

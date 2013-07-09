@@ -1,26 +1,48 @@
 package parallelhyflex.hyperheuristics.records;
 
 
+/**
+ *
+ * @author kommusoft
+ */
 public class ParameterizedHeuristicRecordBase extends HeuristicRecordBase implements ParameterizedHeuristicRecord {
     
     private final double intensityOfMutation, depthOfSearch;
     
+    /**
+     *
+     * @param heuristicIndex
+     * @param intensityOfMutation
+     * @param depthOfSearch
+     */
     public ParameterizedHeuristicRecordBase (int heuristicIndex, double intensityOfMutation, double depthOfSearch) {
         super(heuristicIndex);
         this.intensityOfMutation = intensityOfMutation;
         this.depthOfSearch = depthOfSearch;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getIntensityOfMutation() {
         return this.intensityOfMutation;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public double getDepthOfSearch() {
         return this.depthOfSearch;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = super.hashCode();
@@ -29,6 +51,11 @@ public class ParameterizedHeuristicRecordBase extends HeuristicRecordBase implem
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

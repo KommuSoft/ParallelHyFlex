@@ -11,10 +11,19 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  */
 public class FrequencyAssignmentHeuristicC1 extends CrossoverHeuristicBase<FrequencyAssignmentSolution, FrequencyAssignmentProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public FrequencyAssignmentHeuristicC1(FrequencyAssignmentProblem problem) {
         super(problem);
     }
 
+    /**
+     *
+     * @param from1
+     * @param from2
+     */
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from1, FrequencyAssignmentSolution from2) {
         UniformCrossover.getInstance().crossoverLocal(new FrequencyAssignmentManipulator(this.getProblem(),from1),new int[][]{from1.getFrequencyAssignment(), from2.getFrequencyAssignment()});

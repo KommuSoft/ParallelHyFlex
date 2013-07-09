@@ -45,6 +45,10 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
         this.setSolutionGenerator(new ThreeSatSolutionGenerator(this));
     }
 
+    /**
+     *
+     * @param constraints
+     */
     public ThreeSatProblem(long[] constraints) {
         this();
         this.clauses = constraints;
@@ -324,6 +328,11 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
         return vcClauseEntropy;
     }
 
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         SerialisationUtils.writeLongArray(dos, clauses);
@@ -338,6 +347,11 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
                 vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy);
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ThreeSatProblem) {
@@ -347,6 +361,10 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -354,6 +372,10 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
         return hash;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return String.format("3SAT %s", ClauseUtils.clausesToString(this.clauses));

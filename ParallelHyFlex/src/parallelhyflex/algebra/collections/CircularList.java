@@ -16,22 +16,39 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
     private int writePointer;
     private Object[] data;
 
+    /**
+     *
+     * @param capacity
+     */
     public CircularList(int capacity) {
         this.data = new Object[capacity];
         this.readPointer = 0;
         this.writePointer = 0;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int size() {
         return this.data.length;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isEmpty() {
         return this.size() <= 0;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean contains(Object o) {
         if (o == null) {
@@ -45,11 +62,19 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<TItem> iterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Object[] toArray() {
         Object[] obj = new Object[data.length];
@@ -58,11 +83,22 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return obj;
     }
 
+    /**
+     *
+     * @param <T>
+     * @param ts
+     * @return
+     */
     @Override
     public <T> T[] toArray(T[] ts) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean add(TItem e) {
         this.data[writePointer] = e;
@@ -70,11 +106,21 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return true;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean remove(Object o) {
         return false;//cannot directly remove
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean containsAll(Collection<?> clctn) {
         for (Object o : clctn) {
@@ -85,6 +131,11 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return true;
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean addAll(Collection<? extends TItem> clctn) {
         for (TItem t : clctn) {
@@ -93,21 +144,40 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return true;
     }
 
+    /**
+     *
+     * @param i
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean addAll(int i, Collection<? extends TItem> clctn) {
         return false;//cannot insert
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean removeAll(Collection<?> clctn) {
         return false;//cannot remove given collections
     }
 
+    /**
+     *
+     * @param clctn
+     * @return
+     */
     @Override
     public boolean retainAll(Collection<?> clctn) {
         return false;//cannot retain given collections
     }
 
+    /**
+     *
+     */
     @Override
     public void clear() {
         this.writePointer = 0;
@@ -117,11 +187,22 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         }
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public TItem get(int i) {
         return (TItem) this.data[relReadPointer(i)];
     }
 
+    /**
+     *
+     * @param i
+     * @param e
+     * @return
+     */
     @Override
     public TItem set(int i, TItem e) {
         int index = relWritePointer(i);
@@ -130,16 +211,31 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return res;
     }
 
+    /**
+     *
+     * @param i
+     * @param e
+     */
     @Override
     public void add(int i, TItem e) {
         this.set(i, e);
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public TItem remove(int i) {
         return this.set(i, null);
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int indexOf(Object o) {
         if (o != null) {
@@ -157,6 +253,11 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return -1;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int lastIndexOf(Object o) {
         if (o != null) {
@@ -174,21 +275,41 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return -1;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ListIterator<TItem> listIterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     @Override
     public ListIterator<TItem> listIterator(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param i
+     * @param i1
+     * @return
+     */
     @Override
     public List<TItem> subList(int i, int i1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     @Override
     public boolean offer(TItem e) {
         this.data[this.writePointer] = e;
@@ -196,6 +317,10 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TItem remove() {
         TItem item = this.element();
@@ -203,16 +328,28 @@ public class CircularList<TItem> implements List<TItem>, Queue<TItem> {
         return item;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TItem poll() {
         return this.remove();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TItem element() {
         return (TItem) this.data[this.readPointer];
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TItem peek() {
         return this.element();

@@ -31,46 +31,169 @@ import parallelhyflex.utils.Utils;
  */
 public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> extends HyperHeuristic<TSolution, TProblem, TEC> {
 
+    /**
+     *
+     */
     public static final double ADHS_W1 = 16.0d;
+    /**
+     *
+     */
     public static final double ADHS_W2 = 8.0d;
+    /**
+     *
+     */
     public static final double ADHS_W3 = 4.0d;
+    /**
+     *
+     */
     public static final double ADHS_W4 = 2.0d;
+    /**
+     *
+     */
     public static final double ADHS_W5 = 1.0d;
+    /**
+     *
+     */
     public static final double ADHS_W6 = 0.5d;
+    /**
+     *
+     */
     public static final double ADHS_W7 = 0.25d;
+    /**
+     *
+     */
     public static final int PH_FACTOR = 500;
+    /**
+     *
+     */
     public static final int PH_REQUESTED = 100;
+    /**
+     *
+     */
     public static final int LIST_SIZE = 10;
-    public static final int S = 0;//S location
-    public static final int Sa = 1;//S' location
-    public static final int Saa = 2;//S'' location
-    public static final int Sb = 2;//best solution location
+    /**
+     *
+     */
+    public static final int S = 0;
+    /**
+     *
+     */
+    public static final int Sa = 1;
+    /**
+     *
+     */
+    public static final int Saa = 2;
+    /**
+     *
+     */
+    public static final int Sb = 2;
+    /**
+     *
+     */
     public static final int HISTORY_LENGTH = 5;
-    public static final int LOCAL_MEMORY_SIZE = 4 + HISTORY_LENGTH;//S, S', S'', Sb and HISTORY
+    /**
+     *
+     */
+    public static final int LOCAL_MEMORY_SIZE = 4 + HISTORY_LENGTH;
+    /**
+     *
+     */
     public static final int NON_EXCHANGE_MEMORY_FROM = 1;
+    /**
+     *
+     */
     public static final int NON_EXCHANGE_MEMORY_TO = 2;
+    /**
+     *
+     */
     public static final int AILLA_K = 20;
+    /**
+     *
+     */
     public static final int AILLA_LBASE = 5;
+    /**
+     *
+     */
     public static final int AILLA_LINITIAL = 10;
+    /**
+     *
+     */
     public static final double GAMMA_MIN = 0.02d;
+    /**
+     *
+     */
     public static final double GAMMA_MAX = 50.0d;
+    /**
+     *
+     */
     public static final double LIST_PROBABILITY = 0.25d;
+    /**
+     *
+     */
     public static final double LAMBDA1 = 0.5d;
+    /**
+     *
+     */
     public static final double THETA1 = 0.01d;
+    /**
+     *
+     */
     public static final double THETA2 = 0.001d;
+    /**
+     *
+     */
     public static final double THETA3 = 0.0005d;
+    /**
+     *
+     */
     public static final double THETA4 = 0.0001d;
+    /**
+     *
+     */
     public static final double P_BEST_IOE = 0.5d;
+    /**
+     *
+     */
     public static final double P_BEST_IM1 = 0.25d;
+    /**
+     *
+     */
     public static final double P_BEST_IM2 = 0.5d;
+    /**
+     *
+     */
     public static final double P_BEST_WM = 0.5d;
+    /**
+     *
+     */
     public static final double P_IMPR_IOE = 0.5d;
+    /**
+     *
+     */
     public static final double P_IMPR_IM1 = 0.25d;
+    /**
+     *
+     */
     public static final double P_IMPR_IM2 = 0.5d;
+    /**
+     *
+     */
     public static final double P_IMPR_WM = 0.5d;
+    /**
+     *
+     */
     public static final double P_WORS_IM = 0.5d;
+    /**
+     *
+     */
     public static final double P_EQUA_IOE1 = 0.25d;
+    /**
+     *
+     */
     public static final double P_EQUA_IOE2 = 0.5d;
+    /**
+     *
+     */
     public static final double P_EQUA_IM = 0.5d;
     private final AdaptiveDynamicHeuristicSetStrategy adhs;
     private final AdapHHHeuristicRecord[] records;
@@ -121,6 +244,9 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         this.init();
     }
 
+    /**
+     *
+     */
     @Override
     protected void execute() {
         while (this.hasTimeLeft()) {
@@ -187,6 +313,11 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         this.getLearningAutomaton().reset(all);
     }
 
+    /**
+     *
+     * @param neweval
+     * @return
+     */
     public boolean checkImprovement(double neweval) {
         if (neweval < this.getGlobalOptimum()) {
             this.globalOptimum = neweval;
@@ -251,6 +382,10 @@ public class AdapHH<TSolution extends Solution<TSolution>, TProblem extends Prob
         return adhs;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRandomHistorySolutionIndex() {
         int a = Utils.nextInt(Communication.getCommunication().getSize());
         int b = Utils.nextInt(HISTORY_LENGTH);

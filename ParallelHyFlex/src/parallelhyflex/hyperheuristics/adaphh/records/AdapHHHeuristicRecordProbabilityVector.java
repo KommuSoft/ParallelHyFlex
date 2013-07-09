@@ -11,6 +11,11 @@ public class AdapHHHeuristicRecordProbabilityVector extends EvaluatedHeuristicRe
     private double tf = 1.0d;
     private double tspent = 0.5d;
 
+    /**
+     *
+     * @param variable
+     * @return
+     */
     @Override
     public Double generate(AdapHHHeuristicRecord variable) {
         if(tspent > 0.0d) {

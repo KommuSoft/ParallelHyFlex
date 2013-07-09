@@ -11,11 +11,20 @@ public class ProblemSolutionPointerBase<TSolution extends Solution<TSolution>, T
         this(problem, solution);
     }
 
+    /**
+     *
+     * @param problem
+     * @param solution
+     */
     public ProblemSolutionPointerBase(TProblem problem, TSolution solution) {
         super(problem);
         this.solution = solution;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public TSolution getSolution() {
         return this.getSolution();

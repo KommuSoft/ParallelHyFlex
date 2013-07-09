@@ -10,10 +10,18 @@ import parallelhyflex.problems.circlepositioning.solution.CirclePositioningSolut
  */
 public class CirclePositioningHeuristicR1 extends RuinRecreateHeuristicBase<CirclePositioningSolution,CirclePositioningProblem> {
 
+    /**
+     *
+     * @param problem
+     */
     public CirclePositioningHeuristicR1 (CirclePositioningProblem problem) {
         super(problem);
     }
     
+    /**
+     *
+     * @param from
+     */
     @Override
     public void applyHeuristicLocally(CirclePositioningSolution from) {
         //TODO

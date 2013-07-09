@@ -36,6 +36,11 @@ public class GenericUpperMatrix<T> extends UpperMatrixBase<T> {
         }
     }
     
+    /**
+     *
+     * @param dis
+     * @throws IOException
+     */
     @Override
     public void read(DataInputStream dis) throws IOException {
         int n = dis.readInt();
@@ -53,6 +58,11 @@ public class GenericUpperMatrix<T> extends UpperMatrixBase<T> {
         }
     }
     
+    /**
+     *
+     * @param dos
+     * @throws IOException
+     */
     @Override
     public void write(DataOutputStream dos) throws IOException {
         int n = this.getN();
@@ -64,6 +74,12 @@ public class GenericUpperMatrix<T> extends UpperMatrixBase<T> {
         }
     }
     
+    /**
+     *
+     * @param i
+     * @param j
+     * @param value
+     */
     @Override
     public void set(int i, int j, T value) {
         int n = this.getN();

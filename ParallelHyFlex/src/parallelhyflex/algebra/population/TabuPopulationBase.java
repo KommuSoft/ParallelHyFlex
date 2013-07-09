@@ -9,11 +9,22 @@ import java.util.Stack;
 import parallelhyflex.algebra.Predicate;
 
 
+/**
+ *
+ * @author kommusoft
+ * @param <TIndividual>
+ */
 public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual> implements TabuPopulation<TIndividual> {
     
     private final PriorityQueue<TabuedIndividual<TIndividual>> tabuQueue = new PriorityQueue<>();
     private int time = 0;
 
+    /**
+     *
+     * @param individual
+     * @param ticks
+     * @return
+     */
     @Override
     public boolean tabu(TIndividual individual, int ticks) {
         if(this.remove(individual)) {
@@ -24,6 +35,12 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         return false;
     }
     
+    /**
+     *
+     * @param predicate
+     * @param ticks
+     * @return
+     */
     @Override
     public boolean tabu(Predicate<TIndividual> predicate, int ticks) {
         Stack<TIndividual> tabulist = new Stack<>();
@@ -39,11 +56,20 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         return mod;
     }
 
+    /**
+     *
+     * @param individual
+     * @return
+     */
     @Override
     public boolean isTabued(TIndividual individual) {
         return this.getRemainingTabuTicks(individual) >= 0;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Collection<TIndividual> tabuTick() {
         HashSet<TIndividual> untabued = new HashSet<>();
@@ -57,6 +83,11 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         return untabued;
     }
 
+    /**
+     *
+     * @param individual
+     * @return
+     */
     @Override
     public int getRemainingTabuTicks(TIndividual individual) {
         for(TabuedIndividual<TIndividual> ti : this.tabuQueue) {
@@ -67,6 +98,11 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         return -1;
     }
 
+    /**
+     *
+     * @param individual
+     * @return
+     */
     @Override
     public boolean untabu(TIndividual individual) {
         for (Iterator<TabuedIndividual<TIndividual>> it = this.tabuQueue.iterator(); it.hasNext();) {
@@ -87,11 +123,21 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         return time;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getNumberOfTabuedIndividuals() {
         return this.tabuQueue.size();
     }
 
+    /**
+     *
+     * @param individuals
+     * @param ticks
+     * @return
+     */
     @Override
     public boolean tabu(Collection<TIndividual> individuals, int ticks) {
         boolean mod = false;
@@ -101,6 +147,10 @@ public class TabuPopulationBase<TIndividual> extends PopulationBase<TIndividual>
         return mod;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Collection<TIndividual> getTabuedIndividuals() {
         HashSet<TIndividual> tabued = new HashSet<>();

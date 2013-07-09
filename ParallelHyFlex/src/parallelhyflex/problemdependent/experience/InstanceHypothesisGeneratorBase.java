@@ -11,6 +11,10 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class InstanceHypothesisGeneratorBase<TSolution extends Solution<TSolution>, THypothesis, TProblem extends Problem<TSolution>> extends ProblemPointerBase<TSolution, TProblem> implements InstanceHypothesisGenerator<TSolution, THypothesis> {
 
+    /**
+     *
+     * @param problem
+     */
     public InstanceHypothesisGeneratorBase(TProblem problem) {
         super(problem);
     }
