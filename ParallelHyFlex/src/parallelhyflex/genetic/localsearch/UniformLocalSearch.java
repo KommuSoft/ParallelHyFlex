@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.localsearch;
 
 import parallelhyflex.genetic.observer.ManipulationGuider;
 import parallelhyflex.genetic.observer.ManipulationObserver;

@@ -1,8 +1,7 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.observer;
 
 import java.util.Collection;
 import java.util.Iterator;
-import parallelhyflex.genetic.observer.ManipulationObserver;
 
 /**
  *

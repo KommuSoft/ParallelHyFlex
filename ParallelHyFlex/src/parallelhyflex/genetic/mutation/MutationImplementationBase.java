@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.mutation;
 
 import parallelhyflex.genetic.observer.NullManipulationObserver;
 

@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.crossover;
 
 import java.util.Collection;
 import parallelhyflex.genetic.observer.ManipulationObserver;

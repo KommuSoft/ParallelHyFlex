@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.mutation;
 
 import java.util.ArrayList;
 import parallelhyflex.genetic.observer.ManipulationObserver;

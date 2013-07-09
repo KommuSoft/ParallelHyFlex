@@ -1,13 +1,21 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.mutation;
 
 import parallelhyflex.genetic.observer.ManipulationObserver;
 import parallelhyflex.utils.ProbabilityUtils;
 import parallelhyflex.utils.Utils;
 
+/**
+ *
+ * @author kommusoft
+ */
 public class UniformMutation extends MutationImplementationBase {
 
     private static final UniformMutation instance = new UniformMutation();
 
+    /**
+     *
+     * @return
+     */
     public static UniformMutation getInstance() {
         return instance;
     }
@@ -15,6 +23,12 @@ public class UniformMutation extends MutationImplementationBase {
     private UniformMutation() {
     }
 
+    /**
+     *
+     * @param input
+     * @param ranges
+     * @return
+     */
     @Override
     public int[] mutate(int[] input, int[][] ranges) {
         int n = input.length;

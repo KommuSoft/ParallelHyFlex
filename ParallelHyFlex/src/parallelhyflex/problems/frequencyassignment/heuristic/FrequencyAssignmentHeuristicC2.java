@@ -1,6 +1,6 @@
 package parallelhyflex.problems.frequencyassignment.heuristic;
 
-import parallelhyflex.genetic.InterferenceCrossover;
+import parallelhyflex.genetic.crossover.InterferenceCrossover;
 import parallelhyflex.problemdependent.heuristic.CrossoverHeuristicBase;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;

@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.crossover;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,6 +13,10 @@ public class UniformCrossover extends CrossoverImplementationBase {
 
     private static final UniformCrossover instance = new UniformCrossover();
 
+    /**
+     *
+     * @return
+     */
     public static UniformCrossover getInstance() {
         return instance;
     }
@@ -20,6 +24,12 @@ public class UniformCrossover extends CrossoverImplementationBase {
     private UniformCrossover() {
     }
 
+    /**
+     *
+     * @param genes
+     * @param parents
+     * @return
+     */
     @Override
     public int[] crossover(Collection<Integer> genes, int[]... parents) {
         int m = parents.length;
@@ -42,6 +52,12 @@ public class UniformCrossover extends CrossoverImplementationBase {
         return values;
     }
 
+    /**
+     *
+     * @param observer
+     * @param genes
+     * @param parents
+     */
     @Override
     public void crossoverLocal(ManipulationObserver observer, Collection<Integer> genes, int[]... parents) {
         int m = parents.length;

@@ -49,6 +49,9 @@ public class GenericUniqueRandomGenerator<T> implements UniqueRandomGenerator<T>
         return this.ptr < values.length;
     }
 
+    /**
+     *
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -1,6 +1,6 @@
 package parallelhyflex.problems.frequencyassignment.heuristic;
 
-import parallelhyflex.genetic.InferenceNeighbourhoodBasedMutation;
+import parallelhyflex.genetic.mutation.InferenceNeighbourhoodBasedMutation;
 import parallelhyflex.problemdependent.heuristic.MutationHeuristicBase;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;

@@ -1,4 +1,4 @@
-package parallelhyflex.genetic;
+package parallelhyflex.genetic.crossover;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -14,6 +14,10 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
 
     private static final InterferenceCrossover instance = new InterferenceCrossover();
 
+    /**
+     *
+     * @return
+     */
     public static InterferenceCrossover getInstance() {
         return instance;
     }
@@ -21,6 +25,13 @@ public class InterferenceCrossover extends InterferenceCrossoverImplementationBa
     private InterferenceCrossover() {
     }
 
+    /**
+     *
+     * @param interference
+     * @param genes
+     * @param parents
+     * @return
+     */
     @Override
     public int[] crossover(InterferenceStructure<Integer> interference, Collection<Integer> genes, int[]... parents) {
         int m = parents.length;

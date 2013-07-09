@@ -12,6 +12,10 @@ public class IntegerUniqueRandomGenerator implements UniqueRandomGenerator<Integ
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Integer next() {
         int i = ptr + Utils.nextInt(values.length - ptr);
@@ -26,11 +30,18 @@ public class IntegerUniqueRandomGenerator implements UniqueRandomGenerator<Integ
         this.ptr = 0;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean hasNext() {
         return this.ptr < values.length;
     }
 
+    /**
+     *
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
