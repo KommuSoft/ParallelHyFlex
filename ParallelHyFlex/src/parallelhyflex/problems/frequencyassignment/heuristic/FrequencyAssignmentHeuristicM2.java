@@ -25,6 +25,6 @@ public class FrequencyAssignmentHeuristicM2 extends MutationHeuristicBase<Freque
      */
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from) {
-        UniformMutation.getInstance().mutateLocal(new FrequencyAssignmentGuiderManipulator(this.getProblem(), from), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
+        UniformMutation.getInstance().mutateLocal(this.getProblem().getObserver(from), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
     }
 }

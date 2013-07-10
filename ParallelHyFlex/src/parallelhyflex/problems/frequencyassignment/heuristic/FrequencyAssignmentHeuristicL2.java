@@ -21,6 +21,6 @@ public class FrequencyAssignmentHeuristicL2 extends LocalSearchHeuristicBase<Fre
 
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from) {
-        UniformBestImprovementLocalSearch.getInstance().localSearchLocal(new FrequencyAssignmentGuiderManipulator(this.getProblem(), from), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
+        UniformBestImprovementLocalSearch.getInstance().localSearchLocal(this.getProblem().getObserver(from), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
     }
 }

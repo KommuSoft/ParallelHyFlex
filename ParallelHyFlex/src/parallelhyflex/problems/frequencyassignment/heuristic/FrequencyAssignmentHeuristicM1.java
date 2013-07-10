@@ -9,19 +9,18 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentHeuristicM1 extends MutationHeuristicBase<FrequencyAssignmentSolution,FrequencyAssignmentProblem> {
-    
+public class FrequencyAssignmentHeuristicM1 extends MutationHeuristicBase<FrequencyAssignmentSolution, FrequencyAssignmentProblem> {
+
     /**
      *
      * @param problem
      */
-    public FrequencyAssignmentHeuristicM1 (FrequencyAssignmentProblem problem) {
+    public FrequencyAssignmentHeuristicM1(FrequencyAssignmentProblem problem) {
         super(problem);
     }
 
     @Override
     public void applyHeuristicLocally(FrequencyAssignmentSolution from) {
-        InferenceNeighbourhoodBasedMutation.getInstance().mutateLocal(new FrequencyAssignmentGuiderManipulator(this.getProblem(),from),this.getProblem().getInterferenceStructure(), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
+        InferenceNeighbourhoodBasedMutation.getInstance().mutateLocal(this.getProblem().getObserver(from), this.getProblem().getInterferenceStructure(), from.getFrequencyAssignment(), this.getProblem().getFrequencies());
     }
-    
 }

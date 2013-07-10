@@ -34,7 +34,7 @@ public class FrequencyAssignmentHeuristicC3 extends CrossoverHeuristicBase<Frequ
         double pa = pb + from1.getEvaluation();
         pb /= pb;
         pa = 1.0d - pa;
-        ManipulationObserver mo = new FrequencyAssignmentGuiderManipulator(this.getProblem(), from1);
+        ManipulationObserver mo = this.getProblem().getObserver(from1);
         List<Integer> gn = new ConstantInfiniteList<>(0x01);
         List<Double> pc = new ArrayToListWrapper<>(new Double[]{pa, pb});
         int[][] fa = new int[][]{from1.getFrequencyAssignment(), from2.getFrequencyAssignment()};
