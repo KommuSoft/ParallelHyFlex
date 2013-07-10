@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.util.logging.Logger;
 import mpi.MPI;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
@@ -11,7 +12,7 @@ import parallelhyflex.communication.abstraction.CommMode;
 import parallelhyflex.communication.routing.PacketReceiver;
 import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.memory.senders.PushSenderBase;
-import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.problemdependent.experience.WriteableExperience;
 import parallelhyflex.problemdependent.heuristic.Heuristic;
 import parallelhyflex.problemdependent.searchspace.DummySearchSpace;
 import parallelhyflex.problemdependent.searchspace.SearchSpace;
@@ -30,7 +31,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     private final MemorySlots<TSolution>[] solutionCache;
     private final MemorySlots localSlots;
     private final SolutionReader<TSolution> solutionReader;
-    private WritableExperience<TSolution, ?> writableExperience;
+    private WriteableExperience<TSolution, ?> WriteableExperience;
     private SearchSpace<TSolution> searchSpace = new DummySearchSpace<>();
     private final int[][] others;
     private final int[] cdfI;
@@ -113,7 +114,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
      * @param value
      */
     public void setSolution(int index, TSolution value) {
-        this.getWritableExperience().join(value);
+        this.getWriteableExperience().join(value);
         double eval = this.getObjectiveGenerator().generate(value);
         Communication.logFileTime(LoggingParameters.LOG_MEMORY_SET, LoggingParameters.LOG_MEMORY_SET_TEXT, index, eval);
         if (eval < smallEval) {
@@ -123,13 +124,14 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
         this.localSlots.setSolution(index, value);
     }
 
+    //TODO: carefull with heuristics applied to global solution space
     /**
      *
      * @param heuristic
      * @param from
      * @param to
      */
-        public void applyHeuristic(Heuristic<TSolution> heuristic, int from, int to) {
+    public void applyHeuristic(Heuristic<TSolution> heuristic, int from, int to) {
         if (from == to) {
             heuristic.applyHeuristicLocally(this.getSolution(from));
             pushSolution(to);
@@ -155,7 +157,7 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     }
 
     private void pushSolution(int to) {
-        this.getWritableExperience().join(this.getSolution(to));
+        this.getWriteableExperience().join(this.getSolution(to));
         this.localSlots.pushSolution(to);
     }
 
@@ -179,17 +181,17 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     }
 
     /**
-     * @return the writableExperience
+     * @return the WriteableExperience
      */
-    public WritableExperience<TSolution, ?> getWritableExperience() {
-        return writableExperience;
+    public WriteableExperience<TSolution, ?> getWriteableExperience() {
+        return WriteableExperience;
     }
 
     /**
-     * @param writableExperience the writableExperience to set
+     * @param WriteableExperience the WriteableExperience to set
      */
-    public void setWritableExperience(WritableExperience<TSolution, ?> writableExperience) {
-        this.writableExperience = writableExperience;
+    public void setWriteableExperience(WriteableExperience<TSolution, ?> WriteableExperience) {
+        this.WriteableExperience = WriteableExperience;
     }
 
     /**
@@ -277,4 +279,5 @@ public class ProxyMemory<TSolution extends Solution<TSolution>> implements Packe
     public void setObjectiveGenerator(Generator<TSolution, Double> objectiveGenerator) {
         this.objectiveGenerator = objectiveGenerator;
     }
+    private static final Logger LOG = Logger.getLogger(ProxyMemory.class.getName());
 }

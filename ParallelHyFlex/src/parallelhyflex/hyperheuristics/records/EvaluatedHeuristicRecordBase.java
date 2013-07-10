@@ -1,5 +1,7 @@
 package parallelhyflex.hyperheuristics.records;
 
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -44,5 +46,6 @@ public class EvaluatedHeuristicRecordBase extends HeuristicRecordBase implements
     public int compareTo(EvaluatedHeuristicRecord o) {
         return ((Double) this.getEvaluation()).compareTo(o.getEvaluation());
     }
+    private static final Logger LOG = Logger.getLogger(EvaluatedHeuristicRecordBase.class.getName());
     
 }

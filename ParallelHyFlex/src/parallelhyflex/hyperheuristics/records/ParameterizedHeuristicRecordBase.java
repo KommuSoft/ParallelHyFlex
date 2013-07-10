@@ -1,5 +1,7 @@
 package parallelhyflex.hyperheuristics.records;
 
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -67,5 +69,6 @@ public class ParameterizedHeuristicRecordBase extends HeuristicRecordBase implem
         final ParameterizedHeuristicRecordBase other = (ParameterizedHeuristicRecordBase) obj;
         return (super.equals(other) && other.depthOfSearch == this.depthOfSearch && other.intensityOfMutation == this.intensityOfMutation);
     }
+    private static final Logger LOG = Logger.getLogger(ParameterizedHeuristicRecordBase.class.getName());
     
 }

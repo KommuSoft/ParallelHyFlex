@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  *
@@ -42,5 +43,6 @@ public class QualityIndexer<TRecord extends HeuristicRecord> {
     public Comparator<TRecord> getComparator() {
         return comparator;
     }
+    private static final Logger LOG = Logger.getLogger(QualityIndexer.class.getName());
     
 }

@@ -62,6 +62,29 @@ public final class Utils {
         return StaticRandom.nextInt();
     }
 
+    public static <T> T iThOrNull(Iterable<T> iterable, int index) {
+        return iThOrNull(iterable.iterator(), index);
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param iterator
+     * @param index
+     * @return
+     */
+    public static <T> T iThOrNull(Iterator<T> iterator, int index) {
+        T val = null;
+        for (; iterator.hasNext() && index >= 0x00; index--) {
+            val = iterator.next();
+        }
+        if (index < 0x00) {
+            return val;
+        } else {
+            return null;
+        }
+    }
+
     /**
      *
      * @param n

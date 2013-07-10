@@ -987,11 +987,11 @@ public class MPJDaemon {
                 }
               } //end if key.isReadable()
 
-              else if (key.isWritable()) {
+              else if (key.isWriteable()) {
 
                 if(DEBUG && logger.isDebugEnabled()) { 
                   logger.debug(
-                    "In, WRITABLE, so interestOps to READ_ONLY");
+                    "In, Writeable, so interestOps to READ_ONLY");
 				}
                 key.interestOps(SelectionKey.OP_READ);
               }

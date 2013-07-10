@@ -9,10 +9,6 @@ import parallelhyflex.utils.CompactBitArray;
  */
 public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> extends MemorySlots<TSolution> {
 
-    /**
-     *
-     * @param policy
-     */
     public ProxyMemorySlots(MemoryExchangePolicy policy) {
         super(policy);
     }
@@ -22,20 +18,11 @@ public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> ex
         return false;
     }
 
-    /**
-     *
-     * @param index
-     */
     @Override
     public void pushSolution(int index) {
         throw new IllegalArgumentException("Cannot write at this index: region is read-only!");
     }
 
-    /**
-     *
-     * @param index
-     * @param sol
-     */
     @Override
     public void setSolution(int index, TSolution sol) {
         throw new IllegalArgumentException("Connot write at this index: region is read-only!");
@@ -48,11 +35,6 @@ public abstract class ProxyMemorySlots<TSolution extends Solution<TSolution>> ex
         return null;
     }
 
-    /**
-     *
-     * @param index
-     * @return
-     */
     @Override
     public boolean willExchange(int index) {
         return false;

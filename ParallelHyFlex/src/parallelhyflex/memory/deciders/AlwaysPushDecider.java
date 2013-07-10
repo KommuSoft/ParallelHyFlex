@@ -1,5 +1,6 @@
 package parallelhyflex.memory.deciders;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
@@ -18,4 +19,5 @@ public class AlwaysPushDecider<TSolution extends Solution<TSolution>> implements
     public boolean decidePush(int index, TSolution sol) {
         return true;
     }
+    private static final Logger LOG = Logger.getLogger(AlwaysPushDecider.class.getName());
 }

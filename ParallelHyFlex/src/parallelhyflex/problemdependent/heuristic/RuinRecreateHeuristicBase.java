@@ -9,10 +9,6 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class RuinRecreateHeuristicBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends HeuristicBase<TSolution,TProblem> {
     
-    /**
-     *
-     * @param problem
-     */
     public RuinRecreateHeuristicBase(TProblem problem) {
         super(problem,HeuristicType.RuinRecreate);
     }

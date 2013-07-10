@@ -1,5 +1,6 @@
 package parallelhyflex.memory;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
@@ -43,4 +44,5 @@ public class StateProxyMemorySlots<TSolution extends Solution<TSolution>> extend
     public int getSize() {
         return this.memory.length;
     }
+    private static final Logger LOG = Logger.getLogger(StateProxyMemorySlots.class.getName());
 }

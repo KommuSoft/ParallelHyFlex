@@ -8,8 +8,6 @@ import parallelhyflex.problemdependent.solution.SolutionGenerator;
 
 /**
  *
- * @param <TSolution> 
- * @param <TSolGen> 
  * @author kommusoft
  */
 public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen extends SolutionGenerator<TSolution>> implements Problem<TSolution> {
@@ -22,20 +20,10 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen
     private TSolGen solutionGenerator;
     private final int[] ns;
 
-    /**
-     *
-     */
     protected ProblemBase() {
         ns = new int[HeuristicType.values().length];
     }
 
-    /**
-     *
-     * @param heuristics
-     * @param objectives
-     * @param distances
-     * @param solutionGenerator
-     */
     protected ProblemBase(Heuristic[] heuristics, ObjectiveFunction[] objectives, DistanceFunction[] distances, TSolGen solutionGenerator) {
         this();
         this.heuristics = heuristics;
@@ -44,168 +32,91 @@ public abstract class ProblemBase<TSolution extends Solution<TSolution>, TSolGen
         this.solutionGenerator = solutionGenerator;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public double getIntensityOfMutation() {
         return this.intensityOfMutation;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public double getDepthOfSearch() {
         return this.depthOfSearch;
     }
 
-    /**
-     *
-     * @param intensityOfMutation
-     */
     @Override
     public void setIntensityOfMutation(double intensityOfMutation) {
         this.intensityOfMutation = Math.max(0.0d, Math.min(0.9999d, intensityOfMutation));
     }
 
-    /**
-     *
-     * @param depthOfSearch
-     */
     @Override
     public void setDepthOfSearch(double depthOfSearch) {
         this.depthOfSearch = Math.max(0.0d, Math.min(0.9999d, depthOfSearch));
     }
 
-    /**
-     *
-     * @param index
-     * @return
-     */
     @Override
     public Heuristic<TSolution> getHeuristic(int index) {
         return (Heuristic<TSolution>) this.heuristics[index];
     }
 
-    /**
-     *
-     * @param index
-     * @return
-     */
     @Override
     public ObjectiveFunction<TSolution> getObjectiveFunction(int index) {
         return (ObjectiveFunction<TSolution>) this.objectives[index];
     }
-    
-    /**
-     *
-     * @return
-     */
+
     @Override
     public ObjectiveFunction<TSolution> getObjectiveFunction() {
         return this.getObjectiveFunction(0);
     }
 
-    /**
-     *
-     * @param index
-     * @return
-     */
     @Override
     public DistanceFunction<TSolution> getDistanceFunction(int index) {
         return (DistanceFunction<TSolution>) this.distances[index];
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public TSolGen getSolutionGenerator() {
         return this.solutionGenerator;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfDistanceFunctions() {
         return this.distances.length;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfHeuristics() {
         return this.heuristics.length;
     }
 
-    /**
-     *
-     * @param type
-     * @return
-     */
     @Override
     public int getNumberOfHeuristicsOfType(HeuristicType type) {
         return this.ns[type.ordinal()];
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfLocalSearchHeuristics() {
         return this.getNumberOfHeuristicsOfType(HeuristicType.LocalSearch);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfMutationHeuristics() {
         return this.getNumberOfHeuristicsOfType(HeuristicType.Mutation);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfCrossoverHeuristics() {
         return this.getNumberOfHeuristicsOfType(HeuristicType.Crossover);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfRuinRecreateHeuristics() {
         return this.getNumberOfHeuristicsOfType(HeuristicType.RuinRecreate);
     }
 
-    /**
-     *
-     * @param heuristic
-     * @return
-     */
     @Override
     public HeuristicType getHeuristicType(int heuristic) {
         return this.heuristics[heuristic].getType();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getNumberOfObjectiveFunctions() {
         return this.objectives.length;

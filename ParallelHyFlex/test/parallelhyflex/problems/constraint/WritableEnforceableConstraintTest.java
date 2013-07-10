@@ -8,7 +8,7 @@ import junit.framework.Assert;
 import parallelhyflex.TestParameters;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraintGenerator;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
+import parallelhyflex.problemdependent.constraints.WriteableEnforceableConstraintBase;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemReader;
 import parallelhyflex.problemdependent.solution.Solution;
@@ -23,9 +23,9 @@ import parallelhyflex.problems.ProblemTestBase;
  * @param <TS> 
  * @author kommusoft
  */
-public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGenerator<TS>, TP extends Problem<TS>, TPG extends ProblemReader<TS, TP>, TS extends Solution<TS>> extends ProblemTestBase<TSG, TP, TPG, TS> {
+public abstract class WriteableEnforceableConstraintTest<TSG extends SolutionGenerator<TS>, TP extends Problem<TS>, TPG extends ProblemReader<TS, TP>, TS extends Solution<TS>> extends ProblemTestBase<TSG, TP, TPG, TS> {
 
-    private WritableEnforceableConstraintBase<TS, TP> tswec;
+    private WriteableEnforceableConstraintBase<TS, TP> tswec;
     private EnforceableConstraintGenerator<TS, ? extends EnforceableConstraint<TS>> ecg;
     private TS tss2;
 
@@ -33,7 +33,7 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
      *
      * @return
      */
-    public abstract WritableEnforceableConstraintBase<TS, TP> renewWritableEnforceableConstraint();
+    public abstract WriteableEnforceableConstraintBase<TS, TP> renewWriteableEnforceableConstraint();
     
     /**
      *
@@ -50,7 +50,7 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
             this.renewProblem();
             this.renewSolutionGenerator();
             this.renewSolution();
-            setTswec(this.renewWritableEnforceableConstraint());
+            setTswec(this.renewWriteableEnforceableConstraint());
             getTswec().enforceTrue(getTss());
             Assert.assertTrue(getTswec().isSatisfied(getTss()));
             Assert.assertFalse(getTswec().isNotSatisfied(getTss()));
@@ -65,7 +65,7 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
         this.renewProblem();
         this.renewSolutionGenerator();
         this.renewSolution();
-        setTswec(this.renewWritableEnforceableConstraint());
+        setTswec(this.renewWriteableEnforceableConstraint());
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewSolution2();
             getTswec().enforceTrue(getTss2());
@@ -90,7 +90,7 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
             this.renewProblem();
             this.renewSolutionGenerator();
             this.renewSolution();
-            setTswec(this.renewWritableEnforceableConstraint());
+            setTswec(this.renewWriteableEnforceableConstraint());
             getTswec().enforceFalse(getTss());
             Assert.assertFalse(getTswec().isSatisfied(getTss()));
             Assert.assertTrue(getTswec().isNotSatisfied(getTss()));
@@ -105,7 +105,7 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
         this.renewProblem();
         this.renewSolutionGenerator();
         this.renewSolution();
-        setTswec(this.renewWritableEnforceableConstraint());
+        setTswec(this.renewWriteableEnforceableConstraint());
         for (int i = 0; i < TestParameters.LOOP_PARAMETER; i++) {
             this.renewSolution2();
             getTswec().enforceFalse(getTss2());
@@ -125,7 +125,7 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
             this.renewProblem();
             this.renewSolutionGenerator();
             this.renewSolution();
-            setTswec(this.renewWritableEnforceableConstraint());
+            setTswec(this.renewWriteableEnforceableConstraint());
             ByteArrayInputStream bais;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 try (DataOutputStream dos = new DataOutputStream(baos)) {
@@ -158,14 +158,14 @@ public abstract class WritableEnforceableConstraintTest<TSG extends SolutionGene
     /**
      * @return the tswec
      */
-    public WritableEnforceableConstraintBase<TS, TP> getTswec() {
+    public WriteableEnforceableConstraintBase<TS, TP> getTswec() {
         return tswec;
     }
 
     /**
      * @param tswec the tswec to set
      */
-    public void setTswec(WritableEnforceableConstraintBase<TS, TP> tswec) {
+    public void setTswec(WriteableEnforceableConstraintBase<TS, TP> tswec) {
         this.tswec = tswec;
     }
 

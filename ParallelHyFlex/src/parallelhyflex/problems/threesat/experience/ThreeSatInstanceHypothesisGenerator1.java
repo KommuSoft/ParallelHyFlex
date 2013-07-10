@@ -1,8 +1,9 @@
 package parallelhyflex.problems.threesat.experience;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.experience.InstanceHypothesisGeneratorBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
-import parallelhyflex.problems.threesat.constraint.ThreeSatWritableEnforceableConstraint1;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWriteableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
@@ -10,7 +11,9 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<ThreeSatSolution, ThreeSatWritableEnforceableConstraint1, ThreeSatProblem> {
+public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<ThreeSatSolution, ThreeSatWriteableEnforceableConstraint1, ThreeSatProblem> {
+
+    private static final Logger LOG = Logger.getLogger(ThreeSatInstanceHypothesisGenerator1.class.getName());
 
     /**
      *
@@ -26,12 +29,12 @@ public class ThreeSatInstanceHypothesisGenerator1 extends InstanceHypothesisGene
      * @return
      */
     @Override
-    public ThreeSatWritableEnforceableConstraint1 generate(ThreeSatSolution variable) {
+    public ThreeSatWriteableEnforceableConstraint1 generate(ThreeSatSolution variable) {
         double[] cdf = this.getProblem().getIndexCDF();
         long clause;
         do {
             clause = ClauseUtils.generateCompletelyTrueClause(variable.getCompactBitArray(), cdf);
         } while (!ClauseUtils.isValidClause(clause));
-        return new ThreeSatWritableEnforceableConstraint1(this.getProblem(), clause);
+        return new ThreeSatWriteableEnforceableConstraint1(this.getProblem(), clause);
     }
 }

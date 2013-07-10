@@ -1,44 +1,30 @@
 package parallelhyflex.hyperheuristics.learning.learningschemes;
 
-/**
- *
- * @author kommusoft
- */
+import java.util.logging.Logger;
+import parallelhyflex.algebra.probability.NormalizedProbabilityVector;
+
 public class LinearLearningScheme extends LearningSchemeBase {
 
     private double lambda1;
     private double lambda2;
 
-    /**
-     *
-     */
     public LinearLearningScheme() {
         this(1.0d, 1.0d);
     }
 
-    /**
-     *
-     * @param lambda1
-     * @param lambda2
-     */
     public LinearLearningScheme(double lambda1, double lambda2) {
         this.setLambda1(lambda1);
         this.setLambda2(lambda2);
     }
 
-    /**
-     *
-     * @param probabilities
-     * @param index
-     * @param reward
-     */
     @Override
-    protected void execute(double[] probabilities, int index, double reward) {
+    protected void execute(NormalizedProbabilityVector probabilities, int index, double reward) {
         for (int i = 0; i < index; i++) {
             updateNotEqual(probabilities, i, reward);
         }
         updateEqual(probabilities, index, reward);
-        for (int i = index + 1; i < probabilities.length; i++) {
+        int length = probabilities.getSize();
+        for (int i = index + 1; i < length; i++) {
             updateNotEqual(probabilities, i, reward);
         }
     }
@@ -71,17 +57,18 @@ public class LinearLearningScheme extends LearningSchemeBase {
         this.lambda2 = lambda2;
     }
 
-    private void updateNotEqual(double[] probabilities, int index, double reward) {
-        double arg1 = probabilities[index];
-        this.update(probabilities, index, -1.0d, reward, arg1, 1.0d / (probabilities.length - 1.0d) - arg1);
+    private void updateNotEqual(NormalizedProbabilityVector probabilities, int index, double reward) {
+        double arg1 = probabilities.getProbability(index);
+        this.update(probabilities, index, -1.0d, reward, arg1, 1.0d / (probabilities.getSize() - 1.0d) - arg1);
     }
 
-    private void update(double[] probabilities, int index, double signum, double reward, double arg1, double arg2) {
-        probabilities[index] += signum * (lambda1 * reward * arg1 - lambda2 * (1.0d - reward) * arg2);
+    private void update(NormalizedProbabilityVector probabilities, int index, double signum, double reward, double arg1, double arg2) {
+        probabilities.addProbability(index,signum * (lambda1 * reward * arg1 - lambda2 * (1.0d - reward) * arg2));
     }
 
-    private void updateEqual(double[] probabilities, int index, double reward) {
-        double arg2 = probabilities[index];
+    private void updateEqual(NormalizedProbabilityVector probabilities, int index, double reward) {
+        double arg2 = probabilities.getProbability(index);
         this.update(probabilities, index, 1.0d, reward, 1.0d - arg2, arg2);
     }
+    private static final Logger LOG = Logger.getLogger(LinearLearningScheme.class.getName());
 }

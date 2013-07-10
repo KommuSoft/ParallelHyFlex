@@ -1,5 +1,6 @@
 package parallelhyflex.problems.threesat.problem;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.problem.ObjectiveFunctionBase;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
@@ -18,4 +19,5 @@ public class ThreeSatObjectiveFunction1 extends ObjectiveFunctionBase<ThreeSatSo
     public double evaluateSolution(ThreeSatSolution solution) {
         return solution.getConflictingClauses();
     }
+    private static final Logger LOG = Logger.getLogger(ThreeSatObjectiveFunction1.class.getName());
 }

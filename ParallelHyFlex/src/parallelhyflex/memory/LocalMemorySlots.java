@@ -1,5 +1,6 @@
 package parallelhyflex.memory;
 
+import java.util.logging.Logger;
 import parallelhyflex.memory.deciders.PushDecider;
 import parallelhyflex.memory.senders.PushSender;
 import parallelhyflex.problemdependent.solution.Solution;
@@ -50,12 +51,13 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
         }
     }
 
+    //protected abstract void sendSolution ();
     /**
      *
      * @param index
      * @param sol
      */
-        @Override
+    @Override
     public void setSolution(int index, TSolution sol) {
         if (index < this.storage.length) {
             this.storage[index] = sol;
@@ -106,4 +108,5 @@ public class LocalMemorySlots<TSolution extends Solution<TSolution>> extends Mem
     void receiveSolution(int index, TSolution sol) {
         throw new IllegalArgumentException("Cannot receive on local memory.");
     }
+    private static final Logger LOG = Logger.getLogger(LocalMemorySlots.class.getName());
 }

@@ -1,5 +1,6 @@
 package parallelhyflex.problems.threesat;
 
+import java.util.logging.Logger;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.utils.CompactBitArray;
 import parallelhyflex.utils.ProbabilityUtils;
@@ -10,6 +11,8 @@ import parallelhyflex.utils.Utils;
  * @author kommusoft
  */
 public class ClauseUtils {
+
+    private static final Logger LOG = Logger.getLogger(ClauseUtils.class.getName());
 
     /**
      *
@@ -80,14 +83,14 @@ public class ClauseUtils {
      */
     public static long generateTrueClause(CompactBitArray cba) {
         int n = cba.getLength();
-        long i0 = Utils.nextInt(n);
-        long i1 = Utils.nextInt(n);
-        long i2 = Utils.nextInt(n);
+        long i0 = Utils.StaticRandom.nextInt(n);
+        long i1 = Utils.StaticRandom.nextInt(n);
+        long i2 = Utils.StaticRandom.nextInt(n);
         long ia = Math.min(i0, Math.min(i1, i2));
         long ic = Math.max(i0, Math.max(i1, i2));
         long ib = i0 + i1 + i2 - ia - ic;
-        long fill = (((long) Utils.nextInt(8)) << 60) | generate0Clause(ia, ib, ic);
-        int ci = Utils.nextInt(3);
+        long fill = (((long) Utils.StaticRandom.nextInt(8)) << 60) | generate0Clause(ia, ib, ic);
+        int ci = Utils.StaticRandom.nextInt(3);
         long index = ClauseUtils.getIndexI(fill, ci);
         fill = ClauseUtils.setValue(fill, ci, cba.getBit(index));
         return fill;
@@ -116,9 +119,9 @@ public class ClauseUtils {
      */
     public static long generateCompletelyTrueClause(CompactBitArray cba) {
         int n = cba.getLength();
-        long i0 = Utils.nextInt(n);
-        long i1 = Utils.nextInt(n);
-        long i2 = Utils.nextInt(n);
+        long i0 = Utils.StaticRandom.nextInt(n);
+        long i1 = Utils.StaticRandom.nextInt(n);
+        long i2 = Utils.StaticRandom.nextInt(n);
         long ia = Math.min(i0, Math.min(i1, i2));
         long ic = Math.max(i0, Math.max(i1, i2));
         long ib = i0 + i1 + i2 - ia - ic;
@@ -180,12 +183,13 @@ public class ClauseUtils {
         }
         return ind;
     }
+
     /**
      *
      * @param constraints
      * @return
      */
-    public static String clausesToString (long[] constraints) {
+    public static String clausesToString(long[] constraints) {
         StringBuilder sb = new StringBuilder();
         for (long clause : constraints) {
             sb.append(String.format("(%s)", clauseToString(clause)));
@@ -233,7 +237,7 @@ public class ClauseUtils {
      * @param from
      */
     public static void swapRandomBit(int n, int[][] influences, CompactBitArray cba, long[] constraints, ThreeSatSolution from) {
-        int i = Utils.nextInt(n);
+        int i = Utils.StaticRandom.nextInt(n);
         swapBit(i, influences[i], cba, constraints, from);
     }
 
@@ -310,6 +314,53 @@ public class ClauseUtils {
 
     /**
      *
+     * @param clause
+     * @param i
+     * @return
+     */
+    public static int getSigned1IndexI(long clause, int i) {
+        return (getIndexI(clause, i) + 1) * getSignedValueI(clause, i);
+    }
+
+    /**
+     *
+     * @param clause
+     * @return
+     */
+    public static int getSigned1Index0(long clause) {
+        return (getIndex0(clause) + 1) * getSignedValue0(clause);
+    }
+
+    /**
+     *
+     * @param clause
+     * @return
+     */
+    public static int getSigned1Index1(long clause) {
+        return (getIndex1(clause) + 1) * getSignedValue1(clause);
+    }
+
+    /**
+     *
+     * @param clause
+     * @return
+     */
+    public static int getSigned1Index2(long clause) {
+        return (getIndex2(clause) + 1) * getSignedValue2(clause);
+    }
+
+    /**
+     *
+     * @param clause
+     * @param i
+     * @return
+     */
+    public static int getSignedValueI(long clause, int i) {
+        return (getValueI(clause, i) << 0x01) - 0x01;
+    }
+
+    /**
+     *
      * @param fill
      * @param i
      * @param bit
@@ -344,6 +395,33 @@ public class ClauseUtils {
      */
     public static int getValue2(long clause) {
         return (int) ((clause >> 60) & 0x01);
+    }
+
+    /**
+     *
+     * @param clause
+     * @return
+     */
+    public static int getSignedValue0(long clause) {
+        return 2 * getValue0(clause) - 1;
+    }
+
+    /**
+     *
+     * @param clause
+     * @return
+     */
+    public static int getSignedValue1(long clause) {
+        return 2 * getValue1(clause) - 1;
+    }
+
+    /**
+     *
+     * @param clause
+     * @return
+     */
+    public static int getSignedValue2(long clause) {
+        return 2 * getValue2(clause) - 1;
     }
 
     /**
@@ -445,62 +523,64 @@ public class ClauseUtils {
      */
     public static int getFalseClauseIndex(ThreeSatSolution from, long[] clauses) {
         int c = clauses.length;
-        int c0 = Utils.nextInt(c);
-        for(int i = c0; i < c; i++) {
+        int c0 = Utils.StaticRandom.nextInt(c);
+        for (int i = c0; i < c; i++) {
             if (!from.satisfiesClause(clauses[i])) {
                 return i;
             }
         }
-        for(int i = 0; i < c0; i++) {
+        for (int i = 0; i < c0; i++) {
             if (!from.satisfiesClause(clauses[i])) {
                 return i;
             }
         }
         return -1;
     }
-    
+
     /**
      *
      * @param cba1
      * @param cba2
      * @return
      */
-    public static int getNonEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
+    public static int getNonEqualVariableIndex(CompactBitArray cba1, CompactBitArray cba2) {
         int v = cba1.getLength();
-        int v0 = Utils.nextInt(v);//TODO: speedup with block level
-        for(int i = v0; i < v; i++) {
+        int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
+        for (int i = v0; i < v; i++) {
             if (cba1.getBit(i) != cba2.getBit(i)) {
                 return i;
             }
         }
-        for(int i = 0; i < v0; i++) {
+        for (int i = 0; i < v0; i++) {
             if (cba1.getBit(i) != cba2.getBit(i)) {
                 return i;
             }
         }
         return -1;
     }
+
     /**
      *
      * @param cba1
      * @param cba2
      * @return
      */
-    public static int getEqualVariableIndex (CompactBitArray cba1, CompactBitArray cba2) {
+    public static int getEqualVariableIndex(CompactBitArray cba1, CompactBitArray cba2) {
         int v = cba1.getLength();
-        int v0 = Utils.nextInt(v);//TODO: speedup with block level
-        for(int i = v0; i < v; i++) {
+        int v0 = Utils.StaticRandom.nextInt(v);//TODO: speedup with block level
+        for (int i = v0; i < v; i++) {
             if (cba1.getBit(i) == cba2.getBit(i)) {
                 return i;
             }
         }
-        for(int i = 0; i < v0; i++) {
+        for (int i = 0; i < v0; i++) {
             if (cba1.getBit(i) == cba2.getBit(i)) {
                 return i;
             }
         }
         return -1;
     }
+
     /**
      *
      * @param clause

@@ -5,6 +5,7 @@ import parallelhyflex.communication.serialisation.ReadWriteable;
 
 /**
  *
+ * @param <TSolution>
  * @author kommusoft
  */
 public interface Solution<TSolution> extends Serializable, ReadWriteable {

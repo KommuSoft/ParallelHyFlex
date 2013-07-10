@@ -315,16 +315,16 @@ import java.nio.ByteBuffer ;
  *
  * <h3>Read-write modes</h3>
  * When a buffer object is initially created, the buffer is in a
- * <i>writable</i> state.  In this state, new sections and data can
+ * <i>Writeable</i> state.  In this state, new sections and data can
  * be added to the buffer.  However read operations are <i>not</i>
- * allowed while a buffer is in the writable state.  When writing
+ * allowed while a buffer is in the Writeable state.  When writing
  * is completed, the {\@link #commit() commit()} method "freezes" the buffer,
  * putting it in a <i>readable</i> state, and moves the read pointer to
  * the start of the buffer.  Now read operations can begin; but
  * write operations are no longer allowed.
  * <p>
  * After the data has been read, you may want to put the buffer back
- * into a writable state, ready for more data.  To do this use the
+ * into a Writeable state, ready for more data.  To do this use the
  * {\@link #clear() clear()} method.  This erases the original data, and moves
  * the write pointer to the start of the buffer.
  * If on the other hand you need to re-read the same buffer contents from
@@ -723,7 +723,7 @@ public class Buffer {
     /**
      * Size of current section.
      * If buffer is currently readable, return value is fixed for this section.
-     * If buffer is currently writable, return value is number of elements
+     * If buffer is currently Writeable, return value is number of elements
      * written to this section so far.
      * \@return number of elements in this section.
      * \@throws WrongStateException if current section is undefined,
@@ -2081,7 +2081,7 @@ for ($i = 0 ; $i < @ptypes ; $i++) {
      * Determine read-write mode of buffer.
      * Low-level method used for sending and receiving the buffer.
      */
-    public boolean isWritable() {
+    public boolean isWriteable() {
         return writeable ;
     }
 }

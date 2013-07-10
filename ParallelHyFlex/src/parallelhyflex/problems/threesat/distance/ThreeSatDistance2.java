@@ -1,5 +1,6 @@
 package parallelhyflex.problems.threesat.distance;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.distance.DistanceFunctionBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
@@ -63,4 +64,5 @@ public class ThreeSatDistance2 extends DistanceFunctionBase<ThreeSatSolution, Th
         }
         return true;
     }
+    private static final Logger LOG = Logger.getLogger(ThreeSatDistance2.class.getName());
 }

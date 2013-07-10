@@ -1108,10 +1108,10 @@ public class MPJRun {
 
             } //end if key.isReadable()
 
-            else if (key.isWritable()) {
+            else if (key.isWriteable()) {
 			if(DEBUG && logger.isDebugEnabled())
               logger.debug(
-                  "In, WRITABLE, so changing the interestOps to READ_ONLY");
+                  "In, Writeable, so changing the interestOps to READ_ONLY");
               key.interestOps(SelectionKey.OP_READ);
             }
           }

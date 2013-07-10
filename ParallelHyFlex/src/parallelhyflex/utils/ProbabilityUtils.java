@@ -135,6 +135,21 @@ public final class ProbabilityUtils {
         return Math.max(index, 0x00);
     }
 
+    public static <T> void shuffle(List<T> list, int sublength) {
+        T temp;
+        sublength = Math.min(sublength, list.size());
+        for (int i = 0; i < sublength; i++) {
+            int j = Utils.StaticRandom.nextInt(sublength);
+            temp = list.get(j);
+            list.set(j, list.get(i));
+            list.set(i, temp);
+        }
+    }
+
+    public static <T> void shuffle(List<T> list) {
+        shuffle(list, list.size());
+    }
+
     private ProbabilityUtils() {
     }
 }

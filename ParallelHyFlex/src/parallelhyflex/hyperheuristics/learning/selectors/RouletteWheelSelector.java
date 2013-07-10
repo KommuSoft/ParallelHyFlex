@@ -1,5 +1,7 @@
 package parallelhyflex.hyperheuristics.learning.selectors;
 
+import java.util.logging.Logger;
+import parallelhyflex.algebra.probability.NormalizedProbabilityVector;
 import parallelhyflex.utils.Utils;
 
 /**
@@ -8,19 +10,17 @@ import parallelhyflex.utils.Utils;
  */
 public class RouletteWheelSelector implements Selector {
 
-    /**
-     *
-     * @param probabilities
-     * @return
-     */
     @Override
-    public Integer generate(double[] probabilities) {
-        double p = Utils.nextDouble();
+    public Integer generate(NormalizedProbabilityVector probabilities) {
+        double p = Utils.StaticRandom.nextDouble();
         int index = 0;
-        while(index < probabilities.length && p > probabilities[index]) {
-            p -= probabilities[index++];
+        int length = probabilities.getSize();
+        double prob = probabilities.getProbability(index);
+        while (index < length && p > prob) {
+            p -= prob;
+            prob = probabilities.getProbability(++index);
         }
-        return Math.min(index,probabilities.length-1);
+        return Math.min(index, length - 1);
     }
-    
+    private static final Logger LOG = Logger.getLogger(RouletteWheelSelector.class.getName());
 }

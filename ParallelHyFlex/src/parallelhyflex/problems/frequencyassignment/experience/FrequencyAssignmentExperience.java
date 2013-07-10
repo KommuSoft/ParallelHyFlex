@@ -1,8 +1,8 @@
 package parallelhyflex.problems.frequencyassignment.experience;
 
-import parallelhyflex.problems.frequencyassignment.constraint.FrequencyAssignmentWritableEnforceableConstraint1;
+import parallelhyflex.problems.frequencyassignment.constraint.FrequencyAssignmentWriteableEnforceableConstraint1;
 import parallelhyflex.algebra.ArgumentCloneable;
-import parallelhyflex.experiencestorage.WritableSetExperienceStore;
+import parallelhyflex.experiencestorage.WriteableSetExperienceStore;
 import parallelhyflex.problems.frequencyassignment.problem.FrequencyAssignmentProblem;
 import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentSolution;
 
@@ -10,7 +10,7 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentExperience extends WritableSetExperienceStore<FrequencyAssignmentSolution, FrequencyAssignmentProblem, FrequencyAssignmentWritableEnforceableConstraint1> implements ArgumentCloneable<FrequencyAssignmentProblem, FrequencyAssignmentExperience> {
+public class FrequencyAssignmentExperience extends WriteableSetExperienceStore<FrequencyAssignmentSolution, FrequencyAssignmentProblem, FrequencyAssignmentWriteableEnforceableConstraint1> implements ArgumentCloneable<FrequencyAssignmentProblem, FrequencyAssignmentExperience> {
 
     /**
      *

@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
+import parallelhyflex.experiencestorage.evaluators.SetHypothesisItem;
+import parallelhyflex.experiencestorage.evaluators.SetHypothesisItemComparator1;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.experience.ExperienceBase;
 import parallelhyflex.problemdependent.problem.Problem;
@@ -14,12 +17,15 @@ import parallelhyflex.utils.ProbabilityUtils;
 
 /**
  *
+ * @param <TSolution>
+ * @param <TProblem>
+ * @param <THypothesis>
  * @author kommusoft
  */
 public class SetExperienceStore<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, THypothesis extends EnforceableConstraint<TSolution>> extends ExperienceBase<TSolution, TProblem, THypothesis> {
 
+    private static final Logger LOG = Logger.getLogger(SetExperienceStore.class.getName());
     private final HashSet<SetHypothesisItem<TSolution, THypothesis>> hypothesis = new HashSet<>();
-    //private final ReentrantReadWriteLock setLock;
     private final int historySize;
     private final int hypothesisSize;
     private final int generationSize;

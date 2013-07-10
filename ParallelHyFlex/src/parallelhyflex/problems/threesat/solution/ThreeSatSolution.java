@@ -3,6 +3,7 @@ package parallelhyflex.problems.threesat.solution;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
@@ -247,4 +248,5 @@ public class ThreeSatSolution implements Solution<ThreeSatSolution> {
     public void swapBit(int index, ThreeSatProblem problem) {
         ClauseUtils.swapBit(index, problem.getInfluences()[index], cba, problem.getClauses(), this);
     }
+    private static final Logger LOG = Logger.getLogger(ThreeSatSolution.class.getName());
 }

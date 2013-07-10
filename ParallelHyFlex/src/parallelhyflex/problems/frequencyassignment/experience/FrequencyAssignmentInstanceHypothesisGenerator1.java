@@ -1,6 +1,6 @@
 package parallelhyflex.problems.frequencyassignment.experience;
 
-import parallelhyflex.problems.frequencyassignment.constraint.FrequencyAssignmentWritableEnforceableConstraint1;
+import parallelhyflex.problems.frequencyassignment.constraint.FrequencyAssignmentWriteableEnforceableConstraint1;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import parallelhyflex.algebra.tuples.Tuple2;
@@ -14,14 +14,14 @@ import parallelhyflex.problems.frequencyassignment.solution.FrequencyAssignmentS
  *
  * @author kommusoft
  */
-public class FrequencyAssignmentInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<FrequencyAssignmentSolution, FrequencyAssignmentWritableEnforceableConstraint1, FrequencyAssignmentProblem> {
+public class FrequencyAssignmentInstanceHypothesisGenerator1 extends InstanceHypothesisGeneratorBase<FrequencyAssignmentSolution, FrequencyAssignmentWriteableEnforceableConstraint1, FrequencyAssignmentProblem> {
 
     public FrequencyAssignmentInstanceHypothesisGenerator1(FrequencyAssignmentProblem problem) {
         super(problem);
     }
 
     @Override
-    public FrequencyAssignmentWritableEnforceableConstraint1 generate(FrequencyAssignmentSolution variable) {
+    public FrequencyAssignmentWriteableEnforceableConstraint1 generate(FrequencyAssignmentSolution variable) {
         Tuple2<Integer, Integer> data;
         try {
             data = KeyValueConstraintImplementationBase.getInstance().generate(variable.getFrequencyAssignment(), this.getProblem().getFrequencies());
@@ -29,6 +29,6 @@ public class FrequencyAssignmentInstanceHypothesisGenerator1 extends InstanceHyp
             Logger.getLogger(FrequencyAssignmentInstanceHypothesisGenerator1.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return new FrequencyAssignmentWritableEnforceableConstraint1(this.getProblem(), data);
+        return new FrequencyAssignmentWriteableEnforceableConstraint1(this.getProblem(), data);
     }
 }

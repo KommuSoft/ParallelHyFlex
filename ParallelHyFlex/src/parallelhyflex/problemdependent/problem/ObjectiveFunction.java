@@ -9,5 +9,10 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public interface ObjectiveFunction<TSolution extends Solution> extends Generator<TSolution,Double> {
 
+    /**
+     *
+     * @param solution
+     * @return
+     */
     public double evaluateSolution(TSolution solution);
 }

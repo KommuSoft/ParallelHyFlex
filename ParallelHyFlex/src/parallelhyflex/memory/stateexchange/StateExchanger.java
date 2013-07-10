@@ -16,7 +16,35 @@ public interface StateExchanger {
 
     void synchronizeState() throws IOException;
 
-    public <T extends Serializable> StateExchangerProxy<T> generateProxy(int index);
+    public <T extends Serializable> AllStateExchangerProxy<T> generateAllProxy(int index);
 
+    /**
+     *
+     * @param <T>
+     * @param index
+     * @return
+     */
+    public <T extends Serializable> ForeignStateExchangerProxy<T> generateForeignProxy(int index);
+
+    /**
+     *
+     * @param <T>
+     * @param toAdd
+     * @return
+     */
+    public <T extends Serializable> ForeignStateExchangerProxy<T> turnForeignProxy(T toAdd);
+
+    /**
+     *
+     * @param <T>
+     * @param toAdd
+     * @return
+     */
+    public <T extends Serializable> AllStateExchangerProxy<T> turnAllProxy(T toAdd);
+
+    /**
+     *
+     * @return
+     */
     ArrayIterator<ExchangeState> stateIterator();
 }

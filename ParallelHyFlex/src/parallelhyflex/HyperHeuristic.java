@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpi.MPI;
 import mpi.Status;
-import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.collections.ArrayIterator;
+import parallelhyflex.algebra.Generator;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.abstraction.CommMode;
 import parallelhyflex.communication.abstraction.RequestResult;
@@ -22,12 +22,13 @@ import parallelhyflex.communication.routing.PacketRouterBase;
 import parallelhyflex.logging.LoggingParameters;
 import parallelhyflex.memory.MemoryExchangePolicy;
 import parallelhyflex.memory.ProxyMemory;
+import parallelhyflex.memory.stateexchange.AllStateExchangerProxy;
 import parallelhyflex.memory.stateexchange.ExchangeState;
+import parallelhyflex.memory.stateexchange.ForeignStateExchangerProxy;
 import parallelhyflex.memory.stateexchange.StateExchanger;
 import parallelhyflex.memory.stateexchange.StateExchangerBase;
-import parallelhyflex.memory.stateexchange.StateExchangerProxy;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraint;
-import parallelhyflex.problemdependent.experience.WritableExperience;
+import parallelhyflex.problemdependent.constraints.WriteableEnforceableConstraint;
+import parallelhyflex.problemdependent.experience.WriteableExperience;
 import parallelhyflex.problemdependent.heuristic.HeuristicType;
 import parallelhyflex.problemdependent.problem.Problem;
 import parallelhyflex.problemdependent.problem.ProblemInterface;
@@ -40,12 +41,18 @@ import parallelhyflex.utils.CompactBitArray;
 
 /**
  *
+ * @param <TSolution>
+ * @param <TProblem>
+ * @param <TEC>
  * @author kommusoft
  */
-public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WritableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution>, PacketRouter, StateExchanger {
+public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>, TEC extends WriteableEnforceableConstraint<TSolution>> implements ProblemInterface<TSolution>, PacketRouter, StateExchanger {
+    
+    public static int SEARCH_SPACE_SIZE;
+    public static int SEARCH_SPACE_GENERATION;
 
     private final ProxyMemory<TSolution> proxyMemory;
-    private final WritableExperience<TSolution, TEC> experience;
+    private final WriteableExperience<TSolution, TEC> experience;
     private final StateExchangerBase stateExchanger;
     private final Date startTime, stopTime;
     private final long durationTicks;
@@ -63,10 +70,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * root (has rank = 0), otherwise, one needs to construct this class with
      * the constructor with the ProblemReader
      * @param problem
+     * @param negotiator
      * @throws ProtocolException If this constructor is initialized by a machine
      * with a rank different from zero!
      */
-    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WriteableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         this(problem, durationTicks, experience, negotiator, negotiationTicks, stateExchangeTicks, solutionReader, 10, MemoryExchangePolicy.StateIthDistributed);
     }
 
@@ -78,7 +86,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * @throws ProtocolException If this constructor is initialized by a machine
      * with a rank different from zero!
      */
-    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader, int localMemorySize, MemoryExchangePolicy localMemoryExchangePolicy) throws ProtocolException, IOException {
+    public HyperHeuristic(TProblem problem, long durationTicks, Generator<TProblem, ? extends WriteableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader, int localMemorySize, MemoryExchangePolicy localMemoryExchangePolicy) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() == 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
@@ -90,10 +98,11 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.experience = experience.generate(problem);
             this.negotiator = negotiator.generate(this.problem);
             this.stateExchanger = new StateExchangerBase();
+            this.registerPacketReceiver(this.stateExchanger);
             this.proxyMemory = new ProxyMemory<>(localMemorySize, localMemoryExchangePolicy, solutionReader);
             this.proxyMemory.setObjectiveGenerator(this.problem.getObjectiveFunction());
             this.registerPacketReceiver(this.proxyMemory);
-            this.proxyMemory.setWritableExperience(this.experience);
+            this.proxyMemory.setWriteableExperience(this.experience);
             byte[][] data;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 try (DataOutputStream dos = new DataOutputStream(baos)) {
@@ -102,7 +111,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
                 data = new byte[][]{baos.toByteArray()};
             }
             Communication.Bcast(CommMode.MpiBlocking, data, 0, 1, MPI.OBJECT, 0);
-            int nw = this.getWritableMemory();
+            int nw = this.getWriteableMemory();
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
             this.bestObjectiveSolutionIndices = new int[O];
@@ -124,7 +133,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * is not the root
      * @throws IOException
      */
-    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
+    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WriteableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader) throws ProtocolException, IOException {
         this(problemReader, durationTicks, experience, negotiator, negotiationTicks, stateExchangeTicks, solutionReader, 10, MemoryExchangePolicy.StateIthDistributed);
     }
 
@@ -140,7 +149,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * is not the root
      * @throws IOException
      */
-    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WritableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader, int localMemorySize, MemoryExchangePolicy localMemoryExchangePolicy) throws ProtocolException, IOException {
+    public HyperHeuristic(ProblemReader<TSolution, TProblem> problemReader, long durationTicks, Generator<TProblem, ? extends WriteableExperience<TSolution, TEC>> experience, Generator<TProblem, ? extends SearchSpaceNegotiator<TSolution, TEC>> negotiator, long negotiationTicks, long stateExchangeTicks, SolutionReader<TSolution> solutionReader, int localMemorySize, MemoryExchangePolicy localMemoryExchangePolicy) throws ProtocolException, IOException {
         if (Communication.getCommunication().getRank() != 0) {
             this.startTime = new Date();
             this.stopTime = new Date();
@@ -158,9 +167,10 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
             this.proxyMemory.setObjectiveGenerator(this.problem.getObjectiveFunction());
             this.experience = experience.generate(this.problem);
             this.stateExchanger = new StateExchangerBase();
+            this.registerPacketReceiver(this.stateExchanger);
             this.negotiator = negotiator.generate(this.problem);
-            this.proxyMemory.setWritableExperience(this.experience);
-            int nw = this.getWritableMemory();
+            this.proxyMemory.setWriteableExperience(this.experience);
+            int nw = this.getWriteableMemory();
             int O = this.problem.getNumberOfObjectiveFunctions();
             this.bestObjectives = new double[O];
             this.bestObjectiveSolutionIndices = new int[O];
@@ -309,7 +319,7 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      *
      * @return
      */
-    public final int getWritableMemory() {
+    public final int getWriteableMemory() {
         return this.proxyMemory.getLocalMemorySize();
     }
 
@@ -617,8 +627,29 @@ public abstract class HyperHeuristic<TSolution extends Solution<TSolution>, TPro
      * @return
      */
     @Override
-    public <T extends Serializable> StateExchangerProxy<T> generateProxy(int index) {
-        return this.stateExchanger.generateProxy(index);
+    public <T extends Serializable> AllStateExchangerProxy<T> generateAllProxy(int index) {
+        return this.stateExchanger.generateAllProxy(index);
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param index
+     * @return
+     */
+    @Override
+    public <T extends Serializable> ForeignStateExchangerProxy<T> generateForeignProxy(int index) {
+        return this.stateExchanger.generateForeignProxy(index);
+    }
+
+    @Override
+    public <T extends Serializable> ForeignStateExchangerProxy<T> turnForeignProxy(T toAdd) {
+        return stateExchanger.turnForeignProxy(toAdd);
+    }
+
+    @Override
+    public <T extends Serializable> AllStateExchangerProxy<T> turnAllProxy(T toAdd) {
+        return stateExchanger.turnAllProxy(toAdd);
     }
 
     /**

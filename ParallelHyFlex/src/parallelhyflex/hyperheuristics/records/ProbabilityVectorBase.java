@@ -1,6 +1,7 @@
 package parallelhyflex.hyperheuristics.records;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.generators.ConstantGenerator;
 import parallelhyflex.utils.Utils;
@@ -54,7 +55,7 @@ public class ProbabilityVectorBase implements ProbabilityVector {
      */
     @Override
     public int generateIndex() {
-        double rand = Utils.nextDouble() * cdf[cdf.length - 1];
+        double rand = Utils.StaticRandom.nextDouble() * cdf[cdf.length - 1];
         int index = Arrays.binarySearch(cdf, rand);
         if (index < 0) {
             index = ~index;
@@ -165,4 +166,5 @@ public class ProbabilityVectorBase implements ProbabilityVector {
             this.cdf[i] += dp;
         }
     }
+    private static final Logger LOG = Logger.getLogger(ProbabilityVectorBase.class.getName());
 }

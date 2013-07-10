@@ -2,6 +2,7 @@ package parallelhyflex.problems.threesat.solution;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.SolutionGeneratorBase;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.utils.CompactBitArray;
@@ -48,4 +49,5 @@ public class ThreeSatSolutionGenerator extends SolutionGeneratorBase<ThreeSatSol
     public ThreeSatSolution readAndGenerate(DataInputStream dis) throws IOException {
         return new ThreeSatSolution(dis.readInt(), CompactBitArray.fromDataInputStream(dis));
     }
+    private static final Logger LOG = Logger.getLogger(ThreeSatSolutionGenerator.class.getName());
 }

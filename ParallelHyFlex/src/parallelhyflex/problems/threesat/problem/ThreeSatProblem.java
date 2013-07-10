@@ -1,9 +1,13 @@
 package parallelhyflex.problems.threesat.problem;
 
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.logging.Logger;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.distance.DistanceFunction;
 import parallelhyflex.problemdependent.heuristic.Heuristic;
@@ -12,11 +16,11 @@ import parallelhyflex.problemdependent.problem.ProblemBase;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.distance.ThreeSatDistance1;
 import parallelhyflex.problems.threesat.distance.ThreeSatDistance2;
-import parallelhyflex.problems.threesat.heuristic.ThreeSatHeuristicC1;
-import parallelhyflex.problems.threesat.heuristic.ThreeSatHeuristicL1;
-import parallelhyflex.problems.threesat.heuristic.ThreeSatHeuristicM1;
-import parallelhyflex.problems.threesat.heuristic.ThreeSatHeuristicM3;
-import parallelhyflex.problems.threesat.heuristic.ThreeSatHeuristicR1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicC1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicL1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM1;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicM3;
+import parallelhyflex.problems.threesat.heuristics.ThreeSatHeuristicR1;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
 import parallelhyflex.utils.ProbabilityUtils;
@@ -29,6 +33,7 @@ import parallelhyflex.utils.Utils;
  */
 public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolutionGenerator> {
 
+    private static final Logger LOG = Logger.getLogger(ThreeSatProblem.class.getName());
     private long[] clauses;
     private int[][] influences;
     private int[][] blockInfluences;
@@ -345,6 +350,16 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
                 linearizedRatio1, linearizedRatio2, linearizedRatio3,
                 vcVariableMean, vcVariableVariation, vcVariableMin, vcVariableMax, vcVariableEntropy,
                 vcClauseMean, vcClauseVariation, vcClauseMin, vcClauseMax, vcClauseEntropy);
+    }
+
+    public void writeStandardOutputStream(OutputStream os) {
+        ThreeSatProblemStandardWriter.getInstance().write(os, this.v, this.c, this.clauses);
+    }
+
+    public void writeStandardOutputFile(String filename) throws FileNotFoundException, IOException {
+        try (FileOutputStream fos = new FileOutputStream(filename)) {
+            this.writeStandardOutputStream(fos);
+        }
     }
 
     /**

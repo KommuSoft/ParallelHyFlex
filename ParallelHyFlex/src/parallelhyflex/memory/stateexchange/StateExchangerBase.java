@@ -19,6 +19,7 @@ public class StateExchangerBase extends AsynchronousGatherAll<byte[]> implements
      *
      */
     public static final int SendTag = 1;
+    private static final Logger LOG = Logger.getLogger(StateExchangerBase.class.getName());
     private final ExchangeState[] states;
     private final CompactBitArray synced = new CompactBitArray(Communication.getCommunication().getSize());
     private boolean active = false;
@@ -137,7 +138,28 @@ public class StateExchangerBase extends AsynchronousGatherAll<byte[]> implements
      * @return
      */
     @Override
-    public <T extends Serializable> StateExchangerProxy<T> generateProxy(int index) {
-        return new StateExchangerProxy<>(this, index);
+    public <T extends Serializable> AllStateExchangerProxy<T> generateAllProxy(int index) {
+        return new AllStateExchangerProxy<>(this, index);
+    }
+
+    @Override
+    public <T extends Serializable> ForeignStateExchangerProxy<T> generateForeignProxy(int index) {
+        return new ForeignStateExchangerProxy<>(this, index);
+    }
+
+    @Override
+    public <T extends Serializable> ForeignStateExchangerProxy<T> turnForeignProxy(T toAdd) {
+        ExchangeState es = this.getLocalState();
+        int index = es.size();
+        this.getLocalState().add(toAdd);
+        return this.generateForeignProxy(index);
+    }
+
+    @Override
+    public <T extends Serializable> AllStateExchangerProxy<T> turnAllProxy(T toAdd) {
+        ExchangeState es = this.getLocalState();
+        int index = es.size();
+        this.getLocalState().add(toAdd);
+        return this.generateAllProxy(index);
     }
 }

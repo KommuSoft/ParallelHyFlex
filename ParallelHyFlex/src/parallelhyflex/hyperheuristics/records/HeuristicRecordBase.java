@@ -1,5 +1,7 @@
 package parallelhyflex.hyperheuristics.records;
 
+import java.util.logging.Logger;
+
 
 /**
  * 
@@ -54,5 +56,6 @@ public class HeuristicRecordBase implements HeuristicRecord {
         }
         return true;
     }
+    private static final Logger LOG = Logger.getLogger(HeuristicRecordBase.class.getName());
     
 }

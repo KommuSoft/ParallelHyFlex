@@ -1,8 +1,11 @@
 package parallelhyflex.hyperheuristics.learning;
 
 import com.google.common.collect.HashBiMap;
+import java.util.logging.Logger;
 import parallelhyflex.algebra.Generator;
 import parallelhyflex.algebra.Procedure;
+import parallelhyflex.algebra.probability.NormalizedProbabilityVector;
+import parallelhyflex.algebra.probability.SingleNormalizedProbabilityVector;
 import parallelhyflex.algebra.tuples.Tuple3;
 import parallelhyflex.hyperheuristics.learning.learningschemes.LinearLearningScheme;
 import parallelhyflex.hyperheuristics.learning.selectors.RouletteWheelSelector;
@@ -10,23 +13,26 @@ import parallelhyflex.utils.Utils;
 
 /**
  *
+ * @param <TAction>
  * @author kommusoft
  */
 public class LearningAutomaton<TAction> {
 
+    private static final Logger LOG = Logger.getLogger(LearningAutomaton.class.getName());
     private final HashBiMap<TAction, Integer> actions;
-    private double[] probabilities;
-    private final Generator<double[], Integer> selector;
-    private final Procedure<Tuple3<double[], Integer, Double>> learningScheme;
+    private final Generator<NormalizedProbabilityVector, Integer> selector;
+    private final Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme;
+    private final NormalizedProbabilityVector vector;
 
     /**
      *
+     * @param vector
      * @param selector
      * @param learningScheme
      */
-    public LearningAutomaton(Generator<double[], Integer> selector, Procedure<Tuple3<double[], Integer, Double>> learningScheme) {
-        this.probabilities = new double[0];
+    public LearningAutomaton(NormalizedProbabilityVector vector, Generator<NormalizedProbabilityVector, Integer> selector, Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme) {
         this.actions = HashBiMap.create();
+        this.vector = vector;
         this.selector = selector;
         this.learningScheme = learningScheme;
         this.reset();
@@ -34,21 +40,121 @@ public class LearningAutomaton<TAction> {
 
     /**
      *
+     * @param vector
      * @param selector
      * @param learningScheme
      * @param actions
      */
-    public LearningAutomaton(Generator<double[], Integer> selector, Procedure<Tuple3<double[], Integer, Double>> learningScheme, Iterable<TAction> actions) {
-        this(selector, learningScheme);
+    public LearningAutomaton(NormalizedProbabilityVector vector, Generator<NormalizedProbabilityVector, Integer> selector, Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme, Iterable<TAction> actions) {
+        this(vector, selector, learningScheme);
         this.reset(actions);
+    }
+
+    /**
+     *
+     * @param vector
+     * @param learningScheme
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme) {
+        this(vector, new RouletteWheelSelector(), learningScheme);
+    }
+
+    /**
+     *
+     * @param vector
+     * @param learningScheme
+     * @param actions
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme, Iterable<TAction> actions) {
+        this(vector, new RouletteWheelSelector(), learningScheme);
+        this.reset(actions);
+    }
+
+    /**
+     *
+     * @param vector
+     * @param lambda1
+     * @param lambda2
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, double lambda1, double lambda2) {
+        this(vector, new LinearLearningScheme(lambda1, lambda2));
+    }
+
+    /**
+     *
+     * @param vector
+     * @param lambda1
+     * @param lambda2
+     * @param actions
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, double lambda1, double lambda2, Iterable<TAction> actions) {
+        this(vector, new LinearLearningScheme(lambda1, lambda2));
+        this.reset(actions);
+    }
+
+    /**
+     *
+     * @param vector
+     * @param lambda
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, double lambda) {
+        this(vector, lambda, lambda);
+    }
+
+    /**
+     *
+     * @param vector
+     * @param lambda
+     * @param actions
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, double lambda, Iterable<TAction> actions) {
+        this(vector, lambda);
+        this.reset(actions);
+    }
+
+    /**
+     *
+     * @param vector
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector) {
+        this(vector, 1.0d);
+    }
+
+    /**
+     *
+     * @param vector
+     * @param actions
+     */
+    public LearningAutomaton(NormalizedProbabilityVector vector, Iterable<TAction> actions) {
+        this(vector);
+        this.reset(actions);
+    }
+
+    /**
+     *
+     * @param selector
+     * @param learningScheme
+     */
+    public LearningAutomaton(Generator<NormalizedProbabilityVector, Integer> selector, Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme) {
+        this(new SingleNormalizedProbabilityVector(), selector, learningScheme);
+    }
+
+    /**
+     *
+     * @param selector
+     * @param learningScheme
+     * @param actions
+     */
+    public LearningAutomaton(Generator<NormalizedProbabilityVector, Integer> selector, Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme, Iterable<TAction> actions) {
+        this(new SingleNormalizedProbabilityVector(), selector, learningScheme, actions);
     }
 
     /**
      *
      * @param learningScheme
      */
-    public LearningAutomaton(Procedure<Tuple3<double[], Integer, Double>> learningScheme) {
-        this(new RouletteWheelSelector(), learningScheme);
+    public LearningAutomaton(Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme) {
+        this(new SingleNormalizedProbabilityVector(), learningScheme);
     }
 
     /**
@@ -56,9 +162,8 @@ public class LearningAutomaton<TAction> {
      * @param learningScheme
      * @param actions
      */
-    public LearningAutomaton(Procedure<Tuple3<double[], Integer, Double>> learningScheme, Iterable<TAction> actions) {
-        this(new RouletteWheelSelector(), learningScheme);
-        this.reset(actions);
+    public LearningAutomaton(Procedure<Tuple3<NormalizedProbabilityVector, Integer, Double>> learningScheme, Iterable<TAction> actions) {
+        this(new SingleNormalizedProbabilityVector(), learningScheme, actions);
     }
 
     /**
@@ -67,7 +172,7 @@ public class LearningAutomaton<TAction> {
      * @param lambda2
      */
     public LearningAutomaton(double lambda1, double lambda2) {
-        this(new LinearLearningScheme(lambda1, lambda2));
+        this(new SingleNormalizedProbabilityVector(), lambda1, lambda2);
     }
 
     /**
@@ -77,16 +182,15 @@ public class LearningAutomaton<TAction> {
      * @param actions
      */
     public LearningAutomaton(double lambda1, double lambda2, Iterable<TAction> actions) {
-        this(new LinearLearningScheme(lambda1, lambda2));
-        this.reset(actions);
+        this(new SingleNormalizedProbabilityVector(), lambda1, lambda2, actions);
     }
-    
+
     /**
      *
      * @param lambda
      */
     public LearningAutomaton(double lambda) {
-        this(lambda,lambda);
+        this(new SingleNormalizedProbabilityVector(), lambda, lambda);
     }
 
     /**
@@ -95,34 +199,29 @@ public class LearningAutomaton<TAction> {
      * @param actions
      */
     public LearningAutomaton(double lambda, Iterable<TAction> actions) {
-        this(lambda);
-        this.reset(actions);
+        this(new SingleNormalizedProbabilityVector(), lambda, actions);
     }
 
     /**
      *
      */
     public LearningAutomaton() {
-        this(1.0d);
+        this(new SingleNormalizedProbabilityVector());
     }
-    
+
     /**
      *
      * @param actions
      */
     public LearningAutomaton(Iterable<TAction> actions) {
-        this();
-        this.reset(actions);
+        this(new SingleNormalizedProbabilityVector(), actions);
     }
 
     /**
      *
      */
     public void reset() {
-        double p = 1.0d / this.probabilities.length;
-        for (int i = 0; i < this.probabilities.length; i++) {
-            this.probabilities[i] = p;
-        }
+        this.vector.reset();
     }
 
     /**
@@ -132,8 +231,7 @@ public class LearningAutomaton<TAction> {
     public void reset(Iterable<TAction> actions) {
         this.actions.clear();
         Utils.generateIndexMapper(actions, this.actions);
-        this.probabilities = new double[this.actions.size()];
-        this.reset();
+        this.vector.setSize(this.actions.size());
     }
 
     /**
@@ -141,7 +239,7 @@ public class LearningAutomaton<TAction> {
      * @return
      */
     public TAction getAction() {
-        int index = this.selector.generate(probabilities);
+        int index = this.selector.generate(this.vector);
         return this.actions.inverse().get(index);
     }
 
@@ -153,7 +251,12 @@ public class LearningAutomaton<TAction> {
     public void update(TAction action, double reward) {
         if (this.actions.containsKey(action)) {
             int index = this.actions.get(action);
-            this.learningScheme.execute(new Tuple3<>(this.probabilities, index, reward));
+            this.learningScheme.execute(new Tuple3<>(this.vector, index, reward));
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("LA{%s}",this.vector);
     }
 }

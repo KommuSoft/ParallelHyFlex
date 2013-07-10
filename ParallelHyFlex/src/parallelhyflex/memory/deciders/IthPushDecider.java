@@ -1,5 +1,6 @@
 package parallelhyflex.memory.deciders;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
@@ -38,4 +39,5 @@ public class IthPushDecider<TSolution extends Solution<TSolution>> implements Pu
         this.counters[index] = counter;
         return result;
     }
+    private static final Logger LOG = Logger.getLogger(IthPushDecider.class.getName());
 }

@@ -6,6 +6,8 @@ import parallelhyflex.problemdependent.solution.Solution;
 
 /**
  *
+ * @param <TSolution>
+ * @param <TEC>
  * @author kommusoft
  */
 public interface Experience<TSolution extends Solution<TSolution>, TEC extends EnforceableConstraint<TSolution>> {

@@ -4,7 +4,7 @@ Tag|Content                 |Sender                              |Receiver      
 ---+------------------------+------------------------------------+------------------------------------+--------+-----------
 0  |Solution                |PushSenderBase                      |ProxyMemory                         |MPI     |ISend,IRecv
 1  |State exchange          |StateExchanger                      |StateExchanger                      |MPI     |IGatherAll
-2  |SearchSpace Negotiations|MergingWritableSearchSpaceNegotiator|MergingWritableSearchSpaceNegotiator|MPI     |IGatherAll
+2  |SearchSpace Negotiations|MergingWriteableSearchSpaceNegotiator|MergingWriteableSearchSpaceNegotiator|MPI     |IGatherAll
 
 
 Non-Tagged transmission

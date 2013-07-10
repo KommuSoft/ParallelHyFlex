@@ -1,5 +1,6 @@
 package parallelhyflex.memory.deciders;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 import parallelhyflex.utils.Utils;
 
@@ -34,6 +35,7 @@ public class ProbablePushDecider<TSolution extends Solution<TSolution>> implemen
      */
     @Override
     public boolean decidePush(int index, TSolution sol) {
-        return Utils.nextDouble() < probability;
+        return Utils.StaticRandom.nextDouble() < probability;
     }
+    private static final Logger LOG = Logger.getLogger(ProbablePushDecider.class.getName());
 }

@@ -1,5 +1,6 @@
 package parallelhyflex.problemdependent.searchspace;
 
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
@@ -25,4 +26,5 @@ public class DummySearchSpace<TSolution extends Solution<TSolution>> extends Sea
     public boolean isInSearchSpace(TSolution solution) {
         return true;
     }
+    private static final Logger LOG = Logger.getLogger(DummySearchSpace.class.getName());
 }

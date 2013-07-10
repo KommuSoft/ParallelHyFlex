@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  *
@@ -85,4 +86,5 @@ public class ExchangeState extends ArrayList<Serializable> {
         sb.append(" ]");
         return sb.toString();
     }
+    private static final Logger LOG = Logger.getLogger(ExchangeState.class.getName());
 }

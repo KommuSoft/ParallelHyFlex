@@ -2,6 +2,7 @@ package parallelhyflex.memory;
 
 import java.lang.reflect.Array;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 import parallelhyflex.problemdependent.solution.Solution;
 
 /**
@@ -69,4 +70,5 @@ public class QueueProxyMemorySlots<TSolution extends Solution<TSolution>> extend
     public TSolution peekSolution(int index) {
         return this.solutionQueue[index].peek();
     }
+    private static final Logger LOG = Logger.getLogger(QueueProxyMemorySlots.class.getName());
 }

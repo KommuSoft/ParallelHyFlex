@@ -3,9 +3,9 @@ package parallelhyflex.problems.threesat.constraint;
 import org.junit.Test;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraint;
 import parallelhyflex.problemdependent.constraints.EnforceableConstraintGenerator;
-import parallelhyflex.problemdependent.constraints.WritableEnforceableConstraintBase;
+import parallelhyflex.problemdependent.constraints.WriteableEnforceableConstraintBase;
 import parallelhyflex.problems.TestRenewalStrategy;
-import parallelhyflex.problems.constraint.WritableEnforceableConstraintTest;
+import parallelhyflex.problems.constraint.WriteableEnforceableConstraintTest;
 import parallelhyflex.problems.threesat.ClauseUtils;
 import parallelhyflex.problems.threesat.ThreeSatRenewalStrategy;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
@@ -17,11 +17,11 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolutionGenerator;
  *
  * @author kommusoft
  */
-public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforceableConstraintTest<ThreeSatSolutionGenerator,ThreeSatProblem,ThreeSatProblemGenerator,ThreeSatSolution> {
+public class ThreeSatWriteableEnforceableConstraint1Test extends WriteableEnforceableConstraintTest<ThreeSatSolutionGenerator,ThreeSatProblem,ThreeSatProblemGenerator,ThreeSatSolution> {
 
     /**
      * Test of enforceTrue method, of class
-     * ThreeSatWritableEnforceableConstraint1.
+     * ThreeSatWriteableEnforceableConstraint1.
      */
     @Test
     @Override
@@ -31,11 +31,11 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
 
     /**
      * Test of enforceTrue method, of class
-     * ThreeSatWritableEnforceableConstraint1.
+     * ThreeSatWriteableEnforceableConstraint1.
      */
     /**
      * Test of enforceFalse method, of class
-     * ThreeSatWritableEnforceableConstraint2.
+     * ThreeSatWriteableEnforceableConstraint2.
      */
     @Test
     @Override
@@ -45,7 +45,7 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
 
     /**
      * Test of enforceFalse method, of class
-     * ThreeSatWritableEnforceableConstraint1.
+     * ThreeSatWriteableEnforceableConstraint1.
      */
     @Test
     @Override
@@ -55,7 +55,7 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
 
     /**
      * Test of enforceFalse method, of class
-     * ThreeSatWritableEnforceableConstraint2.
+     * ThreeSatWriteableEnforceableConstraint2.
      */
     @Test
     @Override
@@ -65,7 +65,7 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
 
     /**
      * Test of serialisation/deserialisation method, of class
-     * ThreeSatWritableEnforceableConstraint1.
+     * ThreeSatWriteableEnforceableConstraint1.
      * @throws Exception 
      */
     @Test
@@ -79,8 +79,8 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
      * @return
      */
     @Override
-    public WritableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWritableEnforceableConstraint() {
-        return new ThreeSatWritableEnforceableConstraint1(getTsp(), ClauseUtils.generateTrueClause(getTss().getCompactBitArray()));
+    public WriteableEnforceableConstraintBase<ThreeSatSolution, ThreeSatProblem> renewWriteableEnforceableConstraint() {
+        return new ThreeSatWriteableEnforceableConstraint1(getTsp(), ClauseUtils.generateTrueClause(getTss().getCompactBitArray()));
     }
 
     /**
@@ -98,6 +98,6 @@ public class ThreeSatWritableEnforceableConstraint1Test extends WritableEnforcea
      */
     @Override
     public EnforceableConstraintGenerator<ThreeSatSolution, ? extends EnforceableConstraint<ThreeSatSolution>> renewEnforceableConstraintGenerator() {
-        return new ThreeSatWritableEnforceableConstraintGenerator(this.getTsp());
+        return new ThreeSatWriteableEnforceableConstraintGenerator(this.getTsp());
     }
 }

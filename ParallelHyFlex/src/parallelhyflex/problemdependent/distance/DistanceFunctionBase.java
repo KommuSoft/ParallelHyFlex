@@ -10,10 +10,6 @@ import parallelhyflex.problemdependent.solution.Solution;
  */
 public abstract class DistanceFunctionBase<TSolution extends Solution<TSolution>, TProblem extends Problem<TSolution>> extends ProblemPointerBase<TSolution, TProblem> implements DistanceFunction<TSolution> {
 
-    /**
-     *
-     * @param problem
-     */
     public DistanceFunctionBase(TProblem problem) {
         super(problem);
     }

@@ -94,24 +94,24 @@ import org.apache.log4j.Logger;
  *   <p>
  *   Every time, niodev accepts or connects, it puts the {@link
  *   java.nio.channels.SocketChannel java.nio.channels.SocketChannel} into
- *   an instance of {@link java.util.Vector java.util.Vector} writableChannels
+ *   an instance of {@link java.util.Vector java.util.Vector} WriteableChannels
  *   (for writing messages) or readableChannels (for reading messages),
  *   depending on the serverSocketPort. Note that accepting client request
  *   is done in the selector thread, and
  *   connecting to server socket is done in the user-thread. This may
- *   result in concurrent access to writableChannels and readableChannels,
+ *   result in concurrent access to WriteableChannels and readableChannels,
  *   and thus
  *   access to these should be synchronized. Once alltoall connectivity
- *   has been acheived, which means [writableChannels.size() == N-1] and
+ *   has been acheived, which means [WriteableChannels.size() == N-1] and
  *   [readableChannels.size() == N-1], then each process need to
  *   send information like its rank and UUID to every other process.
  *   These rank are the ones read from the configuration file provided
  *   by the MPJ runtime infrastructure. Once all the processes
- *   have exchanged this information, niodev has worldWritableTable and
+ *   have exchanged this information, niodev has worldWriteableTable and
  *   worldReadableTable, which are instances of {@link java.util.Hashtable
  *   java.util.Hashtable}.
  *   These two hashtables contain UUID as keys, and SocketChannels as
- *   values. Note that the channels in 'worldWritableTable' are in
+ *   values. Note that the channels in 'worldWriteableTable' are in
  *   blocking mode and are only used for writing messages. For 'niodev',
  *   we have decided to keep different channels for reading and writing.
  *   The reason is that we want to use non-blocking reads and
@@ -241,11 +241,11 @@ public class NIODevice
 
   static Logger logger = Logger.getLogger("mpj");
 
-  Vector<SocketChannel> writableChannels = new Vector<SocketChannel> ();
+  Vector<SocketChannel> WriteableChannels = new Vector<SocketChannel> ();
 
   Vector<SocketChannel> readableChannels = new Vector<SocketChannel> ();
 
-  Hashtable<UUID, SocketChannel> worldWritableTable =
+  Hashtable<UUID, SocketChannel> worldWriteableTable =
       new Hashtable<UUID, SocketChannel> ();
 
   Hashtable<UUID, SocketChannel> worldReadableTable =
@@ -497,7 +497,7 @@ public class NIODevice
   String localHostName = null;
 
   /* Server Socket Channel */
-  ServerSocketChannel writableServerChannel = null;
+  ServerSocketChannel WriteableServerChannel = null;
 
   ServerSocketChannel readableServerChannel = null;
 
@@ -595,21 +595,21 @@ public class NIODevice
      *
      * At the end of this process, each process is connected to every
      * other process with two socketChannels. The reason for two
-     * channels is that every process has writable and reable channel.
-     * The writable channel is in blocking mode, whereas, the readable
+     * channels is that every process has Writeable and reable channel.
+     * The Writeable channel is in blocking mode, whereas, the readable
      * channel is in non-blocking mode. In terms of datastructures,
-     * 'writableChannels' (Vector) contains all writable channels, and
+     * 'WriteableChannels' (Vector) contains all Writeable channels, and
      * 'readableChannels' (Vector) contains all readable channels for
      * every process. The next step is that each process send its own rank,
      * ProcessID to all the other processes. At the end of this, each process
      * knows about all the peers and have ProcessID (key), SocketChannel (val)
-     * in 'worldWritableTable' and 'worldReadableTable'.
+     * in 'worldWriteableTable' and 'worldReadableTable'.
      *
-     * As the name suggests, worldWritableTable is used for writing messages
+     * As the name suggests, worldWriteableTable is used for writing messages
      * into channels, and worldReadableTable is used for receiving. The
      * selector-thread would generate events for worldReadableTable
      * SocketChannels whereas, the ones (SocketChannels) in
-     * worldWritableTable have nothing to do with selector thread as they
+     * worldWriteableTable have nothing to do with selector thread as they
      * are in blocking mode.
      *
      */
@@ -725,14 +725,14 @@ public class NIODevice
       isError = false;
 
       try {
-        writableServerChannel = ServerSocketChannel.open();
-        writableServerChannel.configureBlocking(false);
-        writableServerChannel.socket().bind(new InetSocketAddress(pList[rank]));
+        WriteableServerChannel = ServerSocketChannel.open();
+        WriteableServerChannel.configureBlocking(false);
+        WriteableServerChannel.socket().bind(new InetSocketAddress(pList[rank]));
 
         if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
-          logger.debug("created writableServerChannel on port " + pList[rank]);
+          logger.debug("created WriteableServerChannel on port " + pList[rank]);
         }
-        writableServerChannel.register(selector, SelectionKey.OP_ACCEPT);
+        WriteableServerChannel.register(selector, SelectionKey.OP_ACCEPT);
 
         my_server_port = pList[rank];
 
@@ -955,12 +955,12 @@ public class NIODevice
             throw new XDevException(e);
           }
 
-          synchronized (writableChannels) {
+          synchronized (WriteableChannels) {
 
-            writableChannels.add(wChannels[index]);
+            WriteableChannels.add(wChannels[index]);
 
-            if (writableChannels.size() == nprocs - 1) {
-              writableChannels.notify();
+            if (WriteableChannels.size() == nprocs - 1) {
+              WriteableChannels.notify();
             }
 
           } //end synch
@@ -1021,14 +1021,14 @@ public class NIODevice
     count = 0;
 
     /* doAccept() and/or while
-     * loop above adds SocketChannels to writableChannels
-     * so access to writableChannels should be synchronized.
+     * loop above adds SocketChannels to WriteableChannels
+     * so access to WriteableChannels should be synchronized.
      */
-    synchronized (writableChannels) {
+    synchronized (WriteableChannels) {
 
-      if (writableChannels.size() != nprocs - 1) {
+      if (WriteableChannels.size() != nprocs - 1) {
         try {
-          writableChannels.wait();
+          WriteableChannels.wait();
         }
         catch (Exception e) {
           throw new XDevException(e);
@@ -1057,7 +1057,7 @@ public class NIODevice
 
     /*
      * At this point, all-to-all connectivity has been acheived. Each process
-     * has all SocketChannels (for peers) in writableChannels (Vector object). Now
+     * has all SocketChannels (for peers) in WriteableChannels (Vector object). Now
      * each process will send rank(this rank is the one read from config-file),
      * msb (most significant bits), lsb(least significant bits) to all the
      * other processes. After receiving this info, all processes will have
@@ -1080,9 +1080,9 @@ public class NIODevice
                    ">is sending its rank,msb,lsb, to all data channels");
     }
 
-    /* Writing stuff into writable-channels */
-    for (int i = 0; i < writableChannels.size(); i++) {
-      socketChannel = writableChannels.get(i);
+    /* Writing stuff into Writeable-channels */
+    for (int i = 0; i < WriteableChannels.size(); i++) {
+      socketChannel = WriteableChannels.get(i);
       initMsgBuffer.flip();
 
       /* Do we need to iterate here? */
@@ -1140,20 +1140,20 @@ public class NIODevice
 
     /* Do blocking-reads, is this correct? will work but wont scale i think.
      */
-    for (int i = 0; i < writableChannels.size(); i++) {
-      socketChannel = writableChannels.get(i);
+    for (int i = 0; i < WriteableChannels.size(); i++) {
+      socketChannel = WriteableChannels.get(i);
       try {
-        doBarrierRead(socketChannel, worldWritableTable, true);
+        doBarrierRead(socketChannel, worldWriteableTable, true);
       }
       catch (XDevException xde) {
         throw xde;
       }
     }
 
-    synchronized (worldWritableTable) {
-      if ( (worldWritableTable.size() != nprocs - 1)) {
+    synchronized (worldWriteableTable) {
+      if ( (worldWriteableTable.size() != nprocs - 1)) {
         try {
-          worldWritableTable.wait();
+          worldWriteableTable.wait();
         }
         catch (Exception e) {
           throw new XDevException(e);
@@ -1162,20 +1162,20 @@ public class NIODevice
     } //end sync
 
     if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
-      logger.debug("worldWritable is filled ");
+      logger.debug("worldWriteable is filled ");
     }
 
-    //writableServerChannel.close();
+    //WriteableServerChannel.close();
     //readableServerChannel.close();
     pids[rank] = id;
 
-    for (int k = 0; k < writableChannels.size(); k++) {
-      writeLockTable.put(writableChannels.elementAt(k),
+    for (int k = 0; k < WriteableChannels.size(); k++) {
+      writeLockTable.put(WriteableChannels.elementAt(k),
                          new CustomSemaphore(1));
     }
 
     try {
-      writableServerChannel.close();
+      WriteableServerChannel.close();
       readableServerChannel.close();
     }
     catch (Exception e) {
@@ -1379,7 +1379,7 @@ public class NIODevice
                                             STD_COMM_MODE,
                                             sendCounter());
 
-    SocketChannel channel = worldWritableTable.get(dstUUID);
+    SocketChannel channel = worldWriteableTable.get(dstUUID);
 
     if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
       logger.debug("channel :" + channel);
@@ -1546,7 +1546,7 @@ public class NIODevice
       logger.debug("Rendezous(isend), calling rendezCtrlMsgSend");
     }
 
-    channel = worldWritableTable.get(dstUUID);
+    channel = worldWriteableTable.get(dstUUID);
 
     if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
       logger.debug("channel (can never be null) " + channel);
@@ -2138,7 +2138,7 @@ public class NIODevice
 
         request.buffer = buf;
         SocketChannel tc = worldReadableTable.get(request.srcUUID);
-        SocketChannel c = worldWritableTable.get(request.srcUUID);
+        SocketChannel c = worldWriteableTable.get(request.srcUUID);
         recvMap.put(new Integer(request.recvCounter),request);
 	sem.signal();
         CustomSemaphore wLock = writeLockTable.get(c);
@@ -2202,8 +2202,8 @@ public class NIODevice
             SocketChannel peerChannel = null;
             SocketChannel controlChannel = null;
 
-            for (int i = 0; i < writableChannels.size(); i++) {
-              peerChannel = writableChannels.get(i);
+            for (int i = 0; i < WriteableChannels.size(); i++) {
+              peerChannel = WriteableChannels.get(i);
               peerChannel.close();
             }
 
@@ -2246,13 +2246,13 @@ public class NIODevice
     SocketChannel peerCtrlChannel = null;
 
     if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
-      logger.debug("peerChannelSize " + writableChannels.size());
+      logger.debug("peerChannelSize " + WriteableChannels.size());
       logger.debug("peerCtrlChannelSize " + readableChannels.size());
     }
 
-    for (int i = 0; i < writableChannels.size(); i++) {
+    for (int i = 0; i < WriteableChannels.size(); i++) {
 
-      peerChannel = writableChannels.get(i);
+      peerChannel = WriteableChannels.get(i);
       peerCtrlChannel = readableChannels.get(i);
 
       if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
@@ -3360,7 +3360,7 @@ public class NIODevice
                 if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
                   logger.debug("selector calling doAccept (data-channel) ");
                 }
-                doAccept(keyChannel, writableChannels, true);
+                doAccept(keyChannel, WriteableChannels, true);
               }
               else {
                 if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
@@ -3446,7 +3446,7 @@ public class NIODevice
                       }
 
                       SocketChannel c =
-                          worldWritableTable.get(recvRequest.srcUUID);
+                          worldWriteableTable.get(recvRequest.srcUUID);
                       CustomSemaphore wLock = writeLockTable.get(c);
 		      long acq = System.nanoTime() ;
                       wLock.acquire();
@@ -3677,16 +3677,16 @@ public class NIODevice
                 } 
               }
             }
-            else if (key.isValid() && key.isWritable()) {
+            else if (key.isValid() && key.isWriteable()) {
 
               if (mpi.MPI.DEBUG && logger.isDebugEnabled()) {
                 logger.debug("WRITE_EVENT (should not see it)");
-                logger.debug("In, WRITABLE, changing" +
+                logger.debug("In, Writeable, changing" +
                              " interestOps to READ_ONLY");
               }
               key.interestOps(SelectionKey.OP_READ);
 
-            } //end else writable.
+            } //end else Writeable.
 
           } //end while iterator
         } //end while
@@ -3754,7 +3754,7 @@ public class NIODevice
           logger.debug("tag " + tag);
         }
 
-        SocketChannel ch = worldWritableTable.get(sendRequest.dstUUID);
+        SocketChannel ch = worldWriteableTable.get(sendRequest.dstUUID);
         CustomSemaphore wLock = writeLockTable.get(ch);
         wLock.acquire();
 

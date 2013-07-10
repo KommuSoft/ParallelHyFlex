@@ -1,5 +1,6 @@
 package parallelhyflex.memory.senders;
 
+import java.util.logging.Logger;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
 import parallelhyflex.communication.abstraction.CommMode;
@@ -26,4 +27,5 @@ public class DistributedPushSender<TSolution extends Solution<TSolution>> extend
             this.sendIndex = (this.sendIndex + 1) % (Communication.getCommunication().getSize() - 1);
         }
     }
+    private static final Logger LOG = Logger.getLogger(DistributedPushSender.class.getName());
 }

@@ -1,8 +1,9 @@
 package parallelhyflex.problems.threesat.experience;
 
+import java.util.logging.Logger;
 import parallelhyflex.algebra.ArgumentCloneable;
-import parallelhyflex.experiencestorage.WritableSetExperienceStore;
-import parallelhyflex.problems.threesat.constraint.ThreeSatWritableEnforceableConstraint1;
+import parallelhyflex.experiencestorage.WriteableSetExperienceStore;
+import parallelhyflex.problems.threesat.constraints.ThreeSatWriteableEnforceableConstraint1;
 import parallelhyflex.problems.threesat.problem.ThreeSatProblem;
 import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
 
@@ -10,7 +11,7 @@ import parallelhyflex.problems.threesat.solution.ThreeSatSolution;
  *
  * @author kommusoft
  */
-public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolution, ThreeSatProblem, ThreeSatWritableEnforceableConstraint1> implements ArgumentCloneable<ThreeSatProblem, ThreeSatExperience> {
+public class ThreeSatExperience extends WriteableSetExperienceStore<ThreeSatSolution, ThreeSatProblem, ThreeSatWriteableEnforceableConstraint1> implements ArgumentCloneable<ThreeSatProblem, ThreeSatExperience> {
 
     /**
      *
@@ -40,4 +41,5 @@ public class ThreeSatExperience extends WritableSetExperienceStore<ThreeSatSolut
     public ThreeSatExperience clone(ThreeSatProblem argument) {
         return new ThreeSatExperience(argument, this.getHistorySize(), this.getHypothesisSize(), this.getGenerationSize());
     }
+    private static final Logger LOG = Logger.getLogger(ThreeSatExperience.class.getName());
 }

@@ -11,7 +11,7 @@ import parallelhyflex.problemdependent.solution.Solution;
  * @author kommusoft
  */
 public abstract class PushSenderBase<TSolution extends Solution<TSolution>> implements PushSender<TSolution>, SendTagged {
-    
+
     /**
      *
      */
@@ -28,16 +28,14 @@ public abstract class PushSenderBase<TSolution extends Solution<TSolution>> impl
         data[0] = Communication.getCommunication().getRank();
         data[1] = index;
         try {
-            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                DataOutputStream dos = new DataOutputStream(baos);
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); DataOutputStream dos = new DataOutputStream(baos)) {
                 solution.write(dos);
-                dos.close();
                 data[2] = baos.toByteArray();
             }
         } catch (Exception e) {
             Communication.log(e);
         }
-        return new Object[] {data};
+        return new Object[]{data};
     }
 
     /**
