@@ -27,7 +27,7 @@ public class FrequencyAssignmentProblemMain {
         try {
             // = new FrequencyAssignmentProblemGenerator(128,500);
             HyperHeuristic dummy;
-            long timespan = 10_000;//ten seconds
+            long timespan = 120_000;//two minutes
             //long timespan = 360000;//six minutes
             //long timespan = 7200000;//two hours
             if (Communication.getCommunication().getRank() == 0) {
