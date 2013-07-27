@@ -2,6 +2,7 @@ package parallelhyflex.communication.routing;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 import mpi.MPI;
 import parallelhyflex.communication.Communication;
 
@@ -53,12 +54,18 @@ public class PacketRouterBase implements PacketRouter {
      */
     @Override
     public void routePacket(int sender, int tag, Object data) {
-        for (PacketReceiver pr : tagMapper.get(tag)) {
-            try {
-                pr.receivePacket(sender, tag, data);
-            } catch (Exception e) {
-                Communication.log(e);
+        Iterable<PacketReceiver> prs = tagMapper.get(tag);
+        if (prs != null) {
+            for (PacketReceiver pr : prs) {
+                try {
+                    pr.receivePacket(sender, tag, data);
+                } catch (Exception e) {
+                    Communication.log(e);
+                }
             }
+        }
+        else {
+            Communication.log("Received packet with tag %s but could not address it!",tag);
         }
     }
 
@@ -82,4 +89,5 @@ public class PacketRouterBase implements PacketRouter {
     public void receivePacket(int from, int tag, Object data) throws Exception {
         this.routePacket(tag, tag, data);
     }
+    private static final Logger LOG = Logger.getLogger(PacketRouterBase.class.getName());
 }

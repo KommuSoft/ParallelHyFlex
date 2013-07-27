@@ -1,5 +1,6 @@
 package parallelhyflex.communication.abstraction;
 
+import java.util.logging.Logger;
 import mpi.Datatype;
 import mpi.Op;
 
@@ -307,4 +308,5 @@ public class UdpNonBlockingComm implements CommAbstraction {
     public RequestResult BcastRoot(Object buf, int offset, int count, Datatype type, int tag) throws NotSupportedByCommModeException {
         throw new NotSupportedByCommModeException();
     }
+    private static final Logger LOG = Logger.getLogger(UdpNonBlockingComm.class.getName());
 }

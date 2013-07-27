@@ -34,19 +34,19 @@
 \providecommand{\absu}[1][s]{\emph{#1peed-up}}%
 \providecommand{\absus}[1][s]{\emph{#1peed-ups}}%
 \providecommand{\abslsu}[1][s]{\emph{#1uperlineaire speed-up}}%
-\providecommand{\ablsu}[1][l]{\emph{#11ineaire speed-up}} 
+\providecommand{\ablsu}[1][l]{\emph{#1ineaire speed-up}} 
 \setup{title={Parallelle Hyperheuristieken},
   author={Willem~Van~Onsem},
   promotor={Prof.\,dr.\ Bart~Demoen},
-  assessor={Prof.\,dr.\,ir.\, Maurice~Bruynooghe\and Ir.\ Marko van Dooren},%Ir.\,W. Eetveel\and W. Eetrest
+  assessor={Prof.\,dr.\,ir.\, Maurice~Bruynooghe\and Dr.\,ir.\ Marko van Dooren},%Ir.\,W. Eetveel\and W. Eetrest
   assistant={Prof.\,dr.\ Bart~Demoen}}%Ir.\ A.~Assistent \and D.~Vriend}
 \setup{filingcard,
   translatedtitle={Parallel Hyper-heuristics},
   udc=681.3,
   shortabstract={
   Hyperheuristieken zijn een familie van algoritmen die een optimalisatieprobleem benaderend oplossen met behulp van Monte-Carlo simulaties. Op basis van een set transitiefuncties manipuleert het algoritme op een probleemonafhankelijke manier een oplossing tot deze van acceptabele kwaliteit is.\\
-  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteund de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat te veel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Een concrete hyperheuristiek is \emph{AdapHH} van Mustafa M\i{}s\i{}r. In dit werk wordt een parallelle variant, \emph{ParAdapHH}, uitgewerkt om de effectiviteit van het systeem te testen. Op basis van \prbm{Max-3Sat} wordt onderzocht wat de effectiviteit is van de verschillende componenten in \emph{ParHyFlex}.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf%en \prbm{Finite Domain Constraint Optimisation}
-\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages,amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes,rotating,graphicx}
+  Voor complexe optimalisatieproblemen vereist dit mechanisme veel rekentijd. Door het algoritme op verschillende processoren uit te voeren kunnen we deze rekentijd reduceren. Hiervoor stellen een systeem genaamd \emph{ParHyFlex} voor. Het systeem ondersteunt de implementatie van parallelle hyperheuristieken met behulp van verschillende concepten. Tussentijdse oplossingen worden uitgewisseld om zodat sterke eigenschappen van verschillende oplossingen kunnen worden gecombineerd. Daarnaast zal het systeem op basis van eerder beschouwde tussentijdse oplossingen ervaring opdoen over welke eigenschappen tot goede oplossingen leiden. Deze ervaring wordt met behulp van \emph{afdwingbare beperkingen} omgezet in een zoekruimte: een subset van de mogelijke configuraties die waarschijnlijk tot sterke oplossingen kan komen. Het systeem probeert te voorkomen dat te veel processoren op termijn in hetzelfde gebied naar oplossingen zoeken.\\Verder stellen we in dit werk ook \emph{ParAdapHH} voor, een parallelle variant van \emph{AdapHH}, een hyperheuristiek ontwikkeld door Mustafa M\i{}s\i{}r. De effectiviteit van het systeem en de verschillende deelcomponenten wordt vervolgens getest aan de hand van \prbm{MAX-3SAT}-problemen.}}%Hier komt een heel bondig abstract van hooguit 500 woorden. \LaTeX\ commando's mogen hier gebruikt worden. Blanco lijnen (of het commando \texttt{\string\pa r}) zijn wel niet toegelaten! \endgraf%en \prbm{Finite Domain Constraint Optimisation}
+\usepackage{amssymb,amsmath,slantsc,bbm,tikz,tocloft,etoolbox,hyphenat,pdfpages,amsthm,graphicx,cite,multicol,ltablex,enumitem,todonotes,rotating,graphicx,tocvsec2}
 \usepackage[algochapter,ruled,vlined]{algorithm2e}
 \usepackage[all]{xy}
 
@@ -61,7 +61,7 @@
 \SetKwInput{KwData}{Data}
 
 
-\SetAlgorithmName{Algoritme}{willemvanonsem}{Lijst van algoritmes}
+\SetAlgorithmName{Algoritme}{willemvanonsem}{Lijst van algoritmen}
 
 
 \usetikzlibrary{shapes,fit,calc}
@@ -640,61 +640,7 @@
 
 % !!! IMAGES START HERE !!!
 
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline12626}%
-$ x^{\star }$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline12638}%
-$ \mathcal  {X}^{\star }$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline12910}%
-$ \theta $%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline13040}%
-$ \Theta $%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline13068}%
-$ \ensuremath  {\sigma }$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline13070}%
-$ \ensuremath  {\lambda }$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline16402}%
-$ d$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline19367}%
-\ensuremath  {\mathcal  {O}\ensuremath  {\left (p\qopname  \relax o{log}p\right )}}%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \setcounter{tocdepth}{2}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar1769}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Begegnet uns jemand, der uns Dank schuldig ist, gleich f\"alt uns ein. Wie oft k\"onnen wir jemand begegnen, dem wir Dank schuldig sind, ohne daran zu denken.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Johann Wolfgang von Goethe};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
@@ -707,301 +653,7 @@ $ d$%
 \renewcommand{\arraystretch}{1.1}
 
 \renewcommand{\arraystretch}{1.1}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21380}%
-$ \mathbb{B}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21382}%
-$ \mathbb{B}=\ensuremath{\left\{ \mbox{\textbf{true}},\mbox{\textbf{false}}\right\}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21384}%
-$ \ifthenelse{\equal{}{}}{\mathbb{N}}{\ensuremath{\mathbb{N}\ensuremath{\left[\right]}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21386}%
-$ \ifthenelse{\equal{}{}}{\mathbb{N}}{\ensuremath{\mathbb{N}\ensuremath{\left[\right]}}}=\ensuremath{\left\{ 0,1,2,\ldots\right\}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21388}%
-$ \ensuremath{\mathbb{Q}\ensuremath{\left[\ensuremath{L}\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21390}%
-$ \ensuremath{L}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21392}%
-$ \ensuremath{\mathbb{Q}\ensuremath{\left[\ensuremath{L}\right]}}=\ensuremath{\left\{ x/2^{\ensuremath{L}/2},-x/2^{\ensuremath{L}/2}|x\in\ifthenelse{\equal{}{}}{\mathbb{N}}{\ensuremath{\mathbb{N}\ensuremath{\left[\right]}}}:x<2^{\ensuremath{L}-1}\right\}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21394}%
-$ \boldsymbol{0}_{m\times n}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21396}%
-$ m\times n$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21398}%
-$ \boldsymbol{1}_{m\times n}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21402}%
-$ 1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21404}%
-$ \boldsymbol{I}_{m\times n}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21408}%
-$ \mathbb{R}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21410}%
-$ \ensuremath{\mathbb{E}_{\ensuremath{\mathcal{D}\ensuremath{\left(x\right)}}}\ensuremath{\left[\ensuremath{f\ensuremath{\left(x\right)}}\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21412}%
-$ f$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21414}%
-$ \mathcal{D}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21416}%
-$ \ensuremath{\Pr\ensuremath{\left[e\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21418}%
-$ e$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21420}%
-$ \Pi $%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21422}%
-$ \mathcal{X}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21426}%
-$ \mathcal{X}'$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21428}%
-$ \mathcal{X}'=\ensuremath{\left\{ x|x\in\mathcal{X}:\ensuremath{c\ensuremath{\left(x\right)}}=\true{}\right\}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21430}%
-$ x$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21432}%
-$ x\in\mathcal{X}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21436}%
-$ \ensuremath{x^{\star}}\in\mathcal{X}^{\star}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21438}%
-$ \mathcal{S}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21440}%
-$ \mathcal{S}\subseteq\mathcal{X}'$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21442}%
-$ \mathcal{P}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21444}%
-$ c$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21446}%
-$ c:\mathcal{X}\rightarrow \mathbb{B}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21450}%
-$ f:\mathcal{X}\rightarrow \mathbb{R}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21456}%
-$ \mathcal{N}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21458}%
-$ \ensuremath{\lambda_{i,A}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21460}%
-$ i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21462}%
-$ A$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21464}%
-$ \ensuremath{\left| \ensuremath{\lambda_{i,A}}\right|}\geq\ensuremath{\left| \ensuremath{\lambda_{i+1,A}}\right|}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21466}%
-$ \ensuremath{\lambda_{A}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21470}%
-$ \ensuremath{\vec{\mu}_{i,A}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21476}%
-$ \ensuremath{\vec{\nu}_{i,A}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21482}%
-$ \ensuremath{\delta\ensuremath{\left[x\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21486}%
-$ \mathcal{T}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21488}%
-$ p$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21490}%
-$ \ensuremath{\left\| \vec{v}\right\|_{k}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21492}%
-$ k$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21494}%
-$ \vec{v}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21496}%
-$ \ensuremath{\left\| \vec{v}\right\|_{k}}=\sqrt[k]{\sum_i\ensuremath{\left| v_i\right|}^k}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21500}%
-$ k=2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21502}%
-$ \ensuremath{{A}^{\top}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar2373}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{If a man will begin with certainties, he shall end in doubts; but if he will be content to begin with doubts, he shall end in certainties.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Francis Bacon};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{paragraph}
@@ -1017,760 +669,80 @@ $ \ensuremath{{A}^{\top}}$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{section}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar2517}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Il ne suffit pas d'\'enoncer une d\'efinition, il faut la pr\'eparer et il faut la justifier.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Henri Poincar\'e};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21596}%
-$ 1/\sqrt{2}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21608}%
-$ T$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21610}%
-$ T_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21614}%
-$ T_p$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21616}%
-$\displaystyle \ensuremath{\mbox{speed-up}\ensuremath{\left(p\right)}}=\displaystyle\frac{T_1}{T_p}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21620}%
-$\displaystyle \ensuremath{\mbox{effici\"entie}\ensuremath{\left(p\right)}}=\ensuremath{\mbox{speed-up}\ensuremath{\left(p\right)}}/p$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21634}%
-$ f_{\ensuremath{\mbox{\small {seq.}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21636}%
-$\displaystyle <\displaystyle\frac{1}{f_{\mbox{seq.}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21639}%
-$ f_{\mbox{seq.}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21641}%
-$ \mathcal{O}\ensuremath{\left(\log n\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21643}%
-$ n$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsubsection}
 \stepcounter{paragraph}
 \stepcounter{subsubsection}
 \stepcounter{paragraph}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21658}%
-$ \Pi =\ensuremath{\left\langle \mathcal{X}=A_1\times A_2\times\ldots\times A_{n},c,f\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21668}%
-$ f\ensuremath{\left(x\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21676}%
-$ \ensuremath{\left\langle \mathcal{X},c,f\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21678}%
-$ \ensuremath{\left\langle \mathcal{X},c,f'\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21680}%
-$ f':\mathcal{X}\rightarrow \mathbb{R}:x\mapsto -\ensuremath{f\ensuremath{\left(x\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21694}%
-$ \Pi =\ensuremath{\left\langle \mathcal{X},c,f\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21698}%
-$\displaystyle x^{\star}=\displaystyle\ensuremath{\mbox{argmin}}_{x\in\mathcal{X}'}\ensuremath{f\ensuremath{\left(x\right)}}\mbox{ met }\mathcal{X}'=\ensuremath{\left\{ x|\forall x\in\mathcal{X}:\ensuremath{c\ensuremath{\left(x\right)}}=\true\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21715}%
-$ x\in\mathcal{X}'$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21717}%
-$\displaystyle \mathcal{X}^{\star}=\ensuremath{\left\{ x|x\in\mathcal{X}'\wedge\ensuremath{f\ensuremath{\left(x\right)}}=\ensuremath{f\ensuremath{\left(x^{\star}\right)}}\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21720}%
-$ A_i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21722}%
-$ x_i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21737}%
-$\displaystyle \ensuremath{\mathcal{O}\ensuremath{\left(\ensuremath{\left| \mathcal{X}\right|}\right)}}=\ensuremath{\mathcal{O}\ensuremath{\left(\displaystyle\prod_{i=1}^n\ensuremath{\left| A_i\right|}\right)}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21739}%
-$\displaystyle \ensuremath{\mathcal{O}\ensuremath{\left(\ensuremath{\left| \mathcal{X}\right|}\right)}}=\ensuremath{\mathcal{O}\ensuremath{\left(\ensuremath{\left| A_1\right|}^n\right)}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21740}%
-$\displaystyle \forall A_i,A_j: A_i=A_j$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21749}%
-$ \mathcal{O}\ensuremath{\left(n^{3.5}L\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21753}%
-$ L$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21768}%
-$ x^{\circ}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21770}%
-$ \ensuremath{c\ensuremath{\left(x^{\circ}\right)}}=\true$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21776}%
-$ \ensuremath{f\ensuremath{\left(x^{\circ}\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21778}%
-$ \ensuremath{f\ensuremath{\left(x^{\star}\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21790}%
-$ \mathcal{S}\subseteq\ensuremath{\left\{ x|\forall x\in \mathcal{X}:\ensuremath{c\ensuremath{\left(x\right)}}\right\}}\subseteq\mathcal{X}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21792}%
-$ x^{\star}\in\mathcal{S}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21794}%
-$ h_i:\mathcal{S}^{k_i}\times\mathbb{R}^{l_i}\rightarrow\mathcal{S}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21796}%
-$ s_1,s_2,\ldots,s_j$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{algorithm3926}%
+\lthtmlfigureA{algorithm3955}%
 \begin{algorithm}
-% latex2html id marker 3926
+% latex2html id marker 3955
 [hbt]\input{algorithms/metaheuristicgeneral}\caption{Hoog niveau beschrijving van een metaheuristiek\cite{DBLP:journals/jc/ShonkwilerV94}.}
 \end{algorithm}%
 \lthtmlfigureZ
 \lthtmlcheckvsize\clearpage}
 
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21805}%
-$ h_i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21807}%
-$\displaystyle \ensuremath{\mathcal{N}_{h_i}\ensuremath{\left(s_1,s_2,\ldots,s_{k_i}\right)}}=\ensuremath{\left\{ \ensuremath{h_i\ensuremath{\left(s_1,s_2,\ldots,s_{k_i},\xi_1,\xi_2,\ldots,\xi_{l_i}\right)}}|\forall \xi_1,\xi_2\ldots \xi_{l_i}\in\mathbb{R}\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21811}%
-$ \ensuremath{x^{\circ}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21813}%
-$ \ensuremath{x^{\star}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsubsection}
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21818}%
-$\displaystyle \ensuremath{p\ensuremath{\left(\mbox{accept $s_1\rightarrow s_2$}\right)}}=\ensuremath{\min\ensuremath{\left(1,e^{\ensuremath{\left(\ensuremath{f\ensuremath{\left(s_2\right)}}-\ensuremath{f\ensuremath{\left(s_1\right)}}\right)}/T}\right)}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21825}%
-$ \mathcal{N}_i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21837}%
-$ \ensuremath{\left\langle X,c_1\wedge c_2,f\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21839}%
-$ \ensuremath{\left\langle X,c_1,f-K\cdot\ensuremath{\delta\ensuremath{\left[c_2\right]}}\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21841}%
-$ K$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21847}%
-$ \mathcal{P}_i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21850}%
-$ \ensuremath{p\ensuremath{\left(t,i,j\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21854}%
-$ \mathcal{P}_j$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21856}%
-$ t$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21858}%
-$ \ensuremath{p\ensuremath{\left(i,j,t\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21878}%
-$ \mathfrak{P}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21880}%
-$ \mathcal{P}_t$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21882}%
-$\displaystyle \ensuremath{\theta \ensuremath{\left(\mathfrak{P}\right)}}=\min\ensuremath{\left\{ t|\mathcal{P}_t\in\mathfrak{P}\wedge\mathcal{X}^{\star}\cap \mathcal{P}_t\neq\emptyset\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21884}%
-$ v$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21886}%
-$\displaystyle \ensuremath{\theta \ensuremath{\left(\mathfrak{P},\ensuremath{v}\right)}}=\min\ensuremath{\left\{ t|\mathcal{P}_t\in\mathfrak{P}:\exists x\in \mathcal{P}_t:\ensuremath{f\ensuremath{\left(x\right)}}\leq \ensuremath{v}\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21891}%
-$ \ensuremath{N}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21893}%
-$ \ensuremath{g}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21895}%
-$ \mathcal{P}_1,\mathcal{P}_2,\ldots,\mathcal{P}_{\ensuremath{g}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21897}%
-$ \mathcal{P}_{\ensuremath{g}+1},\mathcal{P}_{\ensuremath{g}+2},\ldots,\mathcal{P}_{\ensuremath{N}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21899}%
-$ \vec{\alpha}_{t}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21903}%
-$ \ensuremath{P}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21910}%
-$ 4$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21912}%
-$\displaystyle \ensuremath{P}=\ensuremath{\left(\begin{array}{cc} J&H\\\ensuremath{B}&\ensuremath{\hat{P}} \end{array}\right)}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21914}%
-$ J$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21916}%
-$ \ensuremath{g}\times\ensuremath{g}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21918}%
-$ H$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21920}%
-$ \ensuremath{g}\times\ensuremath{N}-\ensuremath{g}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21922}%
-$ B$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21924}%
-$ \ensuremath{N}-\ensuremath{g}\times\ensuremath{g}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21926}%
-$ \ensuremath{\hat{P}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21928}%
-$ \ensuremath{N}-\ensuremath{g}\times\ensuremath{N}-\ensuremath{g}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21934}%
-$ \ensuremath{B}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21941}%
-$ \ensuremath{\vec{\alpha}_{t}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21943}%
-$ \ensuremath{\vec{\alpha}^G_{t}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21947}%
-$ \ensuremath{\vec{\hat{\alpha}}_{t}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21951}%
-$ \ensuremath{\vec{\alpha}_{t-1}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21953}%
-$\displaystyle \ensuremath{\vec{\alpha}_{t}}=\ensuremath{\left(\ensuremath{\vec{\alpha}^G_{t}}\  |\  \ensuremath{\vec{\hat{\alpha}}_{t}}\right)}=\ensuremath{\vec{\alpha}_{t-1}}\cdot\ensuremath{P}=\ensuremath{\left(\ensuremath{\vec{\alpha}^G_{t-1}}+\ensuremath{B}\cdot\ensuremath{\vec{\hat{\alpha}}_{t-1}}\  |\  \ensuremath{\vec{\hat{\alpha}}_{t-1}}\cdot\ensuremath{\hat{P}}\right)}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21959}%
-$\displaystyle \ensuremath{\Pr\ensuremath{\left[\theta =t\right]}}=\displaystyle\sum_{i=\ensuremath{g}+1}^{N}\ensuremath{\left(\ensuremath{\vec{\alpha}_{t-1,i}}\cdot\displaystyle\sum_{j=1}^{\ensuremath{g}}\ensuremath{p\ensuremath{\left(t,i,j\right)}}\right)}=\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{t-1}}\cdot \ensuremath{B}\right\|_{1}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21964}%
-$\displaystyle \ensuremath{\vec{\hat{\alpha}}_{t}}=\ensuremath{\vec{\hat{\alpha}}_{t-1}}\cdot\ensuremath{\hat{P}}=\ensuremath{\vec{\hat{\alpha}}_{t-2}}\cdot\ensuremath{\hat{P}}^2=\ldots=\ensuremath{\vec{\hat{\alpha}}_{0}}\cdot\ensuremath{\hat{P}}^t$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21966}%
-$\displaystyle \ensuremath{\Pr\ensuremath{\left[\theta >t\right]}}=\displaystyle\sum_{i=\ensuremath{g}+1}^{\ensuremath{N}}\ensuremath{\vec{\alpha}_{t,i}}=\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{t}}\right\|_{1}}=\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\cdot\ensuremath{\hat{P}}^t\right\|_{1}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay21968}%
-$\displaystyle \ensuremath{\mathbb{E}_{}\ensuremath{\left[\theta \right]}}=1+\displaystyle\sum_{i=0}^{\infty}{\ensuremath{\Pr\ensuremath{\left[\theta >i\right]}}}=1+\displaystyle\sum_{i=0}^{\infty}{\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\cdot\ensuremath{\hat{P}}^i\right\|_{1}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21970}%
-$ \ensuremath{\Pr\ensuremath{\left[\theta =k\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21977}%
-$ \hat{p}_{i,j}\geq 0$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21979}%
-$ \ensuremath{m}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21989}%
-$ \ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}<1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21992}%
-$ \boldsymbol{1}_{}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmldisplayA{displaymath21996}%
-\begin{displaymath}\begin{array}{cc} \ensuremath{\vec{x}}\cdot\ensuremath{\hat{P}}^t\cdot\boldsymbol{1}_{\ensuremath{N}-\ensuremath{g}\times1}\approx\ensuremath{\vec{x}}\cdot\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^t\cdot\ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}^{\top}=\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^t\cdot\ensuremath{\sigma}&\mbox{($t\gg 1$)} \end{array}\end{displaymath}%
-\lthtmldisplayZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline21998}%
-$ \ensuremath{\vec{x}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22000}%
-$ \ensuremath{\vec{\hat{\alpha}}_{0}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22004}%
-$ \ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22008}%
-$\displaystyle \ensuremath{\mathbb{E}_{}\ensuremath{\left[\theta \right]}}\approx 1+\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{1}}+\ensuremath{\sigma}\cdot\ensuremath{\left(\displaystyle\sum_{i=1}^{\infty}\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^i\right)}=1+\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{1}}+\displaystyle\frac{\ensuremath{\sigma}\cdot \ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}}{1-\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22010}%
-$ 1+\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{1}}=\ensuremath{\sigma}\cdot\ensuremath{\left(1+\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^{-1}\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22012}%
-$\displaystyle \ensuremath{\mathbb{E}_{}\ensuremath{\left[\theta \right]}}\approx\displaystyle\frac{\ensuremath{\sigma}}{\ensuremath{\left(1-\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}\right)}\cdot\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22036}%
-$ \ensuremath{\left\langle \mathcal{P}_{t,1},\mathcal{P}_{t,2},\ldots,\mathcal{P}_{t,p}\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22038}%
-$\displaystyle \ensuremath{\Theta \ensuremath{\left(\mathfrak{P}\right)}}=\min\ensuremath{\left\{ t|\ensuremath{\left\langle \mathcal{P}_{t,1},\mathcal{P}_{t,2},\ldots,\mathcal{P}_{t,p}\right\rangle}\in\mathfrak{P}\wedge\exists i:\mathcal{X}^{\star}\cap \mathcal{P}_{t,i}\neq\emptyset\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22040}%
-$ \ensuremath{v}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22042}%
-$\displaystyle \ensuremath{\Theta \ensuremath{\left(\mathfrak{P},\ensuremath{v}\right)}}=\min\ensuremath{\left\{ t|\ensuremath{\left\langle \mathcal{P}_{t,1},\mathcal{P}_{t,2},\ldots,\mathcal{P}_{t,p}\right\rangle}\in\mathfrak{P}\wedge\exists i\exists x\in\mathcal{P}_{t,i}:\ensuremath{f\ensuremath{\left(x\right)}}\leq \ensuremath{v}\right\}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmldisplayA{displaymath22044}%
-\begin{equation*}\begin{aligned} \ensuremath{\Pr\ensuremath{\left[\Theta \geq t\right]}}&=\ensuremath{\Pr\ensuremath{\left[\theta _1\geq t\wedge\theta _2\geq t\wedge\ldots\wedge\theta _p\geq t\right]}}\\&=\ensuremath{\Pr\ensuremath{\left[\theta _1\geq t\right]}}\cdot\ensuremath{\Pr\ensuremath{\left[\theta _2\geq t\right]}}\cdot\ldots\cdot\ensuremath{\Pr\ensuremath{\left[\theta _p\geq t\right]}}\\&=\ensuremath{\Pr\ensuremath{\left[\theta \geq t\right]}}\cdot\ensuremath{\Pr\ensuremath{\left[\theta \geq t\right]}}\cdot\ldots\cdot\ensuremath{\Pr\ensuremath{\left[\theta \geq t\right]}}=\ensuremath{\Pr\ensuremath{\left[\theta \geq t\right]}}^p \end{aligned}\end{equation*}%
-\lthtmldisplayZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmldisplayA{displaymath22046}%
-\begin{equation*}\begin{aligned} \ensuremath{\mathbb{E}_{}\ensuremath{\left[\Theta \right]}}&=1+\displaystyle\sum_{i=0}^{\infty}{\ensuremath{\Pr\ensuremath{\left[\Theta >i\right]}}}=1+\displaystyle\sum_{i=0}^{\infty}{\ensuremath{\Pr\ensuremath{\left[\theta >i\right]}}^p}\\&\approx 1+\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{1}}^p+\ensuremath{\sigma}^p\cdot\ensuremath{\left(\displaystyle\sum_{i=1}^{\infty}\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^{p\cdot i}\right)}=1+\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{1}}^p+\displaystyle\frac{\ensuremath{\sigma}^p\cdot\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^p}{1-\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^p}\\&\approx\displaystyle\frac{\ensuremath{\sigma}^p}{\ensuremath{\left(1-\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^p\right)}\cdot\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^{p}} \end{aligned}\end{equation*}%
-\lthtmldisplayZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22048}%
-$\displaystyle \ensuremath{\mbox{\emph{speed-up}{}}\ensuremath{\left(p\right)}}=\displaystyle\frac{\ensuremath{\mathbb{E}_{}\ensuremath{\left[\theta \right]}}}{\ensuremath{\mathbb{E}_{}\ensuremath{\left[\Theta \right]}}}=\displaystyle\frac{\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^{p-1}}{\ensuremath{\sigma}^{p-1}}\cdot\displaystyle\frac{1-\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}^{p}}{1-\ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}}\approx\displaystyle\frac{p\cdot\ensuremath{\lambda}^{p-1}}{\ensuremath{\sigma}^{p-1}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22050}%
-$ \ensuremath{\lambda_{1,\ensuremath{\hat{P}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22062}%
-$ \ensuremath{\vec{\mu}_{1,\ensuremath{\hat{P}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22064}%
-$ \ensuremath{\vec{\hat{\alpha}}_{t}}\approx\ensuremath{\vec{\mu}_{1,\ensuremath{\hat{P}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmldisplayA{displaymath22066}%
-\begin{displaymath}\begin{array}{cc}\ensuremath{\vec{\hat{\alpha}}_{t+1}}=\ensuremath{\vec{\hat{\alpha}}_{t}}\cdot\ensuremath{\hat{P}}=\ensuremath{\lambda}\cdot\ensuremath{\vec{\hat{\alpha}}_{t}}&\mbox{($t\gg 1$)}\end{array}\end{displaymath}%
-\lthtmldisplayZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22072}%
-$ N-g/N\approx 1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22074}%
-$ 0\leq\ensuremath{\lambda}<1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22079}%
-$ \ensuremath{\left\| \ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right\|_{1}}=1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmldisplayA{displaymath22081}%
-\begin{displaymath}\begin{array}{cc}A^t\approx\ensuremath{\lambda_{A}}^t\cdot\ensuremath{\vec{\nu}_{A}}\cdot\ensuremath{\vec{\mu}_{A}}^T&\mbox{($t\gg1$)}\end{array}\end{displaymath}%
-\lthtmldisplayZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22098}%
-$\displaystyle \ensuremath{\cos\ensuremath{\left(\ensuremath{\vec{\hat{\alpha}}_{0}},\ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right)}}=\displaystyle\frac{\ensuremath{\vec{\hat{\alpha}}_{0}}^T\cdot\ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}}{\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{}}\cdot\ensuremath{\left\| \ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right\|_{}}}=\displaystyle\frac{\ensuremath{\sigma}}{\ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{}}\cdot\ensuremath{\left\| \ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right\|_{}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22100}%
-$\displaystyle \ensuremath{\left\| \ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right\|_{}}=\displaystyle\frac{\ensuremath{\left\| \ensuremath{\vec{\mu}_{1,\ensuremath{\hat{P}}}}\right\|_{}}}{\ensuremath{\cos\ensuremath{\left(\ensuremath{\vec{\mu}_{1,\ensuremath{\hat{P}}}},\ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right)}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22102}%
-$\displaystyle \ensuremath{\sigma}=\displaystyle\frac{\ensuremath{\left\| \hat{\alpha}_0\right\|_{}}\cdot\ensuremath{\cos\ensuremath{\left(\ensuremath{\vec{\hat{\alpha}}_{0}},\ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right)}}}{\ensuremath{\left\| \ensuremath{\vec{\mu}_{1,\ensuremath{\hat{P}}}}\right\|_{}}\cdot\ensuremath{\cos\ensuremath{\left(\ensuremath{\vec{\mu}_{1,\ensuremath{\hat{P}}}},\ensuremath{\vec{\nu}_{1,\ensuremath{\hat{P}}}}\right)}}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22114}%
-$ \ensuremath{\left\| \ensuremath{\vec{\hat{\alpha}}_{0}}\right\|_{}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22126}%
-$ 0<\ensuremath{\sigma}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsubsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22133}%
-$ \ensuremath{\sigma}<\ensuremath{\lambda}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{subsubsection}
 \stepcounter{paragraph}
@@ -1779,64 +751,16 @@ $ \ensuremath{\sigma}<\ensuremath{\lambda}$%
 \stepcounter{paragraph}
 \stepcounter{subsubsection}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22158}%
-$\displaystyle \ensuremath{\Pr\ensuremath{\left[\theta=t|\theta\geq t\right]}}=\left\{\begin{array}{ll} 0&\mbox{if }t>N\\1/N-t+1&\mbox{otherwise} \end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22160}%
-$ N$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22162}%
-$ N=\ensuremath{\mathcal{O}\ensuremath{\left(\prod_i\ensuremath{\left| A_i\right|}\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22164}%
-$\displaystyle \ensuremath{\mathbb{E}_{}\ensuremath{\left[\theta \right]}}=\displaystyle\sum_{i=1}^N\ensuremath{\Pr\ensuremath{\left[\theta \geq i\right]}}=\displaystyle\sum_{i=1}^N\displaystyle\frac{i}{N}=\displaystyle\frac{N+1}{2}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22168}%
-$\displaystyle \ensuremath{\mathbb{E}_{}\ensuremath{\left[\Theta \right]}}=\displaystyle\sum_{i=1}^N\ensuremath{\Pr\ensuremath{\left[\Theta \geq i\right]}}=\displaystyle\sum_{i=1}^N\ensuremath{\Pr\ensuremath{\left[\theta \geq i\right]}}^p=\displaystyle\frac{1}{N^p}\displaystyle\sum_{i=1}^Ni^p\approx\displaystyle\frac{N}{p+1}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22170}%
-$ p+1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22172}%
-$ 1/p+1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22174}%
-$\displaystyle =\displaystyle\frac{\ensuremath{\mathbb{E}_{}\ensuremath{\left[\theta \right]}}}{\ensuremath{\mathbb{E}_{}\ensuremath{\left[\Theta \right]}}}\approx\displaystyle\frac{\ensuremath{\left(N+1\right)}\cdot\ensuremath{\left(p+1\right)}}{2\cdot N}\approx\displaystyle\frac{p+1}{2}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22176}%
-$ g$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
+{\newpage\clearpage
+\lthtmlinlinemathA{tex2html_wrap_inline22662}%
+$ 1.0$%
+\lthtmlinlinemathZ
+\lthtmlcheckvsize\clearpage}
+
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
@@ -1845,12 +769,7 @@ $ g$%
 \stepcounter{paragraph}
 \stepcounter{subsubsection}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlfigureA{figure5921}%
-\begin{figure}\begin{center}\def \sc{1.00}\input{tikzpictures/hyperheuristic}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{paragraph}
@@ -1869,12 +788,6 @@ $ g$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar5991}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Un critique n'est form\'e qu'apr\`es plusieurs ann\'ees d'observations et d'\'etudes. Un critiqueur natt du soir au matin.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Jean de la Bruy\`ere};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{paragraph}
@@ -1883,20 +796,8 @@ $ g$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlfigureA{figure6181}%
-\begin{figure}\begin{center}\def \sc{1.4}\input{tikzpictures/hyflexstructure}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22231}%
-$ \checkmark$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{section}
 \stepcounter{subsection}
@@ -1909,15 +810,7 @@ $ \checkmark$%
 \stepcounter{paragraph}
 \stepcounter{subsection}
 \stepcounter{paragraph}
-\stepcounter{section}
-\stepcounter{section}
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar6444}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{A skilled transition team leader will set the general goals for a transition and then confer on the other team leaders working with him the power to implement those goals.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Richard V. Allen};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{paragraph}
@@ -1933,56 +826,8 @@ $ \checkmark$%
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22434}%
-$ \ensuremath{\left\langle c,c^+,c^-\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22436}%
-$ c:\mathcal{S}\rightarrow\mathbb{B}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22438}%
-$ c^+:\mathcal{S}\rightarrow\mathcal{S}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22440}%
-$ c^-:\mathcal{S}\rightarrow\mathcal{S}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22442}%
-$ \mathcal{H}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22444}%
-$ c^+$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22446}%
-$ c^-$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22455}%
-$ g_i:\mathcal{S}^{n_{g_i}}\rightarrow\mathcal{H}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{subsection}
@@ -1994,143 +839,21 @@ $ g_i:\mathcal{S}^{n_{g_i}}\rightarrow\mathcal{H}$%
 \stepcounter{subsection}
 \stepcounter{paragraph}
 \stepcounter{section}
-\stepcounter{section}
-{\newpage\clearpage
-\lthtmlfigureA{figure6745}%
-\begin{figure}\begin{center}\def \sc{1.4}\input{tikzpictures/parhyflexstructure}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22475}%
-$ \star$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlfigureA{figure6758}%
-\begin{figure}\begin{center}\def \sc{1.4}\input{tikzpictures/parhyflexwerking}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22482}%
-$ s_1^{(0)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22484}%
-$ s_1^{(E)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar6803}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Intelligence is the ability to adapt to change.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Stephen Hawking};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{section}
 \stepcounter{section}
 \stepcounter{paragraph}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22493}%
-$\displaystyle \ensuremath{\mbox{eval}\ensuremath{\left(h_i\right)}}\ensuremath{:=}{}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22494}%
-$\displaystyle w_1\cdot\ensuremath{\left[\ensuremath{\left(1+\ensuremath{C_{f,\ensuremath{\mbox{\small {best}}}}\ensuremath{\left(h_i\right)}}\right)}\cdot t_{\ensuremath{\mbox{\small {rem.}}}}/t_{f,\ensuremath{\mbox{\small {spent}}}}\right]}\cdot b+$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22495}%
-$\displaystyle w_2\cdot\ensuremath{\left[\ensuremath{f_{f,\ensuremath{\mbox{\small {imp}}}}\ensuremath{\left(h_i\right)}}/t_{f,\ensuremath{\mbox{\small {spent}}}}\right]}-w_3\cdot\ensuremath{\left[\ensuremath{f_{f,\ensuremath{\mbox{\small {wrs}}}}\ensuremath{\left(h_i\right)}}/t_{f,\ensuremath{\mbox{\small {spent}}}}\right]}+$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22496}%
-$\displaystyle w_4\cdot\ensuremath{\left[\ensuremath{f_{\ensuremath{\mbox{\small {imp}}}}\ensuremath{\left(h_i\right)}}/t_{\ensuremath{\mbox{\small {spent}}}}\right]}-w_5\cdot\ensuremath{\left[\ensuremath{f_{\ensuremath{\mbox{\small {wrs}}}}\ensuremath{\left(h_i\right)}}/t_{\ensuremath{\mbox{\small {spent}}}}\right]}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22497}%
-$\displaystyle b\ensuremath{:=}{}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22498}%
-$\displaystyle \ensuremath{\delta\ensuremath{\left[\exists h_j:\ensuremath{C_{f,\ensuremath{\mbox{\small {best}}}}\ensuremath{\left(h_j\right)}}>0\right]}}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22499}%
-$\displaystyle w_1\gg w_2\gg w_3\gg w_4\gg w_5$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22501}%
-$ C_{\ensuremath{\mbox{\small {best}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22503}%
-$ f_{\ensuremath{\mbox{\small {imp}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22505}%
-$ f_{\ensuremath{\mbox{\small {wrs}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22507}%
-$ t_{\ensuremath{\mbox{\small {spent}}}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22512}%
-$\displaystyle \ensuremath{\mbox{eval'}\ensuremath{\left(h_i\right)}}\ensuremath{:=}{}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay22516}%
-$\displaystyle w_6\cdot\ensuremath{\left[\ensuremath{f_{g,\ensuremath{\mbox{\small {imp}}}}\ensuremath{\left(h_i\right)}}/t_{g,\ensuremath{\mbox{\small {spent}}}}\right]}-w_7\cdot\ensuremath{\left[\ensuremath{f_{g,\ensuremath{\mbox{\small {wrs}}}}\ensuremath{\left(h_i\right)}}/t_{g,\ensuremath{\mbox{\small {spent}}}}\right]}$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22521}%
-$ \sqrt{2\cdot n}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 {\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22528}%
-$ 0.25\%$%
+\lthtmlinlinemathA{tex2html_wrap_inline23008}%
+$ 25\%$%
 \lthtmlinlinemathZ
 \lthtmlcheckvsize\clearpage}
 
@@ -2138,270 +861,24 @@ $ 0.25\%$%
 \stepcounter{section}
 \stepcounter{paragraph}
 {\newpage\clearpage
-\lthtmlfigureA{figure7419}%
-\begin{figure}\begin{center}\def \sc{1.4}\input{tikzpictures/ailla}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22536}%
-$ x_4$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22538}%
+\lthtmlinlinemathA{tex2html_wrap_inline23018}%
 $ x_4'$%
 \lthtmlinlinemathZ
 \lthtmlcheckvsize\clearpage}
 
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22540}%
-$ x_4''$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22542}%
-$ x_5$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{section}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlfigureA{figure7476}%
-\begin{figure}\begin{center}\def \sc{1}\input{tikzpictures/adaphhwerking}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22554}%
-$ S_I$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22556}%
-$ S_A$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22558}%
-$ S_{R2}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22560}%
-$ S_i^{\star}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar7508}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Solange der Ausgang einer gef\"ahrlichen Sache nur noch zweifelhaft ist, darf an kein Zagen gedacht werden, sondern bloss an Widerstand.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - A. Schopenhauer};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22568}%
-$ 4.26$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22576}%
-$ I$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22578}%
-$ I_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22580}%
-$ \delta$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22582}%
-$ \delta_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22584}%
-$ \delta_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22586}%
-$ M_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22588}%
-$ M_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22590}%
-$ M_3$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22594}%
-$ LS_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22596}%
-$ LS_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22598}%
-$ RR_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22600}%
-$ RR_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22602}%
-$ CO_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22604}%
-$ CO_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22606}%
-$ O_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22608}%
-$ O_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22610}%
-$ HG_1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22612}%
-$ HG_2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22615}%
-$ 10'000$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22617}%
-$ 0.00,0.05,\ldots1.00$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22621}%
-$ 1,2,\ldots,20$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22625}%
-$ 1,2,\ldots,10$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22629}%
-$ 1,2,3,4$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22631}%
-$ 25$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22638}%
-$ 36'600$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22640}%
-$ 26'400$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22642}%
-$ 10'200$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22644}%
-$ 4\times3.10~$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22647}%
-$ 6~$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22649}%
-$ 3.7~$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
@@ -2409,205 +886,37 @@ $ 3.7~$%
 \stepcounter{section}
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap22661}%
-\includegraphics[width=\textwidth]{grafieken/smallp.pdf}%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22664}%
-$ 2$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22666}%
+\lthtmlinlinemathA{tex2html_wrap_inline23146}%
 $ 3$%
 \lthtmlinlinemathZ
 \lthtmlcheckvsize\clearpage}
 
-\stepcounter{section}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap22683}%
-\includegraphics[width=\textwidth]{grafieken/largep.pdf}%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsubsection}
 \stepcounter{paragraph}
 {\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22694}%
-$ 8'000$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22696}%
+\lthtmlinlinemathA{tex2html_wrap_inline23176}%
 $ 700$%
 \lthtmlinlinemathZ
 \lthtmlcheckvsize\clearpage}
 
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap22701}%
-\includegraphics[width=\textwidth]{grafieken/adhslarge4.pdf}%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsubsection}
 \stepcounter{paragraph}
 {\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22708}%
-$ a$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22710}%
+\lthtmlinlinemathA{tex2html_wrap_inline23190}%
 $ a=0$%
 \lthtmlinlinemathZ
 \lthtmlcheckvsize\clearpage}
 
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22712}%
-$ a=1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22714}%
-$ 104$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22718}%
-$ a=0.95$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22720}%
-$ a=0.15$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22722}%
-$ a=0.60$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlfigureA{table7917}%
-\begin{table} \centering
- \input{tables/strongestas.tex}
- 
- \end{table}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22739}%
-$ a=0.0$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
+\stepcounter{subsubsection}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22745}%
-$ b$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlfigureA{table7927}%
-\begin{table} \centering
- \input{tables/strongestbs.tex}
- 
- \end{table}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22753}%
-$ 9$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22755}%
-$ b=20$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlfigureA{table7937}%
-\begin{table} \centering
- \input{tables/strongestcs.tex}
- 
- \end{table}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22765}%
-$ \ensuremath{\left\langle b,c\right\rangle}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlfigureA{table7956}%
-\begin{table} \centering
- \input{tables/strongestds.tex}
- 
- \end{table}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsubsection}
 \stepcounter{paragraph}
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlfigureA{table7965}%
-\begin{table} \centering
- \input{tables/strongestes.tex}
- 
- \end{table}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22790}%
-$ 20$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22792}%
-$ 6.2\%$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{table7971}%
-\begin{table} \centering
- \input{tables/strongestfs.tex}
- 
- \end{table}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsubsection}
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar8239}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Man sage nicht, das schwerste sei die Tat; I da hilft der Mut, der Augenblick, die Regung; I das schwerste dieser Welt ist der Entschluss.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Franz Grillparzer};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{paragraph}
@@ -2632,12 +941,6 @@ $ 6.2\%$%
 \stepcounter{paragraph}
 \appendix
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar8352}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{La vraie d\'emocratie est celle qui permet \`a chaque individu de donner son maximum d'efforts dans le monde.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Louis Pasteur};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{paragraph}
@@ -2654,12 +957,6 @@ $ 6.2\%$%
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline22843}%
-$ \epsilon$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{subsection}
@@ -2714,79 +1011,7 @@ $ \epsilon$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlfigureA{sideways9051}%
-\begin{sideways}Implementatie\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9053}%
-\begin{sideways}Agenten\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9055}%
-\begin{sideways}Ant-Colony-Optimisation\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9057}%
-\begin{sideways}Fases\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9059}%
-\begin{sideways}Tabu-Search\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9061}%
-\begin{sideways}Kansvectoren\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9063}%
-\begin{sideways}Iterative Local Search\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9065}%
-\begin{sideways}Reinforcement learning\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9067}%
-\begin{sideways}Genetisch algoritme\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9069}%
-\begin{sideways}Simulated annealing\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlfigureA{sideways9071}%
-\begin{sideways}Variable Neighborhood Search\end{sideways}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar9091}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{The most important thing in communication is to hear what isn't being said.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Peter F. Drucker};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
 \stepcounter{paragraph}
@@ -2806,55 +1031,13 @@ $ \epsilon$%
 \stepcounter{subsection}
 \stepcounter{section}
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23140}%
-$ \ensuremath{\mathcal{O}\ensuremath{\left(p\cdot\ensuremath{\left(p-1\right)}/2\right)}}=\ensuremath{\mathcal{O}\ensuremath{\left(p^2\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23142}%
-$ \mathcal{O}\ensuremath{\left(1\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23144}%
-$ \mathcal{O}\ensuremath{\left(p\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23147}%
-$ \mathcal{O}\ensuremath{\left(p\log p\right)}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23151}%
-$ d=\ensuremath{\left\lceil \log_2p\right\rceil}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23157}%
-$ d-1$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{paragraph}
 \stepcounter{paragraph}
 {\newpage\clearpage
-\lthtmlfigureA{figure9350}%
-\begin{figure}\begin{center}\def \sc{1}\input{tikzpictures/asynchronegatherall}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlfigureA{algorithm9368}%
+\lthtmlfigureA{algorithm9402}%
 \begin{algorithm}
-% latex2html id marker 9368
+% latex2html id marker 9402
 [hbt]\input{algorithms/syncga}\caption{GatherAll\cite{books/bc/KumarGGK94}.}
 \end{algorithm}%
 \lthtmlfigureZ
@@ -2863,27 +1046,15 @@ $ d-1$%
 \stepcounter{paragraph}
 \stepcounter{subsection}
 {\newpage\clearpage
-\lthtmlfigureA{algorithm9381}%
+\lthtmlfigureA{algorithm9415}%
 \begin{algorithm}
-% latex2html id marker 9381
+% latex2html id marker 9415
 [hbt]\input{algorithms/asyncga}\caption{Asynchrone GatherAll.}
 \end{algorithm}%
 \lthtmlfigureZ
 \lthtmlcheckvsize\clearpage}
 
 \stepcounter{paragraph}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23171}%
-$ \ddim$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23173}%
-$ z$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{paragraph}
@@ -2892,190 +1063,22 @@ $ z$%
 \stepcounter{paragraph}
 \stepcounter{paragraph}
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar9489}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{Pour supporter sa propre histoire, chacun y ajoute un peu de l\'egende.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Marcel Jouhandeau};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlfigureA{figure9527}%
-\begin{figure}\begin{center}\def \sc{1.00}\input{tikzpictures/legende}\end{center}\end{figure}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{section}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23198}%
-$ \ensuremath{x^{\star}}\in\mathcal{X}=\ensuremath{\mathbb{Q}\ensuremath{\left[\ensuremath{L}\right]}}^n$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23200}%
-$ \vec{c}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23204}%
-$ \vec{b}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23206}%
-$ \vec{0}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay23208}%
-$\displaystyle \left\{\begin{array}{ll} \mathcal{X}=\ensuremath{\mathbb{Q}\ensuremath{\left[\ensuremath{L}\right]}}^n\\\ensuremath{f\ensuremath{\left(\vec{x}\right)}}=\vec{x}\cdot\ensuremath{{\vec{c}}^{\top}}\\\ensuremath{c\ensuremath{\left(\vec{x}\right)}}=\vec{x}\cdot A\leq\vec{b}\wedge\vec{x}\geq\boldsymbol{0}_{1\times n} \end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23211}%
-$ \vec{x}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23213}%
-$ Q$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay23215}%
-$\displaystyle \left\{\begin{array}{ll} \mathcal{X}=\ensuremath{\mathbb{Q}\ensuremath{\left[\ensuremath{L}\right]}}^n\\\ensuremath{f\ensuremath{\left(\vec{x}\right)}}=\vec{x}\cdot Q\cdot\ensuremath{{\vec{x}}^{\top}}+\vec{x}\cdot\ensuremath{{\vec{c}}^{\top}}\\\  \ensuremath{c\ensuremath{\left(\vec{x}\right)}}=\vec{x}\cdot A\leq\vec{b} \end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23224}%
-$ j$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23226}%
-$ \ensuremath{\mbox{cost}\ensuremath{\left(\vec{x}_i,\vec{x}_{i+1}\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay23228}%
-$\displaystyle \left\{\begin{array}{ll} \mathcal{X}=\ensuremath{\left\{ 1,2,\ldots,n\right\}}^n\\\ensuremath{f\ensuremath{\left(\vec{x}\right)}}=\ensuremath{\mbox{cost}\ensuremath{\left(\vec{x}_{n},\vec{x}_{1}\right)}}+\displaystyle\sum_{i=1}^{n-1}\ensuremath{\mbox{cost}\ensuremath{\left(\vec{x}_i,\vec{x}_{i+1}\right)}}\\\ensuremath{c\ensuremath{\left(\vec{x}\right)}}=\forall i,j: i\neq j\rightarrow \vec{x}_i\neq\vec{x}_j \end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay23231}%
-$\displaystyle \left\{\begin{array}{ll} \mathcal{X}=\ifthenelse{\equal{\ensuremath{L}}{}}{\mathbb{N}}{\ensuremath{\mathbb{N}\ensuremath{\left[\ensuremath{L}\right]}}}^n\\\ensuremath{f\ensuremath{\left(\vec{x}\right)}}=\ensuremath{{\vec{x}}^{\top}}\cdot\vec{c}\\\ensuremath{c\ensuremath{\left(\vec{x}\right)}}=\vec{x}\cdot A\leq\vec{b}\wedge\vec{x}\geq\boldsymbol{0}_{1\times n} \end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
-\stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23234}%
-$ c_i$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay23238}%
-$\displaystyle \left\{\begin{array}{ll} \mathcal{X}=\mathbb{B}^n\\\ensuremath{f\ensuremath{\left(\vec{x}\right)}}=\displaystyle\sum_{i=1}^{n}1-\ensuremath{\delta\ensuremath{\left[\ensuremath{c_i\ensuremath{\left(\vec{x}\right)}}\right]}}\\\ensuremath{c\ensuremath{\left(\vec{x}\right)}}=\true \end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{subsection}
 \stepcounter{subsection}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_indisplay23242}%
-$\displaystyle \left\{\begin{array}{ll} \mathcal{X}=\mathbb{B}^{n\times n}\\\ensuremath{f\ensuremath{\left(X\right)}}=\displaystyle\max\ensuremath{\left\{ j|\exists i:X_{i,j}\right\}}\\\ensuremath{c\ensuremath{\left(X\right)}}=\forall i,j:X_{i,j}\rightarrow \neg\exists k:j\neq k\wedge X_{i,k}\end{array}\right.$%
-\lthtmlindisplaymathZ
-\lthtmlcheckvsize\clearpage}
-
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{subsection}
 \stepcounter{section}
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23260}%
-$ \ensuremath{\mbox{argmin}}_{x\in D}\ensuremath{f\ensuremath{\left(x\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23264}%
-$ D$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23266}%
-$ \ensuremath{f\ensuremath{\left(x\right)}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23268}%
-$ \min X$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23270}%
-$ X$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23272}%
-$ \max X$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23294}%
-$ \ensuremath{a\ensuremath{\left[i\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlinlinemathA{tex2html_wrap_inline23300}%
-$ \ensuremath{a\ensuremath{\left[i:j\right]}}$%
-\lthtmlinlinemathZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar10383}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{If the scholar feels that he must know everything about any topic, he is in trouble - and will not publish with a clear conscience.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - Kenneth L. Pike};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
 \stepcounter{chapter}
-{\newpage\clearpage
-\lthtmlfigureA{figurestar10428}%
-\begin{figure*}\centering\begin{tikzpicture}\node[text width=\textwidth-1.75 cm,anchor=center] (Q) at (0,0) {\Large\textit{\nohyphens{I love these movies where it's just about the film. You don't have my face on the poster. It's all about the movie. I like that.}}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - John Cusack};\end{tikzpicture}\end{figure*}%
-\lthtmlfigureZ
-\lthtmlcheckvsize\clearpage}
-
-{\newpage\clearpage
-\lthtmlpictureA{tex2html_wrap23312}%
-\includegraphics[height=\textwidth,angle=-90]{poster-gray}%
-\lthtmlpictureZ
-\lthtmlcheckvsize\clearpage}
-
 
 \end{document}

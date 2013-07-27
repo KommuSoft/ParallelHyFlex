@@ -31,35 +31,6 @@ import parallelhyflex.utils.Utils;
  */
 public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentSolution, FrequencyAssignmentSolutionGenerator> {
 
-    public static FrequencyAssignmentProblem readText(Scanner sc) {
-        int n = sc.nextInt();//nTranceivers
-        int m = sc.nextInt();//sectors
-        double k = sc.nextDouble();//k
-        double csh = sc.nextDouble();//csh
-        double cacr = sc.nextDouble();//cacr
-        int[][] frequencies = new int[n][];
-        for (int i = 0x00; i < n; i++) {
-            int l = sc.nextInt();
-            int[] freq = new int[l];
-            for (int j = 0x00; j < l; j++) {
-                freq[j] = sc.nextInt();
-            }
-            frequencies[i] = freq;
-        }
-        int[] placement = new int[n];
-        for (int i = 0x00; i < n; i++) {
-            placement[i] = sc.nextInt();
-        }
-        DoubleUpperMatrix means = new DoubleUpperMatrix(m);
-        DoubleUpperMatrix stdevs = new DoubleUpperMatrix(m);
-        for (int i = 0x00; i < m; i++) {
-            for (int j = i + 0x01; j < m; j++) {
-                means.set(i, j, sc.nextDouble());
-                stdevs.set(i, j, sc.nextDouble());
-            }
-        }
-        return new FrequencyAssignmentProblem(n, m, frequencies, means, stdevs, placement, k, csh, cacr);
-    }
     private final int nTransceivers;//TODO remove counters?
     private final int nSectors;
     private final int[][] frequencies;
@@ -82,9 +53,9 @@ public class FrequencyAssignmentProblem extends ProblemBase<FrequencyAssignmentS
         this.csh = csh;
         this.cacr = cacr;
         this.interference = new FunctionInterferenceStructure<>(new IntegerArrayIndexGenerator(placement));
+        this.setHeuristics(new FrequencyAssignmentHeuristicC1(this), new FrequencyAssignmentHeuristicC2(this), new FrequencyAssignmentHeuristicC3(this), new FrequencyAssignmentHeuristicM1(this), new FrequencyAssignmentHeuristicM2(this), new FrequencyAssignmentHeuristicL1(this));
         this.setObjectives(new FrequencyAssignmentObjectiveFunction1());
         this.setSolutionGenerator(new FrequencyAssignmentSolutionGenerator(this));
-        this.setHeuristics(new FrequencyAssignmentHeuristicC1(this), new FrequencyAssignmentHeuristicC2(this), new FrequencyAssignmentHeuristicC3(this), new FrequencyAssignmentHeuristicM1(this), new FrequencyAssignmentHeuristicM2(this), new FrequencyAssignmentHeuristicL1(this), new FrequencyAssignmentHeuristicL2(this));
     }
 
     @Override

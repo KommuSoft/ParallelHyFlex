@@ -1,5 +1,6 @@
 package parallelhyflex.communication.abstraction;
 
+import java.util.logging.Logger;
 import mpi.Status;
 
 /**
@@ -50,4 +51,5 @@ public class UdpNonBlockingRequestResult implements RequestResult {
     public CommMode getCommMode() {
         return CommMode.UdpNonBlocking;
     }
+    private static final Logger LOG = Logger.getLogger(UdpNonBlockingRequestResult.class.getName());
 }

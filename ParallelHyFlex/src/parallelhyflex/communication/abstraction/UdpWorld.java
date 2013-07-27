@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 import mpi.Datatype;
 import mpi.MPI;
 import parallelhyflex.algebra.tuples.Tuple2;
@@ -186,4 +187,5 @@ public class UdpWorld {
     private boolean sourceTagMatch(int srcP, int source, int tagP, int tag) {
         return (srcP == source || source == MPI.ANY_SOURCE) && (tagP == tag || tag == MPI.ANY_TAG);
     }
+    private static final Logger LOG = Logger.getLogger(UdpWorld.class.getName());
 }

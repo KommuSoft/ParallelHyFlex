@@ -2,6 +2,7 @@ package parallelhyflex.problems.frequencyassignment.problem;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Scanner;
 import parallelhyflex.algebra.DoubleUpperMatrix;
 import parallelhyflex.communication.serialisation.SerialisationUtils;
 import parallelhyflex.problemdependent.problem.ProblemReader;
@@ -61,5 +62,36 @@ public class FrequencyAssignmentProblemGenerator implements ProblemReader<Freque
         double csh = Math.pow(1.0d, -2.0d * Utils.nextDouble());
         double cacr = Math.pow(1.0d, -2.0d * Utils.nextDouble());
         return new FrequencyAssignmentProblem(n, m, freqs, means, sigmas, placement, k, csh, cacr);
+    }
+
+    public FrequencyAssignmentProblem readFromFile(String text) {
+        Scanner sc = new Scanner(text);
+        int n = sc.nextInt();//nTranceivers
+        int m = sc.nextInt();//sectors
+        double k = sc.nextDouble();//k
+        double csh = sc.nextDouble();//csh
+        double cacr = sc.nextDouble();//cacr
+        int[][] frequencies = new int[n][];
+        for (int i = 0x00; i < n; i++) {
+            int l = sc.nextInt();
+            int[] freq = new int[l];
+            for (int j = 0x00; j < l; j++) {
+                freq[j] = sc.nextInt();
+            }
+            frequencies[i] = freq;
+        }
+        int[] placement = new int[n];
+        for (int i = 0x00; i < n; i++) {
+            placement[i] = sc.nextInt();
+        }
+        DoubleUpperMatrix means = new DoubleUpperMatrix(m);
+        DoubleUpperMatrix stdevs = new DoubleUpperMatrix(m);
+        for (int i = 0x00; i < m; i++) {
+            for (int j = i + 0x01; j < m; j++) {
+                means.set(i, j, sc.nextDouble());
+                stdevs.set(i, j, sc.nextDouble());
+            }
+        }
+        return new FrequencyAssignmentProblem(n, m, frequencies, means, stdevs, placement, k, csh, cacr);
     }
 }

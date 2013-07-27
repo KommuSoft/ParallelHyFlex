@@ -44,9 +44,9 @@ public class ThreeSatProblem extends ProblemBase<ThreeSatSolution, ThreeSatSolut
 
     private ThreeSatProblem() {
         super();
-        this.setHeuristics(new Heuristic[]{new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this)});
-        this.setObjectives(new ObjectiveFunction[]{new ThreeSatObjectiveFunction1()});
-        this.setDistances(new DistanceFunction[]{new ThreeSatDistance1(this), new ThreeSatDistance2(this)});
+        this.setHeuristics(new ThreeSatHeuristicC1(this), new ThreeSatHeuristicL1(this), new ThreeSatHeuristicM1(this), new ThreeSatHeuristicM3(this), new ThreeSatHeuristicR1(this));
+        this.setObjectives(new ThreeSatObjectiveFunction1());
+        this.setDistances(new ThreeSatDistance1(this), new ThreeSatDistance2(this));
         this.setSolutionGenerator(new ThreeSatSolutionGenerator(this));
     }
 

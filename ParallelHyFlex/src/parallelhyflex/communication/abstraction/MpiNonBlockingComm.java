@@ -1,5 +1,6 @@
 package parallelhyflex.communication.abstraction;
 
+import java.util.logging.Logger;
 import mpi.Datatype;
 import mpi.MPI;
 import mpi.Op;
@@ -308,4 +309,5 @@ public class MpiNonBlockingComm implements CommAbstraction {
     public CommMode getCommMode() {
         return CommMode.MpiNonBlocking;
     }
+    private static final Logger LOG = Logger.getLogger(MpiNonBlockingComm.class.getName());
 }

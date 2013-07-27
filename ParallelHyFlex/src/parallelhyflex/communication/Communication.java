@@ -31,6 +31,11 @@ public class Communication {
     private static File logFile;
     private static BufferedWriter logWriter;
 
+    /**
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void initializeCommunication(String[] args) throws IOException {
         MainCommunication = new Communication(args);
         logFile = new File("log" + MainCommunication.rank + ".txt");
@@ -38,20 +43,45 @@ public class Communication {
         logFileTime(LoggingParameters.LOG_START, LoggingParameters.LOG_START_TEXT);
     }
 
+    /**
+     *
+     * @return
+     */
     public static int[] others() {
         return other;
     }
 
+    /**
+     *
+     * @return
+     */
     public static Communication getCommunication() {
         return MainCommunication;
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     public static void finalizeCommunication() throws IOException {
         logWriter.close();
         Communication comm = MainCommunication;
         comm.finalize();
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param recvtype
+     * @return
+     */
     public static RequestResult Allgather(CommMode mode, Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
         try {
             return mode.getAbstraction().Allgather(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
@@ -61,6 +91,20 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param displs
+     * @param recvtype
+     * @return
+     */
     public static RequestResult Allgatherv(CommMode mode, Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int[] recvcount, int[] displs, Datatype recvtype) {
         try {
             return mode.getAbstraction().Allgatherv(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, displs, recvtype);
@@ -70,6 +114,18 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param recvbuf
+     * @param recvoffset
+     * @param count
+     * @param datatype
+     * @param op
+     * @return
+     */
     public static RequestResult Allreduce(CommMode mode, Object sendbuf, int sendoffset, Object recvbuf, int recvoffset, int count, Datatype datatype, Op op) {
         try {
             return mode.getAbstraction().Allreduce(sendbuf, sendoffset, recvbuf, recvoffset, count, datatype, op);
@@ -79,6 +135,19 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param recvtype
+     * @return
+     */
     public static RequestResult Alltoall(CommMode mode, Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
         try {
             return mode.getAbstraction().Alltoall(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
@@ -88,6 +157,21 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sdispls
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param rdispls
+     * @param recvtype
+     * @return
+     */
     public static RequestResult Alltoallv(CommMode mode, Object sendbuf, int sendoffset, int[] sendcount, int[] sdispls, Datatype sendtype, Object recvbuf, int recvoffset, int[] recvcount, int[] rdispls, Datatype recvtype) {
         try {
             return mode.getAbstraction().Alltoallv(sendbuf, sendoffset, sendcount, sdispls, sendtype, recvbuf, recvoffset, recvcount, rdispls, recvtype);
@@ -97,6 +181,11 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @return
+     */
     public static RequestResult Barrier(CommMode mode) {
         try {
             return mode.getAbstraction().Barrier();
@@ -106,6 +195,16 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param buf
+     * @param offset
+     * @param count
+     * @param type
+     * @param root
+     * @return
+     */
     public static RequestResult Bcast(CommMode mode, Object buf, int offset, int count, Datatype type, int root) {
         try {
             return mode.getAbstraction().Bcast(buf, offset, count, type, root);
@@ -115,6 +214,16 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param buf
+     * @param offset
+     * @param count
+     * @param type
+     * @param tag
+     * @return
+     */
     public static RequestResult BcastRoot(CommMode mode, Object buf, int offset, int count, Datatype type, int tag) {
         try {
             return mode.getAbstraction().BcastRoot(buf, offset, count, type, tag);
@@ -124,6 +233,20 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param recvtype
+     * @param root
+     * @return
+     */
     public static RequestResult Gather(CommMode mode, Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype, int root) {
         try {
             return mode.getAbstraction().Gather(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype, root);
@@ -133,6 +256,21 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param displs
+     * @param recvtype
+     * @param root
+     * @return
+     */
     public static RequestResult Gatherv(CommMode mode, Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int[] recvcount, int[] displs, Datatype recvtype, int root) {
         try {
             return mode.getAbstraction().Gatherv(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, displs, recvtype, root);
@@ -142,6 +280,18 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcounts
+     * @param datatype
+     * @param op
+     * @return
+     */
     public static RequestResult Reduce_scatter(CommMode mode, Object sendbuf, int sendoffset, Object recvbuf, int recvoffset, int[] recvcounts, Datatype datatype, Op op) {
         try {
             return mode.getAbstraction().Reduce_scatter(sendbuf, sendoffset, recvbuf, recvoffset, recvcounts, datatype, op);
@@ -151,6 +301,19 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param recvbuf
+     * @param recvoffset
+     * @param count
+     * @param datatype
+     * @param op
+     * @param root
+     * @return
+     */
     public static RequestResult Reduce(CommMode mode, Object sendbuf, int sendoffset, Object recvbuf, int recvoffset, int count, Datatype datatype, Op op, int root) {
         try {
             return mode.getAbstraction().Reduce(sendbuf, sendoffset, recvbuf, recvoffset, count, datatype, op, root);
@@ -160,6 +323,20 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param recvtype
+     * @param root
+     * @return
+     */
     public static RequestResult Scatter(CommMode mode, Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype, int root) {
         try {
             return mode.getAbstraction().Scatter(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype, root);
@@ -169,6 +346,21 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param sendbuf
+     * @param sendoffset
+     * @param sendcount
+     * @param displs
+     * @param sendtype
+     * @param recvbuf
+     * @param recvoffset
+     * @param recvcount
+     * @param recvtype
+     * @param root
+     * @return
+     */
     public static RequestResult Scatterv(CommMode mode, Object sendbuf, int sendoffset, int[] sendcount, int[] displs, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype, int root) {
         try {
             return mode.getAbstraction().Scatterv(sendbuf, sendoffset, sendcount, displs, sendtype, recvbuf, recvoffset, recvcount, recvtype, root);
@@ -178,6 +370,17 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param buf
+     * @param offset
+     * @param count
+     * @param datatype
+     * @param source
+     * @param tag
+     * @return
+     */
     public static RequestResult Recv(CommMode mode, Object buf, int offset, int count, Datatype datatype, int source, int tag) {
         try {
             return mode.getAbstraction().Recv(buf, offset, count, datatype, source, tag);
@@ -187,6 +390,17 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param mode
+     * @param buf
+     * @param offset
+     * @param count
+     * @param datatype
+     * @param dest
+     * @param tag
+     * @return
+     */
     public static RequestResult Send(CommMode mode, Object buf, int offset, int count, Datatype datatype, int dest, int tag) {
         try {
             return mode.getAbstraction().Send(buf, offset, count, datatype, dest, tag);
@@ -196,43 +410,61 @@ public class Communication {
         }
     }
 
-    /*public static void a2A(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
-     MPI.COMM_WORLD.Alltoall(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
-     }
-
-     public static void aG(Object sendbuf, int sendoffset, int sendcount, Datatype sendtype, Object recvbuf, int recvoffset, int recvcount, Datatype recvtype) {
-     MPI.COMM_WORLD.Allgather(sendbuf, sendoffset, sendcount, sendtype, recvbuf, recvoffset, recvcount, recvtype);
-     }
-
-     public static void bC(Object buf, int offset, int count, Datatype type, int root) {
-     MPI.COMM_WORLD.Bcast(buf, offset, count, type, root);
-     }
-
-     public static Status rV(Object buf, int offset, int count, Datatype type, int source, int tag) {
-     return MPI.COMM_WORLD.Recv(buf, offset, count, type, source, tag);
-     }
-
-     public static mpi.Request nbRv(Object buf, int offset, int count, Datatype type, int source, int tag) {
-     return MPI.COMM_WORLD.Irecv(buf, offset, count, type, source, tag);
-     }
-
-     public static void s(Object buf, int offset, int count, Datatype type, int dest, int tag) {
-     MPI.COMM_WORLD.Send(buf, offset, count, type, dest, tag);
-     }
-
-     public static mpi.Request nbS(Object buf, int offset, int count, Datatype type, int dest, int tag) {
-     return MPI.COMM_WORLD.Isend(buf, offset, count, type, dest, tag);
-     }
-
-     public static void nbB(Object buf, int offset, int count, Datatype type, int tag) {
-     for (int root : Communication.others()) {
-     Communication.nbS(buf, offset, count, type, root, tag);
-     }
-     }*/
+    /**
+     *
+     * @param message
+     */
     public static void log(String message) {
         System.out.println("<" + Communication.MainCommunication.rank + "> " + message);
     }
 
+    /**
+     *
+     * @param object
+     */
+    public static <T> void log(Iterable<T> list) {
+        log(Utils.toString(list));
+    }
+
+    /**
+     *
+     * @param object
+     */
+    public static <T> void log(T... list) {
+        log(Utils.toString(list));
+    }
+
+    /**
+     *
+     * @param object
+     */
+    public static void log(Object object) {
+        log(String.valueOf(object));
+    }
+
+    /**
+     *
+     * @param format
+     * @param args
+     */
+    public static void log(String format, Object... args) {
+        System.out.println("<" + Communication.MainCommunication.rank + "> " + String.format(format, args));
+    }
+
+    /**
+     *
+     * @param locale
+     * @param format
+     * @param args
+     */
+    public static void log(Locale locale, String format, Object... args) {
+        System.out.println("<" + Communication.MainCommunication.rank + "> " + String.format(locale, format, args));
+    }
+
+    /**
+     *
+     * @param message
+     */
     public static void logFile(String message) {
         try {
             logWriter.write(message);
@@ -241,14 +473,29 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param format
+     * @param args
+     */
     public static void logFileTime(String format, Object... args) {
         logFileTime(String.format(format, args));
     }
 
+    /**
+     *
+     * @param locale
+     * @param format
+     * @param args
+     */
     public static void logFileTime(Locale locale, String format, Object... args) {
         logFileTime(String.format(locale, format, args));
     }
 
+    /**
+     *
+     * @param message
+     */
     public static void logFileTime(String message) {
         try {
             logWriter.write(String.format("%s\t%s\n", new Date().getTime(), message));
@@ -257,26 +504,49 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param condition
+     * @param format
+     * @param args
+     */
     public static void logFileTime(boolean condition, String format, Object... args) {
         if (condition) {
             logFileTime(format, args);
         }
     }
 
+    /**
+     *
+     * @param condition
+     * @param locale
+     * @param format
+     * @param args
+     */
     public static void logFileTime(boolean condition, Locale locale, String format, Object... args) {
         if (condition) {
             logFileTime(locale, format, args);
         }
     }
 
+    /**
+     *
+     * @param condition
+     * @param message
+     */
     public static void logFileTime(boolean condition, String message) {
         if (condition) {
             logFileTime(message);
         }
     }
 
+    /**
+     *
+     * @param e
+     */
     public static void log(Exception e) {
         log("ERROR: " + e.toString());
+        e.printStackTrace();
     }
     private final int rank;
     private final int size;
@@ -309,6 +579,10 @@ public class Communication {
         this.udpWorld = new UdpWorld(rank);
     }
 
+    /**
+     *
+     */
+    @Override
     public void finalize() {
         MPI.Finalize();
     }
@@ -327,19 +601,38 @@ public class Communication {
         return size;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDimensions() {
         return dim;
     }
 
+    /**
+     *
+     * @param dimension
+     * @return
+     */
     public int getDimensionId(int dimension) {
         return ((this.rank >> dimension) & 0x01);
     }
 
+    /**
+     *
+     * @param dimension
+     * @return
+     */
     public boolean hasNeighbor(int dimension) {
         int neighbor = this.getRank() ^ (0x01 << dimension);
         return (neighbor < this.getSize());
     }
 
+    /**
+     *
+     * @param dimension
+     * @return
+     */
     public int getNeighbor(int dimension) {
         int rank = this.getRank();
         int neighbor = rank ^ (0x01 << dimension);
@@ -350,6 +643,11 @@ public class Communication {
         }
     }
 
+    /**
+     *
+     * @param neighbor
+     * @return
+     */
     public int getDimensionDifference(int neighbor) {
         int diff = this.getRank() ^ neighbor;
         int d = 0;
@@ -370,4 +668,46 @@ public class Communication {
     public int getNonNeighborCache() {
         return nonNeighborCache;
     }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isHalfWall() {
+        int fullsize = 1 << dim;
+        return rank >= (fullsize >> 1) && size < fullsize;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isFullWall() {
+        return !this.isHalfWall();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean areAssymetricWalls() {
+        return (1 << this.dim) != this.size;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getWallNeighbor() {
+        return rank ^ (1 << (dim - 1));
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean hasWallNeighbor() {
+        return this.getWallNeighbor() < size;
+    }
+    private static final Logger LOG = Logger.getLogger(Communication.class.getName());
 }

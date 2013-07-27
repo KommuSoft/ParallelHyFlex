@@ -12,20 +12,11 @@ public final class FrequencyAssignmentUtils {
 
     /**
      *
-     */
-    public static final double Csh = 0.15d;
-    /**
-     *
-     */
-    public static final double Cadj = 0.05d;
-
-    /**
-     *
      * @param mu
      * @param sigma
      * @return
      */
-    public static double Cco(double mu, double sigma) {
+    public static double Cco(double mu, double sigma, double Csh) {
         return 100.0d * StatisticsUtils.normalCdf(mu, sigma, Csh);
     }
 
@@ -35,7 +26,7 @@ public final class FrequencyAssignmentUtils {
      * @param sigma
      * @return
      */
-    public static double Cadj(double mu, double sigma) {
+    public static double Cadj(double mu, double sigma, double Csh, double Cadj) {
         return 100.0d * StatisticsUtils.normalCdf(mu, sigma, Csh - Cadj);
     }
 
@@ -122,13 +113,13 @@ public final class FrequencyAssignmentUtils {
      * @param sigma
      * @return
      */
-    public static double Csig(int st, int su, int pt, int pu, double mu, double sigma) {
+    public static double Csig(int st, int su, int pt, int pu, double mu, double sigma, double Csh, double Cadj) {
         if (st == su && mu > 0) {
             int delta = Math.abs(pt - pu);
             if (delta == 0) {
-                return Cco(mu, sigma);
+                return Cco(mu, sigma, Csh);
             } else if (delta == 1) {
-                return Cadj(mu, sigma);
+                return Cadj(mu, sigma, Csh, Cadj);
             }
         }
         return 0.0d;
@@ -163,7 +154,7 @@ public final class FrequencyAssignmentUtils {
      * @param delta
      * @return
      */
-    public static double CotherSectorMuLarge(double mu, double sigma, int delta) {
+    public static double CotherSectorMuLarge(double mu, double sigma, int delta, double Csh, Cadj) {
         if (delta == 0) {
             return Cco(mu, sigma);
         } else if (delta == 1) {

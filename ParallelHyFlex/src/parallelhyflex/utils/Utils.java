@@ -695,4 +695,30 @@ public final class Utils {
     public void nextBytes(byte[] bytes) {
         StaticRandom.nextBytes(bytes);
     }
+
+    public static <T> String toString(Iterable<T> values) {
+        StringBuilder sb = new StringBuilder("[ ");
+        for (T val : values) {
+            sb.append(val);
+            sb.append(' ');
+        }
+        sb.append(']');
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @param <T>
+     * @param values
+     * @return
+     */
+    public static <T> String toString(T... values) {
+        StringBuilder sb = new StringBuilder("[ ");
+        for (T val : values) {
+            sb.append(val);
+            sb.append(' ');
+        }
+        sb.append(']');
+        return sb.toString();
+    }
 }
